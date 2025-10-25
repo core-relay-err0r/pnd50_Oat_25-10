@@ -1,0 +1,54 @@
+```typescriptreact file="app/layout.tsx"
+[v0-no-op-code-block-prefix]import type React from "react"
+import type { Metadata } from "next"
+import { Inter } from 'next/font/google'
+import "./globals.css"
+
+const inter = Inter({ subsets: ["latin"] })
+
+export const metadata: Metadata = {
+  title: "PND50 | Premier Tax & Accounting Services in Thailand",
+  description:
+    "Expert tax and accounting services for foreign-owned companies in Thailand. PND50 offers comprehensive solutions for tax planning, compliance, and business consulting.",
+  icons: {
+    icon: {
+      url: "/fav-50.png",
+      type: "image/png",
+      sizes: "32x32",
+    },
+  },
+  openGraph: {
+    title: "PND50 | Premier Tax & Accounting Services in Thailand",
+    description: "Expert tax and accounting services for foreign-owned companies in Thailand.",
+    url: "https://pnd50.com",
+    siteName: "PND50",
+    images: [
+      {
+        url: "/og.jpg",
+        width: 1200,
+        height: 630,
+        alt: 'A professional desk setup with the text "PND50 Premier Tax & Accounting Services in Thailand".',
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "PND50 | Premier Tax & Accounting Services in Thailand",
+    description: "Expert tax and accounting services for foreign-owned companies in Thailand.",
+    images: ["/og.jpg"],
+  },
+}
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode
+}>) {
+  return (
+    <html lang="en">
+      <body>{children}</body>
+    </html>
+  )
+}
