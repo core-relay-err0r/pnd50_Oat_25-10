@@ -152,7 +152,7 @@ export default function PND50Landing() {
                       transitionDelay: `${index * 100}ms`,
                     }}
                   >
-                    <span className="text-2xl group-hover:scale-125 group-hover:rotate-12 transition-all duration-300 animate-wave">
+                    <span className="text-2xl group-hover:scale-125 group-hover:rotate-12 transition-all duration-300">
                       {feature.icon}
                     </span>
                     <span className="text-white font-medium">{feature.label}</span>

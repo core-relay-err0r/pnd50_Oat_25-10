@@ -9,7 +9,8 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  reactCompiler: true,
+  // React Compiler disabled - requires babel-plugin-react-compiler package
+  // reactCompiler: true,
   cacheComponents: true,
 }
 
