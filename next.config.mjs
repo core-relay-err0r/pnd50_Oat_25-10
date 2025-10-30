@@ -9,6 +9,8 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
+  reactCompiler: true,
+  cacheComponents: true,
 }
 
 export default nextConfig

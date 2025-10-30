@@ -2,7 +2,7 @@
 
 import type React from "react"
 
-import { useState } from "react"
+import { useState, useEffectEvent } from "react"
 import { X, MessageCircle, Send } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useChat } from "@ai-sdk/react"
@@ -30,11 +30,14 @@ export function FloatingChatBot() {
 
   const [inputValue, setInputValue] = useState("")
 
+  const performSend = useEffectEvent((message: string) => {
+    sendMessage({ text: message })
+    setInputValue("")
+  })
+
   const handleSend = () => {
     if (!inputValue.trim() || status === "in_progress") return
-
-    sendMessage({ text: inputValue })
-    setInputValue("")
+    performSend(inputValue)
   }
 
   const handleKeyPress = (e: React.KeyboardEvent) => {

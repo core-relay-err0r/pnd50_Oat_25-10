@@ -1,5 +1,5 @@
 "use client"
-import { useEffect, useState, useTransition } from "react"
+import { useEffect, useState, useTransition, useEffectEvent } from "react"
 import { scheduleConsultation, type FormState } from "@/app/actions"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -27,14 +27,18 @@ export default function ConsultationModal({ isOpen, onClose }: ConsultationModal
     })
   }
 
+  const handleAutoClose = useEffectEvent(() => {
+    onClose()
+  })
+
   useEffect(() => {
     if (state.status === "success") {
       const timer = setTimeout(() => {
-        onClose()
-      }, 2000) // Close modal after 2 seconds on success
+        handleAutoClose()
+      }, 2000)
       return () => clearTimeout(timer)
     }
-  }, [state.status, onClose])
+  }, [state.status]) // Only depend on status, not onClose
 
   const handleClose = () => {
     if (!isPending) {
