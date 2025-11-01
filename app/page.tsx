@@ -120,7 +120,7 @@ export default function PND50Landing() {
               </p>
 
               <div
-                className={`flex flex-wrap items-center justify-center gap-4 mb-12 transition-all duration-700 delay-300 ${
+                className={`flex flex-wrap items-center justify-center gap-3 sm:gap-4 mb-12 transition-all duration-700 delay-300 ${
                   isVisible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
                 }`}
               >
@@ -152,13 +152,17 @@ export default function PND50Landing() {
                 ].map((feature, index) => (
                   <div
                     key={index}
-                    className={`group flex items-center gap-3 px-6 py-3 rounded-full bg-gradient-to-r ${feature.color} backdrop-blur-md border border-white/20 transition-all duration-300 hover:scale-102 ${feature.hoverShadow} cursor-pointer`}
+                    className={`group flex items-center gap-2.5 sm:gap-3 px-4 sm:px-6 py-3 sm:py-3.5 rounded-full bg-gradient-to-r ${feature.color} backdrop-blur-md border border-white/20 transition-all duration-300 hover:scale-102 ${feature.hoverShadow} cursor-pointer min-h-[44px] touch-manipulation`}
                     style={{
                       transitionDelay: `${index * 100}ms`,
                     }}
                   >
-                    <span className="text-2xl transition-transform duration-300">{feature.icon}</span>
-                    <span className="text-white font-medium">{feature.label}</span>
+                    <span className="text-xl sm:text-2xl transition-transform duration-300 flex-shrink-0">
+                      {feature.icon}
+                    </span>
+                    <span className="text-white font-medium text-sm sm:text-base whitespace-nowrap">
+                      {feature.label}
+                    </span>
                   </div>
                 ))}
               </div>
