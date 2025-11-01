@@ -25,12 +25,8 @@ export function FloatingChatBot() {
       {
         id: "welcome",
         role: "assistant",
-        parts: [
-          {
-            type: "text",
-            text: "👋 Hi there! I'm Anya, your digital assistant from PND50.\n\nI can help you find the right accounting or tax service for your company — and get your quotation in just a few minutes.\n\nShall we get started? 📋 ✨",
-          },
-        ],
+        content:
+          "👋 Hi there! I'm Anya, your digital assistant from PND50.\n\nI can help you find the right accounting or tax service for your company — and get your quotation in just a few minutes.\n\nShall we get started? 📋 ✨",
       },
     ],
   })
@@ -94,16 +90,20 @@ export function FloatingChatBot() {
                       : "bg-white text-gray-800 border border-gray-200"
                   }`}
                 >
-                  {message.parts.map((part, index) => {
-                    if (part.type === "text") {
-                      return (
-                        <p key={index} className="text-sm leading-relaxed whitespace-pre-wrap">
-                          {part.text}
-                        </p>
-                      )
-                    }
-                    return null
-                  })}
+                  {typeof message.content === "string" ? (
+                    <p className="text-sm leading-relaxed whitespace-pre-wrap">{message.content}</p>
+                  ) : message.parts ? (
+                    message.parts.map((part, index) => {
+                      if (part.type === "text") {
+                        return (
+                          <p key={index} className="text-sm leading-relaxed whitespace-pre-wrap">
+                            {part.text}
+                          </p>
+                        )
+                      }
+                      return null
+                    })
+                  ) : null}
                   <p className={`text-xs mt-1 ${message.role === "user" ? "text-blue-100" : "text-gray-500"}`}>
                     {message.createdAt?.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
                   </p>
