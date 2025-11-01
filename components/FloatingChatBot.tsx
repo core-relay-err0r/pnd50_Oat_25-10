@@ -157,22 +157,35 @@ export function FloatingChatBot() {
         </div>
       </div>
 
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className={`fixed bottom-6 right-6 z-50 bg-white hover:bg-gray-50 text-gray-900 rounded-full shadow-lg hover:shadow-xl flex items-center gap-3 px-5 py-3 transition-all duration-300 hover:scale-105 border border-gray-200 ${
-          isOpen ? "opacity-0 pointer-events-none" : "opacity-100"
-        }`}
-        aria-label="Open chat with Anya"
-      >
-        <div className="flex items-center gap-2">
-          <Sparkles className="w-6 h-6 text-orange-500" />
-          <Sparkles className="w-4 h-4 text-orange-400 -ml-4 -mt-2" />
-        </div>
-        <div className="flex flex-col items-start">
-          <span className="text-sm font-semibold leading-tight">AI assistant</span>
-          <span className="text-xs text-gray-600 leading-tight">Chat with Anya</span>
-        </div>
-      </button>
+      {!isOpen && (
+        <button
+          onClick={() => setIsOpen(true)}
+          className="fixed bottom-6 right-6 z-50 bg-white hover:bg-gray-50 text-gray-900 rounded-full shadow-2xl flex items-center gap-3 px-5 py-3.5 transition-all duration-300 hover:scale-105 hover:shadow-xl border border-gray-200"
+          aria-label="Open chat with Anya"
+        >
+          {/* Sparkle icon with blue gradient */}
+          <div className="flex items-center justify-center">
+            <Sparkles className="w-6 h-6 text-blue-600" />
+          </div>
+
+          {/* Two-line text layout */}
+          <div className="flex flex-col items-start">
+            <span className="text-sm font-semibold text-gray-900 leading-tight">AI assistant</span>
+            <span className="text-xs text-gray-600 leading-tight">Chat with Anya</span>
+          </div>
+        </button>
+      )}
+
+      {/* Close button when chat is open */}
+      {isOpen && (
+        <button
+          onClick={() => setIsOpen(false)}
+          className="fixed bottom-6 right-6 z-50 w-14 h-14 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white rounded-full shadow-2xl flex items-center justify-center transition-all duration-300 hover:scale-105"
+          aria-label="Close chat"
+        >
+          <X className="w-6 h-6" />
+        </button>
+      )}
     </>
   )
 }
