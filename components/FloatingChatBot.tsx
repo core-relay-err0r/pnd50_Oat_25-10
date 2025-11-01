@@ -3,7 +3,7 @@
 import type React from "react"
 
 import { useState, useEffectEvent } from "react"
-import { X, MessageCircle, Send } from "lucide-react"
+import { X, MessageCircle, Send, Sparkles } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useChat } from "@ai-sdk/react"
 import { DefaultChatTransport } from "ai"
@@ -25,8 +25,12 @@ export function FloatingChatBot() {
       {
         id: "welcome",
         role: "assistant",
-        content:
-          "👋 Hi there! I'm Anya, your digital assistant from PND50.\n\nI can help you find the right accounting or tax service for your company — and get your quotation in just a few minutes.\n\nShall we get started? 📋 ✨",
+        parts: [
+          {
+            type: "text",
+            text: "Hi there! 👋 I'm Anya, your PND50 assistant. I'm here to help with accounting and tax services. What can I help you with today?",
+          },
+        ],
       },
     ],
   })
@@ -90,20 +94,16 @@ export function FloatingChatBot() {
                       : "bg-white text-gray-800 border border-gray-200"
                   }`}
                 >
-                  {typeof message.content === "string" ? (
-                    <p className="text-sm leading-relaxed whitespace-pre-wrap">{message.content}</p>
-                  ) : message.parts ? (
-                    message.parts.map((part, index) => {
-                      if (part.type === "text") {
-                        return (
-                          <p key={index} className="text-sm leading-relaxed whitespace-pre-wrap">
-                            {part.text}
-                          </p>
-                        )
-                      }
-                      return null
-                    })
-                  ) : null}
+                  {message.parts.map((part, index) => {
+                    if (part.type === "text") {
+                      return (
+                        <p key={index} className="text-sm leading-relaxed whitespace-pre-wrap">
+                          {part.text}
+                        </p>
+                      )
+                    }
+                    return null
+                  })}
                   <p className={`text-xs mt-1 ${message.role === "user" ? "text-blue-100" : "text-gray-500"}`}>
                     {message.createdAt?.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
                   </p>
@@ -157,23 +157,21 @@ export function FloatingChatBot() {
         </div>
       </div>
 
-      {/* Floating Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className={`fixed bottom-6 right-6 z-50 w-14 h-14 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white rounded-full shadow-2xl flex items-center justify-center transition-all duration-300 hover:scale-102 group ${
-          isOpen ? "rotate-0" : "rotate-0"
+        className={`fixed bottom-6 right-6 z-50 bg-white hover:bg-gray-50 text-gray-900 rounded-full shadow-lg hover:shadow-xl flex items-center gap-3 px-5 py-3 transition-all duration-300 hover:scale-105 border border-gray-200 ${
+          isOpen ? "opacity-0 pointer-events-none" : "opacity-100"
         }`}
-        aria-label="Open chat"
+        aria-label="Open chat with Anya"
       >
-        <MessageCircle className={`w-6 h-6 transition-transform duration-300 ${isOpen ? "scale-0" : "scale-100"}`} />
-        <X className={`w-6 h-6 absolute transition-transform duration-300 ${isOpen ? "scale-100" : "scale-0"}`} />
-
-        {/* Notification Badge */}
-        {!isOpen && (
-          <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">
-            AI
-          </span>
-        )}
+        <div className="flex items-center gap-2">
+          <Sparkles className="w-6 h-6 text-orange-500" />
+          <Sparkles className="w-4 h-4 text-orange-400 -ml-4 -mt-2" />
+        </div>
+        <div className="flex flex-col items-start">
+          <span className="text-sm font-semibold leading-tight">AI assistant</span>
+          <span className="text-xs text-gray-600 leading-tight">Chat with Anya</span>
+        </div>
       </button>
     </>
   )
