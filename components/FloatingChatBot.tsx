@@ -9,31 +9,37 @@ import { useChat } from "@ai-sdk/react"
 import { DefaultChatTransport } from "ai"
 import { usePathname } from "next/navigation"
 
+const WELCOME_MESSAGE = {
+  id: "welcome-static",
+  role: "assistant" as const,
+  parts: [
+    {
+      type: "text" as const,
+      text: "👋 Hi there! I'm Anya, your digital assistant from PND50.\n\nI can help you find the right accounting or tax service for your company — and get your quotation in just a few minutes.\n\nShall we get started? 📋 ✨",
+    },
+  ],
+  createdAt: new Date(),
+}
+
 export function FloatingChatBot() {
   const [isOpen, setIsOpen] = useState(false)
   const pathname = usePathname()
   const isOnCalculator = pathname === "/calculator"
 
-  const { messages, sendMessage, status } = useChat({
+  const {
+    messages: aiMessages,
+    sendMessage,
+    status,
+  } = useChat({
     transport: new DefaultChatTransport({
       api: "/api/chatbot",
       headers: {
         "X-Current-Page": pathname || "/",
       },
     }),
-    initialMessages: [
-      {
-        id: "welcome",
-        role: "assistant",
-        parts: [
-          {
-            type: "text",
-            text: "👋 Hi there! I'm Anya, your digital assistant from PND50.\n\nI can help you find the right accounting or tax service for your company — and get your quotation in just a few minutes.\n\nShall we get started? 📋 ✨",
-          },
-        ],
-      },
-    ],
   })
+
+  const messages = [WELCOME_MESSAGE, ...aiMessages]
 
   const [inputValue, setInputValue] = useState("")
 
