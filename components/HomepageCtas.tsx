@@ -11,7 +11,7 @@ export function HomepageCtas() {
     <div className="flex flex-col sm:flex-row gap-4 justify-center">
       <Link href="/calculator">
         <Button
-          className="bg-blue-500 hover:bg-blue-600 text-white px-8 text-lg font-bold rounded-lg shadow-lg shadow-blue-500/20 transition-all duration-300 transform hover:scale-105 btn-pulse flex items-center justify-center"
+          className="bg-blue-500 hover:bg-blue-600 text-white px-8 text-lg font-bold rounded-lg shadow-lg shadow-blue-500/20 transition-all duration-300 transform hover:scale-102 flex items-center justify-center"
           style={{ minHeight: "60px", height: "60px" }}
         >
           Schedule Consultation
@@ -27,7 +27,7 @@ export function HomepageCtas() {
             openHowItWorks()
           }
         }}
-        className="flex items-center justify-center gap-2 px-8 text-lg font-bold rounded-lg cursor-pointer transition-all duration-300 user-select-none border-2 border-white/30 bg-white/5 backdrop-blur-sm hover:bg-white/10 hover:border-white/50 hover:scale-105 text-white"
+        className="flex items-center justify-center gap-2 px-8 text-lg font-bold rounded-lg cursor-pointer transition-all duration-300 user-select-none border-2 border-white/30 bg-white/5 backdrop-blur-sm hover:bg-white/10 hover:border-white/50 hover:scale-102 text-white"
         style={{ minHeight: "60px", height: "60px" }}
       >
         <span className="text-xl">▶️</span>

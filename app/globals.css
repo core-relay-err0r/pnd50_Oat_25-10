@@ -108,7 +108,8 @@ body {
 
   /* Improved button pulse animation */
   .btn-pulse {
-    animation: pulse-glow 2s infinite cubic-bezier(0.4, 0, 0.6, 1);
+    /* Removed btn-pulse animation - too distracting for professional design */
+    /* animation: pulse-glow 2s infinite cubic-bezier(0.4, 0, 0.6, 1); */
   }
 
   @keyframes pulse-glow {
@@ -141,6 +142,7 @@ body {
     }
   }
 
+  /* Keeping float animations but they're no longer used in components */
   .animate-float {
     animation: float-icon 4s ease-in-out infinite;
   }
@@ -166,6 +168,7 @@ body {
   }
 
   /* Enhanced floating animations for hero section */
+  /* Keeping keyframes but removed from components for cleaner look */
   @keyframes float-slow {
     0%,
     100% {
@@ -212,6 +215,7 @@ body {
   /* Adding new advanced animations for enhanced transitions */
 
   /* Parallax scroll effect */
+  /* Removed parallax-float usage for cleaner design */
   @keyframes parallax-float {
     0%,
     100% {
@@ -227,6 +231,7 @@ body {
   }
 
   /* Shimmer effect for cards */
+  /* Removed shimmer effect - too distracting */
   @keyframes shimmer {
     0% {
       background-position: -1000px 0;
@@ -243,6 +248,7 @@ body {
   }
 
   /* Bounce in animation */
+  /* Removed bounce-in usage for more professional feel */
   @keyframes bounce-in {
     0% {
       opacity: 0;
@@ -313,6 +319,7 @@ body {
   }
 
   /* Glow pulse effect */
+  /* Removed glow-pulse usage - too distracting */
   @keyframes glow-pulse {
     0%,
     100% {
@@ -328,6 +335,7 @@ body {
   }
 
   /* Text reveal animation */
+  /* Removed text-reveal usage */
   @keyframes text-reveal {
     0% {
       opacity: 0;
@@ -362,12 +370,13 @@ body {
   }
 
   /* Tilt on hover effect */
+  /* Removed hover-tilt - too gimmicky */
   .hover-tilt {
     transition: transform 0.3s ease;
   }
 
   .hover-tilt:hover {
-    transform: perspective(1000px) rotateX(5deg) rotateY(-5deg) scale(1.02);
+    /* transform: perspective(1000px) rotateX(5deg) rotateY(-5deg) scale(1.02); */
   }
 
   /* Magnetic hover effect */
@@ -376,6 +385,7 @@ body {
   }
 
   /* Breathing animation */
+  /* Removed breathe animation usage */
   @keyframes breathe {
     0%,
     100% {
@@ -411,6 +421,7 @@ body {
   }
 
   /* Adding subtle pulse animation for CTA button */
+  /* Removed pulse-subtle usage */
   @keyframes pulse-subtle {
     0%,
     100% {
