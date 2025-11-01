@@ -160,18 +160,18 @@ export function FloatingChatBot() {
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
-          className="fixed bottom-6 right-6 z-50 bg-white hover:bg-gray-50 text-gray-900 rounded-full shadow-2xl flex gap-3 px-5 py-3.5 transition-all duration-300 hover:scale-105 hover:shadow-xl opacity-100 shadow-xl border-4 border-dotted border-primary items-center"
+          className="fixed bottom-6 right-6 z-50 bg-white hover:bg-gray-50 text-gray-900 rounded-full shadow-2xl flex gap-4 px-7 py-5 transition-all duration-300 hover:scale-105 hover:shadow-xl opacity-100 shadow-xl border-4 border-dotted border-primary items-center"
           aria-label="Open chat with Anya"
         >
           {/* Sparkle icon with blue gradient */}
           <div className="flex items-center justify-center">
-            <Sparkles className="w-6 h-6 text-blue-600" />
+            <Sparkles className="w-8 h-8 text-blue-600" />
           </div>
 
           {/* Two-line text layout */}
           <div className="flex flex-col items-start">
-            <span className="text-sm font-semibold text-gray-900 leading-tight">AI assistant</span>
-            <span className="text-xs text-gray-600 leading-tight">Chat with Anya</span>
+            <span className="text-base font-bold text-gray-900 leading-tight">AI assistant</span>
+            <span className="text-sm text-gray-600 leading-tight">Chat with Anya</span>
           </div>
         </button>
       )}
