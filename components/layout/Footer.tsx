@@ -2,6 +2,7 @@ import React from "react"
 import Link from "next/link"
 import { TooltipProvider } from "@/components/ui/tooltip"
 import { Calculator, Shield, HandCoins, Target, FileSearch, Phone, Mail, MapPin } from "lucide-react"
+import CurrentYear from "@/components/CurrentYear"
 
 const services = [
   {
@@ -146,7 +147,9 @@ export default function Footer() {
 
           <div className="mt-16 border-t border-slate-800 pt-8 text-sm">
             <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
-              <p className="text-slate-500">© {new Date().getFullYear()} PND50, a Burakorn Partners Group company.</p>
+              <p className="text-slate-500">
+                © <CurrentYear /> PND50, a Burakorn Partners Group company.
+              </p>
               <div className="flex items-center gap-x-4 text-slate-500">
                 <Link href="/privacy-policy" className="hover:text-white transition-colors">
                   Privacy Policy
