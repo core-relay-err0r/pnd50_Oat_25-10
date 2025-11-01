@@ -2,7 +2,7 @@
 
 import type React from "react"
 
-import { useState, useEffectEvent } from "react"
+import { useState, useEffect, useEffectEvent } from "react"
 import { X, MessageCircle, Send } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useChat } from "@ai-sdk/react"
@@ -11,8 +11,39 @@ import { usePathname } from "next/navigation"
 
 export function FloatingChatBot() {
   const [isOpen, setIsOpen] = useState(false)
+  const [showPrompt, setShowPrompt] = useState(false)
   const pathname = usePathname()
   const isOnCalculator = pathname === "/calculator"
+
+  useEffect(() => {
+    // Check if user has dismissed the prompt before
+    const hasSeenPrompt = sessionStorage.getItem("chatbot-prompt-seen")
+
+    if (!hasSeenPrompt && !isOpen) {
+      // Show prompt after 3 seconds
+      const showTimer = setTimeout(() => {
+        setShowPrompt(true)
+      }, 3000)
+
+      // Auto-hide prompt after 8 seconds
+      const hideTimer = setTimeout(() => {
+        setShowPrompt(false)
+        sessionStorage.setItem("chatbot-prompt-seen", "true")
+      }, 11000)
+
+      return () => {
+        clearTimeout(showTimer)
+        clearTimeout(hideTimer)
+      }
+    }
+  }, [isOpen])
+
+  useEffect(() => {
+    if (isOpen) {
+      setShowPrompt(false)
+      sessionStorage.setItem("chatbot-prompt-seen", "true")
+    }
+  }, [isOpen])
 
   const { messages, sendMessage, status } = useChat({
     transport: new DefaultChatTransport({
@@ -154,6 +185,35 @@ export function FloatingChatBot() {
             </div>
             <p className="text-xs text-gray-500 mt-2 text-center">Press Enter to send</p>
           </div>
+        </div>
+      </div>
+
+      <div
+        className={`fixed bottom-24 right-6 z-40 transition-all duration-500 ${
+          showPrompt && !isOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2 pointer-events-none"
+        }`}
+      >
+        <div className="relative">
+          {/* Speech bubble */}
+          <div className="bg-white rounded-2xl shadow-xl border border-gray-200 p-4 pr-8 max-w-[280px]">
+            <p className="text-sm text-gray-800 font-medium">👋 Need help with tax or accounting?</p>
+            <p className="text-xs text-gray-600 mt-1">Click here to chat with our AI assistant!</p>
+
+            {/* Close button */}
+            <button
+              onClick={() => {
+                setShowPrompt(false)
+                sessionStorage.setItem("chatbot-prompt-seen", "true")
+              }}
+              className="absolute top-2 right-2 text-gray-400 hover:text-gray-600 transition-colors"
+              aria-label="Dismiss prompt"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          </div>
+
+          {/* Arrow pointing to button */}
+          <div className="absolute -bottom-2 right-8 w-4 h-4 bg-white border-r border-b border-gray-200 transform rotate-45"></div>
         </div>
       </div>
 
