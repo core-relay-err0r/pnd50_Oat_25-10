@@ -70,7 +70,7 @@ export function FloatingChatBot() {
                 <MessageCircle className="w-5 h-5 text-white" />
               </div>
               <div>
-                <h3 className="text-white font-semibold">Anya</h3>
+                <h3 className="text-white font-semibold">Anya - PND50 Assistant</h3>
                 <p className="text-blue-100 text-xs">{status === "in_progress" ? "Typing..." : "Online"}</p>
               </div>
             </div>
