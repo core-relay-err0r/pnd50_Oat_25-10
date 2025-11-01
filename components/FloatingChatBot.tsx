@@ -1,30 +1,15 @@
 "use client"
 
 import type React from "react"
-import { useState, useEffect, useRef } from "react"
+
+import { useState, useEffectEvent } from "react"
 import { X, MessageCircle, Send } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useChat } from "@ai-sdk/react"
 import { DefaultChatTransport } from "ai"
 
-const getSessionId = () => {
-  if (typeof window === "undefined") return ""
-  let sessionId = sessionStorage.getItem("chatbot-session-id")
-  if (!sessionId) {
-    sessionId = `session-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`
-    sessionStorage.setItem("chatbot-session-id", sessionId)
-  }
-  return sessionId
-}
-
 export function FloatingChatBot() {
-  const [isOpen, setIsOpen] = useState(() => {
-    if (typeof window === "undefined") return false
-    return sessionStorage.getItem("chatbot-open") === "true"
-  })
-
-  const messagesEndRef = useRef<HTMLDivElement>(null)
-  const sessionId = useRef(getSessionId())
+  const [isOpen, setIsOpen] = useState(false)
 
   const { messages, sendMessage, status } = useChat({
     transport: new DefaultChatTransport({ api: "/api/chatbot" }),
@@ -40,25 +25,18 @@ export function FloatingChatBot() {
         ],
       },
     ],
-    body: {
-      sessionId: sessionId.current,
-    },
   })
 
   const [inputValue, setInputValue] = useState("")
 
-  useEffect(() => {
-    sessionStorage.setItem("chatbot-open", isOpen.toString())
-  }, [isOpen])
-
-  useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
-  }, [messages])
+  const performSend = useEffectEvent((message: string) => {
+    sendMessage({ text: message })
+    setInputValue("")
+  })
 
   const handleSend = () => {
     if (!inputValue.trim() || status === "in_progress") return
-    sendMessage({ text: inputValue })
-    setInputValue("")
+    performSend(inputValue)
   }
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
@@ -68,20 +46,13 @@ export function FloatingChatBot() {
     }
   }
 
-  const handleToggle = () => {
-    setIsOpen(!isOpen)
-  }
-
   return (
     <>
       {/* Chat Window */}
       <div
-        className={`fixed bottom-24 right-6 z-[9999] w-[380px] max-w-[calc(100vw-3rem)] transition-all duration-300 ${
+        className={`fixed bottom-24 right-6 z-50 w-[380px] max-w-[calc(100vw-3rem)] transition-all duration-300 ${
           isOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4 pointer-events-none"
         }`}
-        role="dialog"
-        aria-label="Chat with PND50 AI Assistant"
-        aria-hidden={!isOpen}
       >
         <div className="bg-white rounded-2xl shadow-2xl overflow-hidden border border-gray-200">
           {/* Header */}
@@ -96,16 +67,15 @@ export function FloatingChatBot() {
               </div>
             </div>
             <button
-              onClick={handleToggle}
+              onClick={() => setIsOpen(false)}
               className="text-white hover:bg-white/20 rounded-lg p-1.5 transition-colors"
-              aria-label="Close chat"
             >
               <X className="w-5 h-5" />
             </button>
           </div>
 
           {/* Messages */}
-          <div className="h-[400px] overflow-y-auto p-4 space-y-4 bg-gray-50" role="log" aria-live="polite">
+          <div className="h-[400px] overflow-y-auto p-4 space-y-4 bg-gray-50">
             {messages.map((message) => (
               <div key={message.id} className={`flex ${message.role === "user" ? "justify-end" : "justify-start"}`}>
                 <div
@@ -114,8 +84,6 @@ export function FloatingChatBot() {
                       ? "bg-gradient-to-r from-blue-600 to-cyan-600 text-white"
                       : "bg-white text-gray-800 border border-gray-200"
                   }`}
-                  role={message.role === "user" ? "article" : "article"}
-                  aria-label={message.role === "user" ? "Your message" : "Assistant message"}
                 >
                   {message.parts.map((part, index) => {
                     if (part.type === "text") {
@@ -153,7 +121,6 @@ export function FloatingChatBot() {
                 </div>
               </div>
             )}
-            <div ref={messagesEndRef} />
           </div>
 
           {/* Input */}
@@ -167,13 +134,11 @@ export function FloatingChatBot() {
                 placeholder="Type your message..."
                 disabled={status === "in_progress"}
                 className="flex-1 px-4 py-2.5 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm disabled:opacity-50 disabled:cursor-not-allowed"
-                aria-label="Chat message input"
               />
               <Button
                 onClick={handleSend}
                 disabled={status === "in_progress" || !inputValue.trim()}
                 className="bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white rounded-xl px-4 disabled:opacity-50 disabled:cursor-not-allowed"
-                aria-label="Send message"
               >
                 <Send className="w-4 h-4" />
               </Button>
@@ -185,12 +150,11 @@ export function FloatingChatBot() {
 
       {/* Floating Button */}
       <button
-        onClick={handleToggle}
-        className={`fixed bottom-6 right-6 z-[9999] w-14 h-14 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white rounded-full shadow-2xl flex items-center justify-center transition-all duration-300 hover:scale-105 group ${
+        onClick={() => setIsOpen(!isOpen)}
+        className={`fixed bottom-6 right-6 z-50 w-14 h-14 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white rounded-full shadow-2xl flex items-center justify-center transition-all duration-300 hover:scale-105 group ${
           isOpen ? "rotate-0" : "rotate-0"
         }`}
-        aria-label={isOpen ? "Close chat" : "Open chat"}
-        aria-expanded={isOpen}
+        aria-label="Open chat"
       >
         <MessageCircle className={`w-6 h-6 transition-transform duration-300 ${isOpen ? "scale-0" : "scale-100"}`} />
         <X className={`w-6 h-6 absolute transition-transform duration-300 ${isOpen ? "scale-100" : "scale-0"}`} />
