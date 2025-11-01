@@ -2,7 +2,7 @@
 
 import type React from "react"
 
-import { useState, useEffectEvent } from "react"
+import { useState, useEffectEvent, useMemo } from "react"
 import { X, MessageCircle, Send } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useChat } from "@ai-sdk/react"
@@ -14,6 +14,39 @@ export function FloatingChatBot() {
   const pathname = usePathname()
   const isOnCalculator = pathname === "/calculator"
 
+  const welcomeMessage = useMemo(() => {
+    if (isOnCalculator) {
+      return `Hello! 👋 Welcome to PND50's AI Assistant!
+
+I see you're on our calculator page - great choice! I'm here to help you through the process.
+
+**How can I assist you today?**
+• Need help understanding the service options?
+• Have questions about what information to provide?
+• Want to know which service best fits your business?
+• Any other questions or concerns?
+
+Feel free to ask me anything in **any language** (English, Thai, or others) - I'm here to help! 😊
+
+What would you like to know?`
+    }
+
+    return `Hello! 👋 Welcome to PND50's AI Assistant!
+
+I'm here to help you with all your accounting and tax needs in Thailand.
+
+**How can I assist you today?**
+• Questions about our services?
+• Need help with PND50 tax filing?
+• Want to understand pricing?
+• Looking for tax planning advice?
+• Any other concerns or questions?
+
+Feel free to ask me anything in **any language** (English, Thai, or others) - I'm here to make things easy for you! 😊
+
+What's on your mind?`
+  }, [isOnCalculator])
+
   const { messages, sendMessage, status } = useChat({
     transport: new DefaultChatTransport({ api: "/api/chatbot" }),
     initialMessages: [
@@ -23,7 +56,7 @@ export function FloatingChatBot() {
         parts: [
           {
             type: "text",
-            text: "Hi there! 👋 I'm here to help with PND50's accounting and tax services. What can I help you with today?",
+            text: welcomeMessage,
           },
         ],
       },
