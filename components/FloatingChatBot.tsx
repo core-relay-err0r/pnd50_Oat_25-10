@@ -160,21 +160,18 @@ export function FloatingChatBot() {
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
-          className="fixed bottom-6 right-6 z-50 bg-gradient-to-r from-blue-600 via-cyan-500 to-purple-600 hover:from-blue-700 hover:via-cyan-600 hover:to-purple-700 text-white rounded-full shadow-2xl flex items-center gap-3 px-5 py-3.5 transition-all duration-300 hover:scale-105 hover:shadow-[0_0_30px_rgba(59,130,246,0.5)] border border-white/20 backdrop-blur-sm relative overflow-hidden group"
+          className="fixed bottom-6 right-6 z-50 bg-white hover:bg-gray-50 text-gray-900 rounded-full shadow-2xl flex gap-3 px-5 py-3.5 transition-all duration-300 hover:scale-105 hover:shadow-xl opacity-100 shadow-xl border-4 border-dotted border-primary items-center"
           aria-label="Open chat with Anya"
         >
-          {/* Animated gradient overlay for futuristic effect */}
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
-
-          {/* Sparkle icon with glow effect */}
-          <div className="flex items-center justify-center relative z-10">
-            <Sparkles className="w-6 h-6 text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.8)]" />
+          {/* Sparkle icon with blue gradient */}
+          <div className="flex items-center justify-center">
+            <Sparkles className="w-6 h-6 text-blue-600" />
           </div>
 
           {/* Two-line text layout */}
-          <div className="flex flex-col items-start relative z-10">
-            <span className="text-sm font-semibold text-white leading-tight drop-shadow-sm">AI assistant</span>
-            <span className="text-xs text-white/90 leading-tight">Chat with Anya</span>
+          <div className="flex flex-col items-start">
+            <span className="text-sm font-semibold text-gray-900 leading-tight">AI assistant</span>
+            <span className="text-xs text-gray-600 leading-tight">Chat with Anya</span>
           </div>
         </button>
       )}
