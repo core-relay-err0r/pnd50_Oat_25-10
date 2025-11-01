@@ -20,7 +20,7 @@ export function FloatingChatBot() {
         parts: [
           {
             type: "text",
-            text: "Hi there! 👋 I'm here to help with PND50's accounting and tax services. Feel free to ask about our services or click 'Schedule Consultation' to get started!",
+            text: "Hi! 👋 I'm PND50's AI assistant, here to help with Thai tax compliance and accounting services.\n\nI can answer questions about:\n• PND50 withholding tax filing\n• VAT and corporate tax\n• Accounting & bookkeeping\n• Business setup in Thailand\n• Tax planning strategies\n\nWhat can I help you with today?",
           },
         ],
       },
