@@ -23,7 +23,6 @@ export function FloatingChatBot() {
             text: "Hi there! 👋 I'm here to help with PND50's accounting and tax services. Feel free to ask about our services or click 'Schedule Consultation' to get started!",
           },
         ],
-        createdAt: new Date(),
       },
     ],
   })

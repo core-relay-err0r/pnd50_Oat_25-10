@@ -12,6 +12,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Calendar } from "@/components/ui/calendar"
 import { cn } from "@/lib/utils"
 import { format, addDays } from "date-fns"
+import { useEffect } from "react"
 
 const invoiceFormSchema = z.object({
   clientName: z.string().min(1, { message: "Client name is required." }),
@@ -37,8 +38,8 @@ export default function GenerateInvoiceForm() {
     defaultValues: {
       clientName: "",
       clientEmail: "",
-      invoiceDate: new Date(),
-      dueDate: addDays(new Date(), 7),
+      invoiceDate: undefined,
+      dueDate: undefined,
       items: [{ description: "", quantity: 1, price: 0 }],
     },
   })
@@ -47,6 +48,14 @@ export default function GenerateInvoiceForm() {
     control: form.control,
     name: "items",
   })
+
+  useEffect(() => {
+    form.reset({
+      ...form.getValues(),
+      invoiceDate: new Date(),
+      dueDate: addDays(new Date(), 7),
+    })
+  }, [form])
 
   function onSubmit(data: InvoiceFormValues) {
     console.log(data)

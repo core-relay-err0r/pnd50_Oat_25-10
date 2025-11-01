@@ -1,10 +1,15 @@
 "use client"
-import { AnimatedGridBackground } from "@/components/ui/animated-grid-background"
+import dynamic from "next/dynamic"
 import { Progress } from "@/components/ui/progress"
 import { HomepageCtas } from "@/components/HomepageCtas"
 import { SecurityCta } from "@/components/SecurityCta"
 import { FinalCta } from "@/components/FinalCta"
 import { useEffect, useState, useRef } from "react"
+
+const AnimatedGridBackground = dynamic(() =>
+  import("@/components/ui/animated-grid-background").then((mod) => mod.AnimatedGridBackground),
+  { ssr: false }
+)
 
 export default function PND50Landing() {
   const [isVisible, setIsVisible] = useState(false)

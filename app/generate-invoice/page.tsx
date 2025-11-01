@@ -1,4 +1,4 @@
-import GenerateInvoiceForm from "@/components/GenerateInvoiceForm"
+import GenerateInvoicePageClient from "@/components/GenerateInvoicePageClient"
 import { Section } from "@/components/ui/section"
 import { Container } from "@/components/ui/container"
 
@@ -14,7 +14,7 @@ export default function GenerateInvoicePage() {
           </p>
         </div>
         <div className="mt-10">
-          <GenerateInvoiceForm />
+          <GenerateInvoicePageClient />
         </div>
       </Container>
     </Section>
