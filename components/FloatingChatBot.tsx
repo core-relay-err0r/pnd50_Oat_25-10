@@ -7,9 +7,12 @@ import { X, MessageCircle, Send } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useChat } from "@ai-sdk/react"
 import { DefaultChatTransport } from "ai"
+import { usePathname } from "next/navigation"
 
 export function FloatingChatBot() {
   const [isOpen, setIsOpen] = useState(false)
+  const pathname = usePathname()
+  const isOnCalculator = pathname === "/calculator"
 
   const { messages, sendMessage, status } = useChat({
     transport: new DefaultChatTransport({ api: "/api/chatbot" }),
@@ -20,7 +23,7 @@ export function FloatingChatBot() {
         parts: [
           {
             type: "text",
-            text: "Hi there! 👋 I'm here to help with PND50's accounting and tax services. Feel free to ask about our services or click 'Schedule Consultation' to get started!",
+            text: "Hi there! 👋 I'm here to help with PND50's accounting and tax services. What can I help you with today?",
           },
         ],
       },
@@ -30,7 +33,8 @@ export function FloatingChatBot() {
   const [inputValue, setInputValue] = useState("")
 
   const performSend = useEffectEvent((message: string) => {
-    sendMessage({ text: message })
+    const contextualMessage = isOnCalculator ? `[User is currently on the calculator page] ${message}` : message
+    sendMessage({ text: contextualMessage })
     setInputValue("")
   })
 
@@ -69,6 +73,7 @@ export function FloatingChatBot() {
             <button
               onClick={() => setIsOpen(false)}
               className="text-white hover:bg-white/20 rounded-lg p-1.5 transition-colors"
+              aria-label="Close chat"
             >
               <X className="w-5 h-5" />
             </button>
@@ -151,7 +156,7 @@ export function FloatingChatBot() {
       {/* Floating Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className={`fixed bottom-6 right-6 z-50 w-14 h-14 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white rounded-full shadow-2xl flex items-center justify-center transition-all duration-300 hover:scale-105 group ${
+        className={`fixed bottom-6 right-6 z-50 w-14 h-14 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white rounded-full shadow-2xl flex items-center justify-center transition-all duration-300 hover:scale-102 group ${
           isOpen ? "rotate-0" : "rotate-0"
         }`}
         aria-label="Open chat"
@@ -161,7 +166,7 @@ export function FloatingChatBot() {
 
         {/* Notification Badge */}
         {!isOpen && (
-          <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center animate-pulse">
+          <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">
             AI
           </span>
         )}
