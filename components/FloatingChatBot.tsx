@@ -28,7 +28,7 @@ export function FloatingChatBot() {
         parts: [
           {
             type: "text",
-            text: "Hi there! 👋 I'm Anya, your PND50 assistant. I'm here to help with accounting and tax services. What can I help you with today?",
+            text: "I can help you find the right accounting or tax service for your company — and get your quotation in just a few minutes.\n\nShall we get started? 💼✨",
           },
         ],
       },
