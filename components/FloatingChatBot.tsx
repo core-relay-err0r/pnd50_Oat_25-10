@@ -2,7 +2,7 @@
 
 import type React from "react"
 
-import { useState, useEffectEvent, useMemo } from "react"
+import { useState, useEffect, useEffectEvent, useMemo } from "react"
 import { X, MessageCircle, Send } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useChat } from "@ai-sdk/react"
@@ -47,27 +47,29 @@ Feel free to ask me anything in **any language** (English, Thai, or others) - I'
 What's on your mind?`
   }, [isOnCalculator])
 
-  const { messages, sendMessage, status } = useChat({
+  const { messages, append, status } = useChat({
     transport: new DefaultChatTransport({ api: "/api/chatbot" }),
-    initialMessages: [
-      {
-        id: "welcome",
-        role: "assistant",
-        parts: [
-          {
-            type: "text",
-            text: welcomeMessage,
-          },
-        ],
-      },
-    ],
   })
 
   const [inputValue, setInputValue] = useState("")
+  const [hasInitialized, setHasInitialized] = useState(false)
+
+  useEffect(() => {
+    if (!hasInitialized && messages.length === 0) {
+      append({
+        role: "assistant",
+        content: welcomeMessage,
+      })
+      setHasInitialized(true)
+    }
+  }, [hasInitialized, messages.length, welcomeMessage, append])
 
   const performSend = useEffectEvent((message: string) => {
     const contextualMessage = isOnCalculator ? `[User is currently on the calculator page] ${message}` : message
-    sendMessage({ text: contextualMessage })
+    append({
+      role: "user",
+      content: contextualMessage,
+    })
     setInputValue("")
   })
 
@@ -123,16 +125,20 @@ What's on your mind?`
                       : "bg-white text-gray-800 border border-gray-200"
                   }`}
                 >
-                  {message.parts.map((part, index) => {
-                    if (part.type === "text") {
-                      return (
-                        <p key={index} className="text-sm leading-relaxed whitespace-pre-wrap">
-                          {part.text}
-                        </p>
-                      )
-                    }
-                    return null
-                  })}
+                  {message.parts ? (
+                    message.parts.map((part, index) => {
+                      if (part.type === "text") {
+                        return (
+                          <p key={index} className="text-sm leading-relaxed whitespace-pre-wrap">
+                            {part.text}
+                          </p>
+                        )
+                      }
+                      return null
+                    })
+                  ) : (
+                    <p className="text-sm leading-relaxed whitespace-pre-wrap">{message.content}</p>
+                  )}
                   <p className={`text-xs mt-1 ${message.role === "user" ? "text-blue-100" : "text-gray-500"}`}>
                     {message.createdAt?.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
                   </p>
