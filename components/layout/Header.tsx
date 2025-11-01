@@ -49,7 +49,7 @@ export default function Header() {
 
           {/* Center: Desktop Nav */}
           <nav className="hidden md:flex items-center gap-6 text-sm font-medium">
-            <Link href="/#services" className="text-gray-600 transition-colors hover:text-blue-600">
+            <Link href="/services" className="text-gray-600 transition-colors hover:text-blue-600">
               Services
             </Link>
 
@@ -98,7 +98,7 @@ export default function Header() {
           <div className="md:hidden border-t">
             <div className="container mx-auto flex flex-col gap-4 px-6 py-4">
               <Link
-                href="/#services"
+                href="/services"
                 className="text-gray-600 transition-colors hover:text-blue-600"
                 onClick={handleLinkClick}
               >
