@@ -57,11 +57,7 @@ export default function Header() {
               About us
             </Link>
 
-            <Link
-              href="/#contact"
-              className="text-muted-foreground transition-colors hover:text-primary"
-              onClick={handleContactClick}
-            >
+            <Link href="/contact" className="text-muted-foreground transition-colors hover:text-primary">
               Contact
             </Link>
 
@@ -114,9 +110,9 @@ export default function Header() {
               </Link>
 
               <Link
-                href="/#contact"
+                href="/contact"
                 className="text-muted-foreground transition-colors hover:text-primary"
-                onClick={handleContactClick}
+                onClick={handleLinkClick}
               >
                 Contact
               </Link>
