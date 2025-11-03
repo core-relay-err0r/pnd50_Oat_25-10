@@ -42,6 +42,7 @@
     "@react-email/render": "latest",
     "@supabase/ssr": "latest",
     "@vercel/analytics": "latest",
+    "@vercel/speed-insights": "latest",
     "ai": "latest",
     "autoprefixer": "latest",
     "class-variance-authority": "^0.7.1",
@@ -66,6 +67,7 @@
     "tailwindcss-animate": "^1.0.7",
     "tw-animate-css": "latest",
     "vaul": "latest",
+    "vue-router": "latest",
     "zod": "^4.0.0"
   },
   "devDependencies": {

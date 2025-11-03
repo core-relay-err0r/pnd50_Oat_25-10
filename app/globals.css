@@ -491,6 +491,46 @@
   transition: opacity 0.8s ease-out, transform 0.8s ease-out;
 }
 
+.scroll-animate.animate-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.parallax-image {
+  transition: transform 0.3s ease-out;
+  will-change: transform;
+}
+
+.scroll-animate.animate-in .parallax-image {
+  animation: parallax-subtle 20s ease-in-out infinite;
+}
+
+@keyframes parallax-subtle {
+  0%,
+  100% {
+    transform: translateY(0) scale(1.05);
+  }
+  50% {
+    transform: translateY(-10px) scale(1.08);
+  }
+}
+
+.scroll-animate.delay-100 {
+  transition-delay: 100ms;
+}
+
+.scroll-animate.delay-200 {
+  transition-delay: 200ms;
+}
+
+.scroll-animate.delay-300 {
+  transition-delay: 300ms;
+}
+
+.scroll-animate.delay-400 {
+  transition-delay: 400ms;
+}
+
 .section-visible .scroll-animate {
   opacity: 1;
   transform: translateY(0);
