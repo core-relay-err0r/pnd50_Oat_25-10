@@ -1,5 +1,16 @@
 import type { Metadata } from "next"
-import { BookOpen, FileText, Users, Building2, Lightbulb, ArrowRight, TrendingUp } from "lucide-react"
+import {
+  BookOpen,
+  FileText,
+  Users,
+  Building2,
+  Lightbulb,
+  ArrowRight,
+  TrendingUp,
+  Package,
+  Rocket,
+  Zap,
+} from "lucide-react"
 import Link from "next/link"
 
 export const metadata: Metadata = {
@@ -52,6 +63,27 @@ const services = [
   },
 ]
 
+const packages = [
+  {
+    icon: Rocket,
+    title: "Startup",
+    description: "Perfect for new businesses getting started in Thailand. Essential services to launch your company.",
+    href: "/services/packages/startup",
+  },
+  {
+    icon: TrendingUp,
+    title: "Growth",
+    description: "Designed for growing businesses that need comprehensive support and strategic guidance.",
+    href: "/services/packages/growth",
+  },
+  {
+    icon: Zap,
+    title: "Full-Cycle",
+    description: "Complete end-to-end solution for established businesses requiring full-service support.",
+    href: "/services/packages/full-cycle",
+  },
+]
+
 export default function ServicesPage() {
   return (
     <div className="min-h-screen bg-background">
@@ -70,6 +102,54 @@ export default function ServicesPage() {
               From accounting to compliance, we provide comprehensive services tailored for foreign-owned businesses
               operating in Thailand.
             </p>
+          </div>
+        </div>
+      </section>
+
+      <section className="py-16 md:py-20 bg-gradient-to-b from-background to-muted/30">
+        <div className="container mx-auto px-4 max-w-7xl">
+          <div className="text-center mb-12">
+            <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium mb-4">
+              <Package className="w-4 h-4" />
+              Fixed Packages
+            </div>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">Service Packages</h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Choose a package that fits your business needs. Each package is designed to provide comprehensive support
+              at different stages of your business journey.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            {packages.map((pkg, index) => {
+              const Icon = pkg.icon
+              return (
+                <Link
+                  key={index}
+                  href={pkg.href}
+                  className="group bg-card border-2 border-border rounded-2xl p-8 hover:shadow-2xl hover:border-primary transition-all duration-300 hover:-translate-y-2 flex flex-col"
+                >
+                  {/* Icon */}
+                  <div className="w-16 h-16 bg-gradient-to-br from-primary/20 to-primary/5 rounded-2xl flex items-center justify-center mb-6 group-hover:from-primary group-hover:to-primary/80 group-hover:scale-110 transition-all duration-300">
+                    <Icon className="w-8 h-8 text-primary group-hover:text-primary-foreground transition-colors" />
+                  </div>
+
+                  {/* Title */}
+                  <h3 className="text-2xl font-bold text-foreground mb-4 group-hover:text-primary transition-colors">
+                    {pkg.title}
+                  </h3>
+
+                  {/* Description */}
+                  <p className="text-muted-foreground leading-relaxed mb-6 flex-grow">{pkg.description}</p>
+
+                  {/* CTA */}
+                  <div className="flex items-center gap-2 text-primary font-semibold group-hover:gap-4 transition-all">
+                    Learn More
+                    <ArrowRight className="w-5 h-5" />
+                  </div>
+                </Link>
+              )
+            })}
           </div>
         </div>
       </section>
