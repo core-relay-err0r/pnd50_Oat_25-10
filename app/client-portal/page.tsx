@@ -472,7 +472,7 @@ export default function ClientPortalPage() {
                       <CheckCircle2 className="h-5 w-5 text-emerald-600" />
                       <p className="font-semibold">Activity Monitoring</p>
                     </div>
-                    <p className="text-sm text-muted-foreground">AI-powered anomaly detection</p>
+                    <p className="text-sm text-muted-foreground">Advanced threat detection</p>
                   </div>
                 </div>
 

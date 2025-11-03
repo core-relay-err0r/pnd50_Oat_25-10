@@ -63,7 +63,7 @@ export default function SecurityDetailsModal({ isOpen, onClose }: SecurityDetail
               <Brain className="h-6 w-6" />
             </div>
             <div>
-              <h3 className="font-semibold text-gray-800 mb-2">AI-Powered Anomaly Detection</h3>
+              <h3 className="font-semibold text-gray-800 mb-2">Advanced Threat Detection</h3>
               <p className="text-sm text-gray-600">
                 Our intelligent systems continuously monitor for unusual activity, proactively flagging potential risks
                 before they escalate to protect your business data.
