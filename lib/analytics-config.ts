@@ -30,7 +30,6 @@
  * - Service page views
  * - Case study interactions
  * - CTA clicks
- * - Client portal access
  * - FAQ interactions
  * - Downloads
  * - Newsletter signups

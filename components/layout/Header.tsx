@@ -61,10 +61,6 @@ export default function Header() {
               Contact
             </Link>
 
-            <Link href="/client-portal" className="text-muted-foreground transition-colors hover:text-primary">
-              Client Portal
-            </Link>
-
             <Link href="/faq" className="text-muted-foreground transition-colors hover:text-primary">
               FAQ
             </Link>
@@ -119,14 +115,6 @@ export default function Header() {
                 onClick={handleLinkClick}
               >
                 Contact
-              </Link>
-
-              <Link
-                href="/client-portal"
-                className="text-muted-foreground transition-colors hover:text-primary"
-                onClick={handleLinkClick}
-              >
-                Client Portal
               </Link>
 
               <Link

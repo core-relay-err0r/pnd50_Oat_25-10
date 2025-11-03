@@ -104,11 +104,6 @@ export default function Footer() {
                   </Link>
                 </li>
                 <li>
-                  <Link href="/client-portal" className="hover:text-primary-foreground transition-colors">
-                    Client Portal
-                  </Link>
-                </li>
-                <li>
                   <Link href="/case-studies" className="hover:text-primary-foreground transition-colors">
                     Case Studies
                   </Link>

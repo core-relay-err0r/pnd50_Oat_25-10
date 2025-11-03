@@ -48,9 +48,9 @@ const AboutClientPage = () => {
         <div className="absolute bottom-20 right-10 w-96 h-96 bg-chart-2/20 rounded-full blur-3xl"></div>
 
         <div className="container mx-auto px-4 relative z-10">
-          <div className="grid lg:grid-cols-2 gap-12 items-center max-w-7xl mx-auto">
-            {/* Left: Text Content */}
-            <div className="scroll-animate opacity-0 translate-x-[-50px] transition-all duration-1000">
+          {/* Centered content */}
+          <div className="max-w-4xl mx-auto text-center">
+            <div className="scroll-animate opacity-0 translate-y-[50px] transition-all duration-1000">
               <div className="inline-flex items-center gap-2 rounded-full bg-background/10 backdrop-blur-md px-5 py-2 text-sm font-medium text-primary-foreground mb-8 border border-background/20">
                 <span className="relative flex h-2 w-2">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-chart-2 opacity-75"></span>
@@ -68,7 +68,7 @@ const AboutClientPage = () => {
                 </span>
               </h1>
 
-              <p className="text-xl md:text-2xl text-white/90 leading-relaxed mb-8">
+              <p className="text-xl md:text-2xl text-white/90 leading-relaxed mb-8 max-w-3xl mx-auto">
                 PND50 is an accounting and advisory firm based in Thailand, helping foreign-owned businesses navigate
                 Thai accounting and compliance with clarity and confidence.
               </p>
@@ -81,20 +81,6 @@ const AboutClientPage = () => {
               >
                 <Link href="/services">Our Services</Link>
               </Button>
-            </div>
-
-            {/* Right: Image */}
-            <div className="scroll-animate opacity-0 translate-x-[50px] transition-all duration-1000 delay-200 relative">
-              <div className="relative aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl border-4 border-white/10">
-                <img
-                  src="/images/hero-image.png"
-                  alt="Professional team collaboration"
-                  className="w-full h-full object-cover parallax-image"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/50 to-transparent"></div>
-              </div>
-              {/* Decorative floating element */}
-              <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-primary/20 rounded-full blur-3xl animate-pulse"></div>
             </div>
           </div>
         </div>
@@ -261,7 +247,7 @@ const AboutClientPage = () => {
                   ].map((item, index) => (
                     <div
                       key={index}
-                      className="flex items-start gap-4 p-6 rounded-2xl border border-border bg-card hover:border-primary hover:shadow-lg transition-all duration-300 group"
+                      className="p-6 rounded-2xl border border-border bg-card hover:border-primary hover:shadow-lg transition-all duration-300 group"
                     >
                       <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary group-hover:scale-110 transition-all duration-300">
                         <item.icon className="w-6 h-6 text-primary group-hover:text-primary-foreground transition-colors" />
@@ -374,15 +360,17 @@ const AboutClientPage = () => {
         <div className="absolute top-0 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl"></div>
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-7xl mx-auto">
-            <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <div className="max-w-6xl mx-auto">
               {/* Left: Text Content */}
-              <div className="scroll-animate opacity-0 translate-x-[-50px] transition-all duration-1000">
-                <p className="text-sm font-semibold text-primary mb-3 tracking-wide uppercase">Why Choose PND50</p>
-                <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6 leading-tight">
+              <div className="scroll-animate opacity-0 translate-y-[50px] transition-all duration-1000">
+                <p className="text-sm font-semibold text-primary mb-3 tracking-wide uppercase text-center">
+                  Why Choose PND50
+                </p>
+                <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-12 leading-tight text-center">
                   What Sets Us Apart
                 </h2>
 
-                <div className="grid grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                   {[
                     {
                       icon: "⚡",
@@ -422,19 +410,6 @@ const AboutClientPage = () => {
                     </div>
                   ))}
                 </div>
-              </div>
-
-              {/* Right: Image */}
-              <div className="scroll-animate opacity-0 translate-x-[50px] transition-all duration-1000 delay-200 relative lg:order-last order-first">
-                <div className="relative aspect-square rounded-3xl overflow-hidden shadow-2xl">
-                  <img
-                    src="/successful-business-team-celebrating-achievement-i.jpg"
-                    alt="Success and achievement"
-                    className="w-full h-full object-cover parallax-image"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-background/30 to-transparent"></div>
-                </div>
-                <div className="absolute -top-6 -left-6 w-32 h-32 bg-chart-2/20 rounded-full blur-3xl animate-pulse"></div>
               </div>
             </div>
           </div>

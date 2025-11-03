@@ -54,11 +54,6 @@ export function trackCTAClick(data: {
   })
 }
 
-// Client portal access tracking
-export function trackClientPortalAccess() {
-  track("Client Portal Accessed")
-}
-
 // FAQ interaction tracking
 export function trackFAQInteraction(question: string) {
   track("FAQ Opened", {
