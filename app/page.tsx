@@ -5,6 +5,7 @@ import { HomepageCtas } from "@/components/HomepageCtas"
 import { SecurityCta } from "@/components/SecurityCta"
 import { FinalCta } from "@/components/FinalCta"
 import { useEffect, useState, useRef } from "react"
+import { Copy, Check } from "lucide-react"
 
 const AnimatedGridBackground = dynamic(
   () => import("@/components/ui/animated-grid-background").then((mod) => mod.AnimatedGridBackground),
@@ -14,6 +15,7 @@ const AnimatedGridBackground = dynamic(
 export default function PND50Landing() {
   const [isVisible, setIsVisible] = useState(false)
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
+  const [copiedItem, setCopiedItem] = useState<string | null>(null)
 
   const servicesRef = useRef<HTMLElement>(null)
   const securityRef = useRef<HTMLElement>(null)
@@ -65,6 +67,16 @@ export default function PND50Landing() {
 
     return () => observer.disconnect()
   }, [])
+
+  const copyToClipboard = async (text: string, itemId: string) => {
+    try {
+      await navigator.clipboard.writeText(text)
+      setCopiedItem(itemId)
+      setTimeout(() => setCopiedItem(null), 2000)
+    } catch (err) {
+      console.error("Failed to copy:", err)
+    }
+  }
 
   return (
     <div className="min-h-screen bg-neutral-50 text-neutral-900 font-sans">
@@ -331,7 +343,7 @@ export default function PND50Landing() {
 
               <div className="scroll-animate-right relative">
                 <div className="absolute inset-0 bg-gradient-to-br from-blue-600/20 to-emerald-600/20 rounded-3xl blur-3xl"></div>
-                <div className="relative bg-neutral-900 rounded-3xl p-8 shadow-2xl border border-neutral-800 hover:shadow-blue-500/10 transition-all duration-300 hover:shadow-blue-500/20">
+                <div className="relative bg-neutral-900 rounded-3xl p-8 shadow-2xl border border-neutral-800 hover:border-blue-600 transition-all duration-300 hover:shadow-blue-500/20">
                   <div className="flex items-center justify-between mb-6">
                     <div className="flex items-center gap-3">
                       <div className="w-3 h-3 rounded-full bg-red-500 animate-pulse"></div>
@@ -507,47 +519,102 @@ export default function PND50Landing() {
                     Contact Details
                   </h3>
                   <div className="space-y-4">
-                    <div className="flex items-center gap-3 text-lg">
-                      <span className="font-semibold text-neutral-900">Phone:</span>
-                      <a
-                        href="tel:020172949"
-                        className="text-blue-600 hover:text-blue-700 transition-colors duration-300 font-medium"
+                    <div className="flex items-center justify-between gap-3 text-lg group">
+                      <div className="flex items-center gap-3">
+                        <span className="font-semibold text-neutral-900">Phone:</span>
+                        <a
+                          href="tel:020172949"
+                          className="text-blue-600 hover:text-blue-700 transition-colors duration-300 font-medium"
+                        >
+                          02 017 2949
+                        </a>
+                      </div>
+                      <button
+                        onClick={() => copyToClipboard("020172949", "phone")}
+                        className="p-2 rounded-lg hover:bg-blue-100 transition-all duration-300 opacity-0 group-hover:opacity-100"
+                        title="Copy phone number"
                       >
-                        02 017 2949
-                      </a>
+                        {copiedItem === "phone" ? (
+                          <Check className="w-4 h-4 text-green-600" />
+                        ) : (
+                          <Copy className="w-4 h-4 text-neutral-600" />
+                        )}
+                      </button>
                     </div>
-                    <div className="flex items-center gap-3 text-lg">
-                      <span className="font-semibold text-neutral-900">Email:</span>
-                      <a
-                        href="mailto:info@pnd50.com"
-                        className="text-blue-600 hover:text-blue-700 transition-colors duration-300 font-medium"
+
+                    <div className="flex items-center justify-between gap-3 text-lg group">
+                      <div className="flex items-center gap-3">
+                        <span className="font-semibold text-neutral-900">Email:</span>
+                        <a
+                          href="mailto:info@pnd50.com"
+                          className="text-blue-600 hover:text-blue-700 transition-colors duration-300 font-medium"
+                        >
+                          info@pnd50.com
+                        </a>
+                      </div>
+                      <button
+                        onClick={() => copyToClipboard("info@pnd50.com", "email")}
+                        className="p-2 rounded-lg hover:bg-blue-100 transition-all duration-300 opacity-0 group-hover:opacity-100"
+                        title="Copy email"
                       >
-                        info@pnd50.com
-                      </a>
+                        {copiedItem === "email" ? (
+                          <Check className="w-4 h-4 text-green-600" />
+                        ) : (
+                          <Copy className="w-4 h-4 text-neutral-600" />
+                        )}
+                      </button>
                     </div>
-                    <div className="flex items-center gap-3 text-lg">
-                      <span className="font-semibold text-neutral-900">Telegram:</span>
-                      <a
-                        href="https://t.me/66843563805"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-2 text-blue-600 hover:text-blue-700 transition-colors duration-300 font-medium"
+
+                    <div className="flex items-center justify-between gap-3 text-lg group">
+                      <div className="flex items-center gap-3">
+                        <span className="font-semibold text-neutral-900">Telegram:</span>
+                        <a
+                          href="https://t.me/66843563805"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center gap-2 text-blue-600 hover:text-blue-700 transition-colors duration-300 font-medium"
+                        >
+                          <img src="/images/icons8-telegram.gif" alt="Telegram" className="w-5 h-5" />
+                          084 356 3805
+                        </a>
+                      </div>
+                      <button
+                        onClick={() => copyToClipboard("0843563805", "telegram")}
+                        className="p-2 rounded-lg hover:bg-blue-100 transition-all duration-300 opacity-0 group-hover:opacity-100"
+                        title="Copy Telegram number"
                       >
-                        <img src="/images/icons8-telegram.gif" alt="Telegram" className="w-5 h-5" />
-                        084 356 3805
-                      </a>
+                        {copiedItem === "telegram" ? (
+                          <Check className="w-4 h-4 text-green-600" />
+                        ) : (
+                          <Copy className="w-4 h-4 text-neutral-600" />
+                        )}
+                      </button>
                     </div>
-                    <div className="flex items-center gap-3 text-lg">
-                      <span className="font-semibold text-neutral-900">WhatsApp:</span>
-                      <a
-                        href="https://wa.me/66843563805"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-2 text-blue-600 hover:text-blue-700 transition-colors duration-300 font-medium"
+
+                    <div className="flex items-center justify-between gap-3 text-lg group">
+                      <div className="flex items-center gap-3">
+                        <span className="font-semibold text-neutral-900">WhatsApp:</span>
+                        <a
+                          href="https://wa.me/66843563805"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center gap-2 text-blue-600 hover:text-blue-700 transition-colors duration-300 font-medium"
+                        >
+                          <img src="/images/icons8-whatsapp.gif" alt="WhatsApp" className="w-5 h-5" />
+                          084 356 3805
+                        </a>
+                      </div>
+                      <button
+                        onClick={() => copyToClipboard("0843563805", "whatsapp")}
+                        className="p-2 rounded-lg hover:bg-blue-100 transition-all duration-300 opacity-0 group-hover:opacity-100"
+                        title="Copy WhatsApp number"
                       >
-                        <img src="/images/icons8-whatsapp.gif" alt="WhatsApp" className="w-5 h-5" />
-                        084 356 3805
-                      </a>
+                        {copiedItem === "whatsapp" ? (
+                          <Check className="w-4 h-4 text-green-600" />
+                        ) : (
+                          <Copy className="w-4 h-4 text-neutral-600" />
+                        )}
+                      </button>
                     </div>
                   </div>
                 </div>
