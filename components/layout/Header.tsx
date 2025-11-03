@@ -54,7 +54,7 @@ export default function Header() {
             </Link>
 
             <Link href="/about" className="text-gray-600 transition-colors hover:text-blue-600">
-              About
+              About us  
             </Link>
 
             <Link href="/calculator" className="text-gray-600 transition-colors hover:text-blue-600">
