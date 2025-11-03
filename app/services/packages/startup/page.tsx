@@ -13,6 +13,7 @@ import {
   Star,
   CheckCircle,
   Sparkles,
+  ChevronDown,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
@@ -24,55 +25,106 @@ export const metadata: Metadata = {
 export default function StartupPackagePage() {
   return (
     <div className="min-h-screen bg-background">
-      <div className="relative border-b border-border bg-gradient-to-br from-primary/5 via-background to-background overflow-hidden">
-        <div className="absolute inset-0 bg-grid-pattern opacity-[0.02]" />
-        <div className="container relative mx-auto px-4 py-12 md:py-16">
-          <Link
-            href="/services"
-            className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors mb-8 group"
-          >
-            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-            <span className="text-sm font-medium">Back to Services</span>
-          </Link>
+      <div className="relative min-h-screen flex items-center justify-center overflow-hidden">
+        {/* Background image with overlay */}
+        <div className="absolute inset-0">
+          <Image
+            src="/startup-team-launching-business-with-laptop-and-ro.jpg"
+            alt="Startup team launching their business in Thailand"
+            fill
+            className="object-cover"
+            priority
+          />
+          {/* Dark overlay for text readability */}
+          <div className="absolute inset-0 bg-gradient-to-br from-background/95 via-background/90 to-background/85" />
+          {/* Gradient accent overlay */}
+          <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 via-transparent to-transparent" />
+        </div>
 
-          <div className="grid lg:grid-cols-2 gap-12 items-center max-w-7xl">
-            {/* Left side - Text content */}
-            <div className="flex items-start gap-6">
-              <div className="w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center flex-shrink-0 shadow-lg shadow-primary/20">
-                <Rocket className="w-8 h-8 md:w-10 md:h-10 text-primary-foreground" />
+        {/* Decorative elements */}
+        <div className="absolute top-20 left-10 w-32 h-32 bg-primary/10 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute bottom-20 right-10 w-40 h-40 bg-primary/5 rounded-full blur-3xl animate-pulse delay-1000" />
+        <div className="absolute inset-0 bg-grid-pattern opacity-[0.02]" />
+
+        {/* Back button - positioned absolutely */}
+        <Link
+          href="/services"
+          className="absolute top-8 left-4 md:left-8 inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors group z-10"
+        >
+          <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+          <span className="text-sm font-medium">Back to Services</span>
+        </Link>
+
+        {/* Hero content - centered */}
+        <div className="container relative z-10 mx-auto px-4 py-20">
+          <div className="max-w-4xl mx-auto text-center space-y-8">
+            {/* Icon and badge */}
+            <div className="flex flex-col items-center gap-6">
+              <div className="w-20 h-20 md:w-24 md:h-24 rounded-3xl bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center shadow-2xl shadow-primary/30 animate-float">
+                <Rocket className="w-10 h-10 md:w-12 md:h-12 text-primary-foreground" />
               </div>
-              <div className="flex-1">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-medium mb-4">
-                  <Sparkles className="w-3 h-3" />
-                  Most Popular for New Businesses
-                </div>
-                <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-3 tracking-tight">Startup Package</h1>
-                <p className="text-xl text-muted-foreground">Perfect for New Companies in Thailand</p>
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 backdrop-blur-sm border border-primary/20 text-primary text-sm font-medium">
+                <Sparkles className="w-4 h-4" />
+                Most Popular for New Businesses
               </div>
             </div>
 
-            {/* Right side - Hero image */}
-            <div className="relative lg:block hidden">
-              <div className="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl border border-border">
-                <Image
-                  src="/startup-team-launching-business-with-laptop-and-ro.jpg"
-                  alt="Startup team launching their business in Thailand"
-                  fill
-                  className="object-cover"
-                  priority
-                />
-                {/* Decorative gradient overlay */}
-                <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 via-transparent to-transparent" />
+            {/* Main heading */}
+            <div className="space-y-4">
+              <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-foreground tracking-tight">
+                Startup Package
+              </h1>
+              <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto">
+                Perfect for New Companies in Thailand
+              </p>
+            </div>
+
+            {/* Description */}
+            <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+              Launch your business with confidence. We handle your accounting, tax, and payroll — so you can focus on
+              building your business.
+            </p>
+
+            {/* CTA buttons */}
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
+              <Button asChild size="lg" className="text-base px-8 shadow-lg hover:shadow-xl transition-shadow">
+                <Link href="/contact">Get a Quote</Link>
+              </Button>
+              <Button
+                asChild
+                size="lg"
+                variant="outline"
+                className="text-base px-8 bg-background/80 backdrop-blur-sm hover:bg-background"
+              >
+                <Link href="#details">Learn More</Link>
+              </Button>
+            </div>
+
+            {/* Key features preview */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-8 max-w-3xl mx-auto">
+              <div className="bg-card/80 backdrop-blur-sm border border-border rounded-xl p-4 hover:shadow-lg transition-shadow">
+                <div className="text-3xl font-bold text-primary mb-1">1 Week</div>
+                <div className="text-sm text-muted-foreground">Setup Time</div>
               </div>
-              {/* Floating decorative elements */}
-              <div className="absolute -top-4 -right-4 w-24 h-24 bg-primary/10 rounded-full blur-2xl" />
-              <div className="absolute -bottom-4 -left-4 w-32 h-32 bg-primary/5 rounded-full blur-3xl" />
+              <div className="bg-card/80 backdrop-blur-sm border border-border rounded-xl p-4 hover:shadow-lg transition-shadow">
+                <div className="text-3xl font-bold text-primary mb-1">Up to 3</div>
+                <div className="text-sm text-muted-foreground">Employees</div>
+              </div>
+              <div className="bg-card/80 backdrop-blur-sm border border-border rounded-xl p-4 hover:shadow-lg transition-shadow">
+                <div className="text-3xl font-bold text-primary mb-1">100%</div>
+                <div className="text-sm text-muted-foreground">Compliant</div>
+              </div>
             </div>
           </div>
         </div>
+
+        {/* Scroll indicator */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
+          <ChevronDown className="w-6 h-6 text-muted-foreground" />
+        </div>
       </div>
 
-      <div className="container mx-auto px-4 py-16">
+      <div id="details" className="container mx-auto px-4 py-16">
         <div className="grid lg:grid-cols-3 gap-12 max-w-7xl mx-auto">
           {/* Main Content - Left Column */}
           <div className="lg:col-span-2 space-y-16">
