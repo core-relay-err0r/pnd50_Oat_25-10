@@ -33,8 +33,8 @@ export default function FullCyclePackagePage() {
         {/* Background image with overlay */}
         <div className="absolute inset-0">
           <Image
-            src="/professional-business-team-analyzing-growth-charts.jpg"
-            alt="Established business team managing comprehensive accounting in Thailand"
+            src="/corporate-boardroom-executive-meeting-established-bu.jpg"
+            alt="Established business executives in boardroom managing comprehensive accounting in Thailand"
             fill
             className="object-cover"
             priority
