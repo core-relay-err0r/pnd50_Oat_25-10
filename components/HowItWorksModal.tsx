@@ -1,7 +1,8 @@
 "use client"
 
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog"
-// import { CheckCircle, Rocket, Handshake } from 'lucide-react'
+import { Button } from "@/components/ui/button"
+import Link from "next/link"
 
 interface HowItWorksModalProps {
   isOpen: boolean
@@ -21,7 +22,6 @@ export default function HowItWorksModal({ isOpen, onClose }: HowItWorksModalProp
         <div className="space-y-6 py-4">
           <div className="flex items-start space-x-4">
             <div className="flex-shrink-0 bg-blue-100 text-blue-600 rounded-full h-10 w-10 flex items-center justify-center">
-              {/* <Handshake className="h-5 w-5" /> */}
               <span>🤝</span>
             </div>
             <div>
@@ -33,7 +33,6 @@ export default function HowItWorksModal({ isOpen, onClose }: HowItWorksModalProp
           </div>
           <div className="flex items-start space-x-4">
             <div className="flex-shrink-0 bg-green-100 text-green-600 rounded-full h-10 w-10 flex items-center justify-center">
-              {/* <CheckCircle className="h-5 w-5" /> */}
               <span>✅</span>
             </div>
             <div>
@@ -45,7 +44,6 @@ export default function HowItWorksModal({ isOpen, onClose }: HowItWorksModalProp
           </div>
           <div className="flex items-start space-x-4">
             <div className="flex-shrink-0 bg-purple-100 text-purple-600 rounded-full h-10 w-10 flex items-center justify-center">
-              {/* <Rocket className="h-5 w-5" /> */}
               <span>🚀</span>
             </div>
             <div>
@@ -56,6 +54,11 @@ export default function HowItWorksModal({ isOpen, onClose }: HowItWorksModalProp
               </p>
             </div>
           </div>
+        </div>
+        <div className="pt-4 border-t">
+          <Link href="/calculator" onClick={onClose}>
+            <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white">Schedule Consultation</Button>
+          </Link>
         </div>
       </DialogContent>
     </Dialog>
