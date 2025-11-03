@@ -200,7 +200,7 @@ export default function ServicesPage() {
           <div className="space-y-0">
             <div className="relative h-64 w-full rounded-lg overflow-hidden mb-0">
               <Image
-                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-ujHj7SUabB8zhEvNIxbiD2VGdwJZjG.png"
+                src="/images/design-mode/image.png"
                 alt="Thai guardian statue"
                 fill
                 className="object-cover"

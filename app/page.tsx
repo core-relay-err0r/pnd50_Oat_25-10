@@ -103,10 +103,10 @@ export default function PND50Landing() {
                   isVisible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
                 }`}
               >
-                Accounting Meets
+                Your Trusted Accounting Partner
                 <br />
                 <span className="bg-gradient-to-r from-blue-400 via-emerald-400 to-blue-400 bg-clip-text text-transparent animate-gradient-shift inline-block">
-                  Innovation
+                  in Thailand
                 </span>
               </h1>
 
@@ -115,8 +115,7 @@ export default function PND50Landing() {
                   isVisible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
                 }`}
               >
-                Experience the future of financial services with AI-powered precision, real-time insights, and expert
-                guidance tailored for businesses in Thailand.
+                From accounting to compliance, we make doing business in Thailand simpler, smoother, and fully compliant with local regulations.
               </p>
 
               <div
