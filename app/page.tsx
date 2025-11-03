@@ -531,8 +531,9 @@ export default function PND50Landing() {
                         href="https://t.me/66843563805"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-blue-600 hover:text-blue-700 transition-colors duration-300 font-medium"
+                        className="flex items-center gap-2 text-blue-600 hover:text-blue-700 transition-colors duration-300 font-medium"
                       >
+                        <img src="/images/icons8-telegram.gif" alt="Telegram" className="w-5 h-5" />
                         084 356 3805
                       </a>
                     </div>
@@ -542,8 +543,9 @@ export default function PND50Landing() {
                         href="https://wa.me/66843563805"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-blue-600 hover:text-blue-700 transition-colors duration-300 font-medium"
+                        className="flex items-center gap-2 text-blue-600 hover:text-blue-700 transition-colors duration-300 font-medium"
                       >
+                        <img src="/images/icons8-whatsapp.gif" alt="WhatsApp" className="w-5 h-5" />
                         084 356 3805
                       </a>
                     </div>

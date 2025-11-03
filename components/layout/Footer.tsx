@@ -1,7 +1,7 @@
 import React, { Suspense } from "react"
 import Link from "next/link"
 import { TooltipProvider } from "@/components/ui/tooltip"
-import { Calculator, Shield, HandCoins, Target, FileSearch, Phone, Mail, MapPin, MessageCircle } from "lucide-react"
+import { Calculator, Shield, HandCoins, Target, FileSearch, Phone, Mail, MapPin } from "lucide-react"
 import CurrentYear from "@/components/CurrentYear"
 
 const services = [
@@ -144,7 +144,7 @@ export default function Footer() {
                   </a>
                 </li>
                 <li className="flex items-center">
-                  <MessageCircle className="h-4 w-4 mr-3 flex-shrink-0 text-slate-500" />
+                  <img src="/images/icons8-telegram.gif" alt="Telegram" className="h-4 w-4 mr-3 flex-shrink-0" />
                   <a
                     href={telegramUrl}
                     target="_blank"
@@ -155,7 +155,7 @@ export default function Footer() {
                   </a>
                 </li>
                 <li className="flex items-center">
-                  <MessageCircle className="h-4 w-4 mr-3 flex-shrink-0 text-slate-500" />
+                  <img src="/images/icons8-whatsapp.gif" alt="WhatsApp" className="h-4 w-4 mr-3 flex-shrink-0" />
                   <a
                     href={whatsappUrl}
                     target="_blank"
