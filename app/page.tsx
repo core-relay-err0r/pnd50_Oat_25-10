@@ -128,8 +128,8 @@ export default function PND50Landing() {
                   isVisible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
                 }`}
               >
-                From accounting to compliance, we help foreign businesses operate in Thailand with ease, accuracy, and
-                full compliance with local regulations.
+                All in one service.
+From accounting to compliance, we help foreign businesses operate in Thailand with ease, accuracy, and full compliance with local regulations.
               </p>
 
               <div
