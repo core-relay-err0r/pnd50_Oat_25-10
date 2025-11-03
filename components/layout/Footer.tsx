@@ -1,7 +1,7 @@
 import React, { Suspense } from "react"
 import Link from "next/link"
 import { TooltipProvider } from "@/components/ui/tooltip"
-import { Calculator, Shield, HandCoins, Target, FileSearch, Phone, Mail, MapPin } from "lucide-react"
+import { Calculator, Shield, HandCoins, Target, FileSearch, Phone, Mail, MapPin, MessageCircle } from "lucide-react"
 import CurrentYear from "@/components/CurrentYear"
 
 const services = [
@@ -41,6 +41,8 @@ export default function Footer() {
   const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent("Bangkok, Thailand")}`
   const phoneUrl = "tel:+6621234567"
   const emailUrl = "mailto:info@pnd50.com"
+  const telegramUrl = "https://t.me/66843563805"
+  const whatsappUrl = "https://wa.me/66843563805"
 
   return (
     <TooltipProvider delayDuration={100}>
@@ -139,6 +141,28 @@ export default function Footer() {
                   <Mail className="h-4 w-4 mr-3 flex-shrink-0 text-slate-500" />
                   <a href={emailUrl} className="hover:text-white transition-colors">
                     info@pnd50.com
+                  </a>
+                </li>
+                <li className="flex items-center">
+                  <MessageCircle className="h-4 w-4 mr-3 flex-shrink-0 text-slate-500" />
+                  <a
+                    href={telegramUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-white transition-colors"
+                  >
+                    Telegram: 084 356 3805
+                  </a>
+                </li>
+                <li className="flex items-center">
+                  <MessageCircle className="h-4 w-4 mr-3 flex-shrink-0 text-slate-500" />
+                  <a
+                    href={whatsappUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-white transition-colors"
+                  >
+                    WhatsApp: 084 356 3805
                   </a>
                 </li>
               </ul>

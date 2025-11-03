@@ -525,6 +525,28 @@ export default function PND50Landing() {
                         info@pnd50.com
                       </a>
                     </div>
+                    <div className="flex items-center gap-3 text-lg">
+                      <span className="font-semibold text-neutral-900">Telegram:</span>
+                      <a
+                        href="https://t.me/66843563805"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-600 hover:text-blue-700 transition-colors duration-300 font-medium"
+                      >
+                        084 356 3805
+                      </a>
+                    </div>
+                    <div className="flex items-center gap-3 text-lg">
+                      <span className="font-semibold text-neutral-900">WhatsApp:</span>
+                      <a
+                        href="https://wa.me/66843563805"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-600 hover:text-blue-700 transition-colors duration-300 font-medium"
+                      >
+                        084 356 3805
+                      </a>
+                    </div>
                   </div>
                 </div>
 
