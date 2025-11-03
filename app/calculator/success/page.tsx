@@ -75,7 +75,7 @@ export default function CalculatorSuccessPage() {
                 variant="outline"
                 className="flex-1 border-gray-300 text-gray-700 hover:bg-gray-50 bg-transparent"
               >
-                <Link href="/calculator">Get Another Quote</Link>
+                <Link href="/calculator">Schedule Another Consultation</Link>
               </Button>
             </div>
           </CardContent>

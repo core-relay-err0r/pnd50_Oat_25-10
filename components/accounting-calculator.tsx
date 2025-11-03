@@ -420,7 +420,7 @@ export function AccountingCalculator() {
           </div>
 
           <h2 className="text-3xl font-bold text-gray-900 mb-3">
-            Get Your <span className="text-blue-600">Instant Quote</span>
+            Schedule Your <span className="text-blue-600">Free Consultation</span>
           </h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-6">
             Professional accounting services for your business. Get accurate pricing in minutes.
