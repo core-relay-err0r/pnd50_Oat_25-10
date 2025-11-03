@@ -151,7 +151,7 @@ export default function Footer() {
                     rel="noopener noreferrer"
                     className="hover:text-white transition-colors"
                   >
-                    Telegram: 084 356 3805
+                     +66 84 356 3805
                   </a>
                 </li>
                 <li className="flex items-center">
@@ -162,7 +162,7 @@ export default function Footer() {
                     rel="noopener noreferrer"
                     className="hover:text-white transition-colors"
                   >
-                    WhatsApp: 084 356 3805
+                    +66 84 356 3805
                   </a>
                 </li>
               </ul>
