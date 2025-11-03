@@ -63,13 +63,7 @@ export default function ServicesPage() {
               From accounting to compliance, we provide comprehensive services tailored for foreign-owned businesses
               operating in Thailand.
             </p>
-            <Link
-              href="/calculator"
-              className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-8 py-4 rounded-lg font-semibold hover:bg-primary/90 transition-all hover:scale-105 shadow-lg hover:shadow-xl"
-            >
-              Schedule Consultation
-              <ArrowRight className="w-5 h-5" />
-            </Link>
+            
           </div>
         </div>
       </section>
