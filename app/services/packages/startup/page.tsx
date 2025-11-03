@@ -88,7 +88,7 @@ export default function StartupPackagePage() {
             {/* CTA buttons */}
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
               <Button asChild size="lg" className="text-base px-8 shadow-lg hover:shadow-xl transition-shadow">
-                <Link href="/contact">Get a Quote</Link>
+                <Link href="/calculator">Get a Quote</Link>
               </Button>
               <Button
                 asChild
@@ -354,7 +354,7 @@ export default function StartupPackagePage() {
               </p>
               <div className="space-y-3">
                 <Button asChild className="w-full shadow-md hover:shadow-lg transition-shadow">
-                  <Link href="/contact">Get a Quote</Link>
+                  <Link href="/calculator">Get a Quote</Link>
                 </Button>
                 <Button asChild variant="outline" className="w-full bg-background hover:bg-accent">
                   <Link href="/contact">Talk to Our Team</Link>
