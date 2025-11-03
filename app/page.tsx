@@ -124,7 +124,7 @@ export default function PND50Landing() {
               </h1>
 
               <p
-                className={`text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto mb-12 leading-relaxed transition-all duration-700 delay-200 ${
+                className={`text-xl md:text-2xl max-w-3xl mx-auto mb-12 leading-relaxed transition-all duration-700 delay-200 text-white text-white ${
                   isVisible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
                 }`}
               >
