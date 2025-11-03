@@ -64,16 +64,18 @@
     "sonner": "latest",
     "tailwind-merge": "^2.5.5",
     "tailwindcss-animate": "^1.0.7",
+    "tw-animate-css": "latest",
     "vaul": "latest",
     "zod": "^4.0.0"
   },
   "devDependencies": {
+    "@tailwindcss/postcss": "^4.1.9",
     "@types/node": "^22",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "postcss": "^8.5",
     "prettier": "latest",
-    "tailwindcss": "^3.4.17",
+    "tailwindcss": "^4.1.9",
     "typescript": "^5"
   }
 }

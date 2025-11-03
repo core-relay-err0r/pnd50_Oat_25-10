@@ -36,12 +36,12 @@ export default function Header() {
 
   return (
     <>
-      <header className="sticky top-0 z-50 w-full border-b bg-white/95 shadow-sm backdrop-blur-sm">
+      <header className="sticky top-0 z-50 w-full border-b bg-background/95 shadow-sm backdrop-blur-sm">
         <div className="container mx-auto flex h-16 items-center justify-between px-6">
           {/* Left: Logo */}
           <Link
             href="/"
-            className="text-2xl font-bold text-gray-800 hover:text-blue-600 transition-colors"
+            className="text-2xl font-bold text-foreground hover:text-primary transition-colors"
             onClick={handleLinkClick}
           >
             PND50
@@ -49,44 +49,39 @@ export default function Header() {
 
           {/* Center: Desktop Nav */}
           <nav className="hidden md:flex items-center gap-6 text-sm font-medium">
-            <Link href="/#services" className="text-gray-600 transition-colors hover:text-blue-600">
+            <Link href="/services" className="text-muted-foreground transition-colors hover:text-primary">
               Services
             </Link>
 
-            <Link href="/about" className="text-gray-600 transition-colors hover:text-blue-600">
-              About
+            <Link href="/about" className="text-muted-foreground transition-colors hover:text-primary">
+              About us
             </Link>
 
-            <Link href="/calculator" className="text-gray-600 transition-colors hover:text-blue-600">
-              Quote
-            </Link>
-
-            <Link
-              href="/#contact"
-              className="text-gray-600 transition-colors hover:text-blue-600"
-              onClick={handleContactClick}
-            >
+            <Link href="/contact" className="text-muted-foreground transition-colors hover:text-primary">
               Contact
+            </Link>
+
+            <Link href="/client-portal" className="text-muted-foreground transition-colors hover:text-primary">
+              Client Portal
             </Link>
           </nav>
 
           {/* Right: CTA & Mobile Menu Toggle */}
           <div className="flex items-center gap-2 sm:gap-4">
             <Link href="/calculator" className="hidden sm:block">
-              <Button className="relative bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold text-base px-8 py-3 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 animate-pulse-subtle">
+              <Button className="relative bg-primary hover:bg-primary/90 text-primary-foreground font-semibold text-base px-8 py-3 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-102">
                 <span className="relative z-10">Schedule Consultation</span>
-                <div className="absolute inset-0 rounded-lg bg-blue-400 opacity-0 hover:opacity-20 transition-opacity duration-300" />
               </Button>
             </Link>
             {/* Mobile version - enhanced */}
             <Link href="/calculator" className="sm:hidden">
-              <Button className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105 px-4 py-2">
+              <Button className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold shadow-md hover:shadow-lg transition-all duration-300 px-4 py-2">
                 Schedule
               </Button>
             </Link>
             <button
               onClick={toggleMenu}
-              className="md:hidden rounded-md p-2 text-gray-600 hover:bg-gray-100"
+              className="md:hidden rounded-md p-2 text-muted-foreground hover:bg-muted"
               aria-label="Toggle menu"
             >
               {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
@@ -99,8 +94,8 @@ export default function Header() {
           <div className="md:hidden border-t">
             <div className="container mx-auto flex flex-col gap-4 px-6 py-4">
               <Link
-                href="/#services"
-                className="text-gray-600 transition-colors hover:text-blue-600"
+                href="/services"
+                className="text-muted-foreground transition-colors hover:text-primary"
                 onClick={handleLinkClick}
               >
                 Services
@@ -108,31 +103,31 @@ export default function Header() {
 
               <Link
                 href="/about"
-                className="text-gray-600 transition-colors hover:text-blue-600"
+                className="text-muted-foreground transition-colors hover:text-primary"
                 onClick={handleLinkClick}
               >
                 About
               </Link>
 
               <Link
-                href="/calculator"
-                className="text-gray-600 transition-colors hover:text-green-600"
+                href="/contact"
+                className="text-muted-foreground transition-colors hover:text-primary"
                 onClick={handleLinkClick}
-              >
-                Quote
-              </Link>
-
-              <Link
-                href="/#contact"
-                className="text-gray-600 transition-colors hover:text-blue-600"
-                onClick={handleContactClick}
               >
                 Contact
               </Link>
 
               <Link
+                href="/client-portal"
+                className="text-muted-foreground transition-colors hover:text-primary"
+                onClick={handleLinkClick}
+              >
+                Client Portal
+              </Link>
+
+              <Link
                 href="/calculator"
-                className="text-blue-600 font-semibold transition-colors hover:text-blue-700 text-left"
+                className="text-primary font-semibold transition-colors hover:text-primary/90 text-left"
                 onClick={handleLinkClick}
               >
                 Schedule Consultation
