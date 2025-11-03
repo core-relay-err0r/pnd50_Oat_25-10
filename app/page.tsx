@@ -203,7 +203,7 @@ We help foreign businesses operate in Thailand with ease, accuracy, and full com
 
           <div className="container mx-auto px-4 relative z-10">
             <div className="max-w-3xl mb-20 scroll-animate">
-              <p className="text-sm font-semibold text-primary mb-3 tracking-wide uppercase">Our Services</p>
+              <p className="text-sm font-semibold text-primary mb-3 tracking-wide uppercase">What we do </p>
               <h2 className="text-4xl md:text-6xl font-bold text-foreground mb-6 leading-tight">
                 Comprehensive Financial Solutions
               </h2>
