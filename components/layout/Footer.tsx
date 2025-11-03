@@ -109,8 +109,8 @@ export default function Footer() {
                   </Link>
                 </li>
                 <li>
-                  <Link href="/generate-invoice" className="hover:text-primary-foreground transition-colors">
-                    Case Study
+                  <Link href="/case-studies" className="hover:text-primary-foreground transition-colors">
+                    Case Studies
                   </Link>
                 </li>
               </ul>

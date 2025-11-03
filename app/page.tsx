@@ -5,7 +5,10 @@ import { HomepageCtas } from "@/components/HomepageCtas"
 import { SecurityCta } from "@/components/SecurityCta"
 import { FinalCta } from "@/components/FinalCta"
 import { useEffect, useState, useRef } from "react"
-import { Copy, Check } from "lucide-react"
+import { Copy, Check, ArrowRight, Star } from "lucide-react"
+import Link from "next/link"
+import { Button } from "@/components/ui/button"
+import { InfiniteCaseStudiesCarousel } from "@/components/infinite-case-studies-carousel"
 
 const AnimatedGridBackground = dynamic(
   () => import("@/components/ui/animated-grid-background").then((mod) => mod.AnimatedGridBackground),
@@ -16,11 +19,15 @@ export default function PND50Landing() {
   const [isVisible, setIsVisible] = useState(false)
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
   const [copiedItem, setCopiedItem] = useState<string | null>(null)
+  const [canScrollLeft, setCanScrollLeft] = useState(false)
+  const [canScrollRight, setCanScrollRight] = useState(true)
 
   const servicesRef = useRef<HTMLElement>(null)
+  const caseStudiesRef = useRef<HTMLElement>(null)
   const securityRef = useRef<HTMLElement>(null)
   const ctaRef = useRef<HTMLElement>(null)
   const contactRef = useRef<HTMLElement>(null)
+  const scrollContainerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     setIsVisible(true)
@@ -55,7 +62,13 @@ export default function PND50Landing() {
 
     const observer = new IntersectionObserver(observerCallback, observerOptions)
 
-    const sections = [servicesRef.current, securityRef.current, ctaRef.current, contactRef.current]
+    const sections = [
+      servicesRef.current,
+      caseStudiesRef.current,
+      securityRef.current,
+      ctaRef.current,
+      contactRef.current,
+    ]
 
     sections.forEach((section) => {
       if (section) {
@@ -77,6 +90,38 @@ export default function PND50Landing() {
       console.error("Failed to copy:", err)
     }
   }
+
+  const handleScroll = () => {
+    if (scrollContainerRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current
+      setCanScrollLeft(scrollLeft > 0)
+      setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10)
+    }
+  }
+
+  const scrollToDirection = (direction: "left" | "right") => {
+    if (scrollContainerRef.current) {
+      const scrollAmount = scrollContainerRef.current.clientWidth * 0.8
+      const newScrollLeft =
+        direction === "left"
+          ? scrollContainerRef.current.scrollLeft - scrollAmount
+          : scrollContainerRef.current.scrollLeft + scrollAmount
+
+      scrollContainerRef.current.scrollTo({
+        left: newScrollLeft,
+        behavior: "smooth",
+      })
+    }
+  }
+
+  useEffect(() => {
+    const scrollContainer = scrollContainerRef.current
+    if (scrollContainer) {
+      scrollContainer.addEventListener("scroll", handleScroll)
+      handleScroll() // Initial check
+      return () => scrollContainer.removeEventListener("scroll", handleScroll)
+    }
+  }, [])
 
   return (
     <div className="min-h-screen bg-background text-foreground font-sans">
@@ -128,8 +173,9 @@ export default function PND50Landing() {
                   isVisible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
                 }`}
               >
-                All in one service from accounting to compliance.
-We help foreign businesses operate in Thailand with ease, accuracy, and full compliance with local regulations.            </p>
+                All in one service from accounting to compliance. We help foreign businesses operate in Thailand with
+                ease, accuracy, and full compliance with local regulations.{" "}
+              </p>
 
               <div
                 className={`flex flex-wrap items-center justify-center gap-3 sm:gap-4 mb-12 transition-all duration-700 delay-300 ${
@@ -265,6 +311,41 @@ We help foreign businesses operate in Thailand with ease, accuracy, and full com
                   </div>
                 </div>
               ))}
+            </div>
+          </div>
+        </section>
+
+        <section
+          id="case-studies"
+          ref={caseStudiesRef}
+          className="py-24 md:py-32 bg-gradient-to-br from-muted/50 to-background relative overflow-hidden transition-all duration-1000"
+        >
+          <div className="absolute top-0 left-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl opacity-50"></div>
+          <div className="absolute bottom-0 right-0 w-96 h-96 bg-chart-2/5 rounded-full blur-3xl opacity-50"></div>
+
+          <div className="container mx-auto px-4 relative z-10">
+            <div className="max-w-3xl mb-12 scroll-animate">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
+                <Star className="w-4 h-4 fill-primary" />
+                Real Stories, Real Results
+              </div>
+              <h2 className="text-4xl md:text-6xl font-bold text-foreground mb-6 leading-tight">
+                Client Success Stories
+              </h2>
+              <p className="text-xl text-muted-foreground leading-relaxed mb-6">
+                See how we've helped international startups from Russia and Vietnam navigate Thai accounting and
+                compliance with confidence.
+              </p>
+              <Button asChild variant="outline" className="group bg-transparent">
+                <Link href="/case-studies" className="flex items-center gap-2">
+                  View All Case Studies
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </Link>
+              </Button>
+            </div>
+
+            <div className="scroll-animate" style={{ transitionDelay: "200ms" }}>
+              <InfiniteCaseStudiesCarousel />
             </div>
           </div>
         </section>
