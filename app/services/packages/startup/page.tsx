@@ -90,14 +90,6 @@ export default function StartupPackagePage() {
               <Button asChild size="lg" className="text-base px-8 shadow-lg hover:shadow-xl transition-shadow">
                 <Link href="/calculator">Get a Quote</Link>
               </Button>
-              <Button
-                asChild
-                size="lg"
-                variant="outline"
-                className="text-base px-8 bg-background/80 backdrop-blur-sm hover:bg-background"
-              >
-                <Link href="#details">Learn More</Link>
-              </Button>
             </div>
 
             {/* Key features preview */}
