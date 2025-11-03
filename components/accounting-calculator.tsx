@@ -404,41 +404,41 @@ export function AccountingCalculator() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-muted/30">
       <div className="container mx-auto px-4 py-12 max-w-4xl">
         <div className="text-center mb-12">
           <div className="flex justify-center mb-6">
-            <div className="flex items-center gap-3 p-3 bg-white rounded-lg shadow-sm border">
-              <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
-                <Building2 className="h-5 w-5 text-white" />
+            <div className="flex items-center gap-3 p-3 bg-background rounded-lg shadow-sm border border-border">
+              <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
+                <Building2 className="h-5 w-5 text-primary-foreground" />
               </div>
               <div className="text-left">
-                <h1 className="text-2xl font-bold text-gray-900 text-center">PND50</h1>
-                <p className="text-gray-600 text-sm">Accounting Services</p>
+                <h1 className="text-2xl font-bold text-foreground text-center">PND50</h1>
+                <p className="text-muted-foreground text-sm">Accounting Services</p>
               </div>
             </div>
           </div>
 
-          <h2 className="text-3xl font-bold text-gray-900 mb-3">
-            Schedule Your <span className="text-blue-600">Free Consultation</span>
+          <h2 className="text-3xl font-bold text-foreground mb-3">
+            Schedule Your <span className="text-primary">Free Consultation</span>
           </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-6">
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-6">
             Professional accounting services for your business. Get accurate pricing in minutes.
           </p>
         </div>
 
         <div className="flex justify-center mb-8">
-          <div className="flex items-center gap-4 p-4 bg-white rounded-lg shadow-sm border">
+          <div className="flex items-center gap-4 p-4 bg-background rounded-lg shadow-sm border border-border">
             <div
-              className={`flex items-center gap-2 ${step === "input" ? "text-blue-600" : step === "quotation" || step === "checklist" ? "text-green-600" : "text-gray-500"}`}
+              className={`flex items-center gap-2 ${step === "input" ? "text-primary" : step === "quotation" || step === "checklist" ? "text-chart-2" : "text-muted-foreground"}`}
             >
               <div
                 className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold ${
                   step === "input"
-                    ? "bg-blue-600 text-white"
+                    ? "bg-primary text-primary-foreground"
                     : step === "quotation" || step === "checklist"
-                      ? "bg-green-600 text-white"
-                      : "bg-gray-300 text-gray-600"
+                      ? "bg-chart-2 text-primary-foreground"
+                      : "bg-muted text-muted-foreground"
                 }`}
               >
                 {step === "quotation" || step === "checklist" ? <CheckCircle className="h-4 w-4" /> : "1"}
@@ -447,19 +447,19 @@ export function AccountingCalculator() {
             </div>
 
             <ArrowRight
-              className={`h-4 w-4 ${step === "quotation" || step === "checklist" ? "text-green-500" : "text-gray-300"}`}
+              className={`h-4 w-4 ${step === "quotation" || step === "checklist" ? "text-chart-2" : "text-muted"}`}
             />
 
             <div
-              className={`flex items-center gap-2 ${step === "quotation" ? "text-blue-600" : step === "checklist" ? "text-green-600" : "text-gray-500"}`}
+              className={`flex items-center gap-2 ${step === "quotation" ? "text-primary" : step === "checklist" ? "text-chart-2" : "text-muted-foreground"}`}
             >
               <div
                 className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold ${
                   step === "quotation"
-                    ? "bg-blue-600 text-white"
+                    ? "bg-primary text-primary-foreground"
                     : step === "checklist"
-                      ? "bg-green-600 text-white"
-                      : "bg-gray-300 text-gray-600"
+                      ? "bg-chart-2 text-primary-foreground"
+                      : "bg-muted text-muted-foreground"
                 }`}
               >
                 {step === "checklist" ? <CheckCircle className="h-4 w-4" /> : "2"}
@@ -467,12 +467,14 @@ export function AccountingCalculator() {
               <span className="font-medium text-sm">Quotation</span>
             </div>
 
-            <ArrowRight className={`h-4 w-4 ${step === "checklist" ? "text-green-500" : "text-gray-300"}`} />
+            <ArrowRight className={`h-4 w-4 ${step === "checklist" ? "text-chart-2" : "text-muted"}`} />
 
-            <div className={`flex items-center gap-2 ${step === "checklist" ? "text-blue-600" : "text-gray-500"}`}>
+            <div
+              className={`flex items-center gap-2 ${step === "checklist" ? "text-primary" : "text-muted-foreground"}`}
+            >
               <div
                 className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold ${
-                  step === "checklist" ? "bg-blue-600 text-white" : "bg-gray-300 text-gray-600"
+                  step === "checklist" ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground"
                 }`}
               >
                 3
@@ -484,15 +486,15 @@ export function AccountingCalculator() {
 
         {/* Step 1: Client Information Input */}
         {step === "input" && (
-          <Card className="bg-white shadow-sm border">
+          <Card className="bg-background shadow-sm border border-border">
             <CardHeader className="pb-6">
-              <CardTitle className="text-2xl text-gray-900 flex items-center gap-3">
-                <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
-                  <FileText className="h-5 w-5 text-white" />
+              <CardTitle className="text-2xl text-foreground flex items-center gap-3">
+                <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
+                  <FileText className="h-5 w-5 text-primary-foreground" />
                 </div>
                 Business Information
               </CardTitle>
-              <CardDescription className="text-gray-600 text-lg">
+              <CardDescription className="text-muted-foreground text-lg">
                 Tell us about your business to get an accurate quotation
               </CardDescription>
             </CardHeader>
@@ -500,12 +502,12 @@ export function AccountingCalculator() {
               {/* Company Details */}
               <div className="space-y-6">
                 <div className="flex items-center gap-3 mb-6">
-                  <Building2 className="h-6 w-6 text-blue-600" />
-                  <h3 className="text-xl font-semibold text-gray-900">Company Details</h3>
+                  <Building2 className="h-6 w-6 text-primary" />
+                  <h3 className="text-xl font-semibold text-foreground">Company Details</h3>
                 </div>
                 <div className="grid md:grid-cols-2 gap-6">
                   <div className="space-y-3">
-                    <Label htmlFor="companyName" className="text-gray-700 font-medium text-base">
+                    <Label htmlFor="companyName" className="text-foreground font-medium text-base">
                       Company Name *
                     </Label>
                     <Input
@@ -513,12 +515,12 @@ export function AccountingCalculator() {
                       value={clientInfo.companyName}
                       onChange={(e) => handleInputChange("companyName", e.target.value)}
                       placeholder="Enter your company name"
-                      className="border-gray-300 focus:border-blue-500 focus:ring-blue-500/20 h-12 text-base"
+                      className="border-input focus:border-ring focus:ring-ring/20 h-12 text-base"
                     />
                   </div>
 
                   <div className="space-y-3">
-                    <Label htmlFor="businessType" className="text-gray-700 font-medium text-base">
+                    <Label htmlFor="businessType" className="text-foreground font-medium text-base">
                       Business Type
                     </Label>
                     <Input
@@ -526,7 +528,7 @@ export function AccountingCalculator() {
                       value={clientInfo.businessType}
                       onChange={(e) => handleInputChange("businessType", e.target.value)}
                       placeholder="e.g., Trading, Manufacturing, Services"
-                      className="border-gray-300 focus:border-blue-500 focus:ring-blue-500/20 h-12 text-base"
+                      className="border-input focus:border-ring focus:ring-ring/20 h-12 text-base"
                     />
                   </div>
                 </div>
@@ -535,12 +537,12 @@ export function AccountingCalculator() {
               {/* Your Contact section */}
               <div className="space-y-6">
                 <div className="flex items-center gap-3 mb-6">
-                  <User className="h-6 w-6 text-blue-600" />
-                  <h3 className="text-xl font-semibold text-gray-900">Your Contact</h3>
+                  <User className="h-6 w-6 text-primary" />
+                  <h3 className="text-xl font-semibold text-foreground">Your Contact</h3>
                 </div>
                 <div className="grid md:grid-cols-3 gap-6">
                   <div className="space-y-3">
-                    <Label htmlFor="email" className="text-gray-700 font-medium text-base">
+                    <Label htmlFor="email" className="text-foreground font-medium text-base">
                       Email *
                     </Label>
                     <Input
@@ -549,12 +551,12 @@ export function AccountingCalculator() {
                       value={clientInfo.email || ""}
                       onChange={(e) => handleInputChange("email", e.target.value)}
                       placeholder="Enter email address"
-                      className="border-gray-300 focus:border-blue-500 focus:ring-blue-500/20 h-12 text-base"
+                      className="border-input focus:border-ring focus:ring-ring/20 h-12 text-base"
                     />
                   </div>
 
                   <div className="space-y-3">
-                    <Label htmlFor="phone" className="text-gray-700 font-medium text-base">
+                    <Label htmlFor="phone" className="text-foreground font-medium text-base">
                       Phone
                     </Label>
                     <Input
@@ -563,12 +565,12 @@ export function AccountingCalculator() {
                       value={clientInfo.phone || ""}
                       onChange={(e) => handleInputChange("phone", e.target.value)}
                       placeholder="Enter phone number"
-                      className="border-gray-300 focus:border-blue-500 focus:ring-blue-500/20 h-12 text-base"
+                      className="border-input focus:border-ring focus:ring-ring/20 h-12 text-base"
                     />
                   </div>
 
                   <div className="space-y-3">
-                    <Label htmlFor="whatsappId" className="text-gray-700 font-medium text-base">
+                    <Label htmlFor="whatsappId" className="text-foreground font-medium text-base">
                       WhatsApp ID
                     </Label>
                     <Input
@@ -576,7 +578,7 @@ export function AccountingCalculator() {
                       value={clientInfo.whatsappId || ""}
                       onChange={(e) => handleInputChange("whatsappId", e.target.value)}
                       placeholder="Enter WhatsApp ID"
-                      className="border-gray-300 focus:border-blue-500 focus:ring-blue-500/20 h-12 text-base"
+                      className="border-input focus:border-ring focus:ring-ring/20 h-12 text-base"
                     />
                   </div>
                 </div>
@@ -585,8 +587,8 @@ export function AccountingCalculator() {
               {/* Select Your Service */}
               <div className="space-y-4">
                 <div className="flex items-center gap-3 mb-6">
-                  <Briefcase className="h-6 w-6 text-blue-600" />
-                  <h3 className="text-xl font-semibold text-gray-900">Select Your Service</h3>
+                  <Briefcase className="h-6 w-6 text-primary" />
+                  <h3 className="text-xl font-semibold text-foreground">Select Your Service</h3>
                 </div>
                 <div className="grid md:grid-cols-2 gap-4">
                   {serviceOptions.map((service) => (
@@ -595,23 +597,23 @@ export function AccountingCalculator() {
                       onClick={() => handleInputChange("serviceType", service.value)}
                       className={`p-4 border-2 rounded-lg cursor-pointer transition-all hover:shadow-md ${
                         clientInfo.serviceType === service.value
-                          ? "border-blue-500 bg-blue-50"
-                          : "border-gray-200 bg-white hover:border-gray-300"
+                          ? "border-primary bg-primary/10"
+                          : "border-border bg-background hover:border-foreground"
                       }`}
                     >
                       <div className="flex items-start gap-3">
                         <div
                           className={`w-5 h-5 rounded-full border-2 mt-0.5 ${
-                            clientInfo.serviceType === service.value ? "border-blue-500 bg-blue-500" : "border-gray-300"
+                            clientInfo.serviceType === service.value ? "border-primary bg-primary" : "border-foreground"
                           }`}
                         >
                           {clientInfo.serviceType === service.value && (
-                            <div className="w-full h-full rounded-full bg-white scale-50"></div>
+                            <div className="w-full h-full rounded-full bg-background scale-50"></div>
                           )}
                         </div>
                         <div className="flex-1">
-                          <h4 className="font-semibold text-gray-900 mb-1">{service.label}</h4>
-                          <p className="text-sm text-gray-600">{service.description}</p>
+                          <h4 className="font-semibold text-foreground mb-1">{service.label}</h4>
+                          <p className="text-sm text-muted-foreground">{service.description}</p>
                         </div>
                       </div>
                     </div>
@@ -620,12 +622,12 @@ export function AccountingCalculator() {
               </div>
 
               <div className="space-y-6">
-                <h3 className="text-lg font-semibold text-gray-900 border-b border-gray-200 pb-2">Financial Data</h3>
+                <h3 className="text-lg font-semibold text-foreground border-b border-border pb-2">Financial Data</h3>
                 <div className="grid md:grid-cols-2 gap-6">
                   {(clientInfo.serviceType !== "annual-audit" ||
                     (clientInfo.serviceType === "annual-audit" && clientInfo.existingAccountantChoice === "no")) && (
                     <div className="space-y-3">
-                      <Label htmlFor="monthlyTransactions" className="text-gray-700 font-medium text-base">
+                      <Label htmlFor="monthlyTransactions" className="text-foreground font-medium text-base">
                         {clientInfo.serviceType === "annual-audit"
                           ? "Annual review bookkeeping *"
                           : clientInfo.serviceType === "annual-bookkeeping-audit"
@@ -637,17 +639,17 @@ export function AccountingCalculator() {
                         onValueChange={(value) => handleInputChange("monthlyTransactions", value)}
                       >
                         <SelectTrigger
-                          className="border-gray-300 focus:border-blue-500 focus:ring-blue-500/20 bg-white h-12 text-base"
+                          className="border-input focus:border-ring focus:ring-ring/20 bg-background h-12 text-base"
                           style={{ color: "#374151" }}
                         >
                           <SelectValue placeholder="Select transaction volume" style={{ color: "#6b7280" }} />
                         </SelectTrigger>
-                        <SelectContent className="bg-white">
+                        <SelectContent className="bg-background">
                           {getTransactionRanges().map((range) => (
-                            <SelectItem key={range.value} value={range.value} className="text-gray-900 py-3">
+                            <SelectItem key={range.value} value={range.value} className="text-foreground py-3">
                               <div className="flex justify-between items-center w-full">
                                 <span>{range.label}</span>
-                                <span className="text-sm text-gray-500 ml-4">
+                                <span className="text-sm text-muted-foreground ml-4">
                                   ฿{range.price.toLocaleString()}
                                   {clientInfo.serviceType === "annual-bookkeeping-audit" ||
                                   clientInfo.serviceType === "annual-audit"
@@ -667,7 +669,7 @@ export function AccountingCalculator() {
                     clientInfo.serviceType === "annual-audit" ||
                     (clientInfo.serviceType === "annual-audit" && clientInfo.existingAccountantChoice === "yes")) && (
                     <div className="space-y-3">
-                      <Label htmlFor="annualRevenue" className="text-gray-700 font-medium text-base">
+                      <Label htmlFor="annualRevenue" className="text-foreground font-medium text-base">
                         Annual Revenue (Per Year) *
                       </Label>
                       <Select
@@ -675,17 +677,19 @@ export function AccountingCalculator() {
                         onValueChange={(value) => handleInputChange("annualRevenue", value)}
                       >
                         <SelectTrigger
-                          className="border-gray-300 focus:border-blue-500 focus:ring-blue-500/20 bg-white h-12 text-base"
+                          className="border-input focus:border-ring focus:ring-ring/20 bg-background h-12 text-base"
                           style={{ color: "#374151" }}
                         >
                           <SelectValue placeholder="Select revenue range" style={{ color: "#6b7280" }} />
                         </SelectTrigger>
-                        <SelectContent className="bg-white">
+                        <SelectContent className="bg-background">
                           {revenueRanges.map((range) => (
-                            <SelectItem key={range.value} value={range.value} className="text-gray-900 py-3">
+                            <SelectItem key={range.value} value={range.value} className="text-foreground py-3">
                               <div className="flex justify-between items-center w-full">
                                 <span>{range.label}</span>
-                                <span className="text-sm text-gray-500 ml-4">฿{range.price.toLocaleString()}/year</span>
+                                <span className="text-sm text-muted-foreground ml-4">
+                                  ฿{range.price.toLocaleString()}/year
+                                </span>
                               </div>
                             </SelectItem>
                           ))}
@@ -696,8 +700,8 @@ export function AccountingCalculator() {
                 </div>
 
                 {clientInfo.serviceType === "annual-audit" && (
-                  <div className="p-4 bg-blue-50 rounded-lg border border-blue-200">
-                    <Label className="text-gray-900 font-medium text-base mb-4 block">
+                  <div className="p-4 bg-primary/10 rounded-lg border border-primary/20">
+                    <Label className="text-foreground font-medium text-base mb-4 block">
                       Do you already have an existing accountant? *
                     </Label>
                     <div className="flex gap-6">
@@ -705,47 +709,47 @@ export function AccountingCalculator() {
                         onClick={() => handleInputChange("existingAccountantChoice", "yes")}
                         className={`flex items-center gap-3 p-3 border-2 rounded-lg cursor-pointer transition-all ${
                           clientInfo.existingAccountantChoice === "yes"
-                            ? "border-blue-500 bg-blue-50"
-                            : "border-gray-200 bg-white hover:border-gray-300"
+                            ? "border-primary bg-primary/10"
+                            : "border-border bg-background hover:border-foreground"
                         }`}
                       >
                         <div
                           className={`w-5 h-5 rounded-full border-2 ${
                             clientInfo.existingAccountantChoice === "yes"
-                              ? "border-blue-500 bg-blue-500"
-                              : "border-gray-300"
+                              ? "border-primary bg-primary"
+                              : "border-foreground"
                           }`}
                         >
                           {clientInfo.existingAccountantChoice === "yes" && (
-                            <div className="w-full h-full rounded-full bg-white scale-50"></div>
+                            <div className="w-full h-full rounded-full bg-background scale-50"></div>
                           )}
                         </div>
-                        <span className="font-medium text-gray-900">YES</span>
+                        <span className="font-medium text-foreground">YES</span>
                       </div>
 
                       <div
                         onClick={() => handleInputChange("existingAccountantChoice", "no")}
                         className={`flex items-center gap-3 p-3 border-2 rounded-lg cursor-pointer transition-all ${
                           clientInfo.existingAccountantChoice === "no"
-                            ? "border-blue-500 bg-blue-50"
-                            : "border-gray-200 bg-white hover:border-gray-300"
+                            ? "border-primary bg-primary/10"
+                            : "border-border bg-background hover:border-foreground"
                         }`}
                       >
                         <div
                           className={`w-5 h-5 rounded-full border-2 ${
                             clientInfo.existingAccountantChoice === "no"
-                              ? "border-blue-500 bg-blue-500"
-                              : "border-gray-300"
+                              ? "border-primary bg-primary"
+                              : "border-foreground"
                           }`}
                         >
                           {clientInfo.existingAccountantChoice === "no" && (
-                            <div className="w-full h-full rounded-full bg-white scale-50"></div>
+                            <div className="w-full h-full rounded-full bg-background scale-50"></div>
                           )}
                         </div>
-                        <span className="font-medium text-gray-900">NO</span>
+                        <span className="font-medium text-foreground">NO</span>
                       </div>
                     </div>
-                    <p className="text-sm text-gray-600 mt-2">
+                    <p className="text-sm text-muted-foreground mt-2">
                       {clientInfo.existingAccountantChoice === "yes"
                         ? "We will provide audit services for your existing bookkeeping records."
                         : clientInfo.existingAccountantChoice === "no"
@@ -758,34 +762,34 @@ export function AccountingCalculator() {
 
               {/* ... existing additional information section ... */}
               <div className="space-y-6">
-                <h3 className="text-lg font-semibold text-gray-900 border-b border-gray-200 pb-2">
+                <h3 className="text-lg font-semibold text-foreground border-b border-border pb-2">
                   Additional Information
                 </h3>
                 <div className="grid md:grid-cols-2 gap-6">
                   <div className="space-y-4">
-                    <div className="p-4 bg-gray-50 rounded-lg border border-gray-200">
+                    <div className="p-4 bg-muted/50 rounded-lg border border-border">
                       <div className="flex items-center space-x-3">
                         <Checkbox
                           id="hasVAT"
                           checked={clientInfo.hasVAT}
                           onCheckedChange={(checked) => handleInputChange("hasVAT", !!checked)}
-                          className="data-[state=checked]:bg-blue-600 data-[state=checked]:border-blue-600"
+                          className="data-[state=checked]:bg-primary data-[state=checked]:border-primary"
                         />
-                        <Label htmlFor="hasVAT" className="text-gray-700 font-medium text-base">
+                        <Label htmlFor="hasVAT" className="text-foreground font-medium text-base">
                           VAT Registered
                         </Label>
                       </div>
                     </div>
 
-                    <div className="p-4 bg-gray-50 rounded-lg border border-gray-200">
+                    <div className="p-4 bg-muted/50 rounded-lg border border-border">
                       <div className="flex items-center space-x-3">
                         <Checkbox
                           id="hasSocialFund"
                           checked={clientInfo.hasSocialFund}
                           onCheckedChange={(checked) => handleInputChange("hasSocialFund", !!checked)}
-                          className="data-[state=checked]:bg-blue-600 data-[state=checked]:border-blue-600"
+                          className="data-[state=checked]:bg-primary data-[state=checked]:border-primary"
                         />
-                        <Label htmlFor="hasSocialFund" className="text-gray-700 font-medium text-base">
+                        <Label htmlFor="hasSocialFund" className="text-foreground font-medium text-base">
                           Social Fund Registered
                         </Label>
                       </div>
@@ -793,7 +797,7 @@ export function AccountingCalculator() {
                   </div>
 
                   <div className="space-y-3">
-                    <Label htmlFor="employeeCount" className="text-gray-700 font-medium text-base">
+                    <Label htmlFor="employeeCount" className="text-foreground font-medium text-base">
                       Number of Employees
                     </Label>
                     <Input
@@ -802,7 +806,7 @@ export function AccountingCalculator() {
                       onChange={(e) => handleInputChange("employeeCount", e.target.value)}
                       placeholder="e.g., 5"
                       type="number"
-                      className="border-gray-300 focus:border-blue-500 focus:ring-blue-500/20 h-12 text-base"
+                      className="border-input focus:border-ring focus:ring-ring/20 h-12 text-base"
                     />
                   </div>
                 </div>
@@ -820,12 +824,12 @@ export function AccountingCalculator() {
                     <div className="flex-1">
                       <Label
                         htmlFor="needsRushProcessing"
-                        className="text-gray-900 font-semibold text-base flex items-center gap-2"
+                        className="text-foreground font-semibold text-base flex items-center gap-2"
                       >
                         <Zap className="h-5 w-5 text-orange-500" />
                         Rush Processing Service
                       </Label>
-                      <p className="text-gray-600 text-sm mt-1">
+                      <p className="text-muted-foreground text-sm mt-1">
                         Add 30% to all service fees for expedited processing and priority support
                       </p>
                     </div>
@@ -835,7 +839,7 @@ export function AccountingCalculator() {
 
               <Button
                 onClick={handleGenerateQuotation}
-                className="w-full bg-blue-600 hover:bg-blue-700 text-white h-14 text-lg font-semibold"
+                className="w-full bg-primary hover:bg-primary/90 text-primary-foreground h-14 text-lg font-semibold"
                 size="lg"
               >
                 Generate Preliminary Quotation
@@ -848,13 +852,13 @@ export function AccountingCalculator() {
         {/* Step 2: Quotation */}
         {step === "quotation" && (
           <div className="space-y-6">
-            <Card className="bg-white shadow-sm border">
+            <Card className="bg-background shadow-sm border border-border">
               <CardHeader className="pb-4">
-                <CardTitle className="text-xl text-gray-900 flex items-center gap-2">
-                  <Calculator className="h-5 w-5 text-blue-600" />
+                <CardTitle className="text-xl text-foreground flex items-center gap-2">
+                  <Calculator className="h-5 w-5 text-primary" />
                   Preliminary Quotation for {clientInfo.companyName}
                 </CardTitle>
-                <CardDescription className="text-gray-600">
+                <CardDescription className="text-muted-foreground">
                   Service: {serviceOptions.find((s) => s.value === clientInfo.serviceType)?.label} | Based on your
                   business information, here are our recommended services and pricing
                 </CardDescription>
@@ -864,10 +868,10 @@ export function AccountingCalculator() {
                   clientInfo.serviceType === "monthly-tax-only" ||
                   clientInfo.serviceType === "annual-bookkeeping-audit" ||
                   (clientInfo.serviceType === "annual-audit" && clientInfo.existingAccountantChoice === "no")) && (
-                  <div className="p-4 border-2 border-blue-200 bg-blue-50 rounded-lg">
+                  <div className="p-4 border-2 border-primary/20 bg-primary/10 rounded-lg">
                     <div className="flex justify-between items-start mb-3">
                       <div>
-                        <h4 className="text-lg font-bold text-gray-900">
+                        <h4 className="text-lg font-bold text-foreground">
                           {clientInfo.serviceType === "monthly-tax-only"
                             ? "Monthly Tax Filing"
                             : clientInfo.serviceType === "annual-bookkeeping-audit"
@@ -876,23 +880,23 @@ export function AccountingCalculator() {
                                 ? "Monthly Bookkeeping (In Our Name)"
                                 : "Monthly Accounting (Filing & Bookkeeping)"}
                         </h4>
-                        <p className="text-gray-600 text-sm">
+                        <p className="text-muted-foreground text-sm">
                           {getTransactionRanges().find((t) => t.value === clientInfo.monthlyTransactions)?.label}
                         </p>
                       </div>
-                      <Badge className="bg-blue-600 text-white">
+                      <Badge className="bg-primary text-primary-foreground">
                         {clientInfo.serviceType === "annual-bookkeeping-audit" ? "Annual" : "Monthly"}
                       </Badge>
                     </div>
 
                     <div className="space-y-2">
                       <div className="flex justify-between items-center">
-                        <span className="text-gray-700">
+                        <span className="text-foreground">
                           {clientInfo.serviceType === "annual-bookkeeping-audit"
                             ? "Base Annual Fee:"
                             : "Base Monthly Fee:"}
                         </span>
-                        <span className="text-lg font-bold text-gray-900">
+                        <span className="text-lg font-bold text-foreground">
                           ฿{quotation.monthlyAccountingFee.toLocaleString()}
                         </span>
                       </div>
@@ -910,7 +914,7 @@ export function AccountingCalculator() {
                         <span>
                           {clientInfo.serviceType === "annual-bookkeeping-audit" ? "Annual Total:" : "Monthly Total:"}
                         </span>
-                        <span className="text-blue-600">฿{quotation.totalMonthly.toLocaleString()}</span>
+                        <span className="text-primary">฿{quotation.totalMonthly.toLocaleString()}</span>
                       </div>
                     </div>
                   </div>
@@ -919,24 +923,24 @@ export function AccountingCalculator() {
                 {(clientInfo.serviceType === "monthly-tax-bookkeeping" ||
                   clientInfo.serviceType === "annual-bookkeeping-audit" ||
                   (clientInfo.serviceType === "annual-audit" && clientInfo.existingAccountantChoice === "yes")) && (
-                  <div className="p-4 border-2 border-green-200 bg-green-50 rounded-lg">
+                  <div className="p-4 border-2 border-chart-2/20 bg-chart-2/10 rounded-lg">
                     <div className="flex justify-between items-start mb-3">
                       <div>
-                        <h4 className="text-lg font-bold text-gray-900">
+                        <h4 className="text-lg font-bold text-foreground">
                           Annual Audit for NAPE
                           {clientInfo.serviceType === "annual-audit" && " (Existing Bookkeeping + Accountant)"}
                         </h4>
-                        <p className="text-gray-600 text-sm">
+                        <p className="text-muted-foreground text-sm">
                           {revenueRanges.find((r) => r.value === clientInfo.annualRevenue)?.label}
                         </p>
                       </div>
-                      <Badge className="bg-green-600 text-white">Annual</Badge>
+                      <Badge className="bg-chart-2 text-primary-foreground">Annual</Badge>
                     </div>
 
                     <div className="space-y-2">
                       <div className="flex justify-between items-center">
-                        <span className="text-gray-700">Base Annual Fee:</span>
-                        <span className="text-lg font-bold text-gray-900">
+                        <span className="text-foreground">Base Annual Fee:</span>
+                        <span className="text-lg font-bold text-foreground">
                           ฿
                           {(
                             revenueRanges.find((r) => r.value === clientInfo.annualRevenue)?.price || 0
@@ -960,13 +964,13 @@ export function AccountingCalculator() {
                       <Separator />
                       <div className="flex justify-between items-center text-lg font-bold">
                         <span>Annual Total:</span>
-                        <span className="text-green-600">฿{quotation.annualAuditFee.toLocaleString()}</span>
+                        <span className="text-chart-2">฿{quotation.annualAuditFee.toLocaleString()}</span>
                       </div>
                     </div>
                   </div>
                 )}
 
-                <div className="p-6 bg-gray-900 text-white rounded-lg">
+                <div className="p-6 bg-foreground text-background rounded-lg">
                   <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
                     <Calculator className="h-5 w-5" />
                     Investment Summary
@@ -974,7 +978,7 @@ export function AccountingCalculator() {
                   <div className="space-y-3">
                     {quotation.monthlyAccountingFee > 0 && (
                       <div className="flex justify-between items-center">
-                        <span className="text-gray-300">
+                        <span className="text-muted-foreground">
                           {clientInfo.serviceType === "annual-bookkeeping-audit"
                             ? "Annual Bookkeeping:"
                             : "Monthly Investment:"}
@@ -990,7 +994,7 @@ export function AccountingCalculator() {
                         {clientInfo.serviceType === "annual-audit" && clientInfo.existingAccountantChoice === "no" ? (
                           <>
                             <div className="flex justify-between items-center">
-                              <span className="text-gray-300">Annual Review Bookkeeping:</span>
+                              <span className="text-muted-foreground">Annual Review Bookkeeping:</span>
                               <span className="text-xl font-bold">
                                 ฿
                                 {(
@@ -1000,7 +1004,7 @@ export function AccountingCalculator() {
                               </span>
                             </div>
                             <div className="flex justify-between items-center">
-                              <span className="text-gray-300">Annual Revenue Audit:</span>
+                              <span className="text-muted-foreground">Annual Revenue Audit:</span>
                               <span className="text-xl font-bold">
                                 ฿
                                 {(
@@ -1027,13 +1031,13 @@ export function AccountingCalculator() {
                           </>
                         ) : (
                           <div className="flex justify-between items-center">
-                            <span className="text-gray-300">Annual Audit:</span>
+                            <span className="text-muted-foreground">Annual Audit:</span>
                             <span className="text-xl font-bold">฿{quotation.annualAuditFee.toLocaleString()}</span>
                           </div>
                         )}
                       </>
                     )}
-                    <Separator className="bg-gray-600" />
+                    <Separator className="bg-foreground/20" />
                     <div className="flex justify-between items-center text-xl font-bold">
                       <span>Total Annual Investment:</span>
                       <span className="text-yellow-400">
@@ -1050,20 +1054,20 @@ export function AccountingCalculator() {
 
                 {/* ... existing timeline and buttons ... */}
                 <div className="p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
-                  <h4 className="text-lg font-bold text-gray-900 mb-3 flex items-center gap-2">
+                  <h4 className="text-lg font-bold text-foreground mb-3 flex items-center gap-2">
                     <Clock className="h-5 w-5 text-yellow-600" />
                     Filing Deadlines Timeline
                   </h4>
                   <div className="space-y-2">
-                    <div className="flex items-center gap-2 text-sm text-gray-700">
+                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
                       <div className="w-2 h-2 bg-yellow-500 rounded-full"></div>
                       <span>Bookkeeping → 25th of following month</span>
                     </div>
-                    <div className="flex items-center gap-2 text-sm text-gray-700">
+                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
                       <div className="w-2 h-2 bg-yellow-500 rounded-full"></div>
                       <span>WHT filing → 15th of following month</span>
                     </div>
-                    <div className="flex items-center gap-2 text-sm text-gray-700">
+                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
                       <div className="w-2 h-2 bg-yellow-500 rounded-full"></div>
                       <span>VAT (PP.30) filing → 23rd of following month</span>
                     </div>
@@ -1073,7 +1077,7 @@ export function AccountingCalculator() {
                 <div className="flex gap-3">
                   <Button
                     onClick={handleViewChecklist}
-                    className="flex-1 bg-blue-600 hover:bg-blue-700 text-white"
+                    className="flex-1 bg-primary hover:bg-primary/90 text-primary-foreground"
                     size="lg"
                   >
                     View Required Documents
@@ -1082,7 +1086,7 @@ export function AccountingCalculator() {
                   <Button
                     onClick={handleStartOver}
                     variant="outline"
-                    className="border-gray-300 text-gray-700 bg-white hover:bg-gray-50"
+                    className="border-border text-foreground bg-background hover:bg-muted"
                     size="lg"
                   >
                     Start Over
@@ -1095,23 +1099,23 @@ export function AccountingCalculator() {
 
         {/* Step 3: Checklist */}
         {step === "checklist" && (
-          <Card className="bg-white shadow-sm border">
+          <Card className="bg-background shadow-sm border border-border">
             <CardHeader className="pb-4">
-              <CardTitle className="text-xl text-gray-900 flex items-center gap-2">
-                <CheckCircle className="h-5 w-5 text-green-600" />
+              <CardTitle className="text-xl text-foreground flex items-center gap-2">
+                <CheckCircle className="h-5 w-5 text-chart-2" />
                 Required Documents Checklist
               </CardTitle>
-              <CardDescription className="text-gray-600">
+              <CardDescription className="text-muted-foreground">
                 Please prepare the following documents for your accounting service setup
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
-              <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
+              <div className="p-4 bg-primary/10 border border-primary/20 rounded-lg">
                 <div className="flex items-start gap-3">
-                  <AlertCircle className="h-5 w-5 text-blue-600 mt-0.5" />
+                  <AlertCircle className="h-5 w-5 text-primary mt-0.5" />
                   <div>
-                    <h4 className="font-bold text-blue-900 mb-1">Next Steps</h4>
-                    <p className="text-blue-700 text-sm">
+                    <h4 className="font-bold text-primary-foreground mb-1">Next Steps</h4>
+                    <p className="text-primary-foreground text-sm">
                       Once you agree to this quotation, we will prepare an agreement and send you this detailed
                       checklist. Please gather these documents to ensure smooth service delivery.
                     </p>
@@ -1120,18 +1124,18 @@ export function AccountingCalculator() {
               </div>
 
               {documentChecklist.map((section, index) => (
-                <div key={index} className="border border-gray-200 bg-white rounded-lg p-4">
-                  <h4 className="text-lg font-bold text-gray-900 mb-3 flex items-center gap-2">
-                    <div className="w-6 h-6 bg-gray-600 rounded-md flex items-center justify-center">
-                      <span className="text-xs font-bold text-white">{index + 1}</span>
+                <div key={index} className="border border-border bg-background rounded-lg p-4">
+                  <h4 className="text-lg font-bold text-foreground mb-3 flex items-center gap-2">
+                    <div className="w-6 h-6 bg-muted-foreground rounded-md flex items-center justify-center">
+                      <span className="text-xs font-bold text-background">{index + 1}</span>
                     </div>
                     {section.category}
                   </h4>
                   <div className="space-y-2">
                     {section.items.map((item, itemIndex) => (
-                      <div key={itemIndex} className="flex items-start gap-2 p-2 bg-gray-50 rounded">
-                        <div className="w-1.5 h-1.5 bg-gray-400 rounded-full mt-2"></div>
-                        <span className="text-gray-700 text-sm">{item}</span>
+                      <div key={itemIndex} className="flex items-start gap-2 p-2 bg-muted/50 rounded">
+                        <div className="w-1.5 h-1.5 bg-muted-foreground rounded-full mt-2"></div>
+                        <span className="text-foreground text-sm">{item}</span>
                       </div>
                     ))}
                   </div>
@@ -1142,7 +1146,7 @@ export function AccountingCalculator() {
                 <Button
                   onClick={() => setStep("quotation")}
                   variant="outline"
-                  className="flex-1 border-gray-300 text-gray-700 bg-white hover:bg-gray-50"
+                  className="border-border text-foreground bg-background hover:bg-muted flex-1"
                   size="lg"
                 >
                   Back to Quotation
@@ -1150,12 +1154,12 @@ export function AccountingCalculator() {
                 <Button
                   onClick={handleAcceptQuoteAndSendPdf}
                   disabled={isGeneratingPdf}
-                  className="flex-1 bg-green-600 hover:bg-green-700 text-white disabled:opacity-50"
+                  className="flex-1 bg-chart-2 hover:bg-chart-2/90 text-primary-foreground disabled:opacity-50"
                   size="lg"
                 >
                   {isGeneratingPdf ? (
                     <>
-                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-primary-foreground mr-2"></div>
                       Sending Quote...
                     </>
                   ) : (
