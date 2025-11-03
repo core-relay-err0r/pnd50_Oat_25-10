@@ -1,5 +1,5 @@
 import type { Metadata } from "next"
-import { BookOpen, FileText, Users, Building2, Lightbulb, ArrowRight } from "lucide-react"
+import { BookOpen, FileText, Users, Building2, Lightbulb, ArrowRight, TrendingUp } from "lucide-react"
 import Link from "next/link"
 
 export const metadata: Metadata = {
@@ -43,6 +43,13 @@ const services = [
       "Clear, practical guidance on accounting and compliance to help your business make confident decisions in Thailand.",
     features: ["Strategic guidance", "Compliance advice", "Business planning", "Expert consultation"],
   },
+  {
+    icon: TrendingUp,
+    title: "Business Growth Solutions",
+    description:
+      "Strategic financial planning and analysis to help scale your business in Thailand. We provide insights and recommendations to optimize your operations and maximize profitability.",
+    features: ["Financial analysis", "Growth strategy", "Cost optimization", "Performance metrics"],
+  },
 ]
 
 export default function ServicesPage() {
@@ -72,7 +79,6 @@ export default function ServicesPage() {
         <div className="container mx-auto px-4 max-w-7xl">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">Our Services</h2>
-            
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
