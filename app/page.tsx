@@ -115,7 +115,8 @@ export default function PND50Landing() {
                   isVisible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
                 }`}
               >
-                From accounting to compliance, we help foreign businesses operate in Thailand with ease, accuracy, and full compliance with local regulations.
+                From accounting to compliance, we help foreign businesses operate in Thailand with ease, accuracy, and
+                full compliance with local regulations.
               </p>
 
               <div
@@ -125,8 +126,8 @@ export default function PND50Landing() {
               >
                 {[
                   {
-                    icon: "🤖",
-                    label: "AI-Powered",
+                    icon: "👨‍💼",
+                    label: "Certified Accountants",
                     color: "from-blue-500/20 to-blue-600/20 hover:from-blue-500/30 hover:to-blue-600/30",
                     hoverShadow: "hover:shadow-lg hover:shadow-blue-500/30",
                   },
