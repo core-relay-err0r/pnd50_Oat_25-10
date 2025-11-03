@@ -8,31 +8,31 @@ const services = [
   {
     name: "Corporate Tax Planning",
     href: "/services/corporate-tax-planning",
-    icon: <Calculator className="h-4 w-4 text-blue-400" />,
+    icon: <Calculator className="h-4 w-4 text-primary" />,
     description: "AI-driven strategies to optimize your corporate tax position.",
   },
   {
     name: "VAT Management",
     href: "/services/vat-management",
-    icon: <Shield className="h-4 w-4 text-blue-400" />,
+    icon: <Shield className="h-4 w-4 text-primary" />,
     description: "Automated VAT compliance and real-time reporting.",
   },
   {
     name: "Withholding Tax",
     href: "/services/withholding-tax",
-    icon: <HandCoins className="h-4 w-4 text-blue-400" />,
+    icon: <HandCoins className="h-4 w-4 text-primary" />,
     description: "Seamless WHT management with automated calculations.",
   },
   {
     name: "Tax Optimization",
     href: "/services/tax-optimization",
-    icon: <Target className="h-4 w-4 text-blue-400" />,
+    icon: <Target className="h-4 w-4 text-primary" />,
     description: "Data-driven insights to maximize tax efficiency.",
   },
   {
     name: "Audit Support",
     href: "/services/audit-support",
-    icon: <FileSearch className="h-4 w-4 text-blue-400" />,
+    icon: <FileSearch className="h-4 w-4 text-primary" />,
     description: "Proactive audit defense with predictive risk analysis.",
   },
 ]
@@ -51,7 +51,7 @@ export default function Footer() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
             {/* Company Info */}
             <div className="col-span-1 md:col-span-2 lg:col-span-1">
-              <Link href="/" className="text-2xl font-bold text-white mb-4 inline-block">
+              <Link href="/" className="text-2xl font-bold text-primary-foreground mb-4 inline-block">
                 PND50
               </Link>
               <p className="text-sm mb-4">
@@ -59,7 +59,7 @@ export default function Footer() {
                   href="https://burakornpartners.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="hover:text-white transition-colors"
+                  className="hover:text-primary-foreground transition-colors"
                 >
                   Powered by Burakorn Partners
                 </a>
@@ -72,14 +72,14 @@ export default function Footer() {
 
             {/* Services */}
             <div>
-              <h4 className="font-semibold text-white mb-4 tracking-wider uppercase text-sm">Services</h4>
+              <h4 className="font-semibold text-primary-foreground mb-4 tracking-wider uppercase text-sm">Services</h4>
               <ul className="space-y-3 text-sm">
                 {services.map((service) => (
                   <li key={service.name}>
                     <div className="flex items-center text-slate-400">
                       <span className="w-6 h-6 mr-2 rounded-full bg-slate-800 flex items-center justify-center">
                         {React.cloneElement(service.icon, {
-                          className: "h-4 w-4 text-blue-400",
+                          className: "h-4 w-4 text-primary",
                         })}
                       </span>
                       {service.name}
@@ -91,25 +91,25 @@ export default function Footer() {
 
             {/* Company Links */}
             <div>
-              <h4 className="font-semibold text-white mb-4 tracking-wider uppercase text-sm">Company</h4>
+              <h4 className="font-semibold text-primary-foreground mb-4 tracking-wider uppercase text-sm">Company</h4>
               <ul className="space-y-3 text-sm">
                 <li>
-                  <Link href="/about" className="hover:text-white transition-colors">
+                  <Link href="/about" className="hover:text-primary-foreground transition-colors">
                     About Us
                   </Link>
                 </li>
                 <li>
-                  <Link href="/faq" className="hover:text-white transition-colors">
+                  <Link href="/faq" className="hover:text-primary-foreground transition-colors">
                     FAQ
                   </Link>
                 </li>
                 <li>
-                  <Link href="/client-portal" className="hover:text-white transition-colors">
+                  <Link href="/client-portal" className="hover:text-primary-foreground transition-colors">
                     Client Portal
                   </Link>
                 </li>
                 <li>
-                  <Link href="/generate-invoice" className="hover:text-white transition-colors">
+                  <Link href="/generate-invoice" className="hover:text-primary-foreground transition-colors">
                     Case Study
                   </Link>
                 </li>
@@ -118,7 +118,9 @@ export default function Footer() {
 
             {/* Contact Info */}
             <div>
-              <h4 className="font-semibold text-white mb-4 tracking-wider uppercase text-sm">Contact Us</h4>
+              <h4 className="font-semibold text-primary-foreground mb-4 tracking-wider uppercase text-sm">
+                Contact Us
+              </h4>
               <ul className="space-y-3 text-sm">
                 <li className="flex items-start">
                   <MapPin className="h-4 w-4 mr-3 mt-1 flex-shrink-0 text-slate-500" />
@@ -126,20 +128,20 @@ export default function Footer() {
                     href={googleMapsUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="hover:text-white transition-colors"
+                    className="hover:text-primary-foreground transition-colors"
                   >
                     Bangkok, Thailand
                   </a>
                 </li>
                 <li className="flex items-center">
                   <Phone className="h-4 w-4 mr-3 flex-shrink-0 text-slate-500" />
-                  <a href={phoneUrl} className="hover:text-white transition-colors">
+                  <a href={phoneUrl} className="hover:text-primary-foreground transition-colors">
                     +66 2 017 2949
                   </a>
                 </li>
                 <li className="flex items-center">
                   <Mail className="h-4 w-4 mr-3 flex-shrink-0 text-slate-500" />
-                  <a href={emailUrl} className="hover:text-white transition-colors">
+                  <a href={emailUrl} className="hover:text-primary-foreground transition-colors">
                     info@pnd50.com
                   </a>
                 </li>
@@ -149,7 +151,7 @@ export default function Footer() {
                     href={telegramUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="hover:text-white transition-colors"
+                    className="hover:text-primary-foreground transition-colors"
                   >
                     +66 84 356 3805
                   </a>
@@ -160,7 +162,7 @@ export default function Footer() {
                     href={whatsappUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="hover:text-white transition-colors"
+                    className="hover:text-primary-foreground transition-colors"
                   >
                     +66 84 356 3805
                   </a>
@@ -179,10 +181,10 @@ export default function Footer() {
                 PND50, a Burakorn Partners Group company.
               </p>
               <div className="flex items-center gap-x-4 text-slate-500">
-                <Link href="/privacy-policy" className="hover:text-white transition-colors">
+                <Link href="/privacy-policy" className="hover:text-primary-foreground transition-colors">
                   Privacy Policy
                 </Link>
-                <Link href="/terms-of-service" className="hover:text-white transition-colors">
+                <Link href="/terms-of-service" className="hover:text-primary-foreground transition-colors">
                   Terms of Service
                 </Link>
               </div>
