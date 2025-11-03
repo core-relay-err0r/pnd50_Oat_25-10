@@ -57,16 +57,16 @@ export default function Header() {
               About us
             </Link>
 
-            <Link href="/client-portal" className="text-gray-600 transition-colors hover:text-blue-600">
-              Client Portal
-            </Link>
-
             <Link
               href="/#contact"
               className="text-gray-600 transition-colors hover:text-blue-600"
               onClick={handleContactClick}
             >
               Contact
+            </Link>
+
+            <Link href="/client-portal" className="text-gray-600 transition-colors hover:text-blue-600">
+              Client Portal
             </Link>
           </nav>
 
@@ -114,19 +114,19 @@ export default function Header() {
               </Link>
 
               <Link
-                href="/client-portal"
-                className="text-gray-600 transition-colors hover:text-blue-600"
-                onClick={handleLinkClick}
-              >
-                Client Portal
-              </Link>
-
-              <Link
                 href="/#contact"
                 className="text-gray-600 transition-colors hover:text-blue-600"
                 onClick={handleContactClick}
               >
                 Contact
+              </Link>
+
+              <Link
+                href="/client-portal"
+                className="text-gray-600 transition-colors hover:text-blue-600"
+                onClick={handleLinkClick}
+              >
+                Client Portal
               </Link>
 
               <Link
