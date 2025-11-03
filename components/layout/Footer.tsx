@@ -48,7 +48,7 @@ export default function Footer() {
     <TooltipProvider delayDuration={100}>
       <footer id="contact" className="bg-slate-900 text-slate-400 font-sans">
         <div className="container mx-auto px-6 py-16">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
             {/* Company Info */}
             <div className="col-span-1 md:col-span-2 lg:col-span-1">
               <Link href="/" className="text-2xl font-bold text-white mb-4 inline-block">
@@ -89,33 +89,6 @@ export default function Footer() {
               </ul>
             </div>
 
-            {/* Company Links */}
-            <div>
-              <h4 className="font-semibold text-white mb-4 tracking-wider uppercase text-sm">Company</h4>
-              <ul className="space-y-3 text-sm">
-                <li>
-                  <Link href="/about" className="hover:text-white transition-colors">
-                    About Us
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/#contact" className="hover:text-white transition-colors">
-                    Contact
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/client-portal" className="hover:text-white transition-colors">
-                    Client Portal
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/generate-invoice" className="hover:text-white transition-colors">
-                    Generate Invoice
-                  </Link>
-                </li>
-              </ul>
-            </div>
-
             {/* Contact Info */}
             <div>
               <h4 className="font-semibold text-white mb-4 tracking-wider uppercase text-sm">Contact Us</h4>
@@ -134,7 +107,7 @@ export default function Footer() {
                 <li className="flex items-center">
                   <Phone className="h-4 w-4 mr-3 flex-shrink-0 text-slate-500" />
                   <a href={phoneUrl} className="hover:text-white transition-colors">
-                    +66 2 017 2949 
+                    +66 2 017 2949
                   </a>
                 </li>
                 <li className="flex items-center">
@@ -151,7 +124,7 @@ export default function Footer() {
                     rel="noopener noreferrer"
                     className="hover:text-white transition-colors"
                   >
-                     +66 84 356 3805
+                    +66 84 356 3805
                   </a>
                 </li>
                 <li className="flex items-center">
