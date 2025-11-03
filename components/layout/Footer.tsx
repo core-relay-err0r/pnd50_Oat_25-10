@@ -99,7 +99,9 @@ export default function Footer() {
                   </Link>
                 </li>
                 <li>
-                  
+                  <Link href="/faq" className="hover:text-white transition-colors">
+                    FAQ
+                  </Link>
                 </li>
                 <li>
                   <Link href="/client-portal" className="hover:text-white transition-colors">
@@ -132,7 +134,7 @@ export default function Footer() {
                 <li className="flex items-center">
                   <Phone className="h-4 w-4 mr-3 flex-shrink-0 text-slate-500" />
                   <a href={phoneUrl} className="hover:text-white transition-colors">
-                    +66 2 017 2949 
+                    +66 2 017 2949
                   </a>
                 </li>
                 <li className="flex items-center">
@@ -149,7 +151,7 @@ export default function Footer() {
                     rel="noopener noreferrer"
                     className="hover:text-white transition-colors"
                   >
-                     +66 84 356 3805
+                    +66 84 356 3805
                   </a>
                 </li>
                 <li className="flex items-center">
