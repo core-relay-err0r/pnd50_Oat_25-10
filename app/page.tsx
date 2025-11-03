@@ -128,8 +128,8 @@ export default function PND50Landing() {
                   isVisible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
                 }`}
               >
-                All in one service from accounting to compliance, we help foreign businesses operate in Thailand with ease, accuracy, and full compliance with local regulations.
-              </p>
+                All in one service from accounting to compliance.
+We help foreign businesses operate in Thailand with ease, accuracy, and full compliance with local regulations.            </p>
 
               <div
                 className={`flex flex-wrap items-center justify-center gap-3 sm:gap-4 mb-12 transition-all duration-700 delay-300 ${
