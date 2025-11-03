@@ -64,6 +64,10 @@ export default function Header() {
             <Link href="/client-portal" className="text-muted-foreground transition-colors hover:text-primary">
               Client Portal
             </Link>
+
+            <Link href="/faq" className="text-muted-foreground transition-colors hover:text-primary">
+              FAQ
+            </Link>
           </nav>
 
           {/* Right: CTA & Mobile Menu Toggle */}
@@ -123,6 +127,14 @@ export default function Header() {
                 onClick={handleLinkClick}
               >
                 Client Portal
+              </Link>
+
+              <Link
+                href="/faq"
+                className="text-muted-foreground transition-colors hover:text-primary"
+                onClick={handleLinkClick}
+              >
+                FAQ
               </Link>
 
               <Link

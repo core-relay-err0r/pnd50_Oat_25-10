@@ -223,9 +223,10 @@ export function InfiniteCaseStudiesCarousel() {
   const getCardWidth = useCallback(() => {
     if (typeof window === "undefined") return 400
     const width = window.innerWidth
-    if (width < 768) return width * 0.9 // Slightly wider on mobile (was 0.85)
-    if (width < 1024) return width / 2.2 // Wider on tablet (was 2.5)
-    return width / 3.5 // Wider on desktop (was 4)
+    if (width < 640) return width * 0.9 // One card per view on mobile
+    if (width < 768) return width * 0.9
+    if (width < 1024) return width / 2.2
+    return width / 3.5
   }, [])
 
   const [cardWidth, setCardWidth] = useState(getCardWidth())
@@ -385,7 +386,7 @@ export function InfiniteCaseStudiesCarousel() {
 
   return (
     <div
-      className="relative"
+      className="relative pb-[calc(80px+env(safe-area-inset-bottom))] sm:pb-0"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
       role="region"
@@ -393,21 +394,21 @@ export function InfiniteCaseStudiesCarousel() {
     >
       <button
         onClick={goToPrev}
-        className="absolute left-0 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-background border border-border shadow-sm flex items-center justify-center transition-all duration-300 hover:bg-primary hover:border-primary hover:text-primary-foreground hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+        className="absolute left-0 sm:left-0 top-1/2 -translate-y-1/2 z-20 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-background border border-border shadow-sm flex items-center justify-center transition-all duration-300 hover:bg-primary hover:border-primary hover:text-primary-foreground hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
         aria-label="Previous case study"
       >
-        <ChevronLeft className="w-5 h-5" />
+        <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" />
       </button>
 
       <button
         onClick={goToNext}
-        className="absolute right-0 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-background border border-border shadow-sm flex items-center justify-center transition-all duration-300 hover:bg-primary hover:border-primary hover:text-primary-foreground hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+        className="absolute right-0 sm:right-0 top-1/2 -translate-y-1/2 z-20 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-background border border-border shadow-sm flex items-center justify-center transition-all duration-300 hover:bg-primary hover:border-primary hover:text-primary-foreground hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
         aria-label="Next case study"
       >
-        <ChevronRight className="w-5 h-5" />
+        <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
       </button>
 
-      <div className="overflow-hidden px-12">
+      <div className="overflow-hidden px-10 sm:px-12 snap-x snap-mandatory">
         <div
           ref={trackRef}
           className="flex gap-3 cursor-grab active:cursor-grabbing items-start"
@@ -427,7 +428,7 @@ export function InfiniteCaseStudiesCarousel() {
           {extendedCaseStudies.map((caseStudy, index) => (
             <div
               key={`${caseStudy.id}-${index}`}
-              className="flex-shrink-0 group focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-xl"
+              className="flex-shrink-0 snap-center group focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-xl"
               style={{ width: `${cardWidth}px` }}
               tabIndex={0}
               role="article"
@@ -436,10 +437,10 @@ export function InfiniteCaseStudiesCarousel() {
               <div className="h-auto bg-card border border-border rounded-xl hover:border-primary/30 hover:shadow-md transition-all duration-300">
                 <div className="flex flex-col md:flex-row items-start">
                   <div
-                    className={`md:w-2/5 bg-muted/30 border-b md:border-b-0 md:border-r border-border p-5 py-6 flex flex-col`}
+                    className={`md:w-2/5 bg-muted/30 border-b md:border-b-0 md:border-r border-border p-4 sm:p-5 py-5 sm:py-6 flex flex-col`}
                   >
-                    <div className="flex items-center gap-3 mb-4">
-                      <div className="relative w-10 h-10 rounded-full overflow-hidden border-2 border-background shadow-sm flex-shrink-0">
+                    <div className="flex items-center gap-3 mb-3 sm:mb-4">
+                      <div className="relative w-8 h-8 sm:w-10 sm:h-10 rounded-full overflow-hidden border-2 border-background shadow-sm flex-shrink-0">
                         <Image
                           src={caseStudy.flagUrl || "/placeholder.svg"}
                           alt={`${caseStudy.country} Flag`}
@@ -449,69 +450,73 @@ export function InfiniteCaseStudiesCarousel() {
                       </div>
                       <div className="flex-1 min-w-0">
                         <div
-                          className={`text-xs font-medium uppercase tracking-wide ${
+                          className={`text-[10px] sm:text-xs font-medium uppercase tracking-wide ${
                             caseStudy.country === "Russia" ? "text-blue-600" : "text-emerald-600"
                           }`}
                         >
                           {caseStudy.country} → Thailand
                         </div>
-                        <div className="text-xs text-muted-foreground whitespace-normal">{caseStudy.industry}</div>
+                        <div className="text-[10px] sm:text-xs text-muted-foreground whitespace-normal break-words">
+                          {caseStudy.industry}
+                        </div>
                       </div>
                     </div>
-                    <h3 className="text-lg font-bold text-foreground mb-4 whitespace-normal">{caseStudy.title}</h3>
+                    <h3 className="text-base sm:text-lg font-bold text-foreground mb-3 sm:mb-4 whitespace-normal break-words leading-snug">
+                      {caseStudy.title}
+                    </h3>
 
-                    <div className="space-y-3 mb-4 flex-1">
+                    <div className="space-y-2.5 sm:space-y-3 mb-3 sm:mb-4 flex-1">
                       <div>
-                        <div className="text-xs font-semibold text-orange-600 uppercase tracking-wide mb-1.5">
+                        <div className="text-[10px] sm:text-xs font-semibold text-orange-600 uppercase tracking-wide mb-1 sm:mb-1.5">
                           Challenge
                         </div>
-                        <p className="text-xs text-muted-foreground leading-relaxed whitespace-normal">
+                        <p className="text-xs sm:text-xs text-muted-foreground leading-relaxed whitespace-normal break-words">
                           {caseStudy.challenge}
                         </p>
                       </div>
                       <div>
-                        <div className="text-xs font-semibold text-blue-600 uppercase tracking-wide mb-1.5">
+                        <div className="text-[10px] sm:text-xs font-semibold text-blue-600 uppercase tracking-wide mb-1 sm:mb-1.5">
                           Solution
                         </div>
-                        <p className="text-xs text-muted-foreground leading-relaxed whitespace-normal">
+                        <p className="text-xs sm:text-xs text-muted-foreground leading-relaxed whitespace-normal break-words">
                           {caseStudy.solution}
                         </p>
                       </div>
                     </div>
 
-                    <div className="bg-primary/5 border-l-2 border-primary rounded-r-lg p-3 mt-auto">
-                      <Quote className="w-3 h-3 text-primary mb-1.5" />
-                      <p className="text-xs text-foreground italic mb-2 leading-relaxed whitespace-normal">
+                    <div className="bg-primary/5 border-l-2 border-primary rounded-r-lg p-2.5 sm:p-3 mt-auto">
+                      <Quote className="w-3 h-3 text-primary mb-1 sm:mb-1.5" />
+                      <p className="text-xs sm:text-xs text-foreground italic mb-1.5 sm:mb-2 leading-relaxed whitespace-normal break-words">
                         {caseStudy.testimonial.quote}
                       </p>
-                      <p className="text-xs font-semibold text-foreground">{caseStudy.testimonial.author}</p>
+                      <p className="text-xs sm:text-xs font-semibold text-foreground">{caseStudy.testimonial.author}</p>
                     </div>
                   </div>
 
-                  <div className="md:w-3/5 p-5 py-6 bg-background">
-                    <div className="flex items-center gap-2 mb-4">
-                      <CheckCircle2 className="w-4 h-4 text-primary" />
-                      <h4 className="text-base font-bold text-foreground">Success Highlights</h4>
+                  <div className="md:w-3/5 p-4 sm:p-5 py-5 sm:py-6 bg-background">
+                    <div className="flex items-center gap-2 mb-3 sm:mb-4">
+                      <CheckCircle2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-primary" />
+                      <h4 className="text-sm sm:text-base font-bold text-foreground">Success Highlights</h4>
                     </div>
-                    <div className="flex flex-col gap-4">
+                    <div className="flex flex-col gap-3 sm:gap-4">
                       {caseStudy.successHighlights.map((highlight, idx) => (
                         <div
                           key={idx}
-                          className={`bg-gradient-to-br ${colorClasses[highlight.color as keyof typeof colorClasses].bg} border ${colorClasses[highlight.color as keyof typeof colorClasses].border} rounded-lg p-3`}
+                          className={`bg-gradient-to-br ${colorClasses[highlight.color as keyof typeof colorClasses].bg} border ${colorClasses[highlight.color as keyof typeof colorClasses].border} rounded-lg p-2.5 sm:p-3`}
                         >
-                          <div className="flex items-start gap-3">
+                          <div className="flex items-start gap-2.5 sm:gap-3">
                             <div
-                              className={`w-8 h-8 rounded-full ${colorClasses[highlight.color as keyof typeof colorClasses].iconBg} flex items-center justify-center flex-shrink-0`}
+                              className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full ${colorClasses[highlight.color as keyof typeof colorClasses].iconBg} flex items-center justify-center flex-shrink-0`}
                             >
                               <CheckCircle2
-                                className={`w-4 h-4 ${colorClasses[highlight.color as keyof typeof colorClasses].iconColor}`}
+                                className={`w-3.5 h-3.5 sm:w-4 sm:h-4 ${colorClasses[highlight.color as keyof typeof colorClasses].iconColor}`}
                               />
                             </div>
                             <div className="flex-1 min-w-0">
-                              <h5 className="font-semibold text-foreground text-xs mb-1 whitespace-normal">
+                              <h5 className="font-semibold text-foreground text-xs sm:text-xs mb-0.5 sm:mb-1 whitespace-normal break-words leading-snug">
                                 {highlight.title}
                               </h5>
-                              <p className="text-xs text-muted-foreground leading-relaxed whitespace-normal">
+                              <p className="text-xs sm:text-xs text-muted-foreground leading-relaxed whitespace-normal break-words">
                                 {highlight.description}
                               </p>
                             </div>
