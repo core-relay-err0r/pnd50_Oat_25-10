@@ -227,7 +227,7 @@ export default function PND50Landing() {
 
               <div
                 className={`transition-all duration-700 delay-500 ${
-                  isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+                  isVisible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
                 }`}
               >
                 <HomepageCtas />
@@ -312,6 +312,16 @@ export default function PND50Landing() {
                 </div>
               ))}
             </div>
+
+            <div className="mt-12 text-center scroll-animate" style={{ transitionDelay: "600ms" }}>
+              <Button asChild variant="outline" className="group bg-transparent">
+                <Link href="/services" className="flex items-center gap-2">
+                  See our services
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </Link>
+              </Button>
+            </div>
+            {/* </CHANGE> */}
           </div>
         </section>
 

@@ -410,7 +410,7 @@ export function InfiniteCaseStudiesCarousel() {
       <div className="overflow-hidden px-12">
         <div
           ref={trackRef}
-          className="flex gap-3 cursor-grab active:cursor-grabbing"
+          className="flex gap-3 cursor-grab active:cursor-grabbing items-start"
           style={{
             transform: `translateX(${getTranslateX()}px)`,
             transition: isDragging ? "none" : "transform 300ms cubic-bezier(0.4, 0, 0.2, 1)",
@@ -433,12 +433,12 @@ export function InfiniteCaseStudiesCarousel() {
               role="article"
               aria-label={`Case study: ${caseStudy.title}`}
             >
-              <div className="h-[380px] bg-card border border-border rounded-xl overflow-hidden hover:border-primary/30 hover:shadow-md transition-all duration-300">
-                <div className="flex flex-col md:flex-row h-full">
+              <div className="h-auto bg-card border border-border rounded-xl hover:border-primary/30 hover:shadow-md transition-all duration-300">
+                <div className="flex flex-col md:flex-row items-start">
                   <div
-                    className={`md:w-2/5 bg-muted/30 border-b md:border-b-0 md:border-r border-border p-5 flex flex-col`}
+                    className={`md:w-2/5 bg-muted/30 border-b md:border-b-0 md:border-r border-border p-5 py-6 flex flex-col`}
                   >
-                    <div className="flex items-center gap-3 mb-3">
+                    <div className="flex items-center gap-3 mb-4">
                       <div className="relative w-10 h-10 rounded-full overflow-hidden border-2 border-background shadow-sm flex-shrink-0">
                         <Image
                           src={caseStudy.flagUrl || "/placeholder.svg"}
@@ -455,49 +455,51 @@ export function InfiniteCaseStudiesCarousel() {
                         >
                           {caseStudy.country} → Thailand
                         </div>
-                        <div className="text-xs text-muted-foreground truncate">{caseStudy.industry}</div>
+                        <div className="text-xs text-muted-foreground whitespace-normal">{caseStudy.industry}</div>
                       </div>
                     </div>
-                    <h3 className="text-lg font-bold text-foreground mb-3 line-clamp-2">{caseStudy.title}</h3>
+                    <h3 className="text-lg font-bold text-foreground mb-4 whitespace-normal">{caseStudy.title}</h3>
 
-                    <div className="space-y-2 mb-3 flex-1">
+                    <div className="space-y-3 mb-4 flex-1">
                       <div>
-                        <div className="text-xs font-semibold text-orange-600 uppercase tracking-wide mb-1">
+                        <div className="text-xs font-semibold text-orange-600 uppercase tracking-wide mb-1.5">
                           Challenge
                         </div>
-                        <p className="text-xs text-muted-foreground leading-relaxed line-clamp-2">
+                        <p className="text-xs text-muted-foreground leading-relaxed whitespace-normal">
                           {caseStudy.challenge}
                         </p>
                       </div>
                       <div>
-                        <div className="text-xs font-semibold text-blue-600 uppercase tracking-wide mb-1">Solution</div>
-                        <p className="text-xs text-muted-foreground leading-relaxed line-clamp-2">
+                        <div className="text-xs font-semibold text-blue-600 uppercase tracking-wide mb-1.5">
+                          Solution
+                        </div>
+                        <p className="text-xs text-muted-foreground leading-relaxed whitespace-normal">
                           {caseStudy.solution}
                         </p>
                       </div>
                     </div>
 
-                    <div className="bg-primary/5 border-l-2 border-primary rounded-r-lg p-2.5 mt-auto">
-                      <Quote className="w-3 h-3 text-primary mb-1" />
-                      <p className="text-xs text-foreground italic mb-1 leading-relaxed line-clamp-2">
+                    <div className="bg-primary/5 border-l-2 border-primary rounded-r-lg p-3 mt-auto">
+                      <Quote className="w-3 h-3 text-primary mb-1.5" />
+                      <p className="text-xs text-foreground italic mb-2 leading-relaxed whitespace-normal">
                         {caseStudy.testimonial.quote}
                       </p>
                       <p className="text-xs font-semibold text-foreground">{caseStudy.testimonial.author}</p>
                     </div>
                   </div>
 
-                  <div className="md:w-3/5 p-5 bg-background">
-                    <div className="flex items-center gap-2 mb-3">
+                  <div className="md:w-3/5 p-5 py-6 bg-background">
+                    <div className="flex items-center gap-2 mb-4">
                       <CheckCircle2 className="w-4 h-4 text-primary" />
                       <h4 className="text-base font-bold text-foreground">Success Highlights</h4>
                     </div>
-                    <div className="grid grid-cols-1 gap-2.5">
+                    <div className="flex flex-col gap-4">
                       {caseStudy.successHighlights.map((highlight, idx) => (
                         <div
                           key={idx}
                           className={`bg-gradient-to-br ${colorClasses[highlight.color as keyof typeof colorClasses].bg} border ${colorClasses[highlight.color as keyof typeof colorClasses].border} rounded-lg p-3`}
                         >
-                          <div className="flex items-center gap-2.5">
+                          <div className="flex items-start gap-3">
                             <div
                               className={`w-8 h-8 rounded-full ${colorClasses[highlight.color as keyof typeof colorClasses].iconBg} flex items-center justify-center flex-shrink-0`}
                             >
@@ -506,10 +508,10 @@ export function InfiniteCaseStudiesCarousel() {
                               />
                             </div>
                             <div className="flex-1 min-w-0">
-                              <h5 className="font-semibold text-foreground text-xs mb-0.5 line-clamp-1">
+                              <h5 className="font-semibold text-foreground text-xs mb-1 whitespace-normal">
                                 {highlight.title}
                               </h5>
-                              <p className="text-xs text-muted-foreground leading-relaxed line-clamp-2">
+                              <p className="text-xs text-muted-foreground leading-relaxed whitespace-normal">
                                 {highlight.description}
                               </p>
                             </div>
