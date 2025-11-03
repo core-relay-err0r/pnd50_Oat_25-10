@@ -48,9 +48,9 @@ export default function Footer() {
     <TooltipProvider delayDuration={100}>
       <footer id="contact" className="bg-slate-900 text-slate-400 font-sans">
         <div className="container mx-auto px-6 py-16">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
-            {/* Company Info */}
-            <div className="col-span-1 md:col-span-2 lg:col-span-1">
+          <div className="flex flex-col lg:flex-row lg:justify-between gap-12">
+            {/* Company Info - Left Side */}
+            <div className="lg:max-w-md">
               <Link href="/" className="text-2xl font-bold text-white mb-4 inline-block">
                 PND50
               </Link>
@@ -70,75 +70,78 @@ export default function Footer() {
               </p>
             </div>
 
-            {/* Services */}
-            <div>
-              <h4 className="font-semibold text-white mb-4 tracking-wider uppercase text-sm">Services</h4>
-              <ul className="space-y-3 text-sm">
-                {services.map((service) => (
-                  <li key={service.name}>
-                    <div className="flex items-center text-slate-400">
-                      <span className="w-6 h-6 mr-2 rounded-full bg-slate-800 flex items-center justify-center">
-                        {React.cloneElement(service.icon, {
-                          className: "h-4 w-4 text-blue-400",
-                        })}
-                      </span>
-                      {service.name}
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            </div>
+            {/* Services and Contact - Right Side */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+              {/* Services */}
+              <div>
+                <h4 className="font-semibold text-white mb-4 tracking-wider uppercase text-sm">Services</h4>
+                <ul className="space-y-3 text-sm">
+                  {services.map((service) => (
+                    <li key={service.name}>
+                      <div className="flex items-center text-slate-400">
+                        <span className="w-6 h-6 mr-2 rounded-full bg-slate-800 flex items-center justify-center">
+                          {React.cloneElement(service.icon, {
+                            className: "h-4 w-4 text-blue-400",
+                          })}
+                        </span>
+                        {service.name}
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </div>
 
-            {/* Contact Info */}
-            <div>
-              <h4 className="font-semibold text-white mb-4 tracking-wider uppercase text-sm">Contact Us</h4>
-              <ul className="space-y-3 text-sm">
-                <li className="flex items-start">
-                  <MapPin className="h-4 w-4 mr-3 mt-1 flex-shrink-0 text-slate-500" />
-                  <a
-                    href={googleMapsUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="hover:text-white transition-colors"
-                  >
-                    Bangkok, Thailand
-                  </a>
-                </li>
-                <li className="flex items-center">
-                  <Phone className="h-4 w-4 mr-3 flex-shrink-0 text-slate-500" />
-                  <a href={phoneUrl} className="hover:text-white transition-colors">
-                    +66 2 017 2949
-                  </a>
-                </li>
-                <li className="flex items-center">
-                  <Mail className="h-4 w-4 mr-3 flex-shrink-0 text-slate-500" />
-                  <a href={emailUrl} className="hover:text-white transition-colors">
-                    info@pnd50.com
-                  </a>
-                </li>
-                <li className="flex items-center">
-                  <img src="/images/icons8-telegram.gif" alt="Telegram" className="h-4 w-4 mr-3 flex-shrink-0" />
-                  <a
-                    href={telegramUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="hover:text-white transition-colors"
-                  >
-                    +66 84 356 3805
-                  </a>
-                </li>
-                <li className="flex items-center">
-                  <img src="/images/icons8-whatsapp.gif" alt="WhatsApp" className="h-4 w-4 mr-3 flex-shrink-0" />
-                  <a
-                    href={whatsappUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="hover:text-white transition-colors"
-                  >
-                    +66 84 356 3805
-                  </a>
-                </li>
-              </ul>
+              {/* Contact Info */}
+              <div>
+                <h4 className="font-semibold text-white mb-4 tracking-wider uppercase text-sm">Contact Us</h4>
+                <ul className="space-y-3 text-sm">
+                  <li className="flex items-start">
+                    <MapPin className="h-4 w-4 mr-3 mt-1 flex-shrink-0 text-slate-500" />
+                    <a
+                      href={googleMapsUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="hover:text-white transition-colors"
+                    >
+                      Bangkok, Thailand
+                    </a>
+                  </li>
+                  <li className="flex items-center">
+                    <Phone className="h-4 w-4 mr-3 flex-shrink-0 text-slate-500" />
+                    <a href={phoneUrl} className="hover:text-white transition-colors">
+                      +66 2 017 2949
+                    </a>
+                  </li>
+                  <li className="flex items-center">
+                    <Mail className="h-4 w-4 mr-3 flex-shrink-0 text-slate-500" />
+                    <a href={emailUrl} className="hover:text-white transition-colors">
+                      info@pnd50.com
+                    </a>
+                  </li>
+                  <li className="flex items-center">
+                    <img src="/images/icons8-telegram.gif" alt="Telegram" className="h-4 w-4 mr-3 flex-shrink-0" />
+                    <a
+                      href={telegramUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="hover:text-white transition-colors"
+                    >
+                      +66 84 356 3805
+                    </a>
+                  </li>
+                  <li className="flex items-center">
+                    <img src="/images/icons8-whatsapp.gif" alt="WhatsApp" className="h-4 w-4 mr-3 flex-shrink-0" />
+                    <a
+                      href={whatsappUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="hover:text-white transition-colors"
+                    >
+                      +66 84 356 3805
+                    </a>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
 
