@@ -3,30 +3,43 @@
 import type React from "react"
 
 import { useState, useEffectEvent } from "react"
-import { X, MessageCircle, Send } from "lucide-react"
+import { X, MessageCircle, Send, Sparkles } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useChat } from "@ai-sdk/react"
 import { DefaultChatTransport } from "ai"
+import { usePathname } from "next/navigation"
+
+const WELCOME_MESSAGE = {
+  id: "welcome-static",
+  role: "assistant" as const,
+  parts: [
+    {
+      type: "text" as const,
+      text: "👋 Hi there! I'm Anya, your digital assistant from PND50.\n\nI can help you find the right accounting or tax service for your company — and get your quotation in just a few minutes.\n\nShall we get started? 📋 ✨",
+    },
+  ],
+  createdAt: new Date(),
+}
 
 export function FloatingChatBot() {
   const [isOpen, setIsOpen] = useState(false)
+  const pathname = usePathname()
+  const isOnCalculator = pathname === "/calculator"
 
-  const { messages, sendMessage, status } = useChat({
-    transport: new DefaultChatTransport({ api: "/api/chatbot" }),
-    initialMessages: [
-      {
-        id: "welcome",
-        role: "assistant",
-        parts: [
-          {
-            type: "text",
-            text: "Hi there! 👋 I'm here to help with PND50's accounting and tax services. Feel free to ask about our services or click 'Schedule Consultation' to get started!",
-          },
-        ],
-        createdAt: new Date(),
+  const {
+    messages: aiMessages,
+    sendMessage,
+    status,
+  } = useChat({
+    transport: new DefaultChatTransport({
+      api: "/api/chatbot",
+      headers: {
+        "X-Current-Page": pathname || "/",
       },
-    ],
+    }),
   })
+
+  const messages = [WELCOME_MESSAGE, ...aiMessages]
 
   const [inputValue, setInputValue] = useState("")
 
@@ -63,13 +76,14 @@ export function FloatingChatBot() {
                 <MessageCircle className="w-5 h-5 text-white" />
               </div>
               <div>
-                <h3 className="text-white font-semibold">PND50 AI Assistant</h3>
+                <h3 className="text-white font-semibold">Anya - PND50 Assistant</h3>
                 <p className="text-blue-100 text-xs">{status === "in_progress" ? "Typing..." : "Online"}</p>
               </div>
             </div>
             <button
               onClick={() => setIsOpen(false)}
               className="text-white hover:bg-white/20 rounded-lg p-1.5 transition-colors"
+              aria-label="Close chat"
             >
               <X className="w-5 h-5" />
             </button>
@@ -149,24 +163,35 @@ export function FloatingChatBot() {
         </div>
       </div>
 
-      {/* Floating Button */}
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className={`fixed bottom-6 right-6 z-50 w-14 h-14 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white rounded-full shadow-2xl flex items-center justify-center transition-all duration-300 hover:scale-110 group ${
-          isOpen ? "rotate-0" : "rotate-0"
-        }`}
-        aria-label="Open chat"
-      >
-        <MessageCircle className={`w-6 h-6 transition-transform duration-300 ${isOpen ? "scale-0" : "scale-100"}`} />
-        <X className={`w-6 h-6 absolute transition-transform duration-300 ${isOpen ? "scale-100" : "scale-0"}`} />
+      {!isOpen && (
+        <button
+          onClick={() => setIsOpen(true)}
+          className="fixed bottom-6 right-6 z-50 bg-white hover:bg-gray-50 text-gray-900 rounded-full shadow-2xl flex gap-4 px-7 py-5 transition-all duration-300 hover:scale-105 hover:shadow-xl opacity-100 shadow-xl border-4 border-dotted border-primary items-center"
+          aria-label="Open chat with Anya"
+        >
+          {/* Sparkle icon with blue gradient */}
+          <div className="flex items-center justify-center">
+            <Sparkles className="w-8 h-8 text-blue-600" />
+          </div>
 
-        {/* Notification Badge */}
-        {!isOpen && (
-          <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center animate-pulse">
-            AI
-          </span>
-        )}
-      </button>
+          {/* Two-line text layout */}
+          <div className="flex flex-col items-start">
+            <span className="text-base font-bold text-gray-900 leading-tight">AI assistant</span>
+            <span className="text-sm text-gray-600 leading-tight">Chat with Anya</span>
+          </div>
+        </button>
+      )}
+
+      {/* Close button when chat is open */}
+      {isOpen && (
+        <button
+          onClick={() => setIsOpen(false)}
+          className="fixed bottom-6 right-6 z-50 w-14 h-14 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white rounded-full shadow-2xl flex items-center justify-center transition-all duration-300 hover:scale-105"
+          aria-label="Close chat"
+        >
+          <X className="w-6 h-6" />
+        </button>
+      )}
     </>
   )
 }

@@ -149,7 +149,7 @@ export default function Footer() {
             <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
               <p className="text-slate-500">
                 ©{" "}
-                <Suspense fallback={<span />}>
+                <Suspense fallback={<span>...</span>}>
                   <CurrentYear />
                 </Suspense>{" "}
                 PND50, a Burakorn Partners Group company.

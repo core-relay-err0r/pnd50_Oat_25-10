@@ -1,3 +1,4 @@
+import { Suspense } from "react"
 import type React from "react"
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
@@ -32,9 +33,11 @@ export default function RootLayout({
           <Header />
           <main>{children}</main>
           <Footer />
-          <Toaster />
+          <Suspense fallback={null}>
+            <Toaster />
+            <FloatingChatBot />
+          </Suspense>
           <LayoutClientComponent />
-          <FloatingChatBot />
         </ModalProvider>
       </body>
     </html>
