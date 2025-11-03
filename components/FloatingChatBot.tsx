@@ -15,7 +15,7 @@ const WELCOME_MESSAGE = {
   parts: [
     {
       type: "text" as const,
-      text: "👋 Hi there! I'm Anya, your digital assistant from PND50.\n\nI can help you find the right accounting or tax service for your company — and get your quotation in just a few minutes.\n\nShall we get started? 📋 ✨",
+      text: "👋 Hi there! I'm Panida, your digital assistant from PND50.\n\nI can help you find the right accounting or tax service for your company — and get your quotation in just a few minutes.\n\nShall we get started? 📋 ✨",
     },
   ],
   createdAt: new Date(),
@@ -76,7 +76,7 @@ export function FloatingChatBot() {
                 <MessageCircle className="w-5 h-5 text-white" />
               </div>
               <div>
-                <h3 className="text-white font-semibold">Anya - PND50 Assistant</h3>
+                <h3 className="text-white font-semibold">Panida - PND50 Assistant</h3>
                 <p className="text-blue-100 text-xs">{status === "in_progress" ? "Typing..." : "Online"}</p>
               </div>
             </div>
@@ -167,7 +167,7 @@ export function FloatingChatBot() {
         <button
           onClick={() => setIsOpen(true)}
           className="fixed bottom-6 right-6 z-50 bg-white hover:bg-gray-50 text-gray-900 rounded-full shadow-2xl flex gap-4 px-7 py-5 transition-all duration-300 hover:scale-105 hover:shadow-xl opacity-100 shadow-xl border-4 border-dotted border-primary items-center"
-          aria-label="Open chat with Anya"
+          aria-label="Open chat with Panida"
         >
           {/* Sparkle icon with blue gradient */}
           <div className="flex items-center justify-center">
@@ -177,7 +177,7 @@ export function FloatingChatBot() {
           {/* Two-line text layout */}
           <div className="flex flex-col items-start">
             <span className="text-base font-bold text-gray-900 leading-tight">AI assistant</span>
-            <span className="text-sm text-gray-600 leading-tight">Chat with Anya</span>
+            <span className="text-sm text-gray-600 leading-tight">Chat with Panida</span>
           </div>
         </button>
       )}
