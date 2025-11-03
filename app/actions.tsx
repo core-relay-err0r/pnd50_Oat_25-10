@@ -24,6 +24,7 @@ const quotePdfSchema = z.object({
     hasSocialFund: z.boolean(),
     employeeCount: z.string().optional(),
     needsRushProcessing: z.boolean(),
+    selectedPackage: z.string().optional(), // Added selectedPackage to schema
   }),
   quotation: z.object({
     monthlyAccountingFee: z.number(),
@@ -131,6 +132,12 @@ export async function generateAndSendQuotePdf(prevState: FormState, formData: Fo
 
     const { clientInfo, quotation, userEmail } = validatedFields.data
 
+    const packageNames: Record<string, string> = {
+      startup: "Startup Package",
+      growth: "Growth Package",
+      "full-cycle": "Full-Cycle Package",
+    }
+
     const emailHtml = `
       <!DOCTYPE html>
       <html>
@@ -151,6 +158,19 @@ export async function generateAndSendQuotePdf(prevState: FormState, formData: Fo
             <p style="color: #333; font-size: 16px; line-height: 26px; margin: 16px 0;">
               Thank you for your interest in PND50 Accounting Services. We've prepared a detailed quotation based on your business requirements.
             </p>
+            
+            ${
+              clientInfo.selectedPackage
+                ? `
+            <div style="background-color: #eff6ff; border: 2px solid #3b82f6; border-radius: 8px; margin: 24px 0; padding: 20px;">
+              <h3 style="color: #1e40af; font-size: 18px; font-weight: bold; margin: 0 0 8px 0;">Selected Package:</h3>
+              <p style="color: #1e40af; font-size: 20px; font-weight: bold; margin: 0;">
+                ${packageNames[clientInfo.selectedPackage] || clientInfo.selectedPackage}
+              </p>
+            </div>
+            `
+                : ""
+            }
             
             <div style="background-color: #f8f9fa; border: 1px solid #e9ecef; border-radius: 8px; margin: 24px 0; padding: 20px;">
               <h3 style="color: #333; font-size: 18px; font-weight: bold; margin: 0 0 16px 0;">Quote Summary:</h3>
@@ -192,6 +212,15 @@ export async function generateAndSendQuotePdf(prevState: FormState, formData: Fo
             
             <div style="background-color: #f0f9ff; border: 1px solid #bae6fd; border-radius: 8px; margin: 24px 0; padding: 20px;">
               <h3 style="color: #333; font-size: 18px; font-weight: bold; margin: 0 0 16px 0;">Service Details:</h3>
+              ${
+                clientInfo.selectedPackage
+                  ? `
+              <p style="color: #333; font-size: 16px; line-height: 26px; margin: 8px 0;">
+                • Package: ${packageNames[clientInfo.selectedPackage] || clientInfo.selectedPackage}
+              </p>
+              `
+                  : ""
+              }
               <p style="color: #333; font-size: 16px; line-height: 26px; margin: 8px 0;">
                 • Business Type: ${clientInfo.businessType || "Not specified"}
               </p>

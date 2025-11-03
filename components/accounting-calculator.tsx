@@ -20,6 +20,9 @@ import {
   Download,
   Briefcase,
   User,
+  Rocket,
+  TrendingUp,
+  Target,
 } from "lucide-react"
 import { useRouter } from "next/navigation"
 
@@ -40,6 +43,7 @@ interface ClientInfo {
   whatsappId?: string // WhatsApp ID is optional
   contactEmail?: string
   telephone?: string
+  selectedPackage?: string // Added selectedPackage field
 }
 
 interface QuotationResult {
@@ -192,6 +196,33 @@ const serviceOptions = [
   },
 ]
 
+const packageOptions = [
+  {
+    value: "startup",
+    label: "Startup Package",
+    icon: Rocket,
+    description: "Perfect for new companies in Thailand",
+    features: ["Up to 3 employees", "Low-to-medium transaction volume", "Basic compliance support"],
+    color: "from-blue-500 to-cyan-500",
+  },
+  {
+    value: "growth",
+    label: "Growth Package",
+    icon: TrendingUp,
+    description: "Ideal for expanding businesses",
+    features: ["Up to 10 employees", "Medium-to-high transaction volume", "Advanced reporting"],
+    color: "from-purple-500 to-pink-500",
+  },
+  {
+    value: "full-cycle",
+    label: "Full-Cycle Package",
+    icon: Target,
+    description: "Comprehensive solution for established companies",
+    features: ["Unlimited employees", "High transaction volume", "Full-service accounting"],
+    color: "from-orange-500 to-red-500",
+  },
+]
+
 export function AccountingCalculator() {
   const router = useRouter()
   const [step, setStep] = useState<"input" | "quotation" | "checklist">("input")
@@ -214,6 +245,7 @@ export function AccountingCalculator() {
     email: "", // Initialize email
     phone: "", // Initialize phone
     whatsappId: "", // Initialize whatsappId
+    selectedPackage: "", // Initialize selectedPackage
   })
 
   const quotation = useMemo((): QuotationResult => {
@@ -322,20 +354,23 @@ export function AccountingCalculator() {
 
   const isFormValid = () => {
     return !(
-      !clientInfo.companyName ||
-      !clientInfo.email || // Only email is required from contact fields
-      !clientInfo.serviceType ||
-      (!clientInfo.monthlyTransactions && clientInfo.serviceType !== "annual-audit") ||
-      (clientInfo.serviceType === "annual-audit" &&
-        clientInfo.existingAccountantChoice === "no" &&
-        !clientInfo.monthlyTransactions) ||
-      (clientInfo.serviceType === "annual-audit" &&
-        clientInfo.existingAccountantChoice === "yes" &&
-        !clientInfo.annualRevenue) ||
-      (!clientInfo.annualRevenue &&
-        (clientInfo.serviceType === "monthly-tax-bookkeeping" ||
-          clientInfo.serviceType === "annual-bookkeeping-audit")) ||
-      (clientInfo.serviceType === "annual-audit" && !clientInfo.existingAccountantChoice)
+      (
+        !clientInfo.companyName ||
+        !clientInfo.email || // Only email is required from contact fields
+        !clientInfo.serviceType ||
+        (!clientInfo.monthlyTransactions && clientInfo.serviceType !== "annual-audit") ||
+        (clientInfo.serviceType === "annual-audit" &&
+          clientInfo.existingAccountantChoice === "no" &&
+          !clientInfo.monthlyTransactions) ||
+        (clientInfo.serviceType === "annual-audit" &&
+          clientInfo.existingAccountantChoice === "yes" &&
+          !clientInfo.annualRevenue) ||
+        (!clientInfo.annualRevenue &&
+          (clientInfo.serviceType === "monthly-tax-bookkeeping" ||
+            clientInfo.serviceType === "annual-bookkeeping-audit")) ||
+        (clientInfo.serviceType === "annual-audit" && !clientInfo.existingAccountantChoice) ||
+        !clientInfo.selectedPackage
+      ) // Check if a package is selected
     )
   }
 
@@ -368,6 +403,7 @@ export function AccountingCalculator() {
       email: "",
       phone: "",
       whatsappId: "",
+      selectedPackage: "",
     })
   }
 
@@ -499,6 +535,56 @@ export function AccountingCalculator() {
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-8">
+              <div className="space-y-6">
+                <div className="flex items-center gap-3 mb-6">
+                  <Target className="h-6 w-6 text-primary" />
+                  <h3 className="text-xl font-semibold text-foreground">Choose Your Package</h3>
+                </div>
+                <div className="grid md:grid-cols-3 gap-4">
+                  {packageOptions.map((pkg) => {
+                    const IconComponent = pkg.icon
+                    return (
+                      <div
+                        key={pkg.value}
+                        onClick={() => handleInputChange("selectedPackage", pkg.value)}
+                        className={`relative p-5 border-2 rounded-xl cursor-pointer transition-all hover:shadow-lg ${
+                          clientInfo.selectedPackage === pkg.value
+                            ? "border-primary bg-primary/5 shadow-md"
+                            : "border-border bg-background hover:border-primary/50"
+                        }`}
+                      >
+                        <div className="space-y-3">
+                          <div
+                            className={`w-12 h-12 rounded-lg bg-gradient-to-br ${pkg.color} flex items-center justify-center mb-3`}
+                          >
+                            <IconComponent className="h-6 w-6 text-white" />
+                          </div>
+                          <div>
+                            <h4 className="font-bold text-foreground mb-1">{pkg.label}</h4>
+                            <p className="text-sm text-muted-foreground mb-3">{pkg.description}</p>
+                          </div>
+                          <div className="space-y-1.5">
+                            {pkg.features.map((feature, idx) => (
+                              <div key={idx} className="flex items-start gap-2">
+                                <CheckCircle className="h-4 w-4 text-chart-2 mt-0.5 flex-shrink-0" />
+                                <span className="text-xs text-muted-foreground">{feature}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                        {clientInfo.selectedPackage === pkg.value && (
+                          <div className="absolute top-3 right-3">
+                            <div className="w-6 h-6 bg-primary rounded-full flex items-center justify-center">
+                              <CheckCircle className="h-4 w-4 text-primary-foreground" />
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
+
               {/* Company Details */}
               <div className="space-y-6">
                 <div className="flex items-center gap-3 mb-6">
@@ -859,7 +945,8 @@ export function AccountingCalculator() {
                   Preliminary Quotation for {clientInfo.companyName}
                 </CardTitle>
                 <CardDescription className="text-muted-foreground">
-                  Service: {serviceOptions.find((s) => s.value === clientInfo.serviceType)?.label} | Based on your
+                  Service: {serviceOptions.find((s) => s.value === clientInfo.serviceType)?.label} | Package:{" "}
+                  {packageOptions.find((p) => p.value === clientInfo.selectedPackage)?.label || "N/A"} | Based on your
                   business information, here are our recommended services and pricing
                 </CardDescription>
               </CardHeader>
