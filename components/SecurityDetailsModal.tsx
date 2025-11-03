@@ -1,7 +1,7 @@
 "use client"
 
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog"
-import { Shield, Lock, FileText, Brain } from "lucide-react"
+import { Shield, Lock, FileText } from "lucide-react"
 
 interface SecurityDetailsModalProps {
   isOpen: boolean
@@ -60,7 +60,7 @@ export default function SecurityDetailsModal({ isOpen, onClose }: SecurityDetail
 
           <div className="flex items-start space-x-4">
             <div className="flex-shrink-0 bg-orange-100 text-orange-600 rounded-full h-12 w-12 flex items-center justify-center">
-              <Brain className="h-6 w-6" />
+              <Shield className="h-6 w-6" />
             </div>
             <div>
               <h3 className="font-semibold text-gray-800 mb-2">Advanced Threat Detection</h3>

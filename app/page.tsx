@@ -298,7 +298,7 @@ export default function PND50Landing() {
                         "Built on frameworks compliant with the highest international standards for information security.",
                     },
                     {
-                      icon: "🤖",
+                      icon: "🛡️",
                       title: "Advanced Threat Detection",
                       description:
                         "Continuous monitoring for unusual activity, proactively flagging potential risks before escalation.",
@@ -354,7 +354,7 @@ export default function PND50Landing() {
                   </div>
 
                   <div className="space-y-6">
-                    <div className="bg-neutral-800/50 backdrop-blur-sm rounded-xl p-6 border border-neutral-700 hover:border-blue-500 transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/20">
+                    <div className="bg-neutral-800/50 backdrop-blur-sm rounded-xl p-6 border border-neutral-700 hover:border-blue-600 transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/20">
                       <h4 className="text-white font-semibold mb-4 flex items-center gap-2">
                         <span>📊</span> Document Status
                       </h4>
