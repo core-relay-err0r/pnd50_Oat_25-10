@@ -72,9 +72,7 @@ export default function ServicesPage() {
         <div className="container mx-auto px-4 max-w-7xl">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">Our Services</h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Comprehensive solutions designed to support your business growth and ensure compliance
-            </p>
+            
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
