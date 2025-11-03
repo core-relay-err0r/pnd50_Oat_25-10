@@ -126,7 +126,7 @@ export default function PND50Landing() {
               >
                 {[
                   {
-                    icon: "👨‍💼",
+                    icon: "👩‍💼",
                     label: "Certified Accountants",
                     color: "from-blue-500/20 to-blue-600/20 hover:from-blue-500/30 hover:to-blue-600/30",
                     hoverShadow: "hover:shadow-lg hover:shadow-blue-500/30",
