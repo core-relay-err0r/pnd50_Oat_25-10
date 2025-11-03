@@ -57,7 +57,6 @@ export default function PND50Landing() {
 
     sections.forEach((section) => {
       if (section) {
-        // Add initial hidden state
         section.classList.add("section-hidden")
         observer.observe(section)
       }
@@ -177,6 +176,7 @@ export default function PND50Landing() {
               </div>
             </div>
           </AnimatedGridBackground>
+          <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-b from-transparent to-white pointer-events-none z-20"></div>
         </section>
 
         <section
@@ -184,6 +184,8 @@ export default function PND50Landing() {
           ref={servicesRef}
           className="py-24 md:py-32 bg-white relative overflow-hidden transition-all duration-1000"
         >
+          <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-neutral-900 to-transparent pointer-events-none z-20"></div>
+
           <div className="absolute top-0 right-0 w-96 h-96 bg-blue-100 rounded-full blur-3xl opacity-30"></div>
           <div
             className="absolute bottom-0 left-0 w-96 h-96 bg-emerald-100 rounded-full blur-3xl opacity-30"
@@ -256,6 +258,7 @@ export default function PND50Landing() {
               ))}
             </div>
           </div>
+          <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-b from-transparent to-neutral-50 pointer-events-none z-20"></div>
         </section>
 
         <section
@@ -263,6 +266,8 @@ export default function PND50Landing() {
           ref={securityRef}
           className="py-24 md:py-32 bg-neutral-50 relative overflow-hidden transition-all duration-1000"
         >
+          <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-white to-transparent pointer-events-none z-20"></div>
+
           <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-transparent to-emerald-50 opacity-50"></div>
 
           <div className="container mx-auto px-4 relative z-10">
@@ -404,6 +409,7 @@ export default function PND50Landing() {
               </div>
             </div>
           </div>
+          <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-b from-transparent via-neutral-50 to-blue-600 pointer-events-none z-20"></div>
         </section>
 
         <section
@@ -411,6 +417,8 @@ export default function PND50Landing() {
           id="final-cta"
           className="relative py-24 md:py-32 overflow-hidden transition-all duration-1000"
         >
+          <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-neutral-50 to-transparent pointer-events-none z-30"></div>
+
           <div className="absolute inset-0 bg-gradient-to-br from-blue-600 via-blue-700 to-emerald-600 animate-gradient-shift"></div>
           <div className="absolute inset-0 opacity-10">
             <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAxMCAwIEwgMCAwIDAgMTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmlkKSIvPjwvc3ZnPg==')]"></div>
@@ -465,9 +473,12 @@ export default function PND50Landing() {
               <FinalCta />
             </div>
           </div>
+          <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-b from-transparent via-blue-700 to-white pointer-events-none z-30"></div>
         </section>
 
         <section id="contact" ref={contactRef} className="py-24 md:py-32 bg-white relative overflow-hidden">
+          <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-blue-700 to-transparent pointer-events-none z-20"></div>
+
           <div className="absolute top-0 left-0 w-96 h-96 bg-blue-100 rounded-full blur-3xl opacity-20"></div>
           <div className="absolute bottom-0 right-0 w-96 h-96 bg-emerald-100 rounded-full blur-3xl opacity-20"></div>
 
