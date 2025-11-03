@@ -18,6 +18,7 @@ export default function PND50Landing() {
   const servicesRef = useRef<HTMLElement>(null)
   const securityRef = useRef<HTMLElement>(null)
   const ctaRef = useRef<HTMLElement>(null)
+  const contactRef = useRef<HTMLElement>(null)
 
   useEffect(() => {
     setIsVisible(true)
@@ -52,7 +53,7 @@ export default function PND50Landing() {
 
     const observer = new IntersectionObserver(observerCallback, observerOptions)
 
-    const sections = [servicesRef.current, securityRef.current, ctaRef.current]
+    const sections = [servicesRef.current, securityRef.current, ctaRef.current, contactRef.current]
 
     sections.forEach((section) => {
       if (section) {
@@ -126,7 +127,7 @@ export default function PND50Landing() {
               >
                 {[
                   {
-                    icon: "👩‍💼",
+                    icon: "👨‍💼",
                     label: "Certified Accountants",
                     color: "from-blue-500/20 to-blue-600/20 hover:from-blue-500/30 hover:to-blue-600/30",
                     hoverShadow: "hover:shadow-lg hover:shadow-blue-500/30",
@@ -330,7 +331,7 @@ export default function PND50Landing() {
 
               <div className="scroll-animate-right relative">
                 <div className="absolute inset-0 bg-gradient-to-br from-blue-600/20 to-emerald-600/20 rounded-3xl blur-3xl"></div>
-                <div className="relative bg-neutral-900 rounded-3xl p-8 shadow-2xl border border-neutral-800 hover:shadow-blue-500/10 transition-all duration-300">
+                <div className="relative bg-neutral-900 rounded-3xl p-8 shadow-2xl border border-neutral-800 hover:shadow-blue-500/10 transition-all duration-300 hover:shadow-blue-500/20">
                   <div className="flex items-center justify-between mb-6">
                     <div className="flex items-center gap-3">
                       <div className="w-3 h-3 rounded-full bg-red-500 animate-pulse"></div>
@@ -462,6 +463,116 @@ export default function PND50Landing() {
 
             <div className="scroll-animate" style={{ transitionDelay: "500ms" }}>
               <FinalCta />
+            </div>
+          </div>
+        </section>
+
+        <section id="contact" ref={contactRef} className="py-24 md:py-32 bg-white relative overflow-hidden">
+          <div className="absolute top-0 left-0 w-96 h-96 bg-blue-100 rounded-full blur-3xl opacity-20"></div>
+          <div className="absolute bottom-0 right-0 w-96 h-96 bg-emerald-100 rounded-full blur-3xl opacity-20"></div>
+
+          <div className="container mx-auto px-4 relative z-10">
+            <div className="max-w-3xl mx-auto text-center mb-16">
+              <p className="text-sm font-semibold text-blue-600 mb-3 tracking-wide uppercase">Get In Touch</p>
+              <h2 className="text-4xl md:text-6xl font-bold text-neutral-900 mb-6 leading-tight">Visit Our Office</h2>
+              <p className="text-xl text-neutral-600 leading-relaxed">
+                Located in the heart of Bangkok's business district, we're here to help you succeed.
+              </p>
+            </div>
+
+            <div className="grid lg:grid-cols-2 gap-12 items-start max-w-7xl mx-auto">
+              {/* Contact Information */}
+              <div className="space-y-8">
+                <div className="bg-gradient-to-br from-blue-50 to-emerald-50 rounded-2xl p-8 border-2 border-neutral-200 hover:border-blue-600 transition-all duration-300 hover:shadow-xl">
+                  <h3 className="text-2xl font-bold text-neutral-900 mb-6 flex items-center gap-3">
+                    <span className="text-3xl">📍</span>
+                    Office Location
+                  </h3>
+                  <div className="space-y-4 text-neutral-700">
+                    <p className="text-lg leading-relaxed">
+                      <strong className="text-neutral-900">Suite 3065, 30th Floor</strong>
+                      <br />
+                      Bhiraj Tower at EmQuartier
+                      <br />
+                      689 Sukhumvit Rd, Khlong Tan Nuea
+                      <br />
+                      Watthana, Bangkok 10110
+                    </p>
+                  </div>
+                </div>
+
+                <div className="bg-gradient-to-br from-blue-50 to-emerald-50 rounded-2xl p-8 border-2 border-neutral-200 hover:border-blue-600 transition-all duration-300 hover:shadow-xl">
+                  <h3 className="text-2xl font-bold text-neutral-900 mb-6 flex items-center gap-3">
+                    <span className="text-3xl">📞</span>
+                    Contact Details
+                  </h3>
+                  <div className="space-y-4">
+                    <div className="flex items-center gap-3 text-lg">
+                      <span className="font-semibold text-neutral-900">Phone:</span>
+                      <a
+                        href="tel:020172949"
+                        className="text-blue-600 hover:text-blue-700 transition-colors duration-300 font-medium"
+                      >
+                        02 017 2949
+                      </a>
+                    </div>
+                    <div className="flex items-center gap-3 text-lg">
+                      <span className="font-semibold text-neutral-900">Email:</span>
+                      <a
+                        href="mailto:info@pnd50.com"
+                        className="text-blue-600 hover:text-blue-700 transition-colors duration-300 font-medium"
+                      >
+                        info@pnd50.com
+                      </a>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-gradient-to-br from-blue-50 to-emerald-50 rounded-2xl p-8 border-2 border-neutral-200 hover:border-blue-600 transition-all duration-300 hover:shadow-xl">
+                  <h3 className="text-2xl font-bold text-neutral-900 mb-6 flex items-center gap-3">
+                    <span className="text-3xl">🕐</span>
+                    Business Hours
+                  </h3>
+                  <div className="space-y-3 text-neutral-700">
+                    <div className="flex justify-between items-center text-lg">
+                      <span className="font-medium">Monday - Friday:</span>
+                      <span className="text-neutral-900 font-semibold">9:00 AM - 6:00 PM</span>
+                    </div>
+                    <div className="flex justify-between items-center text-lg">
+                      <span className="font-medium">Saturday - Sunday:</span>
+                      <span className="text-neutral-900 font-semibold">Closed</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Google Maps */}
+              <div className="lg:sticky lg:top-24">
+                <div className="rounded-2xl overflow-hidden shadow-2xl border-2 border-neutral-200 hover:border-blue-600 transition-all duration-300 hover:shadow-blue-500/20">
+                  <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3875.6919447890845!2d100.57168931483!3d13.731641990349!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30e29ed269e0c9e5%3A0x8d6c3c8c8c8c8c8c!2sBhiraj+Tower+at+EmQuartier!5e0!3m2!1sen!2sth!4v1234567890123!5m2!1sen!2sth"
+                    width="100%"
+                    height="600"
+                    style={{ border: 0 }}
+                    allowFullScreen
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    title="PND50 Office Location"
+                    className="w-full"
+                  ></iframe>
+                </div>
+                <div className="mt-6 text-center">
+                  <a
+                    href="https://www.google.com/maps/dir//Bhiraj+Tower+at+EmQuartier,+689+Sukhumvit+Rd,+Khlong+Tan+Nuea,+Watthana,+Bangkok+10110"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-all duration-300 hover:shadow-lg hover:scale-102"
+                  >
+                    <span>🗺️</span>
+                    Get Directions
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
         </section>
