@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 import Link from "next/link"
+import Image from "next/image"
 import {
   ArrowLeft,
   Rocket,
@@ -34,17 +35,38 @@ export default function StartupPackagePage() {
             <span className="text-sm font-medium">Back to Services</span>
           </Link>
 
-          <div className="flex items-start gap-6 max-w-4xl">
-            <div className="w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center flex-shrink-0 shadow-lg shadow-primary/20">
-              <Rocket className="w-8 h-8 md:w-10 md:h-10 text-primary-foreground" />
-            </div>
-            <div className="flex-1">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-medium mb-4">
-                <Sparkles className="w-3 h-3" />
-                Most Popular for New Businesses
+          <div className="grid lg:grid-cols-2 gap-12 items-center max-w-7xl">
+            {/* Left side - Text content */}
+            <div className="flex items-start gap-6">
+              <div className="w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center flex-shrink-0 shadow-lg shadow-primary/20">
+                <Rocket className="w-8 h-8 md:w-10 md:h-10 text-primary-foreground" />
               </div>
-              <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-3 tracking-tight">Startup Package</h1>
-              <p className="text-xl text-muted-foreground">Perfect for New Companies in Thailand</p>
+              <div className="flex-1">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-medium mb-4">
+                  <Sparkles className="w-3 h-3" />
+                  Most Popular for New Businesses
+                </div>
+                <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-3 tracking-tight">Startup Package</h1>
+                <p className="text-xl text-muted-foreground">Perfect for New Companies in Thailand</p>
+              </div>
+            </div>
+
+            {/* Right side - Hero image */}
+            <div className="relative lg:block hidden">
+              <div className="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl border border-border">
+                <Image
+                  src="/startup-team-launching-business-with-laptop-and-ro.jpg"
+                  alt="Startup team launching their business in Thailand"
+                  fill
+                  className="object-cover"
+                  priority
+                />
+                {/* Decorative gradient overlay */}
+                <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 via-transparent to-transparent" />
+              </div>
+              {/* Floating decorative elements */}
+              <div className="absolute -top-4 -right-4 w-24 h-24 bg-primary/10 rounded-full blur-2xl" />
+              <div className="absolute -bottom-4 -left-4 w-32 h-32 bg-primary/5 rounded-full blur-3xl" />
             </div>
           </div>
         </div>

@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { MapPin, Phone, Clock, Send, Check, Copy, MessageSquare, Mail, Users, Sparkles } from "lucide-react"
+import { MapPin, Phone, Clock, Send, Check, Copy, MessageSquare } from "lucide-react"
 import Link from "next/link"
 
 export default function ContactPage() {
@@ -91,30 +91,8 @@ export default function ContactPage() {
       {/* Hero Section */}
       <section className="relative py-16 md:py-24 bg-gradient-to-br from-primary/10 via-background to-chart-2/10 overflow-hidden">
         <div className="absolute inset-0 opacity-30">
-          <div className="absolute top-0 right-0 w-96 h-96 bg-primary/20 rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute bottom-0 left-0 w-96 h-96 bg-chart-2/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-r from-primary/10 to-chart-2/10 rounded-full blur-3xl"></div>
-        </div>
-
-        <div className="absolute inset-0 opacity-5">
-          <div
-            className="absolute inset-0"
-            style={{
-              backgroundImage: `linear-gradient(to right, hsl(var(--primary)) 1px, transparent 1px),
-                             linear-gradient(to bottom, hsl(var(--primary)) 1px, transparent 1px)`,
-              backgroundSize: "40px 40px",
-            }}
-          ></div>
-        </div>
-
-        <div className="absolute top-20 right-10 opacity-20 animate-bounce hidden lg:block">
-          <Mail className="w-24 h-24 text-primary" />
-        </div>
-        <div className="absolute bottom-20 left-10 opacity-20 animate-bounce delay-500 hidden lg:block">
-          <Users className="w-20 h-20 text-chart-2" />
-        </div>
-        <div className="absolute top-1/2 right-1/4 opacity-10 animate-spin-slow hidden lg:block">
-          <Sparkles className="w-16 h-16 text-primary" />
+          <div className="absolute top-0 right-0 w-96 h-96 bg-primary/20 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-0 left-0 w-96 h-96 bg-chart-2/20 rounded-full blur-3xl"></div>
         </div>
 
         <div className="container mx-auto px-4 relative z-10">
@@ -130,186 +108,158 @@ export default function ContactPage() {
               Whether you have questions about our services, need expert advice, or want to schedule a consultation,
               we're here to help your business succeed in Thailand.
             </p>
-
-            <div className="mt-12 relative">
-              <div className="relative mx-auto max-w-2xl">
-                <img
-                  src="/professional-business-team-having-a-consultation-m.jpg"
-                  alt="Professional consultation"
-                  className="rounded-2xl shadow-2xl border-4 border-primary/20"
-                />
-                {/* Decorative elements around image */}
-                <div className="absolute -top-4 -left-4 w-24 h-24 bg-primary/20 rounded-full blur-2xl animate-pulse"></div>
-                <div className="absolute -bottom-4 -right-4 w-32 h-32 bg-chart-2/20 rounded-full blur-2xl animate-pulse delay-700"></div>
-              </div>
-            </div>
           </div>
         </div>
       </section>
 
       {/* Main Content */}
-      <section className="py-16 md:py-24 relative overflow-hidden">
-        <div className="absolute inset-0 opacity-5">
-          <div
-            className="absolute top-0 left-0 w-full h-full"
-            style={{
-              backgroundImage: `radial-gradient(circle at 2px 2px, hsl(var(--primary)) 1px, transparent 0)`,
-              backgroundSize: "40px 40px",
-            }}
-          ></div>
-        </div>
-
-        <div className="container mx-auto px-4 relative z-10">
+      <section className="py-16 md:py-24">
+        <div className="container mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-12 max-w-7xl mx-auto">
             {/* Contact Form */}
             <div className="order-2 lg:order-1">
-              <div className="bg-card border-2 border-border rounded-2xl p-8 shadow-lg hover:border-primary transition-all duration-300 relative overflow-hidden">
-                <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-primary/10 to-transparent rounded-bl-full"></div>
-                <div className="absolute bottom-0 left-0 w-32 h-32 bg-gradient-to-tr from-chart-2/10 to-transparent rounded-tr-full"></div>
+              <div className="bg-card border-2 border-border rounded-2xl p-8 shadow-lg hover:border-primary transition-all duration-300">
+                <h2 className="text-3xl font-bold text-foreground mb-2">Send Us a Message</h2>
+                <p className="text-muted-foreground mb-8">
+                  Fill out the form below and we'll get back to you within 24 hours.
+                </p>
 
-                <div className="relative z-10">
-                  <h2 className="text-3xl font-bold text-foreground mb-2">Send Us a Message</h2>
-                  <p className="text-muted-foreground mb-8">
-                    Fill out the form below and we'll get back to you within 24 hours.
-                  </p>
-
-                  <form onSubmit={handleSubmit} className="space-y-6">
-                    <div className="grid md:grid-cols-2 gap-6">
-                      <div className="space-y-2">
-                        <Label htmlFor="name">Full Name *</Label>
-                        <Input
-                          id="name"
-                          name="name"
-                          type="text"
-                          placeholder="John Doe"
-                          value={formData.name}
-                          onChange={handleChange}
-                          required
-                          className="h-12"
-                        />
-                      </div>
-
-                      <div className="space-y-2">
-                        <Label htmlFor="email">Email Address *</Label>
-                        <Input
-                          id="email"
-                          name="email"
-                          type="email"
-                          placeholder="john@company.com"
-                          value={formData.email}
-                          onChange={handleChange}
-                          required
-                          className="h-12"
-                        />
-                      </div>
-                    </div>
-
-                    <div className="grid md:grid-cols-2 gap-6">
-                      <div className="space-y-2">
-                        <Label htmlFor="phone">Phone Number</Label>
-                        <Input
-                          id="phone"
-                          name="phone"
-                          type="tel"
-                          placeholder="+66 XX XXX XXXX"
-                          value={formData.phone}
-                          onChange={handleChange}
-                          className="h-12"
-                        />
-                      </div>
-
-                      <div className="space-y-2">
-                        <Label htmlFor="whatsapp">WhatsApp Number</Label>
-                        <Input
-                          id="whatsapp"
-                          name="whatsapp"
-                          type="tel"
-                          placeholder="+66 XX XXX XXXX"
-                          value={formData.whatsapp}
-                          onChange={handleChange}
-                          className="h-12"
-                        />
-                      </div>
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <div className="space-y-2">
+                      <Label htmlFor="name">Full Name *</Label>
+                      <Input
+                        id="name"
+                        name="name"
+                        type="text"
+                        placeholder="John Doe"
+                        value={formData.name}
+                        onChange={handleChange}
+                        required
+                        className="h-12"
+                      />
                     </div>
 
                     <div className="space-y-2">
-                      <Label htmlFor="companyName">Company Name</Label>
+                      <Label htmlFor="email">Email Address *</Label>
                       <Input
-                        id="companyName"
-                        name="companyName"
-                        type="text"
-                        placeholder="Your Company Ltd."
-                        value={formData.companyName}
+                        id="email"
+                        name="email"
+                        type="email"
+                        placeholder="john@company.com"
+                        value={formData.email}
+                        onChange={handleChange}
+                        required
+                        className="h-12"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <div className="space-y-2">
+                      <Label htmlFor="phone">Phone Number</Label>
+                      <Input
+                        id="phone"
+                        name="phone"
+                        type="tel"
+                        placeholder="+66 XX XXX XXXX"
+                        value={formData.phone}
                         onChange={handleChange}
                         className="h-12"
                       />
                     </div>
 
                     <div className="space-y-2">
-                      <Label htmlFor="serviceType">Service Interest</Label>
-                      <Select
-                        value={formData.serviceType}
-                        onValueChange={(value) => setFormData({ ...formData, serviceType: value })}
-                      >
-                        <SelectTrigger className="h-12">
-                          <SelectValue placeholder="Select a service" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="accounting">Accounting & Bookkeeping</SelectItem>
-                          <SelectItem value="tax">Tax & Compliance</SelectItem>
-                          <SelectItem value="payroll">Payroll Services</SelectItem>
-                          <SelectItem value="corporate">Corporate Services</SelectItem>
-                          <SelectItem value="advisory">Advisory & Support</SelectItem>
-                          <SelectItem value="startup">Startup Package</SelectItem>
-                          <SelectItem value="growth">Growth Package</SelectItem>
-                          <SelectItem value="full-cycle">Full-Cycle Package</SelectItem>
-                          <SelectItem value="other">Other</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label htmlFor="message">Message *</Label>
-                      <Textarea
-                        id="message"
-                        name="message"
-                        placeholder="Tell us about your needs..."
-                        value={formData.message}
+                      <Label htmlFor="whatsapp">WhatsApp Number</Label>
+                      <Input
+                        id="whatsapp"
+                        name="whatsapp"
+                        type="tel"
+                        placeholder="+66 XX XXX XXXX"
+                        value={formData.whatsapp}
                         onChange={handleChange}
-                        required
-                        rows={6}
-                        className="resize-none"
+                        className="h-12"
                       />
                     </div>
+                  </div>
 
-                    {submitStatus === "success" && (
-                      <div className="bg-chart-2/10 border border-chart-2 text-chart-2 px-4 py-3 rounded-lg flex items-center gap-2">
-                        <Check className="w-5 h-5" />
-                        <span>Thank you! We'll get back to you soon.</span>
-                      </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="companyName">Company Name</Label>
+                    <Input
+                      id="companyName"
+                      name="companyName"
+                      type="text"
+                      placeholder="Your Company Ltd."
+                      value={formData.companyName}
+                      onChange={handleChange}
+                      className="h-12"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="serviceType">Service Interest</Label>
+                    <Select
+                      value={formData.serviceType}
+                      onValueChange={(value) => setFormData({ ...formData, serviceType: value })}
+                    >
+                      <SelectTrigger className="h-12">
+                        <SelectValue placeholder="Select a service" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="accounting">Accounting & Bookkeeping</SelectItem>
+                        <SelectItem value="tax">Tax & Compliance</SelectItem>
+                        <SelectItem value="payroll">Payroll Services</SelectItem>
+                        <SelectItem value="corporate">Corporate Services</SelectItem>
+                        <SelectItem value="advisory">Advisory & Support</SelectItem>
+                        <SelectItem value="startup">Startup Package</SelectItem>
+                        <SelectItem value="growth">Growth Package</SelectItem>
+                        <SelectItem value="full-cycle">Full-Cycle Package</SelectItem>
+                        <SelectItem value="other">Other</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="message">Message *</Label>
+                    <Textarea
+                      id="message"
+                      name="message"
+                      placeholder="Tell us about your needs..."
+                      value={formData.message}
+                      onChange={handleChange}
+                      required
+                      rows={6}
+                      className="resize-none"
+                    />
+                  </div>
+
+                  {submitStatus === "success" && (
+                    <div className="bg-chart-2/10 border border-chart-2 text-chart-2 px-4 py-3 rounded-lg flex items-center gap-2">
+                      <Check className="w-5 h-5" />
+                      <span>Thank you! We'll get back to you soon.</span>
+                    </div>
+                  )}
+
+                  {submitStatus === "error" && (
+                    <div className="bg-destructive/10 border border-destructive text-destructive px-4 py-3 rounded-lg">
+                      Something went wrong. Please try again or contact us directly.
+                    </div>
+                  )}
+
+                  <Button type="submit" disabled={isSubmitting} className="w-full h-12 text-lg font-semibold">
+                    {isSubmitting ? (
+                      <>
+                        <span className="animate-spin mr-2">⏳</span>
+                        Sending...
+                      </>
+                    ) : (
+                      <>
+                        <Send className="w-5 h-5 mr-2" />
+                        Send Message
+                      </>
                     )}
-
-                    {submitStatus === "error" && (
-                      <div className="bg-destructive/10 border border-destructive text-destructive px-4 py-3 rounded-lg">
-                        Something went wrong. Please try again or contact us directly.
-                      </div>
-                    )}
-
-                    <Button type="submit" disabled={isSubmitting} className="w-full h-12 text-lg font-semibold">
-                      {isSubmitting ? (
-                        <>
-                          <span className="animate-spin mr-2">⏳</span>
-                          Sending...
-                        </>
-                      ) : (
-                        <>
-                          <Send className="w-5 h-5 mr-2" />
-                          Send Message
-                        </>
-                      )}
-                    </Button>
-                  </form>
-                </div>
+                  </Button>
+                </form>
               </div>
             </div>
 
@@ -517,11 +467,8 @@ export default function ContactPage() {
       </section>
 
       {/* Map Section */}
-      <section className="py-16 bg-muted relative overflow-hidden">
-        <div className="absolute top-0 left-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-0 right-0 w-64 h-64 bg-chart-2/5 rounded-full blur-3xl"></div>
-
-        <div className="container mx-auto px-4 relative z-10">
+      <section className="py-16 bg-muted">
+        <div className="container mx-auto px-4">
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-12">
               <h2 className="text-3xl md:text-5xl font-bold text-foreground mb-4">Find Us on the Map</h2>
