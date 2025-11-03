@@ -54,11 +54,7 @@ export default function Header() {
             </Link>
 
             <Link href="/about" className="text-gray-600 transition-colors hover:text-blue-600">
-              About us  
-            </Link>
-
-            <Link href="/calculator" className="text-gray-600 transition-colors hover:text-blue-600">
-              Quote
+              About us
             </Link>
 
             <Link
@@ -111,14 +107,6 @@ export default function Header() {
                 onClick={handleLinkClick}
               >
                 About
-              </Link>
-
-              <Link
-                href="/calculator"
-                className="text-gray-600 transition-colors hover:text-green-600"
-                onClick={handleLinkClick}
-              >
-                Quote
               </Link>
 
               <Link
