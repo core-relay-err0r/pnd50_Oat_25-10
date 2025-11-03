@@ -331,7 +331,7 @@ export default function PND50Landing() {
 
               <div className="scroll-animate-right relative">
                 <div className="absolute inset-0 bg-gradient-to-br from-blue-600/20 to-emerald-600/20 rounded-3xl blur-3xl"></div>
-                <div className="relative bg-neutral-900 rounded-3xl p-8 shadow-2xl border border-neutral-800 hover:shadow-blue-500/10 transition-all duration-300 hover:shadow-blue-500/20">
+                <div className="relative bg-neutral-900 rounded-3xl p-8 shadow-2xl border border-neutral-800 hover:border-blue-600 transition-all duration-300 hover:shadow-blue-500/20">
                   <div className="flex items-center justify-between mb-6">
                     <div className="flex items-center gap-3">
                       <div className="w-3 h-3 rounded-full bg-red-500 animate-pulse"></div>
@@ -354,7 +354,7 @@ export default function PND50Landing() {
                   </div>
 
                   <div className="space-y-6">
-                    <div className="bg-neutral-800/50 backdrop-blur-sm rounded-xl p-6 border border-neutral-700 hover:border-blue-500 transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/20">
+                    <div className="bg-neutral-800/50 backdrop-blur-sm rounded-xl p-6 border border-neutral-700 hover:border-blue-600 transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/20">
                       <h4 className="text-white font-semibold mb-4 flex items-center gap-2">
                         <span>📊</span> Document Status
                       </h4>
@@ -550,7 +550,7 @@ export default function PND50Landing() {
               <div className="lg:sticky lg:top-24">
                 <div className="rounded-2xl overflow-hidden shadow-2xl border-2 border-neutral-200 hover:border-blue-600 transition-all duration-300 hover:shadow-blue-500/20">
                   <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3875.6919447890845!2d100.57168931483!3d13.731641990349!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30e29ed269e0c9e5%3A0x8d6c3c8c8c8c8c8c!2sBhiraj+Tower+at+EmQuartier!5e0!3m2!1sen!2sth!4v1234567890123!5m2!1sen!2sth"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3875.692!2d100.5716893!3d13.7316419!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30e29ed0c0c0c0c1%3A0x1234567890abcdef!2sBhiraj%20Tower%20at%20EmQuartier!5e0!3m2!1sen!2sth!4v1234567890!5m2!1sen!2sth&q=Bhiraj+Tower+at+EmQuartier,+689+Sukhumvit+Rd,+Khlong+Tan+Nuea,+Watthana,+Bangkok+10110"
                     width="100%"
                     height="600"
                     style={{ border: 0 }}
