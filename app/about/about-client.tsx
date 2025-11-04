@@ -75,28 +75,31 @@ const AboutClientPage = () => {
             </div>
 
             {/* Right: Team Portraits in Circular Composition */}
-            <div className="scroll-animate opacity-0 translate-y-[50px] transition-all duration-1000 delay-200 relative w-full h-[400px] lg:h-[500px]">
-              {/* Decorative circles */}
-              <div className="absolute top-[10%] left-[5%] w-24 h-24 md:w-32 md:h-32 rounded-full bg-orange-500 opacity-90 z-0"></div>
-              <div className="absolute top-[5%] right-[15%] w-16 h-16 md:w-20 md:h-20 rounded-full bg-teal-400 opacity-80 z-0"></div>
-              <div className="absolute bottom-[15%] right-[5%] w-20 h-20 md:w-24 md:h-24 rounded-full bg-slate-700 opacity-90 z-0"></div>
+            <div className="scroll-animate opacity-0 translate-y-[50px] transition-all duration-1000 delay-200 relative w-full h-[400px] md:h-[450px] lg:h-[500px] flex items-center justify-center">
+              {/* Container for centered composition */}
+              <div className="relative w-full max-w-[400px] md:max-w-[450px] lg:max-w-[500px] h-full mx-auto">
+                {/* Decorative circles - adjusted positioning for better balance */}
+                <div className="absolute top-[8%] left-[2%] w-20 h-20 md:w-28 md:h-28 lg:w-32 lg:h-32 rounded-full bg-orange-500 opacity-90 z-0"></div>
+                <div className="absolute top-[3%] right-[12%] w-14 h-14 md:w-18 md:h-18 lg:w-20 lg:h-20 rounded-full bg-teal-400 opacity-80 z-0"></div>
+                <div className="absolute bottom-[12%] right-[2%] w-18 h-18 md:w-22 md:h-22 lg:w-24 lg:h-24 rounded-full bg-slate-700 opacity-90 z-0"></div>
 
-              {/* Portrait 1 - Top Right */}
-              <div className="absolute top-[15%] right-[10%] w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden border-4 border-white shadow-xl z-10 hover:scale-105 transition-transform duration-300">
-                <img
-                  src="/images/design-mode/1762253199-5dad463014758156b5bfb284002cae3f-1%20%281%29.png"
-                  alt="Team member"
-                  className="w-full h-full object-cover"
-                />
-              </div>
+                {/* Portrait 1 - Top Right - adjusted for better alignment */}
+                <div className="absolute top-[12%] right-[8%] w-28 h-28 md:w-36 md:h-36 lg:w-40 lg:h-40 rounded-full overflow-hidden border-4 border-white shadow-xl z-10 hover:scale-105 transition-transform duration-300">
+                  <img
+                    src="/images/design-mode/1762253199-5dad463014758156b5bfb284002cae3f-1%20%281%29.png"
+                    alt="Team member"
+                    className="w-full h-full object-cover object-center"
+                  />
+                </div>
 
-              {/* Portrait 2 - Bottom Left */}
-              <div className="absolute bottom-[10%] left-[15%] w-40 h-40 md:w-48 md:h-48 rounded-full overflow-hidden border-4 border-white shadow-xl z-10 hover:scale-105 transition-transform duration-300">
-                <img
-                  src="/images/design-mode/1762253343-033ac0ccd097640356a38028c4f0f916-1.png.jpeg"
-                  alt="Team member"
-                  className="w-full h-full object-cover"
-                />
+                {/* Portrait 2 - Bottom Left - adjusted for better alignment */}
+                <div className="absolute bottom-[8%] left-[12%] w-36 h-36 md:w-44 md:h-44 lg:w-48 lg:h-48 rounded-full overflow-hidden border-4 border-white shadow-xl z-10 hover:scale-105 transition-transform duration-300">
+                  <img
+                    src="/images/design-mode/1762253343-033ac0ccd097640356a38028c4f0f916-1.png.jpeg"
+                    alt="Team member"
+                    className="w-full h-full object-cover object-center"
+                  />
+                </div>
               </div>
             </div>
           </div>
