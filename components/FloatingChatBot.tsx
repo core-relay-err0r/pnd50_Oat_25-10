@@ -200,10 +200,10 @@ export function FloatingChatBot() {
       </div>
 
       {!isOpen && (
-        <div className="fixed bottom-6 right-6 z-50 flex items-start gap-2">
+        <div className="fixed bottom-6 right-6 z-50 flex items-start gap-2 group">
           <button
             onClick={handleHide}
-            className="bg-muted hover:bg-muted/80 text-muted-foreground rounded-full shadow-lg p-2 transition-all duration-300 hover:scale-105"
+            className="bg-muted hover:bg-muted/80 text-muted-foreground rounded-full shadow-lg p-2 transition-all duration-300 hover:scale-105 opacity-0 group-hover:opacity-100"
             aria-label="Hide AI assistant"
             title="Hide AI assistant"
           >
