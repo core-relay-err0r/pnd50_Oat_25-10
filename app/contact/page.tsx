@@ -308,7 +308,7 @@ export default function ContactPage() {
                         href="tel:020172949"
                         className="text-primary hover:text-primary/90 transition-colors duration-300 font-medium"
                       >
-                        02 017 2949
+                        +66 2 017 2949
                       </a>
                     </div>
                     <button
@@ -357,7 +357,7 @@ export default function ContactPage() {
                         className="flex items-center gap-2 text-primary hover:text-primary/90 transition-colors duration-300 font-medium"
                       >
                         <img src="/images/icons8-telegram.gif" alt="Telegram" className="w-5 h-5" />
-                        084 356 3805
+                        +66 84 356 3805
                       </a>
                     </div>
                     <button
@@ -383,7 +383,7 @@ export default function ContactPage() {
                         className="flex items-center gap-2 text-primary hover:text-primary/90 transition-colors duration-300 font-medium"
                       >
                         <img src="/images/icons8-whatsapp.gif" alt="WhatsApp" className="w-5 h-5" />
-                        084 356 3805
+                        +66 84 356 3805
                       </a>
                     </div>
                     <button

@@ -41,6 +41,7 @@
     "@react-email/components": "latest",
     "@react-email/render": "latest",
     "@supabase/ssr": "latest",
+    "@supabase/supabase-js": "latest",
     "@vercel/analytics": "latest",
     "@vercel/speed-insights": "latest",
     "ai": "latest",
