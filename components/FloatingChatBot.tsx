@@ -2,8 +2,8 @@
 
 import type React from "react"
 
-import { useState, useEffectEvent } from "react"
-import { X, MessageCircle, Send, Sparkles } from "lucide-react"
+import { useState, useEffectEvent, useEffect } from "react"
+import { X, MessageCircle, Send, Sparkles, EyeOff } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useChat } from "@ai-sdk/react"
 import { DefaultChatTransport } from "ai"
@@ -23,8 +23,27 @@ const WELCOME_MESSAGE = {
 
 export function FloatingChatBot() {
   const [isOpen, setIsOpen] = useState(false)
+  const [isHidden, setIsHidden] = useState(false)
   const pathname = usePathname()
   const isOnCalculator = pathname === "/calculator"
+
+  useEffect(() => {
+    const hidden = localStorage.getItem("chatbot-hidden")
+    if (hidden === "true") {
+      setIsHidden(true)
+    }
+  }, [])
+
+  const handleHide = () => {
+    setIsHidden(true)
+    setIsOpen(false)
+    localStorage.setItem("chatbot-hidden", "true")
+  }
+
+  const handleShow = () => {
+    setIsHidden(false)
+    localStorage.removeItem("chatbot-hidden")
+  }
 
   const {
     messages: aiMessages,
@@ -58,6 +77,19 @@ export function FloatingChatBot() {
       e.preventDefault()
       handleSend()
     }
+  }
+
+  if (isHidden) {
+    return (
+      <button
+        onClick={handleShow}
+        className="fixed bottom-6 right-6 z-50 bg-muted hover:bg-muted/80 text-muted-foreground rounded-full shadow-lg px-4 py-2 text-sm transition-all duration-300 hover:scale-105 flex items-center gap-2"
+        aria-label="Show AI assistant"
+      >
+        <MessageCircle className="w-4 h-4" />
+        <span>Show AI Chat</span>
+      </button>
+    )
   }
 
   return (
@@ -168,22 +200,34 @@ export function FloatingChatBot() {
       </div>
 
       {!isOpen && (
-        <button
-          onClick={() => setIsOpen(true)}
-          className="fixed bottom-6 right-6 z-50 bg-background hover:bg-accent text-foreground rounded-full shadow-2xl flex gap-4 px-7 py-5 transition-all duration-300 hover:scale-105 hover:shadow-xl opacity-100 shadow-xl border-4 border-dotted border-primary items-center"
-          aria-label="Open chat with Panida"
-        >
-          {/* Sparkle icon with primary color */}
-          <div className="flex items-center justify-center">
-            <Sparkles className="w-8 h-8 text-primary" />
-          </div>
+        <div className="fixed bottom-6 right-6 z-50 flex items-start gap-2">
+          <button
+            onClick={handleHide}
+            className="bg-muted hover:bg-muted/80 text-muted-foreground rounded-full shadow-lg p-2 transition-all duration-300 hover:scale-105"
+            aria-label="Hide AI assistant"
+            title="Hide AI assistant"
+          >
+            <EyeOff className="w-4 h-4" />
+          </button>
 
-          {/* Two-line text layout */}
-          <div className="flex flex-col items-start">
-            <span className="text-base font-bold text-foreground leading-tight">AI assistant</span>
-            <span className="text-sm text-muted-foreground leading-tight">Chat with Panida</span>
-          </div>
-        </button>
+          {/* Main chat button */}
+          <button
+            onClick={() => setIsOpen(true)}
+            className="bg-background hover:bg-accent text-foreground rounded-full shadow-2xl flex gap-4 px-7 py-5 transition-all duration-300 hover:scale-105 hover:shadow-xl opacity-100 shadow-xl border-4 border-dotted border-primary items-center"
+            aria-label="Open chat with Panida"
+          >
+            {/* Sparkle icon with primary color */}
+            <div className="flex items-center justify-center">
+              <Sparkles className="w-8 h-8 text-primary" />
+            </div>
+
+            {/* Two-line text layout */}
+            <div className="flex flex-col items-start">
+              <span className="text-base font-bold text-foreground leading-tight">AI assistant</span>
+              <span className="text-sm text-muted-foreground leading-tight">Chat with Panida</span>
+            </div>
+          </button>
+        </div>
       )}
 
       {/* Close button when chat is open */}
