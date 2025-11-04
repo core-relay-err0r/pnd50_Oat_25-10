@@ -54,16 +54,14 @@ const AboutClientPage = () => {
               </div>
 
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-slate-900 mb-6 leading-tight">
-                Regional corporate specialist with global{" "}
-                <span className="bg-gradient-to-r from-primary via-chart-2 to-primary bg-clip-text text-transparent">
-                  standards
+                Regional corporate specialist with{" "}
+                <span className="bg-gradient-to-r from-primary via-chart-2 to-primary bg-clip-text text-transparent font-extrabold">
+                  global standards
                 </span>
               </h1>
 
               <p className="text-lg md:text-xl text-slate-600 leading-relaxed mb-8">
-                Entrust yourself into the hands of a true Asia specialist. Our multidisciplinary team is made up of real
-                experts on the ground who will provide highly relevant, market-specific advice, management and support
-                delivered to the highest international standards.
+                PND50 is an accounting and advisory firm based in Thailand, helping foreign-owned businesses navigate Thai accounting and compliance with clarity and confidence.
               </p>
 
               <Button asChild size="lg" className="group">
@@ -84,7 +82,7 @@ const AboutClientPage = () => {
               {/* Portrait 1 - Top Right */}
               <div className="absolute top-[15%] right-[10%] w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden border-4 border-white shadow-xl z-10 hover:scale-105 transition-transform duration-300">
                 <img
-                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/1762253199-5dad463014758156b5bfb284002cae3f-1%20%281%29-rdtjUPJpmmMf2YlowpaUu5YcZr2JSy.png"
+                  src="/images/design-mode/1762253199-5dad463014758156b5bfb284002cae3f-1%20%281%29.png"
                   alt="Team member"
                   className="w-full h-full object-cover"
                 />
@@ -93,7 +91,7 @@ const AboutClientPage = () => {
               {/* Portrait 2 - Bottom Left */}
               <div className="absolute bottom-[10%] left-[15%] w-40 h-40 md:w-48 md:h-48 rounded-full overflow-hidden border-4 border-white shadow-xl z-10 hover:scale-105 transition-transform duration-300">
                 <img
-                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/1762253343-033ac0ccd097640356a38028c4f0f916-1.png-YhkntpNDbFVsnIGnJfbgQDhHJGX5M5.jpeg"
+                  src="/images/design-mode/1762253343-033ac0ccd097640356a38028c4f0f916-1.png.jpeg"
                   alt="Team member"
                   className="w-full h-full object-cover"
                 />
@@ -113,7 +111,7 @@ const AboutClientPage = () => {
               <div className="scroll-animate opacity-0 translate-y-[30px] sm:translate-x-[50px] transition-all duration-1000 delay-200 relative w-full min-w-0 lg:order-last order-first">
                 <div className="relative aspect-[3/4] rounded-3xl overflow-hidden shadow-2xl mx-auto max-w-md lg:max-w-full">
                   <img
-                    src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/1762249087-4ee906051d74732ad592c02379087e35-4.png-s6yofMr0p0BIzeTj0ZyKGm1f3ns0h1.jpeg"
+                    src="/images/design-mode/1762249087-4ee906051d74732ad592c02379087e35-4.png.jpeg"
                     alt="Professional team consultation meeting"
                     className="w-full h-full object-cover parallax-image"
                   />
@@ -180,7 +178,7 @@ const AboutClientPage = () => {
               <div className="scroll-animate opacity-0 translate-y-[30px] sm:translate-x-[50px] transition-all duration-1000 delay-200 relative w-full min-w-0 order-first lg:-ml-12">
                 <div className="relative aspect-square rounded-3xl overflow-hidden shadow-2xl mx-auto max-w-md lg:max-w-full">
                   <img
-                    src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/1762249261-d06258d7eb72520e54142497e865c10a-1.png-jiedcuBtesLium3yHzW5StObWHvRLL.jpeg"
+                    src="/images/design-mode/1762249261-d06258d7eb72520e54142497e865c10a-1.png.jpeg"
                     alt="Professional women in business consultation"
                     className="w-full h-full object-cover parallax-image"
                   />
