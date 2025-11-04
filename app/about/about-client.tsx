@@ -40,77 +40,66 @@ const AboutClientPage = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* Hero Section */}
-      <section className="relative pt-32 pb-24 md:pt-40 md:pb-32 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 overflow-hidden">
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAxMCAwIEwgMCAwIDAgMTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmlkKSIvPjwvc3ZnPg==')]"></div>
-        </div>
-        <div className="absolute top-20 left-10 w-96 h-96 bg-primary/20 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-chart-2/20 rounded-full blur-3xl"></div>
-
+      <section className="relative pt-32 pb-24 md:pt-40 md:pb-32 bg-gradient-to-br from-slate-50 via-white to-slate-50 overflow-hidden">
         <div className="container mx-auto px-4 relative z-10">
-          {/* Grid layout with team portraits on the sides */}
-          <div className="grid lg:grid-cols-[200px_1fr_200px] gap-8 items-center max-w-7xl mx-auto">
-            {/* Left Portrait */}
-            <div className="hidden lg:block scroll-animate opacity-0 translate-x-[-30px] transition-all duration-1000 delay-300">
-              <div className="relative rounded-2xl overflow-hidden shadow-2xl border-2 border-white/10 hover:border-primary/50 transition-all duration-300 hover:scale-105">
-                <img
-                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/1762248935-a464509022aeee57466fa9517c920bf3-4-mk8nskqOi8MJDu5PH2T5A8i0SxEKMp.png"
-                  alt="Team member portrait"
-                  className="w-full h-auto object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 to-transparent"></div>
+          <div className="flex flex-col lg:grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+            {/* Left: Text Content */}
+            <div className="scroll-animate opacity-0 translate-y-[50px] transition-all duration-1000 text-center lg:text-left">
+              <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 text-sm font-medium text-primary mb-6">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+                </span>
+                About PND50
               </div>
+
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-slate-900 mb-6 leading-tight">
+                Regional corporate specialist with global{" "}
+                <span className="bg-gradient-to-r from-primary via-chart-2 to-primary bg-clip-text text-transparent">
+                  standards
+                </span>
+              </h1>
+
+              <p className="text-lg md:text-xl text-slate-600 leading-relaxed mb-8">
+                Entrust yourself into the hands of a true Asia specialist. Our multidisciplinary team is made up of real
+                experts on the ground who will provide highly relevant, market-specific advice, management and support
+                delivered to the highest international standards.
+              </p>
+
+              <Button asChild size="lg" className="group">
+                <Link href="/services" className="flex items-center gap-2">
+                  About us
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </Link>
+              </Button>
             </div>
 
-            {/* Centered content */}
-            <div className="text-center">
-              <div className="scroll-animate opacity-0 translate-y-[50px] transition-all duration-1000">
-                <div className="inline-flex items-center gap-2 rounded-full bg-background/10 backdrop-blur-md px-5 py-2 text-sm font-medium text-primary-foreground mb-8 border border-background/20">
-                  <span className="relative flex h-2 w-2">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-chart-2 opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-2 w-2 bg-chart-2"></span>
-                  </span>
-                  About PND50
-                </div>
+            {/* Right: Team Portraits in Circular Composition */}
+            <div className="scroll-animate opacity-0 translate-y-[50px] transition-all duration-1000 delay-200 relative w-full h-[400px] lg:h-[500px]">
+              {/* Decorative circles */}
+              <div className="absolute top-[10%] left-[5%] w-24 h-24 md:w-32 md:h-32 rounded-full bg-orange-500 opacity-90 z-0"></div>
+              <div className="absolute top-[5%] right-[15%] w-16 h-16 md:w-20 md:h-20 rounded-full bg-teal-400 opacity-80 z-0"></div>
+              <div className="absolute bottom-[15%] right-[5%] w-20 h-20 md:w-24 md:h-24 rounded-full bg-slate-700 opacity-90 z-0"></div>
 
-                <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-primary-foreground mb-6 leading-tight">
-                  Clear Accounting <br />
-                  Real People
-                  <br />
-                  <span className="bg-gradient-to-r from-primary via-chart-2 to-primary bg-clip-text text-transparent">
-                    Smart Technology
-                  </span>
-                </h1>
-
-                <p className="text-xl md:text-2xl text-white/90 leading-relaxed mb-8 max-w-3xl mx-auto">
-                  PND50 is an accounting and advisory firm based in Thailand, helping foreign-owned businesses navigate
-                  Thai accounting and compliance with clarity and confidence.
-                </p>
-
-                <Button
-                  asChild
-                  size="lg"
-                  variant="outline"
-                  className="bg-transparent border-white/20 text-white hover:bg-white/10"
-                >
-                  <Link href="/services">Our Services</Link>
-                </Button>
-              </div>
-            </div>
-
-            {/* Right Portrait */}
-            <div className="hidden lg:block scroll-animate opacity-0 translate-x-[30px] transition-all duration-1000 delay-300">
-              <div className="relative rounded-2xl overflow-hidden shadow-2xl border-2 border-white/10 hover:border-primary/50 transition-all duration-300 hover:scale-105">
+              {/* Portrait 1 - Top Right */}
+              <div className="absolute top-[15%] right-[10%] w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden border-4 border-white shadow-xl z-10 hover:scale-105 transition-transform duration-300">
                 <img
-                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/p_milk.png-1cKCL49WetIBUqNgtYWBLnoNCLro04.jpeg"
-                  alt="Team member portrait"
-                  className="w-full h-auto object-cover"
+                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/1762253199-5dad463014758156b5bfb284002cae3f-1%20%281%29-rdtjUPJpmmMf2YlowpaUu5YcZr2JSy.png"
+                  alt="Team member"
+                  className="w-full h-full object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 to-transparent"></div>
+              </div>
+
+              {/* Portrait 2 - Bottom Left */}
+              <div className="absolute bottom-[10%] left-[15%] w-40 h-40 md:w-48 md:h-48 rounded-full overflow-hidden border-4 border-white shadow-xl z-10 hover:scale-105 transition-transform duration-300">
+                <img
+                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/1762253343-033ac0ccd097640356a38028c4f0f916-1.png-YhkntpNDbFVsnIGnJfbgQDhHJGX5M5.jpeg"
+                  alt="Team member"
+                  className="w-full h-full object-cover"
+                />
               </div>
             </div>
           </div>
-          {/* End of grid layout */}
         </div>
       </section>
 
