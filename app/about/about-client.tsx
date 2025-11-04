@@ -48,41 +48,69 @@ const AboutClientPage = () => {
         <div className="absolute bottom-20 right-10 w-96 h-96 bg-chart-2/20 rounded-full blur-3xl"></div>
 
         <div className="container mx-auto px-4 relative z-10">
-          {/* Centered content */}
-          <div className="max-w-4xl mx-auto text-center">
-            <div className="scroll-animate opacity-0 translate-y-[50px] transition-all duration-1000">
-              <div className="inline-flex items-center gap-2 rounded-full bg-background/10 backdrop-blur-md px-5 py-2 text-sm font-medium text-primary-foreground mb-8 border border-background/20">
-                <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-chart-2 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-chart-2"></span>
-                </span>
-                About PND50
+          {/* Grid layout with team portraits on the sides */}
+          <div className="grid lg:grid-cols-[200px_1fr_200px] gap-8 items-center max-w-7xl mx-auto">
+            {/* Left Portrait */}
+            <div className="hidden lg:block scroll-animate opacity-0 translate-x-[-30px] transition-all duration-1000 delay-300">
+              <div className="relative rounded-2xl overflow-hidden shadow-2xl border-2 border-white/10 hover:border-primary/50 transition-all duration-300 hover:scale-105">
+                <img
+                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/1762248935-a464509022aeee57466fa9517c920bf3-4-mk8nskqOi8MJDu5PH2T5A8i0SxEKMp.png"
+                  alt="Team member portrait"
+                  className="w-full h-auto object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 to-transparent"></div>
               </div>
+            </div>
 
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-primary-foreground mb-6 leading-tight">
-                Clear Accounting <br />
-                Real People
-                <br />
-                <span className="bg-gradient-to-r from-primary via-chart-2 to-primary bg-clip-text text-transparent">
-                  Smart Technology
-                </span>
-              </h1>
+            {/* Centered content */}
+            <div className="text-center">
+              <div className="scroll-animate opacity-0 translate-y-[50px] transition-all duration-1000">
+                <div className="inline-flex items-center gap-2 rounded-full bg-background/10 backdrop-blur-md px-5 py-2 text-sm font-medium text-primary-foreground mb-8 border border-background/20">
+                  <span className="relative flex h-2 w-2">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-chart-2 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-chart-2"></span>
+                  </span>
+                  About PND50
+                </div>
 
-              <p className="text-xl md:text-2xl text-white/90 leading-relaxed mb-8 max-w-3xl mx-auto">
-                PND50 is an accounting and advisory firm based in Thailand, helping foreign-owned businesses navigate
-                Thai accounting and compliance with clarity and confidence.
-              </p>
+                <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-primary-foreground mb-6 leading-tight">
+                  Clear Accounting <br />
+                  Real People
+                  <br />
+                  <span className="bg-gradient-to-r from-primary via-chart-2 to-primary bg-clip-text text-transparent">
+                    Smart Technology
+                  </span>
+                </h1>
 
-              <Button
-                asChild
-                size="lg"
-                variant="outline"
-                className="bg-transparent border-white/20 text-white hover:bg-white/10"
-              >
-                <Link href="/services">Our Services</Link>
-              </Button>
+                <p className="text-xl md:text-2xl text-white/90 leading-relaxed mb-8 max-w-3xl mx-auto">
+                  PND50 is an accounting and advisory firm based in Thailand, helping foreign-owned businesses navigate
+                  Thai accounting and compliance with clarity and confidence.
+                </p>
+
+                <Button
+                  asChild
+                  size="lg"
+                  variant="outline"
+                  className="bg-transparent border-white/20 text-white hover:bg-white/10"
+                >
+                  <Link href="/services">Our Services</Link>
+                </Button>
+              </div>
+            </div>
+
+            {/* Right Portrait */}
+            <div className="hidden lg:block scroll-animate opacity-0 translate-x-[30px] transition-all duration-1000 delay-300">
+              <div className="relative rounded-2xl overflow-hidden shadow-2xl border-2 border-white/10 hover:border-primary/50 transition-all duration-300 hover:scale-105">
+                <img
+                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/p_milk.png-1cKCL49WetIBUqNgtYWBLnoNCLro04.jpeg"
+                  alt="Team member portrait"
+                  className="w-full h-auto object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 to-transparent"></div>
+              </div>
             </div>
           </div>
+          {/* End of grid layout */}
         </div>
       </section>
 
