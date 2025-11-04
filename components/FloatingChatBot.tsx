@@ -83,10 +83,10 @@ export function FloatingChatBot() {
     return (
       <button
         onClick={handleShow}
-        className="fixed bottom-6 right-6 z-50 bg-muted hover:bg-muted/80 text-muted-foreground rounded-full shadow-lg px-4 py-2 text-sm transition-all duration-300 hover:scale-105 flex items-center gap-2"
+        className="fixed bottom-6 right-6 z-50 bg-gradient-to-r from-muted to-muted/80 hover:from-muted/90 hover:to-muted/70 text-muted-foreground rounded-full shadow-lg hover:shadow-2xl px-4 py-2 text-sm transition-all duration-500 hover:scale-110 flex items-center gap-2 backdrop-blur-sm border border-border/50 hover:border-primary/30"
         aria-label="Show AI assistant"
       >
-        <MessageCircle className="w-4 h-4" />
+        <MessageCircle className="w-4 h-4 transition-transform duration-300 group-hover:rotate-12" />
         <span>Show AI Chat</span>
       </button>
     )
@@ -96,11 +96,11 @@ export function FloatingChatBot() {
     <>
       {/* Chat Window */}
       <div
-        className={`fixed bottom-24 right-6 z-50 w-[380px] max-w-[calc(100vw-3rem)] transition-all duration-300 ${
-          isOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4 pointer-events-none"
+        className={`fixed bottom-24 right-6 z-50 w-[380px] max-w-[calc(100vw-3rem)] transition-all duration-500 ease-out ${
+          isOpen ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-8 scale-95 pointer-events-none"
         }`}
       >
-        <div className="bg-background rounded-2xl shadow-2xl overflow-hidden border border-border">
+        <div className="bg-background rounded-2xl shadow-2xl overflow-hidden border border-border backdrop-blur-xl">
           {/* Header */}
           <div className="bg-primary p-4 flex items-center justify-between">
             <div className="flex items-center gap-3">
@@ -203,28 +203,32 @@ export function FloatingChatBot() {
         <div className="fixed bottom-6 right-6 z-50 flex items-start gap-2 group">
           <button
             onClick={handleHide}
-            className="bg-muted hover:bg-muted/80 text-muted-foreground rounded-full shadow-lg p-2 transition-all duration-300 hover:scale-105 opacity-0 group-hover:opacity-100"
+            className="bg-muted/80 hover:bg-muted text-muted-foreground rounded-full shadow-lg hover:shadow-xl p-2 transition-all duration-500 hover:scale-110 opacity-0 group-hover:opacity-100 backdrop-blur-sm border border-border/50 hover:border-destructive/30 hover:text-destructive"
             aria-label="Hide AI assistant"
             title="Hide AI assistant"
           >
-            <EyeOff className="w-4 h-4" />
+            <EyeOff className="w-4 h-4 transition-transform duration-300 hover:scale-110" />
           </button>
 
           {/* Main chat button */}
           <button
             onClick={() => setIsOpen(true)}
-            className="bg-background hover:bg-accent text-foreground rounded-full shadow-2xl flex gap-4 px-7 py-5 transition-all duration-300 hover:scale-105 hover:shadow-xl opacity-100 shadow-xl border-4 border-dotted border-primary items-center"
+            className="relative bg-gradient-to-br from-background via-background to-accent/20 hover:from-accent/10 hover:via-background hover:to-accent/30 text-foreground rounded-full shadow-2xl hover:shadow-[0_20px_60px_-15px_rgba(0,0,0,0.3)] flex gap-4 px-7 py-5 transition-all duration-500 hover:scale-105 border-4 border-dotted border-primary hover:border-solid hover:border-primary/80 items-center overflow-hidden group/button before:absolute before:inset-0 before:bg-gradient-to-r before:from-transparent before:via-primary/10 before:to-transparent before:translate-x-[-200%] hover:before:translate-x-[200%] before:transition-transform before:duration-1000"
             aria-label="Open chat with Panida"
           >
             {/* Sparkle icon with primary color */}
-            <div className="flex items-center justify-center">
-              <Sparkles className="w-8 h-8 text-primary" />
+            <div className="flex items-center justify-center relative z-10">
+              <Sparkles className="w-8 h-8 text-primary transition-all duration-500 group-hover/button:rotate-12 group-hover/button:scale-110 group-hover/button:drop-shadow-[0_0_8px_rgba(var(--primary),0.5)]" />
             </div>
 
             {/* Two-line text layout */}
-            <div className="flex flex-col items-start">
-              <span className="text-base font-bold text-foreground leading-tight">AI assistant</span>
-              <span className="text-sm text-muted-foreground leading-tight">Chat with Panida</span>
+            <div className="flex flex-col items-start relative z-10">
+              <span className="text-base font-bold text-foreground leading-tight transition-colors duration-300 group-hover/button:text-primary">
+                AI assistant
+              </span>
+              <span className="text-sm text-muted-foreground leading-tight transition-colors duration-300 group-hover/button:text-foreground">
+                Chat with Panida
+              </span>
             </div>
           </button>
         </div>
@@ -234,10 +238,10 @@ export function FloatingChatBot() {
       {isOpen && (
         <button
           onClick={() => setIsOpen(false)}
-          className="fixed bottom-6 right-6 z-50 w-14 h-14 bg-primary hover:bg-primary/90 text-primary-foreground rounded-full shadow-2xl flex items-center justify-center transition-all duration-300 hover:scale-105"
+          className="fixed bottom-6 right-6 z-50 w-14 h-14 bg-primary hover:bg-primary/90 text-primary-foreground rounded-full shadow-2xl hover:shadow-[0_20px_60px_-15px_rgba(var(--primary),0.6)] flex items-center justify-center transition-all duration-500 hover:scale-110 hover:rotate-90 backdrop-blur-sm"
           aria-label="Close chat"
         >
-          <X className="w-6 h-6" />
+          <X className="w-6 h-6 transition-transform duration-300" />
         </button>
       )}
     </>
