@@ -1,3 +1,5 @@
+"use client"
+
 import { Mail, Phone, MapPin, Shield, Eye, Lock, Users, FileText, Clock, Globe } from "lucide-react"
 
 const PrivacyPolicyPage = () => {
