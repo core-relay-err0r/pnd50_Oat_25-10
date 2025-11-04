@@ -1,5 +1,6 @@
 "use client"
 
+import Link from "next/link"
 import { Mail, Phone, MapPin, Shield, Eye, Lock, Users, FileText, Clock, Globe } from "lucide-react"
 
 const PrivacyPolicyPage = () => {
@@ -419,9 +420,9 @@ const PrivacyPolicyPage = () => {
               <Globe className="w-5 h-5 mt-1 flex-shrink-0" />
               <div>
                 <h3 className="font-semibold mb-1">Website</h3>
-                <a href="/contact" className="text-blue-100 hover:text-white underline">
+                <Link href="/contact" className="text-blue-100 hover:text-white underline">
                   Contact Form
-                </a>
+                </Link>
               </div>
             </div>
           </div>
