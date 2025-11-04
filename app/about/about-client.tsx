@@ -54,14 +54,16 @@ const AboutClientPage = () => {
               </div>
 
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-slate-900 mb-6 leading-tight">
-                Regional corporate specialist with{" "}
+                Regional corporate specialist with
+                <br />
                 <span className="bg-gradient-to-r from-primary via-chart-2 to-primary bg-clip-text text-transparent font-extrabold">
                   global standards
                 </span>
               </h1>
 
               <p className="text-lg md:text-xl text-slate-600 leading-relaxed mb-8">
-                PND50 is an accounting and advisory firm based in Thailand, helping foreign-owned businesses navigate Thai accounting and compliance with clarity and confidence.
+                PND50 is an accounting and advisory firm based in Thailand, helping foreign-owned businesses navigate
+                Thai accounting and compliance with clarity and confidence.
               </p>
 
               <Button asChild size="lg" className="group">
