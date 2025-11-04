@@ -163,8 +163,8 @@ const AboutClientPage = () => {
               <div className="scroll-animate opacity-0 translate-y-[30px] sm:translate-x-[50px] transition-all duration-1000 delay-200 relative w-full min-w-0 order-first lg:-ml-12">
                 <div className="relative aspect-square rounded-3xl overflow-hidden shadow-2xl mx-auto max-w-md lg:max-w-full">
                   <img
-                    src="/images/hero-collage-2.jpg"
-                    alt="Client consultation meeting"
+                    src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/1762249261-d06258d7eb72520e54142497e865c10a-1.png-jiedcuBtesLium3yHzW5StObWHvRLL.jpeg"
+                    alt="Professional women in business consultation"
                     className="w-full h-full object-cover parallax-image"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-background/30 to-transparent"></div>
