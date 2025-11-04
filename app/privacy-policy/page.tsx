@@ -12,9 +12,8 @@ const PrivacyPolicyPage = () => {
             <Shield className="w-10 h-10" />
             <h1 className="text-4xl font-bold">Privacy Policy</h1>
           </div>
-          <p className="text-xl text-blue-100 leading-relaxed">
-            Last updated: {new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}
-          </p>
+          <p className="text-xl text-blue-100 leading-relaxed">Last updated: January 2025</p>
+          {/* </CHANGE> */}
           <p className="mt-4 text-lg text-blue-50 leading-relaxed max-w-3xl">
             At PND50, we take your privacy seriously. This policy explains how we collect, use, and protect your
             personal information when you use our services.
