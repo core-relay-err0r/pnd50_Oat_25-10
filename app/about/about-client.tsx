@@ -62,8 +62,9 @@ const AboutClientPage = () => {
               </h1>
 
               <p className="text-lg md:text-xl text-slate-600 leading-relaxed mb-8">
-                PND50 is an accounting and advisory firm based in Thailand, helping foreign-owned businesses navigate
-                Thai accounting and compliance with clarity and confidence.
+                Entrust yourself into the hands of a true Asia specialist. Our multidisciplinary team is made up of real
+                experts on the ground who will provide highly relevant, market-specific advice, management and support
+                delivered to the highest international standards.
               </p>
 
               <Button asChild size="lg" className="group">
@@ -75,25 +76,32 @@ const AboutClientPage = () => {
             </div>
 
             {/* Right: Team Portraits in Circular Composition */}
-            <div className="scroll-animate opacity-0 translate-y-[50px] transition-all duration-1000 delay-200 relative w-full h-[400px] lg:h-[500px]">
-              {/* Decorative circles */}
-              <div className="absolute top-[10%] left-[5%] w-24 h-24 md:w-32 md:h-32 rounded-full bg-orange-500 opacity-90 z-0"></div>
-              <div className="absolute top-[5%] right-[15%] w-16 h-16 md:w-20 md:h-20 rounded-full bg-teal-400 opacity-80 z-0"></div>
-              <div className="absolute bottom-[15%] right-[5%] w-20 h-20 md:w-24 md:h-24 rounded-full bg-slate-700 opacity-90 z-0"></div>
+            <div className="scroll-animate opacity-0 translate-y-[50px] transition-all duration-1000 delay-200 relative w-full h-[400px] lg:h-[500px] hidden lg:block">
+              {/* Large orange circle - bottom left */}
+              <div className="absolute bottom-[5%] left-[0%] w-28 h-28 md:w-36 md:h-36 rounded-full bg-[#FF8C00] z-0"></div>
 
-              {/* Portrait 1 - Top Right */}
-              <div className="absolute top-[15%] right-[10%] w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden border-4 border-white shadow-xl z-10 hover:scale-105 transition-transform duration-300">
+              {/* Medium teal circle - top right */}
+              <div className="absolute top-[8%] right-[20%] w-20 h-20 md:w-24 md:h-24 rounded-full bg-[#5DADE2] z-0"></div>
+
+              {/* Large peach circle - middle right */}
+              <div className="absolute top-[35%] right-[5%] w-32 h-32 md:w-40 md:h-40 rounded-full bg-[#FFB380] z-0"></div>
+
+              {/* Small dark slate circle - bottom right */}
+              <div className="absolute bottom-[20%] right-[15%] w-16 h-16 md:w-20 md:h-20 rounded-full bg-[#475569] z-0"></div>
+
+              {/* Portrait 1 - Top left (smaller) */}
+              <div className="absolute top-[5%] left-[8%] w-32 h-32 md:w-36 md:h-36 rounded-full overflow-hidden border-4 border-white shadow-2xl z-20 hover:scale-105 transition-transform duration-300">
                 <img
-                  src="/images/design-mode/1762253199-5dad463014758156b5bfb284002cae3f-1%20%281%29.png"
+                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/1762253199-5dad463014758156b5bfb284002cae3f-1%20%281%29-rdtjUPJpmmMf2YlowpaUu5YcZr2JSy.png"
                   alt="Team member"
                   className="w-full h-full object-cover"
                 />
               </div>
 
-              {/* Portrait 2 - Bottom Left */}
-              <div className="absolute bottom-[10%] left-[15%] w-40 h-40 md:w-48 md:h-48 rounded-full overflow-hidden border-4 border-white shadow-xl z-10 hover:scale-105 transition-transform duration-300">
+              {/* Portrait 2 - Bottom center (larger) */}
+              <div className="absolute bottom-[8%] left-[25%] w-44 h-44 md:w-52 md:h-52 rounded-full overflow-hidden border-4 border-white shadow-2xl z-20 hover:scale-105 transition-transform duration-300">
                 <img
-                  src="/images/design-mode/1762253343-033ac0ccd097640356a38028c4f0f916-1.png.jpeg"
+                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/1762253343-033ac0ccd097640356a38028c4f0f916-1.png-YhkntpNDbFVsnIGnJfbgQDhHJGX5M5.jpeg"
                   alt="Team member"
                   className="w-full h-full object-cover"
                 />
