@@ -295,7 +295,7 @@ const AboutClientPage = () => {
           <div className="max-w-7xl mx-auto">
             <div className="flex flex-col lg:grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
               {/* Image - Centered at top on mobile, right side on desktop */}
-              <div className="scroll-animate opacity-0 translate-y-[30px] sm:translate-x-[50px] transition-all duration-1000 delay-200 relative w-full min-w-0 order-first">
+              <div className="scroll-animate opacity-0 translate-y-[30px] sm:translate-x-[50px] transition-all duration-1000 delay-200 relative w-full min-w-0 order-first lg:-ml-12">
                 <div className="relative aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl mx-auto max-w-md lg:max-w-full">
                   <img
                     src="/professional-accounting-team-portrait-in-modern-of.jpg"
