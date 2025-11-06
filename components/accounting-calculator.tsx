@@ -23,8 +23,10 @@ import {
   Rocket,
   TrendingUp,
   Target,
+  ArrowLeft,
 } from "lucide-react"
 import { useRouter } from "next/navigation"
+import Link from "next/link"
 
 interface ClientInfo {
   companyName: string
@@ -441,6 +443,16 @@ export function AccountingCalculator() {
 
   return (
     <div className="min-h-screen bg-muted/30">
+      <div className="container mx-auto px-4 pt-6">
+        <Link
+          href="/"
+          className="inline-flex items-center gap-2 text-slate-400 hover:text-primary transition-colors group mb-6 sm:mb-8 touch-manipulation"
+        >
+          <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+          <span className="text-sm font-medium">Back to Home</span>
+        </Link>
+      </div>
+
       <div className="container mx-auto px-4 py-12 max-w-4xl">
         <div className="text-center mb-12">
           <div className="flex justify-center mb-6">
@@ -1197,7 +1209,7 @@ export function AccountingCalculator() {
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
-              <div className="p-4 bg-primary/10 border border-primary/20 rounded-lg">
+              <div className="p-4 border border-primary/20 rounded-lg bg-black">
                 <div className="flex items-start gap-3">
                   <AlertCircle className="h-5 w-5 text-primary mt-0.5" />
                   <div>

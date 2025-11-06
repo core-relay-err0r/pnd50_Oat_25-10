@@ -1,5 +1,16 @@
 import type { Metadata } from "next"
-import { BookOpen, FileText, Users, Building2, Lightbulb, ArrowRight, TrendingUp, Rocket, Zap } from "lucide-react"
+import {
+  BookOpen,
+  FileText,
+  Users,
+  Building2,
+  Lightbulb,
+  ArrowRight,
+  TrendingUp,
+  Rocket,
+  Zap,
+  ArrowLeft,
+} from "lucide-react"
 import Link from "next/link"
 
 export const metadata: Metadata = {
@@ -106,6 +117,14 @@ export default function ServicesPage() {
       {/* Hero Section */}
       <section className="relative bg-gradient-to-b from-primary/5 to-background py-8 md:py-12">
         <div className="container mx-auto px-4 max-w-6xl">
+          <Link
+            href="/"
+            className="inline-flex items-center gap-2 text-slate-400 hover:text-primary transition-colors group mb-6 sm:mb-8 touch-manipulation"
+          >
+            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+            <span className="text-sm font-medium">Back to Home</span>
+          </Link>
+
           <div className="text-center max-w-3xl mx-auto">
             <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium mb-6">
               <span className="w-2 h-2 bg-primary rounded-full animate-pulse"></span>
