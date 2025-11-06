@@ -731,7 +731,7 @@ export default function PND50Landing() {
               <div className="lg:sticky lg:top-24">
                 <div className="rounded-2xl overflow-hidden shadow-2xl border-2 border-border hover:border-primary transition-all duration-300 hover:shadow-primary/20">
                   <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3875.6919447890845!2d100.57168931483!3d13.731641990349!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30e29ed269e0c9e5%3A0x8d6c3c8c8c8c8c8c!2sBhiraj+Tower+at+EmQuartier!5e0!3m2!1sen!2sth!4v1234567890123!5m2!1sen!2sth"
+                    src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8&q=Bhiraj+Tower+at+EmQuartier,689+Sukhumvit+Rd,Khlong+Tan+Nuea,Watthana,Bangkok+10110&zoom=16&maptype=roadmap"
                     width="100%"
                     height="600"
                     style={{ border: 0 }}
