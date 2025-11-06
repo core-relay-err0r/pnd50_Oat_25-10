@@ -1,7 +1,7 @@
 import React, { Suspense } from "react"
 import Link from "next/link"
 import { TooltipProvider } from "@/components/ui/tooltip"
-import { Calculator, Shield, HandCoins, Target, FileSearch, Phone, Mail, MapPin } from "lucide-react"
+import { Calculator, Shield, Target, FileSearch, Phone, Mail, MapPin } from "lucide-react"
 import CurrentYear from "@/components/CurrentYear"
 
 const services = [
@@ -16,12 +16,6 @@ const services = [
     href: "/services/vat-management",
     icon: <Shield className="h-4 w-4 text-primary" />,
     description: "Automated VAT compliance and real-time reporting.",
-  },
-  {
-    name: "Withholding Tax",
-    href: "/services/withholding-tax",
-    icon: <HandCoins className="h-4 w-4 text-primary" />,
-    description: "Seamless WHT management with automated calculations.",
   },
   {
     name: "Tax Optimization",
