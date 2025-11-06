@@ -67,8 +67,8 @@ const AboutClientPage = () => {
               </p>
 
               <Button asChild size="lg" className="group">
-                <Link href="/services" className="flex items-center gap-2">
-                  About us
+                <Link href="/contact" className="flex items-center gap-2">
+                  Contact Us
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </Link>
               </Button>
