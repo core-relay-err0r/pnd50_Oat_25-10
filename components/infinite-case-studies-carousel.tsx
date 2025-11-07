@@ -227,7 +227,7 @@ export function InfiniteCaseStudiesCarousel() {
     if (width < 640) return width - 32 // Full width minus padding (16px on each side)
     if (width < 768) return width * 0.85
     if (width < 1024) return width / 2.2
-    return width / 3.5
+    return width / 2.5
   }, [])
 
   const [cardWidth, setCardWidth] = useState(getCardWidth())
