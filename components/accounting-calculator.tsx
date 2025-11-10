@@ -354,6 +354,7 @@ export function AccountingCalculator() {
   const isFormValid = () => {
     return !(
       !clientInfo.companyName ||
+      !clientInfo.email || // Added email validation
       !clientInfo.serviceType ||
       (!clientInfo.monthlyTransactions && clientInfo.serviceType !== "annual-audit") ||
       (clientInfo.serviceType === "annual-audit" &&
@@ -414,7 +415,7 @@ export function AccountingCalculator() {
         body: JSON.stringify({
           clientInfo,
           quotation,
-          userEmail: "info@pnd50.com", // Hardcoded recipient email
+          userEmail: clientInfo.email, // Use email from clientInfo
           userTelephone: clientInfo.phone || "",
           userWhatsappId: clientInfo.whatsappId || "",
         }),
@@ -559,6 +560,57 @@ export function AccountingCalculator() {
                       value={clientInfo.businessType}
                       onChange={(e) => handleInputChange("businessType", e.target.value)}
                       placeholder="e.g., Trading, Manufacturing, Services"
+                      className="border-input focus:border-ring focus:ring-ring/20 h-12 text-base"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Contact Information section */}
+              <div className="space-y-6">
+                <div className="flex items-center gap-3 mb-6">
+                  <Building2 className="h-6 w-6 text-primary" />
+                  <h3 className="text-xl font-semibold text-foreground">Contact Information</h3>
+                </div>
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div className="space-y-3">
+                    <Label htmlFor="email" className="text-foreground font-medium text-base">
+                      Email *
+                    </Label>
+                    <Input
+                      id="email"
+                      type="email"
+                      value={clientInfo.email}
+                      onChange={(e) => handleInputChange("email", e.target.value)}
+                      placeholder="your.email@example.com"
+                      className="border-input focus:border-ring focus:ring-ring/20 h-12 text-base"
+                    />
+                  </div>
+
+                  <div className="space-y-3">
+                    <Label htmlFor="phone" className="text-foreground font-medium text-base">
+                      Phone Number
+                    </Label>
+                    <Input
+                      id="phone"
+                      type="tel"
+                      value={clientInfo.phone}
+                      onChange={(e) => handleInputChange("phone", e.target.value)}
+                      placeholder="+66 XX XXX XXXX"
+                      className="border-input focus:border-ring focus:ring-ring/20 h-12 text-base"
+                    />
+                  </div>
+
+                  <div className="space-y-3">
+                    <Label htmlFor="whatsappId" className="text-foreground font-medium text-base">
+                      WhatsApp ID
+                    </Label>
+                    <Input
+                      id="whatsappId"
+                      type="tel"
+                      value={clientInfo.whatsappId}
+                      onChange={(e) => handleInputChange("whatsappId", e.target.value)}
+                      placeholder="+66 XX XXX XXXX"
                       className="border-input focus:border-ring focus:ring-ring/20 h-12 text-base"
                     />
                   </div>

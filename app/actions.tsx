@@ -24,7 +24,10 @@ const quotePdfSchema = z.object({
     hasSocialFund: z.boolean(),
     employeeCount: z.string().optional(),
     needsRushProcessing: z.boolean(),
-    selectedPackage: z.string().optional(), // Added selectedPackage to schema
+    selectedPackage: z.string().optional(),
+    email: z.string().email(),
+    phone: z.string().optional(),
+    whatsappId: z.string().optional(),
   }),
   quotation: z.object({
     monthlyAccountingFee: z.number(),
@@ -34,6 +37,8 @@ const quotePdfSchema = z.object({
     totalAnnual: z.number(),
   }),
   userEmail: z.string().email(),
+  userTelephone: z.string().optional(),
+  userWhatsappId: z.string().optional(),
 })
 
 export type FormState = {
@@ -130,7 +135,7 @@ export async function generateAndSendQuotePdf(prevState: FormState, formData: Fo
       }
     }
 
-    const { clientInfo, quotation, userEmail } = validatedFields.data
+    const { clientInfo, quotation, userEmail, userTelephone, userWhatsappId } = validatedFields.data
 
     const packageNames: Record<string, string> = {
       startup: "Startup Package",
@@ -250,6 +255,31 @@ export async function generateAndSendQuotePdf(prevState: FormState, formData: Fo
               }
             </div>
             
+            <div style="background-color: #fef3c7; border: 1px solid #fcd34d; border-radius: 8px; margin: 24px 0; padding: 20px;">
+              <h3 style="color: #333; font-size: 18px; font-weight: bold; margin: 0 0 16px 0;">Contact Information:</h3>
+              <p style="color: #333; font-size: 16px; line-height: 26px; margin: 8px 0;">
+                • Email: ${clientInfo.email}
+              </p>
+              ${
+                clientInfo.phone
+                  ? `
+                <p style="color: #333; font-size: 16px; line-height: 26px; margin: 8px 0;">
+                  • Phone Number: ${clientInfo.phone}
+                </p>
+              `
+                  : ""
+              }
+              ${
+                clientInfo.whatsappId
+                  ? `
+                <p style="color: #333; font-size: 16px; line-height: 26px; margin: 8px 0;">
+                  • WhatsApp ID: ${clientInfo.whatsappId}
+                </p>
+              `
+                  : ""
+              }
+            </div>
+            
             <p style="color: #333; font-size: 16px; line-height: 26px; margin: 16px 0;">
               This quotation includes all the services discussed and is valid for 30 days.
             </p>
@@ -274,9 +304,10 @@ export async function generateAndSendQuotePdf(prevState: FormState, formData: Fo
 
     // Send quote email using HTML template
     await resend.emails.send({
-      from: "PND50 Accounting <onboarding@resend.dev>",
-      to: userEmail,
-      subject: `Your Accounting Services Quote - ${clientInfo.companyName}`,
+      from: "PND50 Accounting <info@pnd50.com>",
+      to: "info@pnd50.com",
+      cc: userEmail,
+      subject: `New Quote Request - ${clientInfo.companyName}`,
       html: emailHtml,
     })
 
