@@ -4,7 +4,6 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import {
   ArrowRight,
-  ArrowLeft,
   Mail,
   MessageSquare,
   Target,
@@ -43,14 +42,6 @@ const AboutClientPage = () => {
       {/* Hero Section */}
       <section className="relative pt-32 pb-24 md:pt-40 md:pb-32 bg-gradient-to-br from-blue-50 via-slate-50 to-teal-50 overflow-hidden">
         <div className="container mx-auto px-4 relative z-10">
-          <Link
-            href="/"
-            className="inline-flex items-center gap-2 text-slate-400 hover:text-primary transition-colors group mb-6 sm:mb-8 touch-manipulation"
-          >
-            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-            <span className="text-sm font-medium">Back to Home</span>
-          </Link>
-
           <div className="flex flex-col lg:grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             {/* Left: Text Content */}
             <div className="scroll-animate opacity-0 translate-y-[50px] transition-all duration-1000 text-center lg:text-left">
@@ -76,8 +67,8 @@ const AboutClientPage = () => {
               </p>
 
               <Button asChild size="lg" className="group">
-                <Link href="/contact" className="flex items-center gap-2">
-                  Contact Us
+                <Link href="/services" className="flex items-center gap-2">
+                  About us
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </Link>
               </Button>

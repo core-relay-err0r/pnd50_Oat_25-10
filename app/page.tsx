@@ -161,20 +161,20 @@ export default function PND50Landing() {
                   isVisible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
                 }`}
               >
-                Your Trusted Accounting Partner
-                <br />
-                <span className="bg-gradient-to-r from-primary via-chart-2 to-primary bg-clip-text text-transparent animate-gradient-shift inline-block">
-                  in Thailand
+                <span className="bg-gradient-to-r from-emerald-400 via-green-500 to-teal-400 bg-clip-text text-transparent animate-gradient-shift inline-block">
+                  AI Boutique Consulting
                 </span>
+                <br />
+                <span className="text-white">Accounting & Corporate Services & Compliance</span>
               </h1>
 
               <p
-                className={`text-xl md:text-2xl max-w-3xl mx-auto mb-12 leading-relaxed transition-all duration-700 delay-200 text-white text-white ${
+                className={`text-xl md:text-2xl max-w-3xl mx-auto mb-12 leading-relaxed transition-all duration-700 delay-200 text-white ${
                   isVisible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
                 }`}
               >
-                All in one service from accounting to compliance. We help foreign businesses operate in Thailand with
-                ease, accuracy, and full compliance with local regulations.{" "}
+                You Talk to an Expert, Not a Robot. We connect you with a dedicated human advisor who speaks your native
+                language. Our AI makes them 5x faster and totally error-free.{" "}
               </p>
 
               <div
@@ -731,7 +731,7 @@ export default function PND50Landing() {
               <div className="lg:sticky lg:top-24">
                 <div className="rounded-2xl overflow-hidden shadow-2xl border-2 border-border hover:border-primary transition-all duration-300 hover:shadow-primary/20">
                   <iframe
-                    src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8&q=Bhiraj+Tower+at+EmQuartier,689+Sukhumvit+Rd,Khlong+Tan+Nuea,Watthana,Bangkok+10110&zoom=16&maptype=roadmap"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3875.6919447890845!2d100.57168931483!3d13.731641990349!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30e29ed269e0c9e5%3A0x8d6c3c8c8c8c8c8c!2sBhiraj+Tower+at+EmQuartier!5e0!3m2!1sen!2sth!4v1234567890123!5m2!1sen!2sth"
                     width="100%"
                     height="600"
                     style={{ border: 0 }}

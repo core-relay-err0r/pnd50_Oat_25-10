@@ -19,14 +19,11 @@ import {
   Zap,
   Download,
   Briefcase,
-  User,
   Rocket,
   TrendingUp,
   Target,
-  ArrowLeft,
 } from "lucide-react"
 import { useRouter } from "next/navigation"
-import Link from "next/link"
 
 interface ClientInfo {
   companyName: string
@@ -356,23 +353,19 @@ export function AccountingCalculator() {
 
   const isFormValid = () => {
     return !(
-      (
-        !clientInfo.companyName ||
-        !clientInfo.email || // Only email is required from contact fields
-        !clientInfo.serviceType ||
-        (!clientInfo.monthlyTransactions && clientInfo.serviceType !== "annual-audit") ||
-        (clientInfo.serviceType === "annual-audit" &&
-          clientInfo.existingAccountantChoice === "no" &&
-          !clientInfo.monthlyTransactions) ||
-        (clientInfo.serviceType === "annual-audit" &&
-          clientInfo.existingAccountantChoice === "yes" &&
-          !clientInfo.annualRevenue) ||
-        (!clientInfo.annualRevenue &&
-          (clientInfo.serviceType === "monthly-tax-bookkeeping" ||
-            clientInfo.serviceType === "annual-bookkeeping-audit")) ||
-        (clientInfo.serviceType === "annual-audit" && !clientInfo.existingAccountantChoice) ||
-        !clientInfo.selectedPackage
-      ) // Check if a package is selected
+      !clientInfo.companyName ||
+      !clientInfo.serviceType ||
+      (!clientInfo.monthlyTransactions && clientInfo.serviceType !== "annual-audit") ||
+      (clientInfo.serviceType === "annual-audit" &&
+        clientInfo.existingAccountantChoice === "no" &&
+        !clientInfo.monthlyTransactions) ||
+      (clientInfo.serviceType === "annual-audit" &&
+        clientInfo.existingAccountantChoice === "yes" &&
+        !clientInfo.annualRevenue) ||
+      (!clientInfo.annualRevenue &&
+        (clientInfo.serviceType === "monthly-tax-bookkeeping" ||
+          clientInfo.serviceType === "annual-bookkeeping-audit")) ||
+      (clientInfo.serviceType === "annual-audit" && !clientInfo.existingAccountantChoice)
     )
   }
 
@@ -443,16 +436,6 @@ export function AccountingCalculator() {
 
   return (
     <div className="min-h-screen bg-muted/30">
-      <div className="container mx-auto px-4 pt-6">
-        <Link
-          href="/"
-          className="inline-flex items-center gap-2 text-slate-400 hover:text-primary transition-colors group mb-6 sm:mb-8 touch-manipulation"
-        >
-          <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-          <span className="text-sm font-medium">Back to Home</span>
-        </Link>
-      </div>
-
       <div className="container mx-auto px-4 py-12 max-w-4xl">
         <div className="text-center mb-12">
           <div className="flex justify-center mb-6">
@@ -547,56 +530,6 @@ export function AccountingCalculator() {
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-8">
-              <div className="space-y-6">
-                <div className="flex items-center gap-3 mb-6">
-                  <Target className="h-6 w-6 text-primary" />
-                  <h3 className="text-xl font-semibold text-foreground">Choose Your Package</h3>
-                </div>
-                <div className="grid md:grid-cols-3 gap-4">
-                  {packageOptions.map((pkg) => {
-                    const IconComponent = pkg.icon
-                    return (
-                      <div
-                        key={pkg.value}
-                        onClick={() => handleInputChange("selectedPackage", pkg.value)}
-                        className={`relative p-5 border-2 rounded-xl cursor-pointer transition-all hover:shadow-lg ${
-                          clientInfo.selectedPackage === pkg.value
-                            ? "border-primary bg-primary/5 shadow-md"
-                            : "border-border bg-background hover:border-primary/50"
-                        }`}
-                      >
-                        <div className="space-y-3">
-                          <div
-                            className={`w-12 h-12 rounded-lg bg-gradient-to-br ${pkg.color} flex items-center justify-center mb-3`}
-                          >
-                            <IconComponent className="h-6 w-6 text-white" />
-                          </div>
-                          <div>
-                            <h4 className="font-bold text-foreground mb-1">{pkg.label}</h4>
-                            <p className="text-sm text-muted-foreground mb-3">{pkg.description}</p>
-                          </div>
-                          <div className="space-y-1.5">
-                            {pkg.features.map((feature, idx) => (
-                              <div key={idx} className="flex items-start gap-2">
-                                <CheckCircle className="h-4 w-4 text-chart-2 mt-0.5 flex-shrink-0" />
-                                <span className="text-xs text-muted-foreground">{feature}</span>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                        {clientInfo.selectedPackage === pkg.value && (
-                          <div className="absolute top-3 right-3">
-                            <div className="w-6 h-6 bg-primary rounded-full flex items-center justify-center">
-                              <CheckCircle className="h-4 w-4 text-primary-foreground" />
-                            </div>
-                          </div>
-                        )}
-                      </div>
-                    )
-                  })}
-                </div>
-              </div>
-
               {/* Company Details */}
               <div className="space-y-6">
                 <div className="flex items-center gap-3 mb-6">
@@ -626,56 +559,6 @@ export function AccountingCalculator() {
                       value={clientInfo.businessType}
                       onChange={(e) => handleInputChange("businessType", e.target.value)}
                       placeholder="e.g., Trading, Manufacturing, Services"
-                      className="border-input focus:border-ring focus:ring-ring/20 h-12 text-base"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              {/* Your Contact section */}
-              <div className="space-y-6">
-                <div className="flex items-center gap-3 mb-6">
-                  <User className="h-6 w-6 text-primary" />
-                  <h3 className="text-xl font-semibold text-foreground">Your Contact</h3>
-                </div>
-                <div className="grid md:grid-cols-3 gap-6">
-                  <div className="space-y-3">
-                    <Label htmlFor="email" className="text-foreground font-medium text-base">
-                      Email *
-                    </Label>
-                    <Input
-                      id="email"
-                      type="email"
-                      value={clientInfo.email || ""}
-                      onChange={(e) => handleInputChange("email", e.target.value)}
-                      placeholder="Enter email address"
-                      className="border-input focus:border-ring focus:ring-ring/20 h-12 text-base"
-                    />
-                  </div>
-
-                  <div className="space-y-3">
-                    <Label htmlFor="phone" className="text-foreground font-medium text-base">
-                      Phone
-                    </Label>
-                    <Input
-                      id="phone"
-                      type="tel"
-                      value={clientInfo.phone || ""}
-                      onChange={(e) => handleInputChange("phone", e.target.value)}
-                      placeholder="Enter phone number"
-                      className="border-input focus:border-ring focus:ring-ring/20 h-12 text-base"
-                    />
-                  </div>
-
-                  <div className="space-y-3">
-                    <Label htmlFor="whatsappId" className="text-foreground font-medium text-base">
-                      WhatsApp ID
-                    </Label>
-                    <Input
-                      id="whatsappId"
-                      value={clientInfo.whatsappId || ""}
-                      onChange={(e) => handleInputChange("whatsappId", e.target.value)}
-                      placeholder="Enter WhatsApp ID"
                       className="border-input focus:border-ring focus:ring-ring/20 h-12 text-base"
                     />
                   </div>
@@ -957,8 +840,7 @@ export function AccountingCalculator() {
                   Preliminary Quotation for {clientInfo.companyName}
                 </CardTitle>
                 <CardDescription className="text-muted-foreground">
-                  Service: {serviceOptions.find((s) => s.value === clientInfo.serviceType)?.label} | Package:{" "}
-                  {packageOptions.find((p) => p.value === clientInfo.selectedPackage)?.label || "N/A"} | Based on your
+                  Service: {serviceOptions.find((s) => s.value === clientInfo.serviceType)?.label} | Based on your
                   business information, here are our recommended services and pricing
                 </CardDescription>
               </CardHeader>
@@ -1209,7 +1091,7 @@ export function AccountingCalculator() {
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
-              <div className="p-4 border border-primary/20 rounded-lg bg-black">
+              <div className="p-4 bg-primary/10 border border-primary/20 rounded-lg">
                 <div className="flex items-start gap-3">
                   <AlertCircle className="h-5 w-5 text-primary mt-0.5" />
                   <div>

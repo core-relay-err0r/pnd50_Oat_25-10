@@ -1,16 +1,5 @@
 import type { Metadata } from "next"
-import {
-  BookOpen,
-  FileText,
-  Users,
-  Building2,
-  Lightbulb,
-  ArrowRight,
-  TrendingUp,
-  Rocket,
-  Zap,
-  ArrowLeft,
-} from "lucide-react"
+import { BookOpen, FileText, Users, Building2, Lightbulb, ArrowRight, TrendingUp, Rocket, Zap } from "lucide-react"
 import Link from "next/link"
 
 export const metadata: Metadata = {
@@ -117,14 +106,6 @@ export default function ServicesPage() {
       {/* Hero Section */}
       <section className="relative bg-gradient-to-b from-primary/5 to-background py-8 md:py-12">
         <div className="container mx-auto px-4 max-w-6xl">
-          <Link
-            href="/"
-            className="inline-flex items-center gap-2 text-slate-400 hover:text-primary transition-colors group mb-6 sm:mb-8 touch-manipulation"
-          >
-            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-            <span className="text-sm font-medium">Back to Home</span>
-          </Link>
-
           <div className="text-center max-w-3xl mx-auto">
             <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium mb-6">
               <span className="w-2 h-2 bg-primary rounded-full animate-pulse"></span>
@@ -142,126 +123,7 @@ export default function ServicesPage() {
       </section>
 
       {/* Packages Section */}
-      <section className="py-12 md:py-16 bg-muted/30">
-        <div className="container mx-auto px-4 max-w-7xl">
-          <div className="text-center mb-12">
-            <div className="inline-flex items-center gap-2 text-primary px-4 py-2 rounded-full text-sm font-medium mb-4">
-              <span className="w-2 h-2 bg-primary rounded-full"></span>
-              Business structures in Thailand
-            </div>
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-2">
-              Select the perfect structure for <span className="text-primary">your business</span>
-            </h2>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
-            {packages.map((pkg, index) => {
-              const Icon = pkg.icon
-              const isPopular = pkg.popular
-
-              return (
-                <div
-                  key={index}
-                  className={`relative rounded-2xl p-8 transition-all duration-300 hover:shadow-2xl ${
-                    isPopular
-                      ? "bg-[#0a2540] text-white border-2 border-primary"
-                      : "bg-card border-2 border-border hover:border-primary/50"
-                  }`}
-                >
-                  {/* Popular Badge */}
-                  {isPopular && (
-                    <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                      <span className="bg-primary text-primary-foreground px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wide">
-                        Most Popular
-                      </span>
-                    </div>
-                  )}
-
-                  {/* Title */}
-                  <h3 className={`text-2xl font-bold mb-3 ${isPopular ? "text-white" : "text-foreground"}`}>
-                    {pkg.title}
-                  </h3>
-
-                  {/* Description */}
-                  <p
-                    className={`text-sm leading-relaxed mb-6 ${isPopular ? "text-white/80" : "text-muted-foreground"}`}
-                  >
-                    {pkg.description}
-                  </p>
-
-                  {/* Features */}
-                  <ul className="space-y-3 mb-8">
-                    {pkg.features.map((feature, featureIndex) => (
-                      <li key={featureIndex} className="flex items-start gap-3 text-sm">
-                        <span
-                          className={`w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0 ${
-                            isPopular ? "bg-primary" : "bg-primary"
-                          }`}
-                        ></span>
-                        <span className={isPopular ? "text-white/90" : "text-foreground"}>{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-
-                  {/* Setup Time Circle */}
-                  <div className="flex justify-center mb-6">
-                    <div
-                      className={`relative w-28 h-28 rounded-full flex items-center justify-center ${
-                        isPopular ? "border-4 border-primary/30" : "border-4 border-primary/20"
-                      }`}
-                    >
-                      <div className="text-center">
-                        <div className={`text-lg font-bold ${isPopular ? "text-white" : "text-foreground"}`}>
-                          {pkg.setupTime}
-                        </div>
-                        <div className={`text-xs ${isPopular ? "text-white/60" : "text-muted-foreground"}`}>
-                          Setup time
-                        </div>
-                      </div>
-                      {/* Circular progress indicator */}
-                      <svg className="absolute inset-0 w-full h-full -rotate-90" viewBox="0 0 100 100">
-                        <circle
-                          cx="50"
-                          cy="50"
-                          r="46"
-                          fill="none"
-                          stroke={isPopular ? "rgba(59, 130, 246, 0.5)" : "rgba(59, 130, 246, 0.3)"}
-                          strokeWidth="4"
-                          strokeDasharray="289"
-                          strokeDashoffset="72"
-                          strokeLinecap="round"
-                        />
-                      </svg>
-                    </div>
-                  </div>
-
-                  {/* CTA Button */}
-                  <Link
-                    href={pkg.href}
-                    className={`block w-full text-center px-6 py-3 rounded-lg font-semibold transition-all mb-3 ${
-                      isPopular
-                        ? "bg-primary text-primary-foreground hover:bg-primary/90"
-                        : "bg-primary text-primary-foreground hover:bg-primary/90"
-                    }`}
-                  >
-                    Request a quote
-                  </Link>
-
-                  {/* Learn More Link */}
-                  <Link
-                    href={pkg.href}
-                    className={`block text-center text-sm font-medium transition-colors ${
-                      isPopular ? "text-white/80 hover:text-white" : "text-primary hover:text-primary/80"
-                    }`}
-                  >
-                    Learn more
-                  </Link>
-                </div>
-              )
-            })}
-          </div>
-        </div>
-      </section>
+      
 
       {/* Services Grid */}
       <section className="py-16 md:py-20">
