@@ -24,10 +24,7 @@ const quotePdfSchema = z.object({
     hasSocialFund: z.boolean(),
     employeeCount: z.string().optional(),
     needsRushProcessing: z.boolean(),
-    selectedPackage: z.string().optional(),
-    email: z.string().email(),
-    phone: z.string().optional(),
-    whatsappId: z.string().optional(),
+    selectedPackage: z.string().optional(), // Added selectedPackage to schema
   }),
   quotation: z.object({
     monthlyAccountingFee: z.number(),
@@ -37,8 +34,6 @@ const quotePdfSchema = z.object({
     totalAnnual: z.number(),
   }),
   userEmail: z.string().email(),
-  userTelephone: z.string().optional(),
-  userWhatsappId: z.string().optional(),
 })
 
 export type FormState = {
@@ -135,13 +130,7 @@ export async function generateAndSendQuotePdf(prevState: FormState, formData: Fo
       }
     }
 
-    const { clientInfo, quotation, userEmail, userTelephone, userWhatsappId } = validatedFields.data
-
-    const packageNames: Record<string, string> = {
-      startup: "Startup Package",
-      growth: "Growth Package",
-      "full-cycle": "Full-Cycle Package",
-    }
+    const { clientInfo, quotation, userEmail } = validatedFields.data
 
     const emailHtml = `
       <!DOCTYPE html>
@@ -163,19 +152,6 @@ export async function generateAndSendQuotePdf(prevState: FormState, formData: Fo
             <p style="color: #333; font-size: 16px; line-height: 26px; margin: 16px 0;">
               Thank you for your interest in PND50 Accounting Services. We've prepared a detailed quotation based on your business requirements.
             </p>
-            
-            ${
-              clientInfo.selectedPackage
-                ? `
-            <div style="background-color: #eff6ff; border: 2px solid #3b82f6; border-radius: 8px; margin: 24px 0; padding: 20px;">
-              <h3 style="color: #1e40af; font-size: 18px; font-weight: bold; margin: 0 0 8px 0;">Selected Package:</h3>
-              <p style="color: #1e40af; font-size: 20px; font-weight: bold; margin: 0;">
-                ${packageNames[clientInfo.selectedPackage] || clientInfo.selectedPackage}
-              </p>
-            </div>
-            `
-                : ""
-            }
             
             <div style="background-color: #f8f9fa; border: 1px solid #e9ecef; border-radius: 8px; margin: 24px 0; padding: 20px;">
               <h3 style="color: #333; font-size: 18px; font-weight: bold; margin: 0 0 16px 0;">Quote Summary:</h3>
@@ -218,17 +194,14 @@ export async function generateAndSendQuotePdf(prevState: FormState, formData: Fo
             <div style="background-color: #f0f9ff; border: 1px solid #bae6fd; border-radius: 8px; margin: 24px 0; padding: 20px;">
               <h3 style="color: #333; font-size: 18px; font-weight: bold; margin: 0 0 16px 0;">Service Details:</h3>
               ${
-                clientInfo.selectedPackage
+                clientInfo.businessType
                   ? `
               <p style="color: #333; font-size: 16px; line-height: 26px; margin: 8px 0;">
-                • Package: ${packageNames[clientInfo.selectedPackage] || clientInfo.selectedPackage}
+                • Business Type: ${clientInfo.businessType}
               </p>
               `
                   : ""
               }
-              <p style="color: #333; font-size: 16px; line-height: 26px; margin: 8px 0;">
-                • Business Type: ${clientInfo.businessType || "Not specified"}
-              </p>
               <p style="color: #333; font-size: 16px; line-height: 26px; margin: 8px 0;">
                 • Service Type: ${clientInfo.serviceType}
               </p>
@@ -249,31 +222,6 @@ export async function generateAndSendQuotePdf(prevState: FormState, formData: Fo
                   ? `
                 <p style="color: #333; font-size: 16px; line-height: 26px; margin: 8px 0;">
                   • Employee Count: ${clientInfo.employeeCount}
-                </p>
-              `
-                  : ""
-              }
-            </div>
-            
-            <div style="background-color: #fef3c7; border: 1px solid #fcd34d; border-radius: 8px; margin: 24px 0; padding: 20px;">
-              <h3 style="color: #333; font-size: 18px; font-weight: bold; margin: 0 0 16px 0;">Contact Information:</h3>
-              <p style="color: #333; font-size: 16px; line-height: 26px; margin: 8px 0;">
-                • Email: ${clientInfo.email}
-              </p>
-              ${
-                clientInfo.phone
-                  ? `
-                <p style="color: #333; font-size: 16px; line-height: 26px; margin: 8px 0;">
-                  • Phone Number: ${clientInfo.phone}
-                </p>
-              `
-                  : ""
-              }
-              ${
-                clientInfo.whatsappId
-                  ? `
-                <p style="color: #333; font-size: 16px; line-height: 26px; margin: 8px 0;">
-                  • WhatsApp ID: ${clientInfo.whatsappId}
                 </p>
               `
                   : ""
@@ -304,10 +252,9 @@ export async function generateAndSendQuotePdf(prevState: FormState, formData: Fo
 
     // Send quote email using HTML template
     await resend.emails.send({
-      from: "PND50 Accounting <info@pnd50.com>",
-      to: "info@pnd50.com",
-      cc: userEmail,
-      subject: `New Quote Request - ${clientInfo.companyName}`,
+      from: "PND50 Accounting <onboarding@resend.dev>",
+      to: userEmail,
+      subject: `Your Accounting Services Quote - ${clientInfo.companyName}`,
       html: emailHtml,
     })
 

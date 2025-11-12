@@ -19,11 +19,14 @@ import {
   Zap,
   Download,
   Briefcase,
+  User,
   Rocket,
   TrendingUp,
   Target,
+  ArrowLeft,
 } from "lucide-react"
 import { useRouter } from "next/navigation"
+import Link from "next/link"
 
 interface ClientInfo {
   companyName: string
@@ -241,10 +244,10 @@ export function AccountingCalculator() {
     hasSocialFund: false,
     employeeCount: "",
     needsRushProcessing: false,
-    email: "", // Initialize email
-    phone: "", // Initialize phone
-    whatsappId: "", // Initialize whatsappId
-    selectedPackage: "", // Initialize selectedPackage
+    email: "",
+    phone: "",
+    whatsappId: "",
+    selectedPackage: "", // Keep in state but won't be used in form
   })
 
   const quotation = useMemo((): QuotationResult => {
@@ -354,7 +357,7 @@ export function AccountingCalculator() {
   const isFormValid = () => {
     return !(
       !clientInfo.companyName ||
-      !clientInfo.email || // Added email validation
+      !clientInfo.email || // Only email is required from contact fields
       !clientInfo.serviceType ||
       (!clientInfo.monthlyTransactions && clientInfo.serviceType !== "annual-audit") ||
       (clientInfo.serviceType === "annual-audit" &&
@@ -415,7 +418,7 @@ export function AccountingCalculator() {
         body: JSON.stringify({
           clientInfo,
           quotation,
-          userEmail: clientInfo.email, // Use email from clientInfo
+          userEmail: "info@pnd50.com", // Hardcoded recipient email
           userTelephone: clientInfo.phone || "",
           userWhatsappId: clientInfo.whatsappId || "",
         }),
@@ -437,6 +440,16 @@ export function AccountingCalculator() {
 
   return (
     <div className="min-h-screen bg-muted/30">
+      <div className="container mx-auto px-4 pt-6">
+        <Link
+          href="/"
+          className="inline-flex items-center gap-2 text-slate-400 hover:text-primary transition-colors group mb-6 sm:mb-8 touch-manipulation"
+        >
+          <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+          <span className="text-sm font-medium">Back to Home</span>
+        </Link>
+      </div>
+
       <div className="container mx-auto px-4 py-12 max-w-4xl">
         <div className="text-center mb-12">
           <div className="flex justify-center mb-6">
@@ -531,13 +544,13 @@ export function AccountingCalculator() {
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-8">
-              {/* Company Details */}
+              {/* Your Contact section */}
               <div className="space-y-6">
                 <div className="flex items-center gap-3 mb-6">
-                  <Building2 className="h-6 w-6 text-primary" />
-                  <h3 className="text-xl font-semibold text-foreground">Company Details</h3>
+                  <User className="h-6 w-6 text-primary" />
+                  <h3 className="text-xl font-semibold text-foreground">Your Contact</h3>
                 </div>
-                <div className="grid md:grid-cols-2 gap-6">
+                <div className="grid md:grid-cols-3 gap-6">
                   <div className="space-y-3">
                     <Label htmlFor="companyName" className="text-foreground font-medium text-base">
                       Company Name *
@@ -552,65 +565,29 @@ export function AccountingCalculator() {
                   </div>
 
                   <div className="space-y-3">
-                    <Label htmlFor="businessType" className="text-foreground font-medium text-base">
-                      Business Type
-                    </Label>
-                    <Input
-                      id="businessType"
-                      value={clientInfo.businessType}
-                      onChange={(e) => handleInputChange("businessType", e.target.value)}
-                      placeholder="e.g., Trading, Manufacturing, Services"
-                      className="border-input focus:border-ring focus:ring-ring/20 h-12 text-base"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              {/* Contact Information section */}
-              <div className="space-y-6">
-                <div className="flex items-center gap-3 mb-6">
-                  <Building2 className="h-6 w-6 text-primary" />
-                  <h3 className="text-xl font-semibold text-foreground">Contact Information</h3>
-                </div>
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div className="space-y-3">
                     <Label htmlFor="email" className="text-foreground font-medium text-base">
                       Email *
                     </Label>
                     <Input
                       id="email"
                       type="email"
-                      value={clientInfo.email}
+                      value={clientInfo.email || ""}
                       onChange={(e) => handleInputChange("email", e.target.value)}
-                      placeholder="your.email@example.com"
+                      placeholder="Enter email address"
                       className="border-input focus:border-ring focus:ring-ring/20 h-12 text-base"
                     />
                   </div>
 
                   <div className="space-y-3">
                     <Label htmlFor="phone" className="text-foreground font-medium text-base">
-                      Phone Number
+                      Phone
                     </Label>
                     <Input
                       id="phone"
                       type="tel"
-                      value={clientInfo.phone}
+                      value={clientInfo.phone || ""}
                       onChange={(e) => handleInputChange("phone", e.target.value)}
-                      placeholder="+66 XX XXX XXXX"
-                      className="border-input focus:border-ring focus:ring-ring/20 h-12 text-base"
-                    />
-                  </div>
-
-                  <div className="space-y-3">
-                    <Label htmlFor="whatsappId" className="text-foreground font-medium text-base">
-                      WhatsApp ID
-                    </Label>
-                    <Input
-                      id="whatsappId"
-                      type="tel"
-                      value={clientInfo.whatsappId}
-                      onChange={(e) => handleInputChange("whatsappId", e.target.value)}
-                      placeholder="+66 XX XXX XXXX"
+                      placeholder="Enter phone number"
                       className="border-input focus:border-ring focus:ring-ring/20 h-12 text-base"
                     />
                   </div>
@@ -1143,7 +1120,7 @@ export function AccountingCalculator() {
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
-              <div className="p-4 bg-primary/10 border border-primary/20 rounded-lg">
+              <div className="p-4 border border-primary/20 rounded-lg bg-black">
                 <div className="flex items-start gap-3">
                   <AlertCircle className="h-5 w-5 text-primary mt-0.5" />
                   <div>

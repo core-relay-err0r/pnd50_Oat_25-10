@@ -167,7 +167,7 @@ export default function Footer() {
                 <Suspense fallback={<span>...</span>}>
                   <CurrentYear />
                 </Suspense>{" "}
-                PND50, a Burakorn Partners Group company.
+                PND50 CO.,LTD a Burakorn Partners Group company.
               </p>
               <div className="flex items-center gap-x-4 text-slate-500">
                 <Link href="/privacy-policy" className="hover:text-primary-foreground transition-colors">

@@ -4,6 +4,7 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import {
   ArrowRight,
+  ArrowLeft,
   Mail,
   MessageSquare,
   Target,
@@ -42,6 +43,14 @@ const AboutClientPage = () => {
       {/* Hero Section */}
       <section className="relative pt-32 pb-24 md:pt-40 md:pb-32 bg-gradient-to-br from-blue-50 via-slate-50 to-teal-50 overflow-hidden">
         <div className="container mx-auto px-4 relative z-10">
+          <Link
+            href="/"
+            className="inline-flex items-center gap-2 text-slate-400 hover:text-primary transition-colors group mb-6 sm:mb-8 touch-manipulation"
+          >
+            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+            <span className="text-sm font-medium">Back to Home</span>
+          </Link>
+
           <div className="flex flex-col lg:grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             {/* Left: Text Content */}
             <div className="scroll-animate opacity-0 translate-y-[50px] transition-all duration-1000 text-center lg:text-left">
@@ -67,8 +76,8 @@ const AboutClientPage = () => {
               </p>
 
               <Button asChild size="lg" className="group">
-                <Link href="/services" className="flex items-center gap-2">
-                  About us
+                <Link href="/contact" className="flex items-center gap-2">
+                  Contact Us
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </Link>
               </Button>
@@ -78,7 +87,7 @@ const AboutClientPage = () => {
             <div className="scroll-animate opacity-0 translate-y-[50px] transition-all duration-1000 delay-200 relative w-full h-[400px] md:h-[500px] lg:h-[550px] flex items-center justify-center">
               {/* Container for centered composition */}
               <div className="relative w-full max-w-[450px] md:max-w-[550px] lg:max-w-[600px] h-full mx-auto">
-                <div className="absolute top-[8%] left-[2%] w-28 h-28 md:w-36 md:h-36 lg:w-40 lg:h-40 rounded-full bg-orange-500 opacity-90 z-0"></div>
+                <div className="absolute top-[8%] left-[2%] w-28 h-28 md:w-36 md:h-36 lg:w-40 lg:h-40 rounded-full opacity-90 z-0 bg-emerald-200"></div>
                 <div className="absolute top-[3%] right-[12%] w-20 h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 rounded-full bg-teal-400 opacity-80 z-0"></div>
                 <div className="absolute bottom-[12%] right-[2%] w-24 h-24 md:w-28 md:h-28 lg:w-32 lg:h-32 rounded-full bg-slate-700 opacity-90 z-0"></div>
 
