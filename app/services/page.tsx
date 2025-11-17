@@ -1,16 +1,5 @@
 import type { Metadata } from "next"
-import {
-  BookOpen,
-  FileText,
-  Users,
-  Building2,
-  Lightbulb,
-  ArrowRight,
-  TrendingUp,
-  Rocket,
-  Zap,
-  ArrowLeft,
-} from "lucide-react"
+import { BookOpen, FileText, Users, Building2, Lightbulb, ArrowRight, TrendingUp, Rocket, Zap, ArrowLeft } from 'lucide-react'
 import Link from "next/link"
 
 export const metadata: Metadata = {
@@ -115,7 +104,7 @@ export default function ServicesPage() {
   return (
     <div className="min-h-screen bg-background">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-b from-primary/5 to-background py-8 md:py-12">
+      <section className="relative bg-gradient-to-b from-primary/5 to-background py-8 md:py-12 pt-[100px] lg:pt-8">
         <div className="container mx-auto px-4 max-w-6xl">
           <Link
             href="/"
