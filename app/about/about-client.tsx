@@ -4,6 +4,7 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { ArrowRight, ArrowLeft, Mail, MessageSquare, Target, CheckCircle2, Heart, MessageCircle, Cloud, Eye, Users } from 'lucide-react'
 import { useEffect, useRef } from "react"
+import { Testimonial } from "@/components/ui/testimonial-card"
 
 const AboutClientPage = () => {
   const observerRef = useRef<IntersectionObserver | null>(null)
@@ -187,71 +188,72 @@ const AboutClientPage = () => {
         </div>
       </section>
 
-      {/* Who We Work With Section */}
+      {/* Our Success Stories Section */}
       <section className="py-12 sm:py-24 md:py-32 bg-muted/30 relative overflow-hidden">
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-chart-2/5 rounded-full blur-3xl"></div>
         <div className="container mx-auto px-4 sm:px-6 relative z-10">
           <div className="max-w-7xl mx-auto">
-            <div className="flex flex-col lg:grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-              {/* Image - Centered at top on mobile, right side on desktop */}
-              <div className="scroll-animate opacity-0 translate-y-[30px] sm:translate-x-[50px] transition-all duration-1000 delay-200 relative w-full min-w-0 order-first lg:-ml-12">
-                <div className="relative aspect-square rounded-3xl overflow-hidden shadow-2xl mx-auto max-w-md lg:max-w-full">
-                  <img
-                    src="/images/design-mode/1762249261-d06258d7eb72520e54142497e865c10a-1.png.jpeg"
-                    alt="Professional women in business consultation"
-                    className="w-full h-full object-cover parallax-image"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-background/50 to-transparent"></div>
-                </div>
-                <div className="absolute -bottom-6 -right-6 w-40 h-40 bg-primary/20 rounded-full blur-3xl animate-pulse pointer-events-none"></div>
-              </div>
+            <div className="text-center mb-12 sm:mb-16">
+              <p className="text-sm font-semibold text-primary mb-3 tracking-wide uppercase">
+                Our Success Stories
+              </p>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4 leading-tight">
+                Trusted by Businesses Across Thailand
+              </h2>
+              <p className="text-base sm:text-lg text-muted-foreground max-w-3xl mx-auto">
+                See what our clients say about their experience working with PND50
+              </p>
+            </div>
 
-              {/* Text Content - Centered on mobile, left-aligned on desktop */}
-              <div className="scroll-animate opacity-0 translate-y-[30px] sm:translate-x-[-50px] transition-all duration-1000 text-center lg:text-left flex flex-col justify-center min-w-0 w-full">
-                <p className="text-sm font-semibold text-primary mb-3 tracking-wide uppercase">Who We Work With</p>
-                <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4 sm:mb-6 leading-tight break-words">
-                  Trusted by International Businesses
-                </h2>
-                <p className="text-base sm:text-lg text-muted-foreground mb-6 sm:mb-8 leading-relaxed break-words">
-                  We serve foreign companies registered in Thailand, startups and SMEs expanding in the Thai market, and
-                  international subsidiaries operating across Asia.
-                </p>
-
-                <div className="space-y-4 mx-auto lg:mx-0 max-w-md lg:max-w-none">
-                  {[
-                    "Foreign companies registered in Thailand",
-                    "Startups and SMEs expanding in the Thai market",
-                    "International subsidiaries operating across Asia",
-                    "E-commerce businesses navigating Thai regulations",
-                  ].map((item, index) => (
-                    <div key={index} className="flex items-center gap-3 group">
-                      <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center group-hover:bg-primary group-hover:scale-110 transition-all duration-300">
-                        <CheckCircle2 className="w-5 h-5 text-primary group-hover:text-primary-foreground transition-colors" />
-                      </div>
-                      <span className="text-foreground font-medium text-base sm:text-lg text-left break-words min-w-0 flex-1">
-                        {item}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-
-                <div className="mt-6 sm:mt-8 p-4 sm:p-6 rounded-2xl bg-gradient-to-br from-primary/5 to-chart-2/5 border border-border">
-                  <p className="text-base sm:text-lg text-foreground font-medium break-words">
-                    Whether you're just starting or already established, PND50 helps you stay organized, compliant, and
-                    worry-free.
-                  </p>
-                </div>
-              </div>
+            <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+              <Testimonial
+                name="Sarah Mitchell"
+                role="Operations Manager"
+                company="TechStart Asia"
+                rating={5}
+                image="https://i.pravatar.cc/150?u=sarah"
+                testimonial="PND50 transformed our accounting process completely. Their AI-powered system made compliance effortless and saved our team countless hours every month. The real-time support in English was invaluable."
+              />
+              <Testimonial
+                name="Michael Chen"
+                role="CEO"
+                company="Digital Commerce Co."
+                rating={5}
+                image="https://i.pravatar.cc/150?u=michael"
+                testimonial="As a foreign company navigating Thai regulations, PND50 was a game-changer. They handle everything with precision and clarity. No more confusion about deadlines or compliance requirements."
+              />
+              <Testimonial
+                name="Priya Sharma"
+                role="Finance Director"
+                company="Southeast Ventures"
+                rating={5}
+                image="https://i.pravatar.cc/150?u=priya"
+                testimonial="The combination of expert accountants and modern technology sets PND50 apart. They're proactive, transparent, and make financial reporting stress-free. Highly recommend for any international business in Thailand."
+              />
             </div>
           </div>
         </div>
       </section>
 
       {/* How We Work Section */}
-      
+      {/* Placeholder for How We Work Section */}
+      <section className="py-12 sm:py-24 md:py-32 bg-background relative overflow-hidden">
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="max-w-7xl mx-auto">
+            {/* Content for How We Work Section */}
+          </div>
+        </div>
+      </section>
 
       {/* Our Team Section */}
-      
+      {/* Placeholder for Our Team Section */}
+      <section className="py-12 sm:py-24 md:py-32 bg-background relative overflow-hidden">
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="max-w-7xl mx-auto">
+            {/* Content for Our Team Section */}
+          </div>
+        </div>
+      </section>
 
       {/* Why Choose Us Section */}
       <section className="py-12 sm:py-24 md:py-32 bg-background relative overflow-hidden">
