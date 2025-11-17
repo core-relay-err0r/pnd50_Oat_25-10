@@ -148,6 +148,20 @@ export default function PND50Landing() {
               </div>
             </div>
           </div>
+
+          <div className="absolute bottom-0 left-0 right-0 z-20 pb-8 px-4">
+            <div className="container mx-auto">
+              <div className="text-center space-y-2 backdrop-blur-sm bg-slate-900/20 rounded-lg py-6 px-4">
+                <h2 className="text-2xl md:text-3xl font-bold text-white">PND50</h2>
+                <p className="text-sm md:text-base text-primary font-medium">
+                  Powered by Burakorn Partners
+                </p>
+                <p className="text-xs md:text-sm text-slate-300 max-w-2xl mx-auto leading-relaxed">
+                  Tech-driven accounting for foreign-owned businesses in Thailand. A proud subsidiary of Burakorn Partners Group.
+                </p>
+              </div>
+            </div>
+          </div>
         </AnimatedGridBackground>
       </section>
     </main>
