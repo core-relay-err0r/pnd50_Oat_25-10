@@ -6,9 +6,10 @@ import "./globals.css"
 import { ModalProvider } from "@/contexts/modal-context"
 import LayoutClientComponent from "@/components/layout/LayoutClientComponent"
 import { Toaster } from "@/components/ui/toaster"
-import Header from "@/components/layout/Header"
-import ConditionalFooter from "@/components/layout/ConditionalFooter"
+import { Navbar } from "@/components/ui/mini-navbar"
+import Footer from "@/components/layout/Footer"
 import { FloatingChatBot } from "@/components/FloatingChatBot"
+import { Analytics } from "@vercel/analytics/react"
 import { SpeedInsights } from "@vercel/speed-insights/next"
 
 const inter = Inter({ subsets: ["latin"] })
@@ -31,16 +32,16 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
         <ModalProvider>
-          <Header />
+          <Navbar />
           <main>{children}</main>
-          <ConditionalFooter />
+          <Footer />
           <Suspense fallback={null}>
             <Toaster />
             <FloatingChatBot />
           </Suspense>
           <LayoutClientComponent />
         </ModalProvider>
-        {/* <Analytics /> */}
+        <Analytics />
         <SpeedInsights />
       </body>
     </html>
