@@ -2,19 +2,7 @@
 
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import {
-  ArrowRight,
-  ArrowLeft,
-  Mail,
-  MessageSquare,
-  Target,
-  CheckCircle2,
-  Heart,
-  MessageCircle,
-  Cloud,
-  Eye,
-  Users,
-} from "lucide-react"
+import { ArrowRight, ArrowLeft, Mail, MessageSquare, Target, CheckCircle2, Heart, MessageCircle, Cloud, Eye, Users } from 'lucide-react'
 import { useEffect, useRef } from "react"
 
 const AboutClientPage = () => {
@@ -105,6 +93,24 @@ const AboutClientPage = () => {
                     alt="Team member"
                     className="w-full h-full object-cover object-center"
                   />
+                </div>
+
+                {/* Team stats overlay */}
+                <div className="absolute bottom-4 sm:bottom-6 left-4 sm:left-6 right-4 sm:right-6 bg-background/90 backdrop-blur-md rounded-2xl p-3 sm:p-4 border border-border max-w-full z-20">
+                  <div className="grid grid-cols-3 gap-2 sm:gap-3 text-center">
+                    <div className="min-w-0">
+                      <div className="text-xl sm:text-2xl md:text-3xl font-bold text-primary mb-1">10+</div>
+                      <div className="text-[10px] sm:text-xs text-muted-foreground break-words">Years Experience</div>
+                    </div>
+                    <div className="min-w-0">
+                      <div className="text-xl sm:text-2xl md:text-3xl font-bold text-primary mb-1">50+</div>
+                      <div className="text-[10px] sm:text-xs text-muted-foreground break-words">Happy Clients</div>
+                    </div>
+                    <div className="min-w-0">
+                      <div className="text-xl sm:text-2xl md:text-3xl font-bold text-primary mb-1">100%</div>
+                      <div className="text-[10px] sm:text-xs text-muted-foreground break-words">Compliant</div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
