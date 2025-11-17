@@ -24,7 +24,6 @@ export function TestimonialCard({ handleShuffle, testimonial, position, id, auth
       animate={{
         rotate: position === "front" ? "-6deg" : position === "middle" ? "0deg" : "6deg",
         x: position === "front" ? "0%" : position === "middle" ? "33%" : "66%",
-        opacity: position === "front" ? 1 : position === "middle" ? 0.7 : 0.5,
       }}
       drag={true}
       dragElastic={0.35}
@@ -45,9 +44,9 @@ export function TestimonialCard({ handleShuffle, testimonial, position, id, auth
         dragRef.current = 0
       }}
       transition={{ duration: 0.35 }}
-      className={`absolute left-0 top-0 grid h-[450px] w-[350px] select-none place-content-center space-y-6 rounded-2xl border-2 border-slate-700 ${
-        isFront ? "bg-slate-800/95 cursor-grab active:cursor-grabbing" : "bg-slate-800/70"
-      } p-6 shadow-xl backdrop-blur-lg`}
+      className={`absolute left-0 top-0 grid h-[450px] w-[350px] select-none place-content-center space-y-6 rounded-2xl border-2 border-slate-700 bg-slate-800/95 p-6 shadow-xl ${
+        isFront ? "cursor-grab active:cursor-grabbing" : ""
+      }`}
     >
       <img
         src={image || `https://i.pravatar.cc/128?img=${id}`}
