@@ -4,7 +4,6 @@ import { HomepageCtas } from "@/components/HomepageCtas"
 import { useEffect, useState, useMemo } from "react"
 import { ShuffleTestimonials } from "@/components/ShuffleTestimonials"
 import { motion } from "framer-motion"
-import { Sparkles, Zap, Shield, TrendingUp } from 'lucide-react'
 
 const AnimatedGridBackground = dynamic(
   () => import("@/components/ui/animated-grid-background").then((mod) => mod.AnimatedGridBackground),
@@ -126,48 +125,12 @@ export default function PND50Landing() {
                 </p>
 
                 <div
-                  className={`grid grid-cols-2 gap-4 max-w-2xl mx-auto lg:mx-0 transition-all duration-700 delay-300 ${
+                  className={`flex lg:hidden justify-center transition-all duration-700 delay-300 ${
                     isVisible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
                   }`}
                 >
-                  <div className="flex items-start gap-3 p-4 rounded-xl bg-gradient-to-br from-slate-800/50 to-slate-800/30 backdrop-blur-sm border border-slate-700/50 shadow-lg hover:shadow-xl hover:border-slate-600/50 transition-all duration-300">
-                    <div className="p-2 rounded-lg bg-blue-500/20 shadow-lg shadow-blue-500/20">
-                      <Sparkles className="w-5 h-5 text-blue-400" />
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="text-sm font-semibold text-white mb-1">AI-Powered</h3>
-                      <p className="text-xs text-slate-400 leading-relaxed">Lightning fast processing</p>
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-start gap-3 p-4 rounded-xl bg-gradient-to-br from-slate-800/50 to-slate-800/30 backdrop-blur-sm border border-slate-700/50 shadow-lg hover:shadow-xl hover:border-slate-600/50 transition-all duration-300">
-                    <div className="p-2 rounded-lg bg-cyan-500/20 shadow-lg shadow-cyan-500/20">
-                      <Shield className="w-5 h-5 text-cyan-400" />
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="text-sm font-semibold text-white mb-1">100% Accurate</h3>
-                      <p className="text-xs text-slate-400 leading-relaxed">Error-free results</p>
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-start gap-3 p-4 rounded-xl bg-gradient-to-br from-slate-800/50 to-slate-800/30 backdrop-blur-sm border border-slate-700/50 shadow-lg hover:shadow-xl hover:border-slate-600/50 transition-all duration-300">
-                    <div className="p-2 rounded-lg bg-purple-500/20 shadow-lg shadow-purple-500/20">
-                      <Zap className="w-5 h-5 text-purple-400" />
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="text-sm font-semibold text-white mb-1">Real Experts</h3>
-                      <p className="text-xs text-slate-400 leading-relaxed">Human advisors</p>
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-start gap-3 p-4 rounded-xl bg-gradient-to-br from-slate-800/50 to-slate-800/30 backdrop-blur-sm border border-slate-700/50 shadow-lg hover:shadow-xl hover:border-slate-600/50 transition-all duration-300">
-                    <div className="p-2 rounded-lg bg-emerald-500/20 shadow-lg shadow-emerald-500/20">
-                      <TrendingUp className="w-5 h-5 text-emerald-400" />
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="text-sm font-semibold text-white mb-1">5x Faster</h3>
-                      <p className="text-xs text-slate-400 leading-relaxed">Rapid turnaround</p>
-                    </div>
+                  <div className="scale-75 origin-center">
+                    <ShuffleTestimonials />
                   </div>
                 </div>
 
