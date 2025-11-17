@@ -153,7 +153,7 @@ export default function PND50Landing() {
             <div className="container mx-auto">
               <div className="text-center space-y-1 backdrop-blur-sm bg-slate-900/20 rounded-lg py-2 px-3">
                 
-                <p className="text-[10px] md:text-xs font-medium text-backgroundund">
+                <p className="text-[10px] md:text-xs font-medium text-backgroundund text-cardforeground">
                   Powered by Burakorn Partners
                 </p>
                 
