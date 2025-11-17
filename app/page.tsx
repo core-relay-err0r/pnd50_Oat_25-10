@@ -85,7 +85,7 @@ export default function PND50Landing() {
                     isVisible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
                   }`}
                 >
-                  <span className="bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-500 bg-clip-text text-transparent animate-gradient-shift inline-block pb-2 leading-[1.1] drop-shadow-[0_0_30px_rgba(59,130,246,0.3)]">
+                  <span className="bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400 bg-clip-text text-transparent animate-gradient-shift inline-block pb-2 leading-[1.1]">
                     AI Boutique
                   </span>
                   <br />
@@ -120,8 +120,8 @@ export default function PND50Landing() {
                   }`}
                 >
                   You Talk to an Expert, Not a Robot. We connect you with a dedicated human advisor who speaks your
-                  native language. Our AI makes them <span className="text-blue-400 font-semibold bg-blue-400/10 px-2 py-0.5 rounded">5x faster</span> and{" "}
-                  <span className="text-cyan-400 font-semibold bg-cyan-400/10 px-2 py-0.5 rounded">totally error-free</span>.
+                  native language. Our AI makes them <span className="text-blue-400 font-semibold">5x faster</span> and{" "}
+                  <span className="text-emerald-400 font-semibold">totally error-free</span>.
                 </p>
 
                 <div
