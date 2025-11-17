@@ -82,7 +82,7 @@ export default function PND50Landing() {
                 </div>
 
                 <h1
-                  className={`text-5xl sm:text-6xl md:text-7xl lg:text-7xl xl:text-8xl font-bold mb-4 leading-tight tracking-tight transition-all duration-700 delay-100 ${
+                  className={`text-6xl sm:text-7xl md:text-8xl lg:text-7xl xl:text-8xl font-bold mb-4 leading-tight tracking-tight transition-all duration-700 delay-100 ${
                     isVisible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
                   }`}
                 >
