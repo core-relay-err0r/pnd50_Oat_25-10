@@ -20,7 +20,7 @@ export function HomepageCtas() {
           className="w-full sm:w-auto flex items-center justify-center gap-2 px-8 text-lg font-bold rounded-lg cursor-pointer transition-all duration-300 user-select-none border-2 border-white/30 bg-white/5 backdrop-blur-sm hover:bg-white/10 hover:border-white/50 hover:scale-102 text-white"
           style={{ minHeight: "60px", height: "60px" }}
         >
-          <span>📧 Contact Us</span>
+          <span>Contact Us</span>
         </div>
       </Link>
     </div>
