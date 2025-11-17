@@ -152,7 +152,7 @@ export default function PND50Landing() {
           <div className="absolute bottom-0 left-0 right-0 z-20 pb-4 px-4">
             <div className="container mx-auto">
               <div className="text-center space-y-1 backdrop-blur-sm bg-slate-900/20 rounded-lg py-2 px-3">
-                <h2 className="text-xs md:text-sm font-bold text-white">PND50</h2>
+                
                 <p className="text-[10px] md:text-xs text-primary font-medium">
                   Powered by Burakorn Partners
                 </p>
