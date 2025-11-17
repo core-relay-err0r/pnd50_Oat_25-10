@@ -4,9 +4,7 @@ import { HomepageCtas } from "@/components/HomepageCtas"
 import { useEffect, useState, useMemo } from "react"
 import { ShuffleTestimonials } from "@/components/ShuffleTestimonials"
 import { motion } from "framer-motion"
-import ServiceCTA from "@/components/ServiceCTA"
-import { FinalCta } from "@/components/FinalCta"
-import { Sparkles, Zap, Shield, Globe } from 'lucide-react'
+import { Sparkles, Zap, Shield, TrendingUp } from 'lucide-react'
 
 const AnimatedGridBackground = dynamic(
   () => import("@/components/ui/animated-grid-background").then((mod) => mod.AnimatedGridBackground),
@@ -51,50 +49,52 @@ export default function PND50Landing() {
       <section className="relative w-full min-h-screen flex flex-col bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
         <AnimatedGridBackground className="min-h-screen flex-1">
           <div
-            className="absolute top-20 left-10 w-96 h-96 bg-primary/20 rounded-full blur-3xl pointer-events-none"
+            className="hidden lg:block absolute top-20 left-10 w-96 h-96 bg-primary/30 rounded-full blur-3xl pointer-events-none"
             style={{
               transform: `translate(${mousePosition.x}px, ${mousePosition.y}px)`,
               transition: "transform 0.5s ease-out",
             }}
           />
           <div
-            className="absolute bottom-20 right-10 w-96 h-96 bg-chart-2/20 rounded-full blur-3xl pointer-events-none"
+            className="hidden lg:block absolute bottom-20 right-10 w-96 h-96 bg-chart-2/30 rounded-full blur-3xl pointer-events-none"
             style={{
               transform: `translate(${-mousePosition.x}px, ${-mousePosition.y}px)`,
               transition: "transform 0.5s ease-out",
             }}
           />
 
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 min-h-screen flex items-center py-12 sm:py-16 lg:py-20">
-            <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center w-full">
+          <div className="container mx-auto px-6 sm:px-8 lg:px-12 relative z-10 min-h-screen flex items-center py-16 sm:py-20 lg:py-24">
+            <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center w-full">
               {/* Left side - Hero content */}
-              <div className="text-center lg:text-left space-y-6 md:space-y-8">
+              <div className="text-center lg:text-left space-y-8 md:space-y-10">
                 <div
-                  className={`hidden lg:inline-flex items-center gap-2.5 rounded-full bg-gradient-to-r from-primary/10 to-chart-2/10 backdrop-blur-md px-6 py-3 text-sm font-semibold text-white mb-2 border border-primary/20 transition-all duration-700 hover:bg-primary/20 hover:scale-105 hover:border-primary/40 ${
+                  className={`hidden lg:inline-flex items-center gap-3 rounded-full bg-gradient-to-r from-primary/20 to-chart-2/20 backdrop-blur-xl px-6 py-3.5 text-sm font-semibold text-white mb-3 border border-primary/30 shadow-lg shadow-primary/20 transition-all duration-700 hover:bg-primary/30 hover:scale-105 hover:border-primary/50 hover:shadow-xl hover:shadow-primary/30 ${
                     isVisible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
                   }`}
                 >
-                  <span className="relative flex h-2.5 w-2.5">
+                  <span className="relative flex h-3 w-3">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+                    <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500 shadow-lg shadow-emerald-500/50"></span>
                   </span>
-                  <span className="leading-tight">Thailand's Leading Tech-Driven Corporate Services Firm.</span>
+                  <span className="leading-tight bg-gradient-to-r from-white to-slate-200 bg-clip-text text-transparent">
+                    Thailand's Leading Tech-Driven Corporate Services Firm
+                  </span>
                 </div>
 
                 <h1
-                  className={`text-6xl sm:text-7xl md:text-8xl lg:text-7xl xl:text-8xl font-bold mb-4 leading-tight tracking-tight transition-all duration-700 delay-100 ${
+                  className={`text-6xl sm:text-7xl md:text-8xl lg:text-7xl xl:text-8xl font-bold mb-6 leading-[1.1] tracking-tight transition-all duration-700 delay-100 ${
                     isVisible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
                   }`}
                 >
-                  <span className="bg-gradient-to-r from-primary via-chart-2 to-primary bg-clip-text text-transparent animate-gradient-shift inline-block pb-2 leading-[1.15]">
+                  <span className="bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-500 bg-clip-text text-transparent animate-gradient-shift inline-block pb-2 leading-[1.1] drop-shadow-[0_0_30px_rgba(59,130,246,0.3)]">
                     AI Boutique
                   </span>
                   <br />
-                  <span className="relative inline-block w-full overflow-visible" style={{ height: "1.15em" }}>
+                  <span className="relative inline-block w-full overflow-visible" style={{ height: "1.2em", marginTop: "0.1em" }}>
                     {words.map((word, index) => (
                       <motion.span
                         key={index}
-                        className="absolute left-1/2 lg:left-0 -translate-x-1/2 lg:translate-x-0 text-white font-bold whitespace-nowrap"
+                        className="absolute left-1/2 lg:left-0 -translate-x-1/2 lg:translate-x-0 text-white font-bold whitespace-nowrap drop-shadow-[0_0_25px_rgba(255,255,255,0.2)]"
                         initial={{ opacity: 0, y: 100 }}
                         transition={{ type: "spring", stiffness: 50 }}
                         animate={
@@ -116,17 +116,63 @@ export default function PND50Landing() {
                 </h1>
 
                 <p
-                  className={`text-base md:text-lg lg:text-xl max-w-2xl mx-auto lg:mx-0 leading-relaxed transition-all duration-700 delay-200 text-slate-300 ${
+                  className={`text-lg md:text-xl lg:text-2xl max-w-2xl mx-auto lg:mx-0 leading-relaxed transition-all duration-700 delay-200 text-slate-300/90 font-light ${
                     isVisible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
                   }`}
                 >
                   You Talk to an Expert, Not a Robot. We connect you with a dedicated human advisor who speaks your
-                  native language. Our AI makes them <span className="text-primary font-semibold">5x faster</span> and{" "}
-                  <span className="text-chart-2 font-semibold">totally error-free</span>.
+                  native language. Our AI makes them <span className="text-blue-400 font-semibold bg-blue-400/10 px-2 py-0.5 rounded">5x faster</span> and{" "}
+                  <span className="text-cyan-400 font-semibold bg-cyan-400/10 px-2 py-0.5 rounded">totally error-free</span>.
                 </p>
 
                 <div
-                  className={`pt-4 transition-all duration-700 delay-500 ${
+                  className={`grid grid-cols-2 gap-4 max-w-2xl mx-auto lg:mx-0 transition-all duration-700 delay-300 ${
+                    isVisible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
+                  }`}
+                >
+                  <div className="flex items-start gap-3 p-4 rounded-xl bg-gradient-to-br from-slate-800/50 to-slate-800/30 backdrop-blur-sm border border-slate-700/50 shadow-lg hover:shadow-xl hover:border-slate-600/50 transition-all duration-300">
+                    <div className="p-2 rounded-lg bg-blue-500/20 shadow-lg shadow-blue-500/20">
+                      <Sparkles className="w-5 h-5 text-blue-400" />
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-sm font-semibold text-white mb-1">AI-Powered</h3>
+                      <p className="text-xs text-slate-400 leading-relaxed">Lightning fast processing</p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-start gap-3 p-4 rounded-xl bg-gradient-to-br from-slate-800/50 to-slate-800/30 backdrop-blur-sm border border-slate-700/50 shadow-lg hover:shadow-xl hover:border-slate-600/50 transition-all duration-300">
+                    <div className="p-2 rounded-lg bg-cyan-500/20 shadow-lg shadow-cyan-500/20">
+                      <Shield className="w-5 h-5 text-cyan-400" />
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-sm font-semibold text-white mb-1">100% Accurate</h3>
+                      <p className="text-xs text-slate-400 leading-relaxed">Error-free results</p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-start gap-3 p-4 rounded-xl bg-gradient-to-br from-slate-800/50 to-slate-800/30 backdrop-blur-sm border border-slate-700/50 shadow-lg hover:shadow-xl hover:border-slate-600/50 transition-all duration-300">
+                    <div className="p-2 rounded-lg bg-purple-500/20 shadow-lg shadow-purple-500/20">
+                      <Zap className="w-5 h-5 text-purple-400" />
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-sm font-semibold text-white mb-1">Real Experts</h3>
+                      <p className="text-xs text-slate-400 leading-relaxed">Human advisors</p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-start gap-3 p-4 rounded-xl bg-gradient-to-br from-slate-800/50 to-slate-800/30 backdrop-blur-sm border border-slate-700/50 shadow-lg hover:shadow-xl hover:border-slate-600/50 transition-all duration-300">
+                    <div className="p-2 rounded-lg bg-emerald-500/20 shadow-lg shadow-emerald-500/20">
+                      <TrendingUp className="w-5 h-5 text-emerald-400" />
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-sm font-semibold text-white mb-1">5x Faster</h3>
+                      <p className="text-xs text-slate-400 leading-relaxed">Rapid turnaround</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div
+                  className={`pt-8 transition-all duration-700 delay-500 ${
                     isVisible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
                   }`}
                 >
