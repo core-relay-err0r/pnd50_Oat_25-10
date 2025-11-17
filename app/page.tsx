@@ -7,6 +7,7 @@ import { motion } from "framer-motion"
 import ServiceCTA from "@/components/ServiceCTA"
 import { FinalCta } from "@/components/FinalCta"
 import { Sparkles, Zap, Shield, Globe } from 'lucide-react'
+import Link from "next/link"
 
 const AnimatedGridBackground = dynamic(
   () => import("@/components/ui/animated-grid-background").then((mod) => mod.AnimatedGridBackground),
@@ -152,10 +153,17 @@ export default function PND50Landing() {
           <div className="absolute bottom-0 left-0 right-0 z-20 pb-4 px-4">
             <div className="container mx-auto">
               <div className="text-center space-y-1 backdrop-blur-sm bg-slate-900/20 rounded-lg py-2 px-3">
-                
-                <p className="text-[10px] md:text-xs font-medium text-backgroundund text-cardforeground text-background text-accent-foreground                Powered by Burakorn Partners
+                <p className="text-[10px] md:text-xs font-medium text-slate-400">
+                  Powered by{" "}
+                  <Link 
+                    href="https://burakornpartners.com/" 
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-primary hover:text-primary/80 transition-colors underline"
+                  >
+                    Burakorn Partners
+                  </Link>
                 </p>
-                
               </div>
             </div>
           </div>
