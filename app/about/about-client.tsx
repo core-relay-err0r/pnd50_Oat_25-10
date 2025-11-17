@@ -201,7 +201,7 @@ const AboutClientPage = () => {
                     alt="Professional women in business consultation"
                     className="w-full h-full object-cover parallax-image"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-background/30 to-transparent"></div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-background/50 to-transparent"></div>
                 </div>
                 <div className="absolute -bottom-6 -right-6 w-40 h-40 bg-primary/20 rounded-full blur-3xl animate-pulse pointer-events-none"></div>
               </div>
