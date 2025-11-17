@@ -207,12 +207,12 @@ const AboutClientPage = () => {
 
             <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
               <Testimonial
-                name="Sarah Mitchell"
-                role="Operations Manager"
-                company="TechStart Asia"
+                name="Dmitry K."
+                role="Founder"
+                company="Russian E-commerce Startup"
                 rating={5}
                 image="https://i.pravatar.cc/150?u=sarah"
-                testimonial="PND50 transformed our accounting process completely. Their AI-powered system made compliance effortless and saved our team countless hours every month. The real-time support in English was invaluable."
+                testimonial="We opened our company in Bangkok last year and needed help with accounting and taxes. PND50 took care of everything from registration to monthly reports. They always reply fast, explain things in clear English, and send updates on time. It's very reliable to work with them — everything is transparent and professional."
               />
               <Testimonial
                 name="Michael Chen"
