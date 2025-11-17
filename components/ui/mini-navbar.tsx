@@ -90,10 +90,7 @@ export function Navbar() {
 
   return (
     <header
-      className={`fixed top-6 left-1/2 transform -translate-x-1/2 z-50
-                       flex flex-col items-center
-                       pl-6 pr-6 py-3 backdrop-blur-sm
-                       ${headerShapeClass}
+      className={`fixed top-6 left-1/2 transform -translate-x-1/2 z-50 flex flex-col items-center pl-6 pr-6 py-3 backdrop-blur-sm border-none ${headerShapeClass}
                        border border-[#333] bg-[#1f1f1f57]
                        w-[calc(100%-2rem)] sm:w-auto
                        transition-[border-radius] duration-0 ease-in-out`}
