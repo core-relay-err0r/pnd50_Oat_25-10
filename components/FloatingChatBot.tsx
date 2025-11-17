@@ -225,7 +225,7 @@ export function FloatingChatBot() {
           {/* Main chat button */}
           <button
             onClick={() => setIsOpen(true)}
-            className="relative bg-background hover:bg-accent text-foreground rounded-full shadow-2xl hover:shadow-[0_20px_60px_-15px_rgba(0,0,0,0.3)] flex gap-3 md:gap-4 px-5 py-4 md:px-7 md:py-5 transition-all duration-500 hover:scale-105 border-4 border-dotted border-primary hover:border-solid hover:border-primary/80 items-center overflow-hidden group/button"
+            className="relative bg-background hover:bg-white text-foreground rounded-full shadow-2xl hover:shadow-[0_20px_60px_-15px_rgba(0,0,0,0.3)] flex gap-3 md:gap-4 px-5 py-4 md:px-7 md:py-5 transition-all duration-500 hover:scale-105 border-4 border-dotted border-primary hover:border-solid hover:border-primary/80 items-center overflow-hidden group/button"
             aria-label="Open chat with Panida"
           >
             {/* Sparkle icon with primary color */}
