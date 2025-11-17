@@ -167,7 +167,7 @@ export default function PND50Landing() {
               </div>
 
               {/* Right side - Testimonial cards */}
-              <div className="hidden lg:flex items-center justify-center overflow-visible">
+              <div className="flex items-center justify-center overflow-visible mt-8 lg:mt-0">
                 <ShuffleTestimonials />
               </div>
             </div>
