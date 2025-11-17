@@ -19,7 +19,7 @@ export function TestimonialCard({ handleShuffle, testimonial, position, id, auth
 
   React.useEffect(() => {
     const checkScreenSize = () => {
-      setIsDesktop(window.innerWidth >= 1024) // lg breakpoint
+      setIsDesktop(window.innerWidth >= 1024)
     }
     
     checkScreenSize()
@@ -27,13 +27,15 @@ export function TestimonialCard({ handleShuffle, testimonial, position, id, auth
     
     return () => window.removeEventListener('resize', checkScreenSize)
   }, [])
+
+  const blurFilter = isDesktop && position !== "front" ? "blur(0.8px)" : undefined
   // </CHANGE>
 
   return (
     <motion.div
       style={{
         zIndex: position === "front" ? "2" : position === "middle" ? "1" : "0",
-        filter: isDesktop && position !== "front" ? "blur(0.8px)" : "blur(0px)",
+        filter: blurFilter,
       }}
       animate={{
         rotate: position === "front" ? "-6deg" : position === "middle" ? "0deg" : "6deg",
