@@ -12,7 +12,7 @@ export function HomepageCtas() {
           style={{ minHeight: "60px", height: "60px" }}
         >
           Schedule Consultation
-          <span className="ml-2 text-blue-100">→</span>
+          
         </Button>
       </Link>
       <Link href="/contact" className="w-full sm:w-auto">
