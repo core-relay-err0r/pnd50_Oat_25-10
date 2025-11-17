@@ -1,13 +1,13 @@
 import { Suspense } from "react"
 import type React from "react"
 import type { Metadata } from "next"
-import { Inter } from "next/font/google"
+import { Inter } from 'next/font/google'
 import "./globals.css"
 import { ModalProvider } from "@/contexts/modal-context"
 import LayoutClientComponent from "@/components/layout/LayoutClientComponent"
 import { Toaster } from "@/components/ui/toaster"
 import Header from "@/components/layout/Header"
-import Footer from "@/components/layout/Footer"
+import ConditionalFooter from "@/components/layout/ConditionalFooter"
 import { FloatingChatBot } from "@/components/FloatingChatBot"
 import { Analytics } from "@vercel/analytics/react"
 import { SpeedInsights } from "@vercel/speed-insights/next"
@@ -34,7 +34,7 @@ export default function RootLayout({
         <ModalProvider>
           <Header />
           <main>{children}</main>
-          <Footer />
+          <ConditionalFooter />
           <Suspense fallback={null}>
             <Toaster />
             <FloatingChatBot />
