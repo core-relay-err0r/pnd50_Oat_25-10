@@ -1,13 +1,13 @@
 "use client"
 import dynamic from "next/dynamic"
 import { HomepageCtas } from "@/components/HomepageCtas"
-import { FinalCta } from "@/components/FinalCta"
 import { useEffect, useState, useMemo } from "react"
 import { ShuffleTestimonials } from "@/components/ShuffleTestimonials"
 import { motion } from "framer-motion"
-import { CheckCircle2, Shield, Zap, Globe } from 'lucide-react'
 import { InfiniteCaseStudiesCarousel } from "@/components/infinite-case-studies-carousel"
 import ServiceCTA from "@/components/ServiceCTA"
+import { FinalCta } from "@/components/FinalCta"
+import { Sparkles, Zap, Shield, Globe } from 'lucide-react'
 
 const AnimatedGridBackground = dynamic(
   () => import("@/components/ui/animated-grid-background").then((mod) => mod.AnimatedGridBackground),
@@ -48,10 +48,9 @@ export default function PND50Landing() {
   }, [wordIndex, words])
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
-      {/* Hero Section */}
-      <section className="relative w-full min-h-screen flex flex-col overflow-hidden">
-        <AnimatedGridBackground className="h-full flex-1">
+    <main className="min-h-screen">
+      <section className="relative w-full min-h-screen flex flex-col bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
+        <AnimatedGridBackground className="min-h-screen flex-1">
           <div
             className="absolute top-20 left-10 w-96 h-96 bg-primary/20 rounded-full blur-3xl pointer-events-none"
             style={{
@@ -67,28 +66,28 @@ export default function PND50Landing() {
             }}
           />
 
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 h-full flex items-center py-8 sm:py-12 lg:py-16">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 min-h-screen flex items-center py-12 sm:py-16 lg:py-20">
             <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center w-full">
               {/* Left side - Hero content */}
-              <div className="text-center lg:text-left space-y-4 sm:space-y-6">
+              <div className="text-center lg:text-left space-y-6 md:space-y-8">
                 <div
-                  className={`inline-flex items-center gap-2 sm:gap-2.5 rounded-full bg-gradient-to-r from-primary/10 to-chart-2/10 backdrop-blur-md px-4 sm:px-6 py-2 sm:py-3 text-xs sm:text-sm font-semibold text-white mb-2 border border-primary/20 transition-all duration-700 hover:bg-primary/20 hover:scale-105 hover:border-primary/40 ${
+                  className={`inline-flex items-center gap-2.5 rounded-full bg-gradient-to-r from-primary/10 to-chart-2/10 backdrop-blur-md px-6 py-3 text-sm font-semibold text-white mb-2 border border-primary/20 transition-all duration-700 hover:bg-primary/20 hover:scale-105 hover:border-primary/40 ${
                     isVisible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
                   }`}
                 >
-                  <span className="relative flex h-2 w-2 sm:h-2.5 sm:w-2.5">
+                  <span className="relative flex h-2.5 w-2.5">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-2 w-2 sm:h-2.5 sm:w-2.5 bg-emerald-500"></span>
+                    <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
                   </span>
                   <span className="leading-tight">Thailand's Leading Tech-Driven Corporate Services Firm.</span>
                 </div>
 
                 <h1
-                  className={`text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-3 sm:mb-4 leading-tight sm:leading-[1.1] tracking-tight transition-all duration-700 delay-100 ${
+                  className={`text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 leading-tight tracking-tight transition-all duration-700 delay-100 ${
                     isVisible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
                   }`}
                 >
-                  <span className="bg-gradient-to-r from-primary via-chart-2 to-primary bg-clip-text text-transparent animate-gradient-shift inline-block pb-1 sm:pb-2 leading-tight sm:leading-[1.15]">
+                  <span className="bg-gradient-to-r from-primary via-chart-2 to-primary bg-clip-text text-transparent animate-gradient-shift inline-block pb-2 leading-[1.15]">
                     AI Boutique
                   </span>
                   <br />
@@ -118,7 +117,7 @@ export default function PND50Landing() {
                 </h1>
 
                 <p
-                  className={`text-sm sm:text-base md:text-lg lg:text-xl max-w-2xl mx-auto lg:mx-0 leading-relaxed transition-all duration-700 delay-200 text-slate-300 px-2 sm:px-0 ${
+                  className={`text-base md:text-lg lg:text-xl max-w-2xl mx-auto lg:mx-0 leading-relaxed transition-all duration-700 delay-200 text-slate-300 ${
                     isVisible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
                   }`}
                 >
@@ -128,7 +127,7 @@ export default function PND50Landing() {
                 </p>
 
                 <div
-                  className={`pt-2 sm:pt-4 transition-all duration-700 delay-500 ${
+                  className={`pt-4 transition-all duration-700 delay-500 ${
                     isVisible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
                   }`}
                 >
@@ -137,7 +136,7 @@ export default function PND50Landing() {
               </div>
 
               {/* Right side - Testimonial cards */}
-              <div className="hidden lg:flex items-center justify-center overflow-visible">
+              <div className="hidden lg:flex items-center justify-center">
                 <ShuffleTestimonials />
               </div>
             </div>
@@ -145,75 +144,71 @@ export default function PND50Landing() {
         </AnimatedGridBackground>
       </section>
 
-      {/* Features Section */}
-      <section className="relative py-16 sm:py-20 lg:py-24 bg-slate-900/50">
+      <section className="py-16 sm:py-20 lg:py-24 bg-background">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12 sm:mb-16">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4">
-              Why Choose <span className="bg-gradient-to-r from-primary to-chart-2 bg-clip-text text-transparent">PND50</span>
+          <div className="text-center mb-12 lg:mb-16">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4">
+              Why Choose <span className="text-primary">PND50</span>?
             </h2>
-            <p className="text-lg sm:text-xl text-slate-400 max-w-3xl mx-auto">
-              We combine human expertise with AI technology to deliver unmatched service quality
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              We combine cutting-edge AI technology with human expertise to deliver unmatched corporate services
             </p>
           </div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
             {[
               {
-                icon: Zap,
+                icon: Sparkles,
                 title: "Tech-Driven Experts",
-                description: "AI-powered workflows make our team 5x faster without sacrificing quality",
-                gradient: "from-blue-500/20 to-cyan-500/20",
-                iconColor: "text-cyan-400",
+                description: "AI-powered workflows combined with human oversight for perfect accuracy",
+                color: "text-blue-500",
+                bg: "bg-blue-500/10",
               },
               {
-                icon: Globe,
-                title: "Expat Specialists",
-                description: "Native language support for Russian, Vietnamese, and English speakers",
-                gradient: "from-purple-500/20 to-pink-500/20",
-                iconColor: "text-pink-400",
+                icon: Zap,
+                title: "Real-Time Data",
+                description: "Instant access to your financial data anytime, anywhere in the cloud",
+                color: "text-amber-500",
+                bg: "bg-amber-500/10",
               },
               {
                 icon: Shield,
                 title: "Secure & Compliant",
-                description: "Bank-level security with 100% compliance guaranteed",
-                gradient: "from-emerald-500/20 to-teal-500/20",
-                iconColor: "text-emerald-400",
+                description: "Bank-level security with full regulatory compliance guaranteed",
+                color: "text-emerald-500",
+                bg: "bg-emerald-500/10",
               },
               {
-                icon: CheckCircle2,
-                title: "Real-Time Data",
-                description: "Access your financial data anytime, anywhere with our cloud platform",
-                gradient: "from-amber-500/20 to-orange-500/20",
-                iconColor: "text-amber-400",
+                icon: Globe,
+                title: "Expat Specialists",
+                description: "Multilingual support team that understands your unique needs",
+                color: "text-purple-500",
+                bg: "bg-purple-500/10",
               },
             ].map((feature, index) => (
-              <motion.div
+              <div
                 key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className={`bg-gradient-to-br ${feature.gradient} backdrop-blur-sm border border-slate-700/50 rounded-xl p-6 sm:p-8 hover:scale-105 transition-all duration-300 hover:border-slate-600`}
+                className="group p-6 lg:p-8 rounded-2xl border-2 border-border hover:border-primary/40 bg-card transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
               >
-                <feature.icon className={`w-10 h-10 sm:w-12 sm:h-12 ${feature.iconColor} mb-4`} />
-                <h3 className="text-xl sm:text-2xl font-bold text-white mb-3">{feature.title}</h3>
-                <p className="text-slate-400 leading-relaxed">{feature.description}</p>
-              </motion.div>
+                <div className={`w-14 h-14 rounded-xl ${feature.bg} flex items-center justify-center mb-4`}>
+                  <feature.icon className={`w-7 h-7 ${feature.color}`} />
+                </div>
+                <h3 className="text-xl font-bold text-foreground mb-3">{feature.title}</h3>
+                <p className="text-muted-foreground leading-relaxed">{feature.description}</p>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Case Studies Section */}
-      <section className="relative py-16 sm:py-20 lg:py-24 bg-slate-950/80">
+      <section className="py-16 sm:py-20 lg:py-24 bg-muted/30">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12 sm:mb-16">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4">
-              Success Stories
+          <div className="text-center mb-12 lg:mb-16">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4">
+              Success Stories from Around the World
             </h2>
-            <p className="text-lg sm:text-xl text-slate-400 max-w-3xl mx-auto">
-              See how we've helped businesses like yours navigate Thai regulations
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              See how we've helped international businesses thrive in Thailand
             </p>
           </div>
 
@@ -221,21 +216,20 @@ export default function PND50Landing() {
         </div>
       </section>
 
-      {/* Service CTA Section */}
-      <section className="relative">
-        <ServiceCTA />
-      </section>
+      <ServiceCTA />
 
-      {/* Final CTA Section */}
-      <section className="relative py-16 sm:py-20 lg:py-24 bg-gradient-to-b from-slate-900 to-slate-950">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6">
-            Ready to Simplify Your Business Operations?
-          </h2>
-          <p className="text-lg sm:text-xl text-slate-400 max-w-3xl mx-auto mb-10">
-            Join hundreds of expat entrepreneurs who trust PND50 for their corporate services in Thailand
-          </p>
-          <FinalCta />
+      <section className="relative py-20 sm:py-24 lg:py-32 bg-gradient-to-br from-primary via-chart-2 to-primary overflow-hidden">
+        <div className="absolute inset-0 bg-grid-white/[0.05] bg-[size:20px_20px]" />
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="text-center max-w-3xl mx-auto">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6">
+              Ready to Transform Your Business?
+            </h2>
+            <p className="text-lg sm:text-xl text-white/90 mb-10 leading-relaxed">
+              Join hundreds of international companies who trust PND50 for their corporate services in Thailand
+            </p>
+            <FinalCta />
+          </div>
         </div>
       </section>
     </main>
