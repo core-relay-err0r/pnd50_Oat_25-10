@@ -131,10 +131,10 @@ export function AnimatedGridBackground({
   }, [])
 
   return (
-    <div className={cn("relative flex flex-col items-center justify-center bg-slate-900 overflow-hidden", className)}>
+    <div className={cn("relative flex flex-col items-center justify-center bg-slate-900 overflow-hidden min-h-full", className)}>
       <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" style={{ opacity: 0.6 }} />
 
-      <div className="relative z-10">{children}</div>
+      <div className="relative z-10 w-full">{children}</div>
     </div>
   )
 }
