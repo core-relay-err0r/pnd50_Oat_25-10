@@ -45,17 +45,17 @@ export function TestimonialCard({ handleShuffle, testimonial, position, id, auth
         dragRef.current = 0
       }}
       transition={{ duration: 0.35 }}
-      className={`absolute left-0 top-0 grid h-[450px] w-[350px] select-none place-content-center space-y-6 rounded-2xl border-2 border-slate-700 bg-slate-800 p-6 shadow-xl ${
+      className={`absolute left-0 top-0 grid h-[350px] w-[280px] sm:h-[450px] sm:w-[350px] select-none place-content-center space-y-6 rounded-2xl border-2 border-slate-700 bg-slate-800 p-6 shadow-xl ${
         isFront ? "cursor-grab active:cursor-grabbing" : ""
       }`}
     >
       <img
         src={image || `https://i.pravatar.cc/128?img=${id}`}
         alt={`Avatar of ${author}`}
-        className="pointer-events-none mx-auto h-32 w-32 rounded-full border-2 border-slate-700 bg-slate-200 object-cover"
+        className="pointer-events-none mx-auto h-24 w-24 sm:h-32 sm:w-32 rounded-full border-2 border-slate-700 bg-slate-200 object-cover"
       />
-      <span className="text-center text-lg italic text-slate-400">"{testimonial}"</span>
-      <span className="text-center text-sm font-medium text-indigo-400">{author}</span>
+      <span className="text-center text-base sm:text-lg italic text-slate-400">"{testimonial}"</span>
+      <span className="text-center text-xs sm:text-sm font-medium text-indigo-400">{author}</span>
     </motion.div>
   )
 }
