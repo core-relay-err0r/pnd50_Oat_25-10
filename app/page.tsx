@@ -47,7 +47,7 @@ export default function PND50Landing() {
   }, [wordIndex, words])
 
   return (
-    <main className="min-h-screen pt-24 sm:pt-0">
+    <main className="min-h-screen">
       <section className="relative w-full min-h-screen flex flex-col bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
         <AnimatedGridBackground className="min-h-screen flex-1">
           <div
@@ -65,7 +65,7 @@ export default function PND50Landing() {
             }}
           />
 
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 min-h-screen flex items-center py-12 sm:py-16 lg:py-20">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 min-h-screen flex items-center py-12 sm:py-16 lg:py-20 pt-20 lg:pt-12">
             <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center w-full">
               {/* Left side - Hero content */}
               <div className="text-center lg:text-left space-y-6 md:space-y-8">
