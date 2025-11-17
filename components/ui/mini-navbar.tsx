@@ -91,7 +91,7 @@ export function Navbar() {
   return (
     <header
       className={`fixed top-6 left-1/2 transform -translate-x-1/2 z-50 flex flex-col items-center pl-6 pr-6 py-3 backdrop-blur-sm border-none ${headerShapeClass}
-                       border border-[#333] bg-[#1f1f1f57]
+                       border border-[#333] bg-slate-900/80
                        w-[calc(100%-2rem)] sm:w-auto
                        transition-[border-radius] duration-0 ease-in-out`}
     >
@@ -124,7 +124,7 @@ export function Navbar() {
               viewBox="0 0 24 24"
               xmlns="http://www.w3.org/2000/svg"
             >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12M4 6h16M4 12h16M4 18h16"></path>
             </svg>
           ) : (
             <svg
