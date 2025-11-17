@@ -104,7 +104,7 @@ export default function ServicesPage() {
   return (
     <div className="min-h-screen bg-background">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-b from-primary/5 to-background py-8 md:py-12 pt-[100px] lg:pt-8">
+      <section className="relative bg-gradient-to-b from-primary/5 to-background py-8 md:py-12 pt-[100px] lg:pt-[100px]">
         <div className="container mx-auto px-4 max-w-6xl">
           <Link
             href="/"
