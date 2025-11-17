@@ -44,7 +44,7 @@ export function TestimonialCard({ handleShuffle, testimonial, position, id, auth
         dragRef.current = 0
       }}
       transition={{ duration: 0.35 }}
-      className={`absolute left-0 top-0 grid h-[450px] w-[350px] select-none place-content-center space-y-6 rounded-2xl border-2 border-slate-700 bg-slate-800/70 p-6 shadow-xl backdrop-blur-lg ${
+      className={`absolute left-0 top-0 grid h-[450px] w-[350px] select-none place-content-center space-y-6 rounded-2xl border-2 border-slate-700 bg-slate-800 p-6 shadow-xl ${
         isFront ? "cursor-grab active:cursor-grabbing" : ""
       }`}
     >
