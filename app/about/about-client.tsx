@@ -201,7 +201,7 @@ const AboutClientPage = () => {
                 Trusted by Businesses Across Thailand
               </h2>
               <p className="text-base sm:text-lg text-muted-foreground max-w-3xl mx-auto">
-                See what our clients say about their experience working with PND50
+                We&#39;re proud to support international startups — especially from Russia and Vietnam. Helping them manage accounting, tax, and compliance with confidence in Thailand.
               </p>
             </div>
 
