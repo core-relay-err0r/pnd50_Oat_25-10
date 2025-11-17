@@ -156,9 +156,7 @@ export default function PND50Landing() {
                 <p className="text-[10px] md:text-xs text-primary font-medium">
                   Powered by Burakorn Partners
                 </p>
-                <p className="text-[9px] md:text-[10px] text-slate-300 max-w-2xl mx-auto leading-tight">
-                  Tech-driven accounting for foreign-owned businesses in Thailand. A proud subsidiary of Burakorn Partners Group.
-                </p>
+                
               </div>
             </div>
           </div>
