@@ -9,7 +9,6 @@ import { Toaster } from "@/components/ui/toaster"
 import Header from "@/components/layout/Header"
 import ConditionalFooter from "@/components/layout/ConditionalFooter"
 import { FloatingChatBot } from "@/components/FloatingChatBot"
-import { Analytics } from "@vercel/analytics/react"
 import { SpeedInsights } from "@vercel/speed-insights/next"
 
 const inter = Inter({ subsets: ["latin"] })
@@ -41,7 +40,7 @@ export default function RootLayout({
           </Suspense>
           <LayoutClientComponent />
         </ModalProvider>
-        <Analytics />
+        {/* <Analytics /> */}
         <SpeedInsights />
       </body>
     </html>
