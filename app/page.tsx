@@ -47,7 +47,7 @@ export default function PND50Landing() {
   }, [wordIndex, words])
 
   return (
-    <main className="min-h-screen pt-24 sm:pt-32">
+    <main className="min-h-screen pt-24 sm:pt-0">
       <section className="relative w-full min-h-screen flex flex-col bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
         <AnimatedGridBackground className="min-h-screen flex-1">
           <div
