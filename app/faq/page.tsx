@@ -3,7 +3,7 @@
 import { useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
-import { ArrowLeft, BookOpen, Flame, MessageCircle, FileText, Phone, Search, ChevronRight } from "lucide-react"
+import { ArrowLeft, BookOpen, Flame, MessageCircle, FileText, Phone, Search, ChevronRight } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
@@ -249,7 +249,7 @@ export default function FAQPage() {
   return (
     <div className="min-h-screen bg-background">
       {/* Hero Section */}
-      <div className="relative bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 border-b border-border overflow-hidden">
+      <div className="relative bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 border-b border-border overflow-hidden pt-[80px]">
         {/* Background Image */}
         <div className="absolute inset-0 z-0">
           <Image
