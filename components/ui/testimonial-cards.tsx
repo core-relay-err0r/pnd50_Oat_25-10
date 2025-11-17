@@ -20,6 +20,7 @@ export function TestimonialCard({ handleShuffle, testimonial, position, id, auth
     <motion.div
       style={{
         zIndex: position === "front" ? "2" : position === "middle" ? "1" : "0",
+        filter: position === "front" ? "blur(0px)" : "blur(2px)",
       }}
       animate={{
         rotate: position === "front" ? "-6deg" : position === "middle" ? "0deg" : "6deg",
