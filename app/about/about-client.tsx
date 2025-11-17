@@ -237,84 +237,14 @@ const AboutClientPage = () => {
 
       {/* How We Work Section */}
       {/* Placeholder for How We Work Section */}
-      <section className="py-12 sm:py-24 md:py-32 bg-background relative overflow-hidden">
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="max-w-7xl mx-auto">
-            {/* Content for How We Work Section */}
-          </div>
-        </div>
-      </section>
+      
 
       {/* Our Team Section */}
       {/* Placeholder for Our Team Section */}
-      <section className="py-12 sm:py-24 md:py-32 bg-background relative overflow-hidden">
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="max-w-7xl mx-auto">
-            {/* Content for Our Team Section */}
-          </div>
-        </div>
-      </section>
+      
 
       {/* Why Choose Us Section */}
-      <section className="py-12 sm:py-24 md:py-32 bg-background relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl"></div>
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="max-w-7xl mx-auto">
-            <div className="max-w-6xl mx-auto">
-              {/* Left: Text Content */}
-              <div className="scroll-animate opacity-0 translate-y-[50px] transition-all duration-1000">
-                <p className="text-sm font-semibold text-primary mb-3 tracking-wide uppercase text-center">
-                  Why Choose PND50
-                </p>
-                <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-12 leading-tight text-center">
-                  What Sets Us Apart
-                </h2>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                  {[
-                    {
-                      icon: "⚡",
-                      title: "Fast Setup",
-                      stat: "< 10 Days",
-                      description: "Get started quickly",
-                    },
-                    {
-                      icon: "✅",
-                      title: "100% Compliant",
-                      stat: "Always",
-                      description: "On-time with regulations",
-                    },
-                    {
-                      icon: "🛡️",
-                      title: "Zero Issues",
-                      stat: "Proactive",
-                      description: "Compliance management",
-                    },
-                    {
-                      icon: "🌟",
-                      title: "Expert Team",
-                      stat: "10+ Years",
-                      description: "Certified accountants",
-                    },
-                  ].map((item, index) => (
-                    <div
-                      key={index}
-                      className="p-6 rounded-2xl border border-border bg-card hover:border-primary hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group"
-                    >
-                      <div className="text-4xl mb-3 transition-transform duration-300 group-hover:scale-110 inline-block">
-                        {item.icon}
-                      </div>
-                      <div className="text-2xl font-bold text-primary mb-1">{item.stat}</div>
-                      <h3 className="text-lg font-bold text-foreground mb-1">{item.title}</h3>
-                      <p className="text-sm text-muted-foreground">{item.description}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      
 
       {/* Call to Action Section */}
       <section className="py-12 sm:py-24 md:py-32 bg-gradient-to-br from-primary via-primary/90 to-chart-2 relative overflow-hidden">
