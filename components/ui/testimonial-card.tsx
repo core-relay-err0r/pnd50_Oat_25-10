@@ -3,7 +3,6 @@
 import * as React from "react"
 import { Star } from 'lucide-react'
 import { cn } from "@/lib/utils"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 
 export interface TestimonialProps extends React.HTMLAttributes<HTMLDivElement> {
   name: string
@@ -52,12 +51,13 @@ const Testimonial = React.forwardRef<HTMLDivElement, TestimonialProps>(
 
           <div className="flex items-center gap-4 justify-start">
             <div className="flex items-center gap-4">
-              {image && (
-                <Avatar>
-                  <AvatarImage src={image || "/placeholder.svg"} alt={name} height={48} width={48} />
-                  <AvatarFallback>{name[0]}</AvatarFallback>
-                </Avatar>
-              )}
+              <div className="flex items-center justify-center w-12 h-12 rounded-full overflow-hidden bg-white">
+                <div className="w-full h-full flex flex-col">
+                  <div className="h-1/3 bg-white"></div>
+                  <div className="h-1/3 bg-blue-600"></div>
+                  <div className="h-1/3 bg-red-600"></div>
+                </div>
+              </div>
 
               <div className="flex flex-col">
                 <h3 className="font-semibold text-foreground">{name}</h3>
