@@ -380,7 +380,7 @@ export default function ContactPage() {
                         rel="noopener noreferrer"
                         className="flex items-center gap-2 text-primary hover:text-primary/90 transition-colors duration-300 font-medium truncate"
                       >
-                        <img src="/images/icons8-telegram.gif" alt="Telegram" className="w-5 h-5 flex-shrink-0" />
+                        <img src="/images/10464249.png" alt="Telegram" className="w-5 h-5 flex-shrink-0" />
                         +66 84 356 3805
                       </a>
                     </div>
