@@ -89,7 +89,7 @@ export function FloatingChatBot() {
         aria-label="Show AI assistant"
       >
         <MessageCircle className="w-4 h-4 transition-transform duration-300 group-hover:rotate-12" />
-        <span>Show AI Chat</span>
+        <span>Chat with Panida </span>
       </button>
     )
   }
