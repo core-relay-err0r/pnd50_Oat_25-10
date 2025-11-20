@@ -3,7 +3,7 @@
 import { useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
-import { ArrowLeft, FileText, Phone, Search, ChevronRight, X, Calculator, Building2, HelpCircle } from "lucide-react"
+import { ArrowLeft, BookOpen, Flame, MessageCircle, FileText, Phone, Search, ChevronRight, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
@@ -12,7 +12,7 @@ const faqCategories = [
   {
     id: "accounting",
     title: "Accounting Questions",
-    icon: Calculator, // Changed from BookOpen to Calculator for more professional look
+    icon: BookOpen,
     color: "blue",
     questions: [
       {
@@ -81,7 +81,7 @@ const faqCategories = [
   {
     id: "tax",
     title: "Tax Questions",
-    icon: FileText, // Changed from Flame to FileText for more professional look
+    icon: Flame,
     color: "orange",
     questions: [
       {
@@ -146,7 +146,7 @@ const faqCategories = [
   {
     id: "general",
     title: "General Questions",
-    icon: HelpCircle, // Changed from MessageCircle to HelpCircle for more professional look
+    icon: MessageCircle,
     color: "purple",
     questions: [
       {
@@ -181,7 +181,7 @@ const faqCategories = [
   {
     id: "corporate",
     title: "Corporate & Compliance Questions",
-    icon: Building2, // Keep Building2 as it's already professional
+    icon: FileText,
     color: "green",
     questions: [
       {
@@ -353,11 +353,7 @@ export default function FAQPage() {
                 <section key={category.id} id={category.id} className="scroll-mt-20 sm:scroll-mt-24">
                   <div className="flex items-start sm:items-center justify-between mb-6 sm:mb-8 gap-4">
                     <div className="flex items-start sm:items-center gap-3 sm:gap-4">
-                      <div
-                        className={`w-12 h-12 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl flex items-center justify-center border flex-shrink-0 ${colorClasses[category.color as keyof typeof colorClasses]}`}
-                      >
-                        <Icon className="w-6 h-6 sm:w-7 sm:h-7" />
-                      </div>
+                      
                       <div>
                         <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground leading-tight">
                           {category.title}
