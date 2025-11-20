@@ -3,7 +3,7 @@
 import { useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
-import { ArrowLeft, BookOpen, Flame, MessageCircle, FileText, Phone, Search, ChevronRight } from "lucide-react"
+import { ArrowLeft, BookOpen, Flame, MessageCircle, FileText, Phone, Search } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
@@ -260,7 +260,7 @@ export default function FAQPage() {
             priority
           />
           {/* Gradient Overlays */}
-          <div className="absolute inset-0 bg-gradient-to-br from-slate-950/70 via-slate-950/60 to-slate-950/70" />
+          <div className="absolute inset-0 bg-gradient-to-br from-slate-950/70 via-slate-900/60 to-slate-950/70" />
           <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent" />
         </div>
 
@@ -372,7 +372,7 @@ export default function FAQPage() {
                             {q.question}
                           </span>
                         </AccordionTrigger>
-                        <AccordionContent className="text-muted-foreground text-sm sm:text-base leading-relaxed space-y-3 sm:space-y-4 pb-4 sm:pb-6 pl-8 sm:pl-10">
+                        <AccordionContent className="text-muted-foreground text-sm sm:text-base leading-relaxed space-y-3 sm:space-y-4 pb-4 sm:pb-6 pl-6 sm:pl-8">
                           {q.answer}
                         </AccordionContent>
                       </AccordionItem>
@@ -422,7 +422,7 @@ export default function FAQPage() {
                     >
                       <Link href="/contact" className="flex items-center justify-center gap-2">
                         Contact Us
-                        <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                        <ArrowLeft className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                       </Link>
                     </Button>
                     <Button
