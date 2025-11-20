@@ -3,11 +3,11 @@
 import type React from "react"
 
 import { useState, useEffectEvent, useEffect } from "react"
-import { X, MessageCircle, Send, Sparkles, EyeOff } from 'lucide-react'
+import { X, MessageCircle, Send, Sparkles, EyeOff } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useChat } from "@ai-sdk/react"
 import { DefaultChatTransport } from "ai"
-import { usePathname } from 'next/navigation'
+import { usePathname } from "next/navigation"
 import { useIsMobile } from "@/components/ui/use-mobile"
 
 const WELCOME_MESSAGE = {
@@ -89,7 +89,7 @@ export function FloatingChatBot() {
         aria-label="Show AI assistant"
       >
         <MessageCircle className="w-4 h-4 transition-transform duration-300 group-hover:rotate-12" />
-        <span>Show AI Chat</span>
+        <span>{"Chat with Panida"}</span>
       </button>
     )
   }
@@ -235,10 +235,10 @@ export function FloatingChatBot() {
 
             {/* Two-line text layout */}
             <div className="flex flex-col items-start relative z-10">
-              <span className="text-sm md:text-base font-bold text-foreground leading-tight transition-colors duration-300 group-hover/button:text-primary">
-                PND50 Assistant    
+              <span className="text-xs text-muted-foreground leading-tight transition-colors duration-300 group-hover/button:text-foreground md:text-xs">
+                Don&#39;t know where to start?
               </span>
-              <span className="text-xs md:text-sm text-muted-foreground leading-tight transition-colors duration-300 group-hover/button:text-foreground">
+              <span className="font-bold text-foreground leading-tight transition-colors duration-300 group-hover/button:text-primary text-lg">
                 Chat with Panida
               </span>
             </div>
