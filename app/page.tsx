@@ -4,10 +4,7 @@ import { HomepageCtas } from "@/components/HomepageCtas"
 import { useEffect, useState, useMemo } from "react"
 import { ShuffleTestimonials } from "@/components/ShuffleTestimonials"
 import { motion } from "framer-motion"
-import ServiceCTA from "@/components/ServiceCTA"
-import { FinalCta } from "@/components/FinalCta"
-import { Sparkles, Zap, Shield, Globe } from 'lucide-react'
-import Link from "next/link"
+import { LandingFooter } from "@/components/landing-footer"
 
 const AnimatedGridBackground = dynamic(
   () => import("@/components/ui/animated-grid-background").then((mod) => mod.AnimatedGridBackground),
@@ -66,15 +63,14 @@ export default function PND50Landing() {
             }}
           />
 
-          {/* Added fading gradient to the bottom of the screen */}
-          <div className="absolute bottom-0 left-0 right-0 h-64 bg-gradient-to-t from-slate-950 via-slate-950/50 to-transparent pointer-events-none z-10" />
-
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 min-h-screen flex items-center py-12 sm:py-16 lg:py-20 pt-[100px] lg:pt-12">
             <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center w-full">
               {/* Left side - Hero content */}
               <div className="text-center lg:text-left space-y-6 md:space-y-8">
                 <div
-                  className={`hidden lg:inline-flex items-center gap-2.5 rounded-full bg-gradient-to-r from-primary via-chart-2 to-primary bg-clip-text text-transparent animate-gradient-shift inline-block pb-2 leading-[1.15]`}
+                  className={`hidden lg:inline-flex items-center gap-2.5 rounded-full bg-gradient-to-r from-primary/10 to-chart-2/10 backdrop-blur-md px-6 py-3 text-sm font-semibold text-white mb-2 border border-primary/20 transition-all duration-700 hover:bg-primary/20 hover:scale-105 hover:border-primary/40 ${
+                    isVisible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
+                  }`}
                 >
                   <span className="relative flex h-2.5 w-2.5">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
@@ -151,23 +147,7 @@ export default function PND50Landing() {
             </div>
           </div>
 
-          <div className="absolute bottom-0 left-0 right-0 z-20 pb-4 px-4">
-            <div className="container mx-auto">
-              <div className="text-center space-y-1 backdrop-blur-sm bg-slate-900/20 rounded-lg py-2 px-3">
-                <p className="text-[10px] md:text-xs font-medium text-slate-400">
-                  Powered by{" "}
-                  <Link 
-                    href="https://burakornpartners.com/" 
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-primary hover:text-primary/80 transition-colors underline"
-                  >
-                    Burakorn Partners
-                  </Link>
-                </p>
-              </div>
-            </div>
-          </div>
+          <LandingFooter />
         </AnimatedGridBackground>
       </section>
     </main>
