@@ -3,7 +3,7 @@
 import { useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
-import { ArrowLeft, BookOpen, Flame, MessageCircle, FileText, Phone, Search, ChevronRight } from 'lucide-react'
+import { ArrowLeft, BookOpen, Flame, MessageCircle, FileText, Phone, Search, ChevronRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
@@ -278,14 +278,14 @@ export default function FAQPage() {
           <div className="max-w-4xl">
             <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-primary/10 backdrop-blur-sm border border-primary/20 text-primary text-xs sm:text-sm font-medium mb-4 sm:mb-6">
               <FileText className="w-3 h-3 sm:w-4 sm:h-4" />
-              Real Questions from Clients
+              Knowledge Base
             </div>
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 sm:mb-6 tracking-tight leading-tight">
               Frequently Asked Questions
             </h1>
             <p className="text-base sm:text-lg md:text-xl text-slate-300 leading-relaxed mb-6 sm:mb-8">
-              Clear answers about accounting, tax, and business setup in Thailand — explained in simple English, based
-              on real client questions.
+              Expert insights on accounting, tax, and corporate compliance in Thailand — based on current regulations
+              and client inquiries.
             </p>
 
             <div className="relative max-w-2xl">
@@ -367,7 +367,7 @@ export default function FAQPage() {
                         value={q.id}
                         className="group bg-card border border-border rounded-xl sm:rounded-2xl px-4 sm:px-6 md:px-8 data-[state=open]:shadow-xl data-[state=open]:border-primary/30 transition-all duration-300 hover:shadow-lg hover:border-border/80"
                       >
-                        <AccordionTrigger className="text-left hover:no-underline py-4 sm:py-6 touch-manipulation">
+                        <AccordionTrigger className="text-left hover:no-underline py-4 sm:py-6 touch-manipulation [&>svg:last-child]:hidden">
                           <div className="flex items-start gap-2 sm:gap-3 pr-2 sm:pr-4">
                             <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 text-primary mt-0.5 sm:mt-1 flex-shrink-0 group-data-[state=open]:rotate-90 transition-transform" />
                             <span className="font-semibold text-foreground text-sm sm:text-base md:text-lg leading-relaxed text-balance">
@@ -414,8 +414,8 @@ export default function FAQPage() {
                     Still Have Questions?
                   </h2>
                   <p className="text-base sm:text-lg text-muted-foreground leading-relaxed mb-6 sm:mb-8 max-w-2xl">
-                    Can't find what you're looking for? Our team is ready to guide you step by step — in simple English,
-                    with full transparency. Get personalized answers to your specific situation.
+                    If you cannot find the information you need, our team is ready to provide detailed guidance tailored
+                    to your specific business requirements.
                   </p>
                   <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
                     <Button
