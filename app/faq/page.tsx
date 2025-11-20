@@ -3,7 +3,7 @@
 import { useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
-import { ArrowLeft, BookOpen, Flame, MessageCircle, FileText, Phone, Search, ChevronRight, X } from "lucide-react"
+import { ArrowLeft, FileText, Phone, Search, ChevronRight, X, Calculator, Building2, HelpCircle } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
@@ -12,7 +12,7 @@ const faqCategories = [
   {
     id: "accounting",
     title: "Accounting Questions",
-    icon: BookOpen,
+    icon: Calculator, // Changed from BookOpen to Calculator for more professional look
     color: "blue",
     questions: [
       {
@@ -81,7 +81,7 @@ const faqCategories = [
   {
     id: "tax",
     title: "Tax Questions",
-    icon: Flame,
+    icon: FileText, // Changed from Flame to FileText for more professional look
     color: "orange",
     questions: [
       {
@@ -146,7 +146,7 @@ const faqCategories = [
   {
     id: "general",
     title: "General Questions",
-    icon: MessageCircle,
+    icon: HelpCircle, // Changed from MessageCircle to HelpCircle for more professional look
     color: "purple",
     questions: [
       {
@@ -181,7 +181,7 @@ const faqCategories = [
   {
     id: "corporate",
     title: "Corporate & Compliance Questions",
-    icon: FileText,
+    icon: Building2, // Keep Building2 as it's already professional
     color: "green",
     questions: [
       {
