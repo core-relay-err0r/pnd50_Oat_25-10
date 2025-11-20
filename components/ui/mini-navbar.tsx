@@ -1,27 +1,45 @@
 "use client"
 
-import React, { useState, useEffect, useRef } from "react"
+import type React from "react"
+import { useState, useEffect, useRef } from "react"
 import Link from "next/link"
+import { usePathname } from "next/navigation"
+import { motion } from "framer-motion"
 
-const AnimatedNavLink = ({ href, children }: { href: string; children: React.ReactNode }) => {
-  const defaultTextColor = "text-gray-300"
+const AnimatedNavLink = ({
+  href,
+  children,
+  isActive,
+}: {
+  href: string
+  children: React.ReactNode
+  isActive: boolean
+}) => {
+  const defaultTextColor = isActive ? "text-white font-medium" : "text-gray-300"
   const hoverTextColor = "text-white"
   const textSizeClass = "text-sm"
 
   return (
-    <Link
-      href={href}
-      className={`group relative inline-block overflow-hidden h-5 flex items-center ${textSizeClass}`}
-    >
-      <div className="flex flex-col transition-transform duration-400 ease-out transform group-hover:-translate-y-1/2">
-        <span className={defaultTextColor}>{children}</span>
-        <span className={hoverTextColor}>{children}</span>
+    <Link href={href} className={`group relative inline-flex flex-col items-center justify-center ${textSizeClass}`}>
+      <div className="relative overflow-hidden h-5 flex items-center">
+        <div className="flex flex-col transition-transform duration-400 ease-out transform group-hover:-translate-y-1/2">
+          <span className={defaultTextColor}>{children}</span>
+          <span className={hoverTextColor}>{children}</span>
+        </div>
       </div>
+      {isActive && (
+        <motion.div
+          layoutId="navbar-active"
+          className="absolute -bottom-1 w-full h-0.5 bg-white rounded-full shadow-[0_0_8px_rgba(255,255,255,0.5)]"
+          transition={{ type: "spring", stiffness: 380, damping: 30 }}
+        />
+      )}
     </Link>
   )
 }
 
 export function Navbar() {
+  const pathname = usePathname()
   const [isOpen, setIsOpen] = useState(false)
   const [headerShapeClass, setHeaderShapeClass] = useState("rounded-full")
   const shapeTimeoutRef = useRef<NodeJS.Timeout | null>(null)
@@ -100,7 +118,7 @@ export function Navbar() {
 
         <nav className="hidden sm:flex items-center space-x-4 sm:space-x-6 text-sm">
           {navLinksData.map((link) => (
-            <AnimatedNavLink key={link.href} href={link.href}>
+            <AnimatedNavLink key={link.href} href={link.href} isActive={pathname === link.href}>
               {link.label}
             </AnimatedNavLink>
           ))}
@@ -149,7 +167,7 @@ export function Navbar() {
             <Link
               key={link.href}
               href={link.href}
-              className="text-gray-300 hover:text-white transition-colors w-full text-center"
+              className={`${pathname === link.href ? "text-white font-medium" : "text-gray-300"} hover:text-white transition-colors w-full text-center`}
               onClick={() => setIsOpen(false)}
             >
               {link.label}
