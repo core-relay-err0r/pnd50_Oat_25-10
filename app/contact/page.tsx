@@ -89,7 +89,7 @@ export default function ContactPage() {
   return (
     <div className="min-h-screen bg-background">
       {/* Hero Section */}
-      <section className="relative py-16 md:py-24 bg-gradient-to-br from-primary/10 via-background to-chart-2/10 overflow-hidden">
+      <section className="relative pt-32 pb-16 md:py-24 bg-gradient-to-br from-primary/10 via-background to-chart-2/10 overflow-hidden">
         <div className="absolute inset-0 opacity-30">
           <div className="absolute top-0 right-0 w-96 h-96 bg-primary/20 rounded-full blur-3xl"></div>
           <div className="absolute bottom-0 left-0 w-96 h-96 bg-chart-2/20 rounded-full blur-3xl"></div>
