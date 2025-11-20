@@ -1,5 +1,16 @@
 import type { Metadata } from "next"
-import { BookOpen, FileText, Users, Building2, Lightbulb, ArrowRight, TrendingUp, Rocket, Zap, ArrowLeft } from 'lucide-react'
+import {
+  BookOpen,
+  FileText,
+  Users,
+  Building2,
+  Lightbulb,
+  ArrowRight,
+  TrendingUp,
+  Rocket,
+  Zap,
+  ArrowLeft,
+} from "lucide-react"
 import Link from "next/link"
 
 export const metadata: Metadata = {
@@ -105,7 +116,7 @@ export default function ServicesPage() {
     <div className="min-h-screen bg-background">
       {/* Hero Section */}
       <section className="relative bg-gradient-to-b from-primary/5 to-background py-8 md:py-12 pt-[100px] lg:pt-[100px]">
-        <div className="container mx-auto px-4 max-w-6xl">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
           <Link
             href="/"
             className="inline-flex items-center gap-2 text-slate-400 hover:text-primary transition-colors group mb-6 sm:mb-8 touch-manipulation"
@@ -131,11 +142,10 @@ export default function ServicesPage() {
       </section>
 
       {/* Packages Section */}
-      
 
       {/* Services Grid */}
       <section className="py-16 md:py-20">
-        <div className="container mx-auto px-4 max-w-7xl">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">Our Services</h2>
           </div>
@@ -179,7 +189,7 @@ export default function ServicesPage() {
 
       {/* CTA Section */}
       <section className="py-16 md:py-24 bg-gradient-to-b from-background to-primary/5">
-        <div className="container mx-auto px-4 max-w-4xl text-center">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl text-center">
           <h2 className="text-3xl md:text-5xl font-bold text-foreground mb-6">Ready to Get Started?</h2>
           <p className="text-xl text-muted-foreground mb-8 leading-relaxed">
             Schedule a free consultation to discuss how we can support your business in Thailand
