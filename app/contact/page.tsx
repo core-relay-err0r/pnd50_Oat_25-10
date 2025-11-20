@@ -373,7 +373,7 @@ export default function ContactPage() {
 
                   <div className="flex items-center justify-between gap-3 group">
                     <div className="flex items-center gap-3 overflow-hidden">
-                      <span className="font-semibold text-foreground flex-shrink-0">Telegram:</span>
+                      <span className="font-semibold flex-shrink-0 text-sidebar-accent-foreground">Telegram:</span>
                       <a
                         href="https://t.me/66843563805"
                         target="_blank"
@@ -399,7 +399,7 @@ export default function ContactPage() {
 
                   <div className="flex items-center justify-between gap-3 group">
                     <div className="flex items-center gap-3 overflow-hidden">
-                      <span className="font-semibold text-foreground flex-shrink-0">WhatsApp:</span>
+                      <span className="font-semibold flex-shrink-0 text-chart-2">WhatsApp:</span>
                       <a
                         href="https://wa.me/66843563805"
                         target="_blank"
