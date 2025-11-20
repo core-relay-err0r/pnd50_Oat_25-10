@@ -3,7 +3,7 @@
 import { useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
-import { ArrowLeft, BookOpen, Flame, MessageCircle, FileText, Phone, Search, ChevronRight } from 'lucide-react'
+import { ArrowLeft, BookOpen, Flame, MessageCircle, FileText, Phone, Search, ChevronRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
@@ -260,7 +260,7 @@ export default function FAQPage() {
             priority
           />
           {/* Gradient Overlays */}
-          <div className="absolute inset-0 bg-gradient-to-br from-slate-950/70 via-slate-900/60 to-slate-950/70" />
+          <div className="absolute inset-0 bg-gradient-to-br from-slate-950/70 via-slate-950/60 to-slate-950/70" />
           <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent" />
         </div>
 
@@ -367,15 +367,12 @@ export default function FAQPage() {
                         value={q.id}
                         className="group bg-card border border-border rounded-xl sm:rounded-2xl px-4 sm:px-6 md:px-8 data-[state=open]:shadow-xl data-[state=open]:border-primary/30 transition-all duration-300 hover:shadow-lg hover:border-border/80"
                       >
-                        <AccordionTrigger className="text-left hover:no-underline py-4 sm:py-6 touch-manipulation">
-                          <div className="flex items-start gap-2 sm:gap-3 pr-2 sm:pr-4">
-                            <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 text-primary mt-0.5 sm:mt-1 flex-shrink-0 group-data-[state=open]:rotate-90 transition-transform" />
-                            <span className="font-semibold text-foreground text-sm sm:text-base md:text-lg leading-relaxed text-balance">
-                              {q.question}
-                            </span>
-                          </div>
+                        <AccordionTrigger className="justify-start gap-3 py-4 sm:py-6 text-left hover:no-underline [&>svg]:-order-1 [&>svg]:text-primary [&>svg]:opacity-100 [&>svg]:w-5 [&>svg]:h-5">
+                          <span className="font-semibold text-foreground text-sm sm:text-base md:text-lg leading-relaxed text-balance">
+                            {q.question}
+                          </span>
                         </AccordionTrigger>
-                        <AccordionContent className="text-muted-foreground text-sm sm:text-base leading-relaxed space-y-3 sm:space-y-4 pb-4 sm:pb-6 pl-6 sm:pl-8">
+                        <AccordionContent className="text-muted-foreground text-sm sm:text-base leading-relaxed space-y-3 sm:space-y-4 pb-4 sm:pb-6 pl-8 sm:pl-10">
                           {q.answer}
                         </AccordionContent>
                       </AccordionItem>
