@@ -122,6 +122,12 @@
 }
 
 @layer base {
+  html {
+    /* Set default scale to 80% on desktop screens to increase information density while maintaining responsiveness. This scales all rem-based values (Tailwind defaults). */
+    @media (min-width: 1024px) {
+      font-size: 80%;
+    }
+  }
   * {
     @apply border-border outline-ring/50;
   }
