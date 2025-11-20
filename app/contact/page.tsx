@@ -373,14 +373,16 @@ export default function ContactPage() {
 
                   <div className="flex items-center justify-between gap-3 group">
                     <div className="flex items-center gap-3 overflow-hidden">
-                      <span className="font-semibold flex-shrink-0 text-sidebar-accent-foreground">Telegram:</span>
+                      <div className="flex items-center gap-2 flex-shrink-0">
+                        <img src="/images/10464249.png" alt="Telegram" className="w-5 h-5 object-contain" />
+                        <span className="font-semibold text-sidebar-accent-foreground">Telegram:</span>
+                      </div>
                       <a
                         href="https://t.me/66843563805"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-2 text-primary hover:text-primary/90 transition-colors duration-300 font-medium truncate"
+                        className="text-primary hover:text-primary/90 transition-colors duration-300 font-medium truncate"
                       >
-                        
                         +66 84 356 3805
                       </a>
                     </div>
@@ -399,14 +401,20 @@ export default function ContactPage() {
 
                   <div className="flex items-center justify-between gap-3 group">
                     <div className="flex items-center gap-3 overflow-hidden">
-                      <span className="font-semibold flex-shrink-0 text-chart-2">WhatsApp:</span>
+                      <div className="flex items-center gap-2 flex-shrink-0">
+                        <img
+                          src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/WhatsApp.svg/120px-WhatsApp.svg.png"
+                          alt="WhatsApp"
+                          className="w-5 h-5 object-contain"
+                        />
+                        <span className="font-semibold text-chart-2">WhatsApp:</span>
+                      </div>
                       <a
                         href="https://wa.me/66843563805"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-2 text-primary hover:text-primary/90 transition-colors duration-300 font-medium truncate"
+                        className="text-primary hover:text-primary/90 transition-colors duration-300 font-medium truncate"
                       >
-                        
                         +66 84 356 3805
                       </a>
                     </div>
