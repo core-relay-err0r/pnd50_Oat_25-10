@@ -265,7 +265,7 @@ export default function FAQPage() {
         </div>
 
         {/* Content */}
-        <div className="relative z-10 container mx-auto px-4 sm:px-6 py-12 sm:py-16 md:py-24">
+        <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-24">
           {/* Back button */}
           <Link
             href="/"
@@ -312,7 +312,7 @@ export default function FAQPage() {
       </div>
 
       <div className="border-b border-border bg-muted/30">
-        <div className="container mx-auto px-4 sm:px-6 py-4 sm:py-6">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
           <div className="flex gap-2 sm:gap-3 overflow-x-auto pb-2 scrollbar-hide snap-x snap-mandatory md:flex-wrap md:justify-center md:overflow-visible">
             {faqCategories.map((category) => {
               const Icon = category.icon
@@ -337,7 +337,7 @@ export default function FAQPage() {
       </div>
 
       {/* FAQ Content */}
-      <div className="container mx-auto px-4 sm:px-6 py-12 sm:py-16 md:py-20">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20">
         <div className="max-w-5xl mx-auto space-y-12 sm:space-y-16">
           {filteredCategories.length > 0 ? (
             filteredCategories.map((category) => {
@@ -353,7 +353,6 @@ export default function FAQPage() {
                 <section key={category.id} id={category.id} className="scroll-mt-20 sm:scroll-mt-24">
                   <div className="flex items-start sm:items-center justify-between mb-6 sm:mb-8 gap-4">
                     <div className="flex items-start sm:items-center gap-3 sm:gap-4">
-                      
                       <div>
                         <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground leading-tight">
                           {category.title}
