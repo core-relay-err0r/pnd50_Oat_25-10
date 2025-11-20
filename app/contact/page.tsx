@@ -402,11 +402,7 @@ export default function ContactPage() {
                   <div className="flex items-center justify-between gap-3 group">
                     <div className="flex items-center gap-3 overflow-hidden">
                       <div className="flex items-center gap-2 flex-shrink-0">
-                        <img
-                          src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/WhatsApp.svg/120px-WhatsApp.svg.png"
-                          alt="WhatsApp"
-                          className="w-5 h-5 object-contain"
-                        />
+                        <img src="/images/whatsapp-green-icon.png" alt="WhatsApp" className="w-5 h-5 object-contain" />
                         <span className="font-semibold text-chart-2">WhatsApp:</span>
                       </div>
                       <a
