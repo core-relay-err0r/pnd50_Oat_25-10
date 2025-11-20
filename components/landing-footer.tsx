@@ -16,7 +16,7 @@ export function LandingFooter() {
               Burakorn Partners
             </Link>
           </p>
-          <p className="text-[10px] text-slate-600 mt-2">© {new Date().getFullYear()} PND50. All rights reserved.</p>
+          <p className="text-[10px] text-slate-600 mt-2">© {new Date().getFullYear()} PND50. All-in-one reserved.</p>
         </div>
       </div>
     </footer>
