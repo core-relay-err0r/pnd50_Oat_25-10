@@ -130,7 +130,7 @@ export default function ServicesPage() {
               <span className="w-2 h-2 bg-primary rounded-full animate-pulse"></span>
               Comprehensive Solutions
             </div>
-            <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-6 leading-tight">
+            <h1 className="text-3xl md:text-6xl font-bold text-foreground mb-6 leading-tight">
               Professional Services for Your Business
             </h1>
             <p className="text-xl text-muted-foreground leading-relaxed">
@@ -144,32 +144,34 @@ export default function ServicesPage() {
       {/* Packages Section */}
 
       {/* Services Grid */}
-      <section className="py-16 md:py-20">
+      <section className="py-12 md:py-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">Our Services</h2>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
             {services.map((service, index) => {
               const Icon = service.icon
               return (
                 <div
                   key={index}
-                  className="group bg-card border border-border rounded-2xl p-8 hover:shadow-2xl hover:border-primary/50 transition-all duration-300 hover:-translate-y-2"
+                  className="group bg-card border border-border rounded-2xl p-6 md:p-8 hover:shadow-2xl hover:border-primary/50 transition-all duration-300 hover:-translate-y-2"
                 >
                   {/* Icon */}
-                  <div className="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-primary group-hover:scale-110 transition-all duration-300">
-                    <Icon className="w-7 h-7 text-primary group-hover:text-primary-foreground transition-colors" />
+                  <div className="w-12 h-12 md:w-14 md:h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-primary group-hover:scale-110 transition-all duration-300">
+                    <Icon className="w-6 h-6 md:w-7 md:h-7 text-primary group-hover:text-primary-foreground transition-colors" />
                   </div>
 
                   {/* Title */}
-                  <h3 className="text-2xl font-bold text-foreground mb-4 group-hover:text-primary transition-colors">
+                  <h3 className="text-xl md:text-2xl font-bold text-foreground mb-4 group-hover:text-primary transition-colors">
                     {service.title}
                   </h3>
 
                   {/* Description */}
-                  <p className="text-muted-foreground leading-relaxed mb-6">{service.description}</p>
+                  <p className="text-muted-foreground leading-relaxed mb-6 text-sm md:text-base">
+                    {service.description}
+                  </p>
 
                   {/* Features */}
                   <ul className="space-y-2">
