@@ -235,10 +235,10 @@ export function FloatingChatBot() {
 
             {/* Two-line text layout */}
             <div className="flex flex-col items-start relative z-10">
-              <span className="text-xs md:text-sm text-muted-foreground leading-tight transition-colors duration-300 group-hover/button:text-foreground">
+              <span className="text-xs text-muted-foreground leading-tight transition-colors duration-300 group-hover/button:text-foreground md:text-xs">
                 Don&#39;t know where to start?
               </span>
-              <span className="text-sm md:text-base font-bold text-foreground leading-tight transition-colors duration-300 group-hover/button:text-primary">
+              <span className="font-bold text-foreground leading-tight transition-colors duration-300 group-hover/button:text-primary text-lg">
                 Chat with Panida
               </span>
             </div>
