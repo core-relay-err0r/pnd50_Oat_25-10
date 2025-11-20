@@ -89,16 +89,16 @@ export default function ContactPage() {
   return (
     <div className="min-h-screen bg-background">
       {/* Hero Section */}
-      <section className="relative pt-32 pb-16 md:py-24 bg-gradient-to-br from-primary/10 via-background to-chart-2/10 overflow-hidden">
+      <section className="relative pt-32 pb-12 md:py-24 bg-gradient-to-br from-primary/10 via-background to-chart-2/10 overflow-hidden">
         <div className="absolute inset-0 opacity-30">
-          <div className="absolute top-0 right-0 w-96 h-96 bg-primary/20 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-0 left-0 w-96 h-96 bg-chart-2/20 rounded-full blur-3xl"></div>
+          <div className="absolute top-0 right-0 w-64 h-64 md:w-96 md:h-96 bg-primary/20 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-0 left-0 w-64 h-64 md:w-96 md:h-96 bg-chart-2/20 rounded-full blur-3xl"></div>
         </div>
 
-        <div className="container mx-auto px-4 relative z-10">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <Link
             href="/"
-            className="inline-flex items-center gap-2 text-slate-400 hover:text-primary transition-colors group mb-6 sm:mb-8 touch-manipulation"
+            className="inline-flex items-center gap-2 text-slate-400 hover:text-primary transition-colors group mb-8 touch-manipulation py-2"
           >
             <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
             <span className="text-sm font-medium">Back to Home</span>
@@ -109,10 +109,10 @@ export default function ContactPage() {
               <MessageSquare className="w-4 h-4" />
               Get In Touch
             </div>
-            <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-6 leading-tight">
+            <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold text-foreground mb-4 md:mb-6 leading-tight">
               Let's Start a Conversation
             </h1>
-            <p className="text-xl text-muted-foreground leading-relaxed">
+            <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto">
               Whether you have questions about our services, need expert advice, or want to schedule a consultation,
               we're here to help your business succeed in Thailand.
             </p>
@@ -121,21 +121,23 @@ export default function ContactPage() {
       </section>
 
       {/* Main Content */}
-      <section className="py-16 md:py-24">
-        <div className="container mx-auto px-4">
-          <div className="grid lg:grid-cols-2 gap-12 max-w-7xl mx-auto">
+      <section className="py-12 md:py-24">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-2 gap-8 md:gap-12 max-w-7xl mx-auto">
             {/* Contact Form */}
             <div className="order-2 lg:order-1">
-              <div className="bg-card border-2 border-border rounded-2xl p-8 shadow-lg hover:border-primary transition-all duration-300">
-                <h2 className="text-3xl font-bold text-foreground mb-2">Send Us a Message</h2>
-                <p className="text-muted-foreground mb-8">
+              <div className="bg-card border-2 border-border rounded-2xl p-6 md:p-8 shadow-lg hover:border-primary transition-all duration-300">
+                <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-2">Send Us a Message</h2>
+                <p className="text-muted-foreground mb-6 md:mb-8">
                   Fill out the form below and we'll get back to you within 24 hours.
                 </p>
 
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  <div className="grid md:grid-cols-2 gap-6">
+                <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6">
+                  <div className="grid md:grid-cols-2 gap-4 md:gap-6">
                     <div className="space-y-2">
-                      <Label htmlFor="name">Full Name *</Label>
+                      <Label htmlFor="name" className="text-base md:text-sm">
+                        Full Name *
+                      </Label>
                       <Input
                         id="name"
                         name="name"
@@ -144,12 +146,14 @@ export default function ContactPage() {
                         value={formData.name}
                         onChange={handleChange}
                         required
-                        className="h-12"
+                        className="h-12 text-base"
                       />
                     </div>
 
                     <div className="space-y-2">
-                      <Label htmlFor="email">Email Address *</Label>
+                      <Label htmlFor="email" className="text-base md:text-sm">
+                        Email Address *
+                      </Label>
                       <Input
                         id="email"
                         name="email"
@@ -158,14 +162,16 @@ export default function ContactPage() {
                         value={formData.email}
                         onChange={handleChange}
                         required
-                        className="h-12"
+                        className="h-12 text-base"
                       />
                     </div>
                   </div>
 
-                  <div className="grid md:grid-cols-2 gap-6">
+                  <div className="grid md:grid-cols-2 gap-4 md:gap-6">
                     <div className="space-y-2">
-                      <Label htmlFor="phone">Phone Number</Label>
+                      <Label htmlFor="phone" className="text-base md:text-sm">
+                        Phone Number
+                      </Label>
                       <Input
                         id="phone"
                         name="phone"
@@ -173,12 +179,14 @@ export default function ContactPage() {
                         placeholder="+66 XX XXX XXXX"
                         value={formData.phone}
                         onChange={handleChange}
-                        className="h-12"
+                        className="h-12 text-base"
                       />
                     </div>
 
                     <div className="space-y-2">
-                      <Label htmlFor="whatsapp">WhatsApp Number</Label>
+                      <Label htmlFor="whatsapp" className="text-base md:text-sm">
+                        WhatsApp Number
+                      </Label>
                       <Input
                         id="whatsapp"
                         name="whatsapp"
@@ -186,13 +194,15 @@ export default function ContactPage() {
                         placeholder="+66 XX XXX XXXX"
                         value={formData.whatsapp}
                         onChange={handleChange}
-                        className="h-12"
+                        className="h-12 text-base"
                       />
                     </div>
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="companyName">Company Name</Label>
+                    <Label htmlFor="companyName" className="text-base md:text-sm">
+                      Company Name
+                    </Label>
                     <Input
                       id="companyName"
                       name="companyName"
@@ -200,17 +210,19 @@ export default function ContactPage() {
                       placeholder="Your Company Ltd."
                       value={formData.companyName}
                       onChange={handleChange}
-                      className="h-12"
+                      className="h-12 text-base"
                     />
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="serviceType">Service Interest</Label>
+                    <Label htmlFor="serviceType" className="text-base md:text-sm">
+                      Service Interest
+                    </Label>
                     <Select
                       value={formData.serviceType}
                       onValueChange={(value) => setFormData({ ...formData, serviceType: value })}
                     >
-                      <SelectTrigger className="h-12">
+                      <SelectTrigger className="h-12 text-base">
                         <SelectValue placeholder="Select a service" />
                       </SelectTrigger>
                       <SelectContent>
@@ -228,7 +240,9 @@ export default function ContactPage() {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="message">Message *</Label>
+                    <Label htmlFor="message" className="text-base md:text-sm">
+                      Message *
+                    </Label>
                     <Textarea
                       id="message"
                       name="message"
@@ -237,13 +251,13 @@ export default function ContactPage() {
                       onChange={handleChange}
                       required
                       rows={6}
-                      className="resize-none"
+                      className="resize-none text-base"
                     />
                   </div>
 
                   {submitStatus === "success" && (
                     <div className="bg-chart-2/10 border border-chart-2 text-chart-2 px-4 py-3 rounded-lg flex items-center gap-2">
-                      <Check className="w-5 h-5" />
+                      <Check className="w-5 h-5 flex-shrink-0" />
                       <span>Thank you! We'll get back to you soon.</span>
                     </div>
                   )}
@@ -274,18 +288,18 @@ export default function ContactPage() {
             {/* Contact Information */}
             <div className="order-1 lg:order-2 space-y-6">
               {/* Office Location */}
-              <div className="bg-gradient-to-br from-primary/5 to-chart-2/5 rounded-2xl p-8 border-2 border-border hover:border-primary transition-all duration-300 hover:shadow-xl">
+              <div className="bg-gradient-to-br from-primary/5 to-chart-2/5 rounded-2xl p-6 md:p-8 border-2 border-border hover:border-primary transition-all duration-300 hover:shadow-xl">
                 <div className="flex items-start gap-4 mb-6">
                   <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
                     <MapPin className="w-6 h-6 text-primary" />
                   </div>
                   <div>
-                    <h3 className="text-2xl font-bold text-foreground mb-2">Office Location</h3>
-                    <p className="text-muted-foreground">Visit us at our Bangkok office</p>
+                    <h3 className="text-xl md:text-2xl font-bold text-foreground mb-2">Office Location</h3>
+                    <p className="text-muted-foreground text-sm md:text-base">Visit us at our Bangkok office</p>
                   </div>
                 </div>
                 <div className="space-y-2 text-muted-foreground">
-                  <p className="text-lg leading-relaxed">
+                  <p className="text-base md:text-lg leading-relaxed">
                     <strong className="text-foreground">Suite 3065, 30th Floor</strong>
                     <br />
                     Bhiraj Tower at EmQuartier
@@ -298,30 +312,32 @@ export default function ContactPage() {
               </div>
 
               {/* Contact Details */}
-              <div className="bg-gradient-to-br from-primary/5 to-chart-2/5 rounded-2xl p-8 border-2 border-border hover:border-primary transition-all duration-300 hover:shadow-xl">
+              <div className="bg-gradient-to-br from-primary/5 to-chart-2/5 rounded-2xl p-6 md:p-8 border-2 border-border hover:border-primary transition-all duration-300 hover:shadow-xl">
                 <div className="flex items-start gap-4 mb-6">
                   <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
                     <Phone className="w-6 h-6 text-primary" />
                   </div>
                   <div>
-                    <h3 className="text-2xl font-bold text-foreground mb-2">Contact Details</h3>
-                    <p className="text-muted-foreground">Reach out through your preferred channel</p>
+                    <h3 className="text-xl md:text-2xl font-bold text-foreground mb-2">Contact Details</h3>
+                    <p className="text-muted-foreground text-sm md:text-base">
+                      Reach out through your preferred channel
+                    </p>
                   </div>
                 </div>
                 <div className="space-y-4">
                   <div className="flex items-center justify-between gap-3 group">
-                    <div className="flex items-center gap-3">
-                      <span className="font-semibold text-foreground">Phone:</span>
+                    <div className="flex items-center gap-3 overflow-hidden">
+                      <span className="font-semibold text-foreground flex-shrink-0">Phone:</span>
                       <a
                         href="tel:020172949"
-                        className="text-primary hover:text-primary/90 transition-colors duration-300 font-medium"
+                        className="text-primary hover:text-primary/90 transition-colors duration-300 font-medium truncate"
                       >
                         +66 2 017 2949
                       </a>
                     </div>
                     <button
                       onClick={() => copyToClipboard("020172949", "phone")}
-                      className="p-2 rounded-lg hover:bg-primary/10 transition-all duration-300 opacity-0 group-hover:opacity-100"
+                      className="p-2 rounded-lg hover:bg-primary/10 transition-all duration-300 opacity-100 lg:opacity-0 lg:group-hover:opacity-100"
                       title="Copy phone number"
                     >
                       {copiedItem === "phone" ? (
@@ -333,18 +349,18 @@ export default function ContactPage() {
                   </div>
 
                   <div className="flex items-center justify-between gap-3 group">
-                    <div className="flex items-center gap-3">
-                      <span className="font-semibold text-foreground">Email:</span>
+                    <div className="flex items-center gap-3 overflow-hidden">
+                      <span className="font-semibold text-foreground flex-shrink-0">Email:</span>
                       <a
                         href="mailto:info@pnd50.com"
-                        className="text-primary hover:text-primary/90 transition-colors duration-300 font-medium"
+                        className="text-primary hover:text-primary/90 transition-colors duration-300 font-medium truncate"
                       >
                         info@pnd50.com
                       </a>
                     </div>
                     <button
                       onClick={() => copyToClipboard("info@pnd50.com", "email")}
-                      className="p-2 rounded-lg hover:bg-primary/10 transition-all duration-300 opacity-0 group-hover:opacity-100"
+                      className="p-2 rounded-lg hover:bg-primary/10 transition-all duration-300 opacity-100 lg:opacity-0 lg:group-hover:opacity-100"
                       title="Copy email"
                     >
                       {copiedItem === "email" ? (
@@ -356,21 +372,21 @@ export default function ContactPage() {
                   </div>
 
                   <div className="flex items-center justify-between gap-3 group">
-                    <div className="flex items-center gap-3">
-                      <span className="font-semibold text-foreground">Telegram:</span>
+                    <div className="flex items-center gap-3 overflow-hidden">
+                      <span className="font-semibold text-foreground flex-shrink-0">Telegram:</span>
                       <a
                         href="https://t.me/66843563805"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-2 text-primary hover:text-primary/90 transition-colors duration-300 font-medium"
+                        className="flex items-center gap-2 text-primary hover:text-primary/90 transition-colors duration-300 font-medium truncate"
                       >
-                        <img src="/images/icons8-telegram.gif" alt="Telegram" className="w-5 h-5" />
+                        <img src="/images/icons8-telegram.gif" alt="Telegram" className="w-5 h-5 flex-shrink-0" />
                         +66 84 356 3805
                       </a>
                     </div>
                     <button
                       onClick={() => copyToClipboard("0843563805", "telegram")}
-                      className="p-2 rounded-lg hover:bg-primary/10 transition-all duration-300 opacity-0 group-hover:opacity-100"
+                      className="p-2 rounded-lg hover:bg-primary/10 transition-all duration-300 opacity-100 lg:opacity-0 lg:group-hover:opacity-100"
                       title="Copy Telegram number"
                     >
                       {copiedItem === "telegram" ? (
@@ -382,21 +398,21 @@ export default function ContactPage() {
                   </div>
 
                   <div className="flex items-center justify-between gap-3 group">
-                    <div className="flex items-center gap-3">
-                      <span className="font-semibold text-foreground">WhatsApp:</span>
+                    <div className="flex items-center gap-3 overflow-hidden">
+                      <span className="font-semibold text-foreground flex-shrink-0">WhatsApp:</span>
                       <a
                         href="https://wa.me/66843563805"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-2 text-primary hover:text-primary/90 transition-colors duration-300 font-medium"
+                        className="flex items-center gap-2 text-primary hover:text-primary/90 transition-colors duration-300 font-medium truncate"
                       >
-                        <img src="/images/icons8-whatsapp.gif" alt="WhatsApp" className="w-5 h-5" />
+                        <img src="/images/icons8-whatsapp.gif" alt="WhatsApp" className="w-5 h-5 flex-shrink-0" />
                         +66 84 356 3805
                       </a>
                     </div>
                     <button
                       onClick={() => copyToClipboard("0843563805", "whatsapp")}
-                      className="p-2 rounded-lg hover:bg-primary/10 transition-all duration-300 opacity-0 group-hover:opacity-100"
+                      className="p-2 rounded-lg hover:bg-primary/10 transition-all duration-300 opacity-100 lg:opacity-0 lg:group-hover:opacity-100"
                       title="Copy WhatsApp number"
                     >
                       {copiedItem === "whatsapp" ? (
@@ -410,14 +426,14 @@ export default function ContactPage() {
               </div>
 
               {/* Business Hours */}
-              <div className="bg-gradient-to-br from-primary/5 to-chart-2/5 rounded-2xl p-8 border-2 border-border hover:border-primary transition-all duration-300 hover:shadow-xl">
+              <div className="bg-gradient-to-br from-primary/5 to-chart-2/5 rounded-2xl p-6 md:p-8 border-2 border-border hover:border-primary transition-all duration-300 hover:shadow-xl">
                 <div className="flex items-start gap-4 mb-6">
                   <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
                     <Clock className="w-6 h-6 text-primary" />
                   </div>
                   <div>
-                    <h3 className="text-2xl font-bold text-foreground mb-2">Business Hours</h3>
-                    <p className="text-muted-foreground">We're here when you need us</p>
+                    <h3 className="text-xl md:text-2xl font-bold text-foreground mb-2">Business Hours</h3>
+                    <p className="text-muted-foreground text-sm md:text-base">We're here when you need us</p>
                   </div>
                 </div>
                 <div className="space-y-3 text-muted-foreground">
@@ -439,12 +455,12 @@ export default function ContactPage() {
       </section>
 
       {/* Map Section */}
-      <section className="py-16 bg-muted">
-        <div className="container mx-auto px-4">
+      <section className="py-12 md:py-16 bg-muted">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-7xl mx-auto">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-5xl font-bold text-foreground mb-4">Find Us on the Map</h2>
-              <p className="text-xl text-muted-foreground">
+            <div className="text-center mb-8 md:mb-12">
+              <h2 className="text-2xl md:text-3xl lg:text-5xl font-bold text-foreground mb-4">Find Us on the Map</h2>
+              <p className="text-lg md:text-xl text-muted-foreground">
                 Located in the heart of Bangkok's business district at EmQuartier
               </p>
             </div>
@@ -459,7 +475,7 @@ export default function ContactPage() {
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
                 title="PND50 Office Location"
-                className="w-full"
+                className="w-full h-80 md:h-[500px]"
               ></iframe>
             </div>
 
