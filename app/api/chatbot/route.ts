@@ -85,7 +85,7 @@ ${
 `
 
   const result = streamText({
-    model: "openai/gpt-5-mini",
+    model: "openai/gpt-4o",
     system: systemPrompt,
     prompt,
     abortSignal: req.signal,
