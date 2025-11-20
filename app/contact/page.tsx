@@ -374,7 +374,7 @@ export default function ContactPage() {
                   <div className="flex items-center justify-between gap-3 group">
                     <div className="flex items-center gap-3 overflow-hidden">
                       <div className="flex items-center gap-2 flex-shrink-0">
-                        <img src="/images/10464249.png" alt="Telegram" className="w-5 h-5 object-contain" />
+                        <img src="/images/telegram-png-21821.png" alt="Telegram" className="w-5 h-5 object-contain" />
                         <span className="font-semibold text-sidebar-accent-foreground">Telegram:</span>
                       </div>
                       <a
