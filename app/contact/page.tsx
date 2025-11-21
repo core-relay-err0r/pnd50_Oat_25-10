@@ -201,7 +201,7 @@ export default function ContactPage() {
 
                   <div className="space-y-2">
                     <Label htmlFor="companyName" className="text-base md:text-sm">
-                      Company Name
+                      Company Name (Optional) 
                     </Label>
                     <Input
                       id="companyName"
