@@ -28,9 +28,9 @@ const AboutClientPage = () => {
   }, [])
 
   return (
-    <div className="min-h-screen bg-background lg:scale-[0.85] lg:origin-top lg:w-[117.647%] lg:mt-24">
+    <div className="min-h-screen bg-background">
       {/* Hero Section */}
-      <section className="relative pb-24 bg-gradient-to-br from-blue-50 via-slate-50 to-teal-50 overflow-hidden md:pb-32 md:pt-28 pt-24">
+      <section className="relative pb-24 bg-gradient-to-br from-blue-50 via-slate-50 to-teal-50 overflow-hidden md:pb-32 md:pt-28 pt-24 px-4 sm:px-6 lg:px-8">
         <div className="container mx-auto px-4 sm:px-6 relative z-10 lg:px-0">
           <Link
             href="/"
@@ -104,7 +104,7 @@ const AboutClientPage = () => {
       </section>
 
       {/* Our Mission Section */}
-      <section className="py-12 sm:py-24 md:py-32 bg-background relative overflow-hidden">
+      <section className="py-12 sm:py-24 md:py-32 bg-background relative overflow-hidden lg:scale-[0.85] lg:origin-center">
         <div className="absolute top-0 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl"></div>
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="max-w-7xl mx-auto">
