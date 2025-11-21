@@ -1,7 +1,7 @@
 import { Suspense } from "react"
 import type React from "react"
 import type { Metadata } from "next"
-import { Inter } from "next/font/google"
+import { Inter } from 'next/font/google'
 import "./globals.css"
 import { ModalProvider } from "@/contexts/modal-context"
 import LayoutClientComponent from "@/components/layout/LayoutClientComponent"
@@ -30,33 +30,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.className} flex flex-col min-h-screen overflow-x-hidden bg-slate-950`}>
+      <body className={inter.className}>
         <ModalProvider>
-          {/* Scaled Navbar Wrapper - Fixed */}
-          <div className="fixed top-0 left-0 w-full z-50 pointer-events-none lg:w-[117.647%] lg:scale-[0.85] lg:origin-top-left">
-            <div className="pointer-events-auto w-full h-full">
-              <Navbar />
-            </div>
-          </div>
-
-          {/* Scaled Main Content - Scrollable */}
-          <div className="flex-1 flex flex-col w-full lg:w-[117.647%] lg:min-h-[117.647vh] lg:scale-[0.85] lg:origin-top-left">
-            <main className="flex-1">{children}</main>
-            <Footer />
-          </div>
-
-          {/* Scaled Overlays - Fixed */}
-          <div className="fixed inset-0 z-[60] pointer-events-none lg:w-[117.647%] lg:scale-[0.85] lg:origin-top-left">
-            <Suspense fallback={null}>
-              <div className="pointer-events-auto">
-                <Toaster />
-              </div>
-              <div className="pointer-events-auto">
-                <FloatingChatBot />
-              </div>
-            </Suspense>
-          </div>
-
+          <Navbar />
+          <main>{children}</main>
+          <Footer />
+          <Suspense fallback={null}>
+            <Toaster />
+            <FloatingChatBot />
+          </Suspense>
           <LayoutClientComponent />
         </ModalProvider>
         <Analytics />

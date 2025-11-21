@@ -63,7 +63,7 @@ export default function PND50Landing() {
             }}
           />
 
-          <div className="flex-1 w-full flex flex-col">
+          <div className="flex-1 w-full flex flex-col lg:scale-[0.85] lg:origin-top lg:mt-24">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex-1 flex items-center py-12 sm:py-16 lg:py-20 pt-[100px] lg:pt-12 pb-32 lg:pb-20">
               <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center w-full">
                 {/* Left side - Hero content */}
