@@ -31,7 +31,7 @@ const AboutClientPage = () => {
     <div className="min-h-screen bg-background">
       {/* Hero Section */}
       <section className="relative pt-32 pb-24 md:pt-40 md:pb-32 bg-gradient-to-br from-blue-50 via-slate-50 to-teal-50 overflow-hidden">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="container mx-auto px-4 sm:px-6 relative z-10 lg:px-0">
           <Link
             href="/"
             className="inline-flex items-center gap-2 text-slate-400 hover:text-primary transition-colors group mb-6 sm:mb-8 touch-manipulation"
@@ -250,10 +250,10 @@ const AboutClientPage = () => {
         <div className="absolute bottom-10 right-10 w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-          <h2 className="text-4xl md:text-6xl font-bold text-primary-foreground mb-6 leading-tight">
+          <h2 className="text-4xl font-bold text-primary-foreground mb-6 leading-tight md:text-5xl">
             Let's Simplify Accounting in Thailand — Together.
           </h2>
-          <p className="text-xl md:text-2xl text-primary-foreground/90 max-w-3xl mx-auto mb-12 leading-relaxed">
+          <p className="text-xl text-primary-foreground/90 max-w-3xl mx-auto mb-12 leading-relaxed md:text-lg">
             Your business deserves clear, compliant, and modern accounting support. Reach out today to see how we can
             help.
           </p>
