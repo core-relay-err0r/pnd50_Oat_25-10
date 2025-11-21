@@ -63,8 +63,8 @@ export default function PND50Landing() {
             }}
           />
 
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 relative z-10 min-h-screen flex items-center py-12 sm:py-16 lg:py-20 pt-[100px] lg:pt-12 pb-32 lg:pb-20">
-            <div className="grid lg:grid-cols-2 gap-8 lg:gap-20 xl:gap-32 items-center w-full">
+          <div className="container mx-auto px-6 sm:px-8 md:px-12 lg:px-16 xl:px-20 2xl:px-24 max-w-[1600px] relative z-10 min-h-screen flex items-center py-12 sm:py-16 lg:py-20 pt-[100px] lg:pt-12 pb-32 lg:pb-20">
+            <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 xl:gap-24 items-center w-full">
               {/* Left side - Hero content */}
               <div className="text-center lg:text-left space-y-6 md:space-y-8">
                 <div
@@ -141,7 +141,7 @@ export default function PND50Landing() {
               </div>
 
               {/* Right side - Testimonial cards */}
-              <div className="hidden lg:flex items-center justify-center scale-[1.11]">
+              <div className="hidden lg:flex items-center justify-center">
                 <ShuffleTestimonials />
               </div>
             </div>
