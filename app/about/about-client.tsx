@@ -30,7 +30,7 @@ const AboutClientPage = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* Hero Section */}
-      <section className="relative pt-32 pb-24 bg-gradient-to-br from-blue-50 via-slate-50 to-teal-50 overflow-hidden md:pb-32 md:pt-28">
+      <section className="relative pb-24 bg-gradient-to-br from-blue-50 via-slate-50 to-teal-50 overflow-hidden md:pb-32 md:pt-28 pt-24">
         <div className="container mx-auto px-4 sm:px-6 relative z-10 lg:px-0">
           <Link
             href="/"
