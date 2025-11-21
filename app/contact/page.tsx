@@ -273,7 +273,7 @@ export default function ContactPage() {
                   </div>
                 </div>
                 <div className="space-y-2 text-muted-foreground">
-                  <p className="md:text-lg leading-relaxed text-sm">
+                  <p className="leading-relaxed text-sm md:text-base">
                     <strong className="text-foreground">Suite 3065, 30th Floor</strong>
                     <br />
                     Bhiraj Tower at EmQuartier
