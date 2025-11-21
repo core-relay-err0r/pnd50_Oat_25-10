@@ -6,6 +6,9 @@ import { ShuffleTestimonials } from "@/components/ShuffleTestimonials"
 import { motion } from "framer-motion"
 import { LandingFooter } from "@/components/landing-footer"
 import { MouseFollowerBackground } from "@/components/ui/mouse-follower-background"
+import { FeaturesSection } from "@/components/sections/features-section"
+import { TestimonialsSection } from "@/components/sections/testimonials-section"
+import { CTASection } from "@/components/sections/cta-section"
 
 const AnimatedGridBackground = dynamic(
   () => import("@/components/ui/animated-grid-background").then((mod) => mod.AnimatedGridBackground),
@@ -33,12 +36,13 @@ export default function PND50Landing() {
   }, [wordIndex, words])
 
   return (
-    <main className="min-h-screen">
-      <section className="relative w-full min-h-screen flex flex-col bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
-        <AnimatedGridBackground className="min-h-screen flex-1">
-          <MouseFollowerBackground />
+    <main className="min-h-screen bg-slate-950">
+      <AnimatedGridBackground className="min-h-screen flex flex-col">
+        <MouseFollowerBackground />
 
-          <div className="container mx-auto px-8 sm:px-12 md:px-16 lg:px-24 xl:px-32 2xl:px-40 max-w-[1400px] relative z-10 min-h-screen flex items-center py-12 sm:py-16 lg:py-20 pt-[100px] lg:pt-12 pb-32 lg:pb-20">
+        {/* Hero Section */}
+        <section className="relative w-full min-h-screen flex items-center">
+          <div className="container mx-auto px-8 sm:px-12 md:px-16 lg:px-24 xl:px-32 2xl:px-40 max-w-[1400px] relative z-10 py-20 pt-[120px] lg:pt-32">
             <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 xl:gap-24 items-center w-full">
               {/* Left side - Hero content */}
               <div className="text-center lg:text-left space-y-6 md:space-y-8">
@@ -121,10 +125,16 @@ export default function PND50Landing() {
               </div>
             </div>
           </div>
+        </section>
 
+        <FeaturesSection />
+        <TestimonialsSection />
+        <CTASection />
+
+        <div className="pb-20">
           <LandingFooter />
-        </AnimatedGridBackground>
-      </section>
+        </div>
+      </AnimatedGridBackground>
     </main>
   )
 }
