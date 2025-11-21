@@ -111,7 +111,7 @@ export default function ContactPage() {
             <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold text-foreground mb-4 md:mb-6 leading-tight">
               Let's Start a Conversation
             </h1>
-            <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto">
+            <p className="md:text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto text-sm">
               Whether you have questions about our services, need expert advice, or want to schedule a consultation,
               we're here to help your business succeed in Thailand.
             </p>
@@ -273,7 +273,7 @@ export default function ContactPage() {
                   </div>
                 </div>
                 <div className="space-y-2 text-muted-foreground">
-                  <p className="text-base md:text-lg leading-relaxed">
+                  <p className="md:text-lg leading-relaxed text-sm">
                     <strong className="text-foreground">Suite 3065, 30th Floor</strong>
                     <br />
                     Bhiraj Tower at EmQuartier
@@ -438,7 +438,7 @@ export default function ContactPage() {
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-8 md:mb-12">
               <h2 className="text-2xl md:text-3xl lg:text-5xl font-bold text-foreground mb-4">Find Us on the Map</h2>
-              <p className="text-lg md:text-xl text-muted-foreground">
+              <p className="md:text-xl text-muted-foreground text-sm">
                 Located in the heart of Bangkok's business district at EmQuartier
               </p>
             </div>
