@@ -145,7 +145,7 @@ const AboutClientPage = () => {
                 <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4 sm:mb-6 leading-tight break-words">
                   Making Accounting Simple and Stress-Free
                 </h2>
-                <p className="text-base sm:text-lg text-muted-foreground mb-6 sm:mb-8 leading-relaxed break-words">
+                <p className="sm:text-lg text-muted-foreground mb-6 sm:mb-8 leading-relaxed break-words text-sm">
                   We believe that numbers should never cause confusion. Our approach is to make accounting simple and
                   transparent for foreign-owned businesses in Thailand.
                 </p>
@@ -253,7 +253,7 @@ const AboutClientPage = () => {
           <h2 className="text-4xl font-bold text-primary-foreground mb-6 leading-tight md:text-5xl">
             Let's Simplify Accounting in Thailand — Together.
           </h2>
-          <p className="text-xl text-primary-foreground/90 max-w-3xl mx-auto mb-12 leading-relaxed md:text-lg">
+          <p className="text-primary-foreground/90 max-w-3xl mx-auto mb-12 leading-relaxed md:text-lg text-lg">
             Your business deserves clear, compliant, and modern accounting support. Reach out today to see how we can
             help.
           </p>
