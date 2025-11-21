@@ -5,10 +5,6 @@ import { useEffect, useState, useMemo } from "react"
 import { ShuffleTestimonials } from "@/components/ShuffleTestimonials"
 import { motion } from "framer-motion"
 import { LandingFooter } from "@/components/landing-footer"
-import { MouseFollowerBackground } from "@/components/ui/mouse-follower-background"
-import { FeaturesSection } from "@/components/sections/features-section"
-import { TestimonialsSection } from "@/components/sections/testimonials-section"
-import { CTASection } from "@/components/sections/cta-section"
 
 const AnimatedGridBackground = dynamic(
   () => import("@/components/ui/animated-grid-background").then((mod) => mod.AnimatedGridBackground),
@@ -17,11 +13,24 @@ const AnimatedGridBackground = dynamic(
 
 export default function PND50Landing() {
   const [isVisible, setIsVisible] = useState(false)
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
   const [wordIndex, setWordIndex] = useState(0)
   const words = useMemo(() => ["Accounting", "Consultant", "Compliant"], [])
 
   useEffect(() => {
     setIsVisible(true)
+  }, [])
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePosition({
+        x: (e.clientX / window.innerWidth - 0.5) * 20,
+        y: (e.clientY / window.innerHeight - 0.5) * 20,
+      })
+    }
+
+    window.addEventListener("mousemove", handleMouseMove)
+    return () => window.removeEventListener("mousemove", handleMouseMove)
   }, [])
 
   useEffect(() => {
@@ -36,105 +45,118 @@ export default function PND50Landing() {
   }, [wordIndex, words])
 
   return (
-    <main className="min-h-screen bg-slate-950">
-      <AnimatedGridBackground className="min-h-screen flex flex-col">
-        <MouseFollowerBackground />
+    <main className="min-h-screen overflow-x-hidden">
+      <section className="relative w-full min-h-screen flex flex-col bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
+        <AnimatedGridBackground className="min-h-screen flex-1">
+          {/* Added a scaling wrapper to create the zoomed-out effect on laptops, with width compensation */}
+          <div className="w-full origin-top lg:scale-[0.85] lg:w-[117.65%]">
+            <div
+              className="absolute top-20 left-10 w-96 h-96 bg-primary/20 rounded-full blur-3xl pointer-events-none"
+              style={{
+                transform: `translate(${mousePosition.x}px, ${mousePosition.y}px)`,
+                transition: "transform 0.5s ease-out",
+              }}
+            />
+            <div
+              className="absolute bottom-20 right-10 w-96 h-96 bg-chart-2/20 rounded-full blur-3xl pointer-events-none"
+              style={{
+                transform: `translate(${-mousePosition.x}px, ${-mousePosition.y}px)`,
+                transition: "transform 0.5s ease-out",
+              }}
+            />
 
-        {/* Hero Section */}
-        <section className="relative w-full min-h-screen flex items-center">
-          <div className="container mx-auto px-8 sm:px-12 md:px-16 lg:px-24 xl:px-32 2xl:px-40 max-w-[1400px] relative z-10 py-20 pt-[120px] lg:pt-32">
-            <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 xl:gap-24 items-center w-full">
-              {/* Left side - Hero content */}
-              <div className="text-center lg:text-left space-y-6 md:space-y-8">
-                <div
-                  className={`hidden lg:inline-flex items-center gap-2.5 rounded-full bg-gradient-to-r from-primary/10 to-chart-2/10 backdrop-blur-md px-6 py-3 text-sm font-semibold text-white mb-2 border border-primary/20 transition-all duration-700 hover:bg-primary/20 hover:scale-105 hover:border-primary/40 ${
-                    isVisible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
-                  }`}
-                >
-                  <span className="relative flex h-2.5 w-2.5">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
-                  </span>
-                  <span className="leading-tight">Thailand's Leading Tech-Driven Corporate Services Firm.</span>
+            {/* Increased padding and max-width for a more airy, breathable layout */}
+            <div className="container mx-auto px-6 md:px-12 lg:px-20 relative z-10 min-h-screen flex items-center py-24 lg:py-32 pt-32 lg:pt-48 pb-40 lg:pb-64">
+              {/* Increased grid gap to separate content and testimonials */}
+              <div className="grid lg:grid-cols-2 gap-16 lg:gap-32 items-center w-full">
+                {/* Left side - Hero content */}
+                {/* Increased vertical spacing between elements */}
+                <div className="text-center lg:text-left space-y-10 md:space-y-12">
+                  <div
+                    className={`hidden lg:inline-flex items-center gap-2.5 rounded-full bg-gradient-to-r from-primary/10 to-chart-2/10 backdrop-blur-md px-6 py-3 text-sm font-semibold text-white mb-4 border border-primary/20 transition-all duration-700 hover:bg-primary/20 hover:scale-105 hover:border-primary/40 ${
+                      isVisible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
+                    }`}
+                  >
+                    <span className="relative flex h-2.5 w-2.5">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+                    </span>
+                    <span className="leading-tight">Thailand's Leading Tech-Driven Corporate Services Firm.</span>
+                  </div>
+
+                  <h1
+                    className={`text-6xl sm:text-7xl md:text-8xl lg:text-7xl xl:text-8xl font-bold mb-8 leading-tight tracking-tight transition-all duration-700 delay-100 ${
+                      isVisible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
+                    }`}
+                  >
+                    <span className="bg-gradient-to-r from-primary via-chart-2 to-primary bg-clip-text text-transparent animate-gradient-shift inline-block pb-2 leading-[1.15]">
+                      AI Boutique
+                    </span>
+                    <br />
+                    <span className="relative inline-block w-full overflow-visible" style={{ height: "1.15em" }}>
+                      {words.map((word, index) => (
+                        <motion.span
+                          key={index}
+                          className="absolute left-1/2 lg:left-0 -translate-x-1/2 lg:translate-x-0 text-white font-bold whitespace-nowrap"
+                          initial={{ opacity: 0, y: 100 }}
+                          transition={{ type: "spring", stiffness: 50 }}
+                          animate={
+                            wordIndex === index
+                              ? {
+                                  y: 0,
+                                  opacity: 1,
+                                }
+                              : {
+                                  y: wordIndex > index ? -150 : 150,
+                                  opacity: 0,
+                                }
+                          }
+                        >
+                          {word}
+                        </motion.span>
+                      ))}
+                    </span>
+                  </h1>
+
+                  <div
+                    className={`flex lg:hidden justify-center my-12 transition-all duration-700 delay-300 scale-90 ${
+                      isVisible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
+                    }`}
+                  >
+                    <ShuffleTestimonials />
+                  </div>
+
+                  {/* Constrained max-width and increased line-height for readability */}
+                  <p
+                    className={`text-base md:text-lg lg:text-xl max-w-[600px] mx-auto lg:mx-0 leading-loose transition-all duration-700 delay-200 text-slate-300 ${
+                      isVisible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
+                    }`}
+                  >
+                    You Talk to an Expert, Not a Robot. We connect you with a dedicated human advisor who speaks your
+                    native language. Our AI makes them <span className="text-primary font-semibold">5x faster</span> and{" "}
+                    <span className="text-chart-2 font-semibold">totally error-free</span>.
+                  </p>
+
+                  <div
+                    className={`pt-8 transition-all duration-700 delay-500 ${
+                      isVisible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
+                    }`}
+                  >
+                    <HomepageCtas />
+                  </div>
                 </div>
 
-                <h1
-                  className={`text-6xl sm:text-7xl md:text-8xl lg:text-7xl xl:text-8xl font-bold mb-4 leading-tight tracking-tight transition-all duration-700 delay-100 ${
-                    isVisible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
-                  }`}
-                >
-                  <span className="bg-gradient-to-r from-primary via-chart-2 to-primary bg-clip-text text-transparent animate-gradient-shift inline-block pb-2 leading-[1.15]">
-                    AI Boutique
-                  </span>
-                  <br />
-                  <span className="relative inline-block w-full overflow-visible" style={{ height: "1.15em" }}>
-                    {words.map((word, index) => (
-                      <motion.span
-                        key={index}
-                        className="absolute left-1/2 lg:left-0 -translate-x-1/2 lg:translate-x-0 text-white font-bold whitespace-nowrap"
-                        initial={{ opacity: 0, y: 100 }}
-                        transition={{ type: "spring", stiffness: 50 }}
-                        animate={
-                          wordIndex === index
-                            ? {
-                                y: 0,
-                                opacity: 1,
-                              }
-                            : {
-                                y: wordIndex > index ? -150 : 150,
-                                opacity: 0,
-                              }
-                        }
-                      >
-                        {word}
-                      </motion.span>
-                    ))}
-                  </span>
-                </h1>
-
-                <div
-                  className={`flex lg:hidden justify-center my-8 transition-all duration-700 delay-300 scale-75 ${
-                    isVisible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
-                  }`}
-                >
+                {/* Right side - Testimonial cards */}
+                <div className="hidden lg:flex items-center justify-center pl-12">
                   <ShuffleTestimonials />
                 </div>
-
-                <p
-                  className={`text-base md:text-lg lg:text-xl max-w-2xl mx-auto lg:mx-0 leading-relaxed transition-all duration-700 delay-200 text-slate-300 ${
-                    isVisible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
-                  }`}
-                >
-                  You Talk to an Expert, Not a Robot. We connect you with a dedicated human advisor who speaks your
-                  native language. Our AI makes them <span className="text-primary font-semibold">5x faster</span> and{" "}
-                  <span className="text-chart-2 font-semibold">totally error-free</span>.
-                </p>
-
-                <div
-                  className={`pt-4 transition-all duration-700 delay-500 ${
-                    isVisible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
-                  }`}
-                >
-                  <HomepageCtas />
-                </div>
-              </div>
-
-              {/* Right side - Testimonial cards */}
-              <div className="hidden lg:flex items-center justify-center">
-                <ShuffleTestimonials />
               </div>
             </div>
+
+            <LandingFooter />
           </div>
-        </section>
-
-        <FeaturesSection />
-        <TestimonialsSection />
-        <CTASection />
-
-        <div className="pb-20">
-          <LandingFooter />
-        </div>
-      </AnimatedGridBackground>
+        </AnimatedGridBackground>
+      </section>
     </main>
   )
 }
