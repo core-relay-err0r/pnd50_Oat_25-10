@@ -128,13 +128,6 @@
   body {
     @apply bg-background text-foreground;
   }
-
-  /* Set default zoom to 80% on desktop screens for better information density */
-  @media (min-width: 1024px) {
-    html {
-      font-size: 80%;
-    }
-  }
 }
 
 @keyframes accordion-down {

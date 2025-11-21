@@ -21,14 +21,15 @@ export function TestimonialCard({ handleShuffle, testimonial, position, id, auth
     const checkScreenSize = () => {
       setIsDesktop(window.innerWidth >= 1024)
     }
-
+    
     checkScreenSize()
-    window.addEventListener("resize", checkScreenSize)
-
-    return () => window.removeEventListener("resize", checkScreenSize)
+    window.addEventListener('resize', checkScreenSize)
+    
+    return () => window.removeEventListener('resize', checkScreenSize)
   }, [])
 
   const blurFilter = isDesktop && position !== "front" ? "blur(0.8px)" : undefined
+  // </CHANGE>
 
   return (
     <motion.div
@@ -59,17 +60,17 @@ export function TestimonialCard({ handleShuffle, testimonial, position, id, auth
         dragRef.current = 0
       }}
       transition={{ duration: 0.35 }}
-      className={`absolute left-0 top-0 grid h-[450px] w-[350px] select-none place-content-center space-y-6 rounded-2xl border border-white/20 bg-slate-900/80 backdrop-blur-md p-6 shadow-2xl ${
+      className={`absolute left-0 top-0 grid h-[450px] w-[350px] select-none place-content-center space-y-6 rounded-2xl border-2 border-slate-700 bg-slate-800 p-6 shadow-xl ${
         isFront ? "cursor-grab active:cursor-grabbing" : ""
       }`}
     >
       <img
         src={image || `https://i.pravatar.cc/128?img=${id}`}
         alt={`Avatar of ${author}`}
-        className="pointer-events-none mx-auto h-32 w-32 rounded-full border-2 border-white/20 bg-slate-200 object-cover"
+        className="pointer-events-none mx-auto h-32 w-32 rounded-full border-2 border-slate-700 bg-slate-200 object-cover"
       />
-      <span className="text-center text-lg italic text-slate-300">"{testimonial}"</span>
-      <span className="text-center text-sm font-medium text-blue-400">{author}</span>
+      <span className="text-center text-lg italic text-slate-400">"{testimonial}"</span>
+      <span className="text-center text-sm font-medium text-indigo-400">{author}</span>
     </motion.div>
   )
 }

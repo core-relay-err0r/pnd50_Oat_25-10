@@ -3,6 +3,7 @@ import dynamic from "next/dynamic"
 import { HomepageCtas } from "@/components/HomepageCtas"
 import { useEffect, useState, useMemo } from "react"
 import { ShuffleTestimonials } from "@/components/ShuffleTestimonials"
+import { motion } from "framer-motion"
 import { LandingFooter } from "@/components/landing-footer"
 
 const AnimatedGridBackground = dynamic(
@@ -63,7 +64,7 @@ export default function PND50Landing() {
           />
 
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 min-h-screen flex items-center py-12 sm:py-16 lg:py-20 pt-[100px] lg:pt-12 pb-32 lg:pb-20">
-            <div className="grid lg:grid-cols-2 gap-12 lg:gap-32 items-center w-full">
+            <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center w-full">
               {/* Left side - Hero content */}
               <div className="text-center lg:text-left space-y-6 md:space-y-8">
                 <div
@@ -83,11 +84,33 @@ export default function PND50Landing() {
                     isVisible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
                   }`}
                 >
-                  <span className="bg-gradient-to-r from-emerald-400 to-teal-500 bg-clip-text text-transparent inline-block pb-2 leading-[1.15]">
+                  <span className="bg-gradient-to-r from-primary via-chart-2 to-primary bg-clip-text text-transparent animate-gradient-shift inline-block pb-2 leading-[1.15]">
                     AI Boutique
                   </span>
                   <br />
-                  <span className="text-white inline-block leading-[1.15]">Accounting</span>
+                  <span className="relative inline-block w-full overflow-visible" style={{ height: "1.15em" }}>
+                    {words.map((word, index) => (
+                      <motion.span
+                        key={index}
+                        className="absolute left-1/2 lg:left-0 -translate-x-1/2 lg:translate-x-0 text-white font-bold whitespace-nowrap"
+                        initial={{ opacity: 0, y: 100 }}
+                        transition={{ type: "spring", stiffness: 50 }}
+                        animate={
+                          wordIndex === index
+                            ? {
+                                y: 0,
+                                opacity: 1,
+                              }
+                            : {
+                                y: wordIndex > index ? -150 : 150,
+                                opacity: 0,
+                              }
+                        }
+                      >
+                        {word}
+                      </motion.span>
+                    ))}
+                  </span>
                 </h1>
 
                 <div
@@ -104,8 +127,8 @@ export default function PND50Landing() {
                   }`}
                 >
                   You Talk to an Expert, Not a Robot. We connect you with a dedicated human advisor who speaks your
-                  native language. Our AI makes them <span className="text-blue-500 font-bold">5x faster</span> and{" "}
-                  <span className="text-emerald-500 font-bold">totally error-free</span>.
+                  native language. Our AI makes them <span className="text-primary font-semibold">5x faster</span> and{" "}
+                  <span className="text-chart-2 font-semibold">totally error-free</span>.
                 </p>
 
                 <div

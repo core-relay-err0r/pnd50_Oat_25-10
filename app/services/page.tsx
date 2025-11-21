@@ -116,7 +116,7 @@ export default function ServicesPage() {
               <ArrowRight className="w-5 h-5" />
             </Link>
             <Link
-              href="/#contact"
+              href="/contact"
               className="inline-flex items-center justify-center gap-2 bg-card border-2 border-border text-foreground px-8 py-4 rounded-lg font-semibold hover:border-primary hover:bg-card/50 transition-all"
             >
               Contact Us
