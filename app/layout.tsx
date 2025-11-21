@@ -1,12 +1,12 @@
 import { Suspense } from "react"
 import type React from "react"
 import type { Metadata } from "next"
-import { Inter } from "next/font/google"
+import { Inter } from 'next/font/google'
 import "./globals.css"
 import { ModalProvider } from "@/contexts/modal-context"
 import LayoutClientComponent from "@/components/layout/LayoutClientComponent"
 import { Toaster } from "@/components/ui/toaster"
-import Header from "@/components/layout/Header"
+import { Navbar } from "@/components/ui/mini-navbar"
 import Footer from "@/components/layout/Footer"
 import { FloatingChatBot } from "@/components/FloatingChatBot"
 import { Analytics } from "@vercel/analytics/react"
@@ -32,7 +32,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
         <ModalProvider>
-          <Header />
+          <Navbar />
           <main>{children}</main>
           <Footer />
           <Suspense fallback={null}>

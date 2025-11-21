@@ -3,7 +3,7 @@
 import { useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
-import { ArrowLeft, BookOpen, Flame, MessageCircle, FileText, Phone, Search, ChevronRight } from "lucide-react"
+import { ArrowLeft, BookOpen, Flame, MessageCircle, FileText, Phone, Search, ChevronRight, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
@@ -249,7 +249,7 @@ export default function FAQPage() {
   return (
     <div className="min-h-screen bg-background">
       {/* Hero Section */}
-      <div className="relative bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 border-b border-border overflow-hidden">
+      <div className="relative bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 border-b border-border overflow-hidden pt-[80px]">
         {/* Background Image */}
         <div className="absolute inset-0 z-0">
           <Image
@@ -265,7 +265,7 @@ export default function FAQPage() {
         </div>
 
         {/* Content */}
-        <div className="relative z-10 container mx-auto px-4 sm:px-6 py-12 sm:py-16 md:py-24">
+        <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-24">
           {/* Back button */}
           <Link
             href="/"
@@ -295,15 +295,24 @@ export default function FAQPage() {
                 placeholder="Search FAQs..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10 sm:pl-12 pr-4 py-4 sm:py-6 text-sm sm:text-base bg-white/10 backdrop-blur-sm border-white/20 text-white placeholder:text-slate-400 focus:bg-white/15 focus:border-primary/50 transition-all w-full"
+                className="pl-10 sm:pl-12 pr-10 sm:pr-12 py-4 sm:py-6 text-sm sm:text-base bg-white/10 backdrop-blur-sm border-white/20 text-white placeholder:text-slate-400 focus:bg-white/15 focus:border-primary/50 transition-all w-full"
               />
+              {searchQuery && (
+                <button
+                  onClick={() => setSearchQuery("")}
+                  className="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white transition-colors p-1"
+                  aria-label="Clear search"
+                >
+                  <X className="w-4 h-4 sm:w-5 sm:h-5" />
+                </button>
+              )}
             </div>
           </div>
         </div>
       </div>
 
       <div className="border-b border-border bg-muted/30">
-        <div className="container mx-auto px-4 sm:px-6 py-4 sm:py-6">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
           <div className="flex gap-2 sm:gap-3 overflow-x-auto pb-2 scrollbar-hide snap-x snap-mandatory md:flex-wrap md:justify-center md:overflow-visible">
             {faqCategories.map((category) => {
               const Icon = category.icon
@@ -328,7 +337,7 @@ export default function FAQPage() {
       </div>
 
       {/* FAQ Content */}
-      <div className="container mx-auto px-4 sm:px-6 py-12 sm:py-16 md:py-20">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20">
         <div className="max-w-5xl mx-auto space-y-12 sm:space-y-16">
           {filteredCategories.length > 0 ? (
             filteredCategories.map((category) => {
@@ -344,11 +353,6 @@ export default function FAQPage() {
                 <section key={category.id} id={category.id} className="scroll-mt-20 sm:scroll-mt-24">
                   <div className="flex items-start sm:items-center justify-between mb-6 sm:mb-8 gap-4">
                     <div className="flex items-start sm:items-center gap-3 sm:gap-4">
-                      <div
-                        className={`w-12 h-12 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl flex items-center justify-center border flex-shrink-0 ${colorClasses[category.color as keyof typeof colorClasses]}`}
-                      >
-                        <Icon className="w-6 h-6 sm:w-7 sm:h-7" />
-                      </div>
                       <div>
                         <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground leading-tight">
                           {category.title}

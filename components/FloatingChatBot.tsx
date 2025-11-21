@@ -3,11 +3,11 @@
 import type React from "react"
 
 import { useState, useEffectEvent, useEffect } from "react"
-import { X, MessageCircle, Send, Sparkles, EyeOff } from "lucide-react"
+import { X, MessageCircle, Send, Sparkles, EyeOff } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { useChat } from "@ai-sdk/react"
 import { DefaultChatTransport } from "ai"
-import { usePathname } from "next/navigation"
+import { usePathname } from 'next/navigation'
 import { useIsMobile } from "@/components/ui/use-mobile"
 
 const WELCOME_MESSAGE = {
@@ -89,7 +89,7 @@ export function FloatingChatBot() {
         aria-label="Show AI assistant"
       >
         <MessageCircle className="w-4 h-4 transition-transform duration-300 group-hover:rotate-12" />
-        <span>Show AI Chat</span>
+        <span>Chat with Panida </span>
       </button>
     )
   }
@@ -225,7 +225,7 @@ export function FloatingChatBot() {
           {/* Main chat button */}
           <button
             onClick={() => setIsOpen(true)}
-            className="relative bg-background hover:bg-accent/10 text-foreground rounded-full shadow-2xl hover:shadow-[0_20px_60px_-15px_rgba(0,0,0,0.3)] flex gap-3 md:gap-4 px-5 py-4 md:px-7 md:py-5 transition-all duration-500 hover:scale-105 border-4 border-dotted border-primary hover:border-solid hover:border-primary/80 items-center overflow-hidden group/button"
+            className="relative bg-background hover:bg-white text-foreground rounded-full shadow-2xl hover:shadow-[0_20px_60px_-15px_rgba(0,0,0,0.3)] flex gap-3 md:gap-4 px-5 py-4 md:px-7 md:py-5 transition-all duration-500 hover:scale-105 border-4 border-dotted border-primary hover:border-solid hover:border-primary/80 items-center overflow-hidden group/button"
             aria-label="Open chat with Panida"
           >
             {/* Sparkle icon with primary color */}
@@ -236,7 +236,7 @@ export function FloatingChatBot() {
             {/* Two-line text layout */}
             <div className="flex flex-col items-start relative z-10">
               <span className="text-sm md:text-base font-bold text-foreground leading-tight transition-colors duration-300 group-hover/button:text-primary">
-                AI assistant
+                PND50 Assistant    
               </span>
               <span className="text-xs md:text-sm text-muted-foreground leading-tight transition-colors duration-300 group-hover/button:text-foreground">
                 Chat with Panida

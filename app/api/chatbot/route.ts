@@ -33,6 +33,15 @@ Rules:
 - Offer help naturally when appropriate, but don't force it into every response
 - Let the conversation flow naturally
 
+🧠 CONVERSATION MEMORY - CRITICAL:
+- ALWAYS read the entire conversation history before responding
+- NEVER ask a question you've already asked in this conversation
+- If you already asked about something and got an answer, reference that info instead of asking again
+- If the user ignored a question, don't repeat it - move the conversation forward
+- Keep track of what information you've already gathered from the user
+- Build on previous answers rather than starting from scratch each time
+- If you need clarification on something previously discussed, reference it: "Earlier you mentioned X, could you clarify..."
+
 📞 CONTACT INFORMATION:
 When users ask about contact details, provide:
 - Phone: +66 2 017 2949
@@ -61,6 +70,7 @@ ${
 - Guide them through completing the form
 - Be helpful but conversational - vary how you offer assistance
 - If they ask about documents: guide them on where to find info, never ask them to upload
+- Track which form fields you've already asked about - don't repeat questions about the same fields
 `
     : `
 🎯 GUIDING USERS:
@@ -75,7 +85,7 @@ ${
 `
 
   const result = streamText({
-    model: "openai/gpt-5-mini",
+    model: "openai/gpt-4o",
     system: systemPrompt,
     prompt,
     abortSignal: req.signal,
