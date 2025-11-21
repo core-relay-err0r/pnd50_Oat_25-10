@@ -59,7 +59,7 @@ const AboutClientPage = () => {
                 </span>
               </h1>
 
-              <p className="text-lg md:text-xl text-slate-600 leading-relaxed mb-8">
+              <p className="md:text-xl text-slate-600 leading-relaxed mb-8 text-sm">
                 PND50 is an accounting and advisory firm based in Thailand, helping foreign-owned businesses navigate
                 Thai accounting and compliance with clarity and confidence.
               </p>
@@ -174,7 +174,7 @@ const AboutClientPage = () => {
                       </div>
                       <div className="text-left min-w-0 flex-1">
                         <h3 className="text-lg sm:text-xl font-bold text-foreground mb-2 break-words">{item.title}</h3>
-                        <p className="text-sm sm:text-base text-muted-foreground leading-relaxed break-words">
+                        <p className="sm:text-base text-muted-foreground leading-relaxed break-words text-xs">
                           {item.description}
                         </p>
                       </div>
@@ -197,7 +197,7 @@ const AboutClientPage = () => {
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4 leading-tight">
                 Trusted by Businesses Across Thailand
               </h2>
-              <p className="text-base sm:text-lg text-muted-foreground max-w-3xl mx-auto">
+              <p className="sm:text-lg text-muted-foreground max-w-3xl mx-auto text-sm">
                 We&#39;re proud to support international startups — especially from Russia and Vietnam. Helping them
                 manage accounting, tax, and compliance with confidence in Thailand.
               </p>
