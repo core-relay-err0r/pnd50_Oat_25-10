@@ -136,7 +136,7 @@ export default function ContactPage() {
                   <div className="grid md:grid-cols-2 gap-4 md:gap-6">
                     <div className="space-y-2">
                       <Label htmlFor="name" className="text-base md:text-sm">
-                        Full Name *
+                        Your Name *
                       </Label>
                       <Input
                         id="name"
@@ -214,30 +214,7 @@ export default function ContactPage() {
                     />
                   </div>
 
-                  <div className="space-y-2">
-                    <Label htmlFor="serviceType" className="text-base md:text-sm">
-                      Service Interest
-                    </Label>
-                    <Select
-                      value={formData.serviceType}
-                      onValueChange={(value) => setFormData({ ...formData, serviceType: value })}
-                    >
-                      <SelectTrigger className="h-12 text-base">
-                        <SelectValue placeholder="Select a service" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="accounting">Accounting & Bookkeeping</SelectItem>
-                        <SelectItem value="tax">Tax & Compliance</SelectItem>
-                        <SelectItem value="payroll">Payroll Services</SelectItem>
-                        <SelectItem value="corporate">Corporate Services</SelectItem>
-                        <SelectItem value="advisory">Advisory & Support</SelectItem>
-                        <SelectItem value="startup">Startup Package</SelectItem>
-                        <SelectItem value="growth">Growth Package</SelectItem>
-                        <SelectItem value="full-cycle">Full-Cycle Package</SelectItem>
-                        <SelectItem value="other">Other</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
+                  
 
                   <div className="space-y-2">
                     <Label htmlFor="message" className="text-base md:text-sm">
