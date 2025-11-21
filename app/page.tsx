@@ -47,7 +47,7 @@ export default function PND50Landing() {
   return (
     <main className="min-h-screen">
       <section className="relative w-full min-h-screen flex flex-col bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 overflow-hidden">
-        <AnimatedGridBackground className="min-h-screen flex-1">
+        <AnimatedGridBackground className="min-h-screen flex flex-col">
           <div
             className="absolute top-20 left-10 w-96 h-96 bg-primary/20 rounded-full blur-3xl pointer-events-none"
             style={{
@@ -63,11 +63,11 @@ export default function PND50Landing() {
             }}
           />
 
-          <div className="w-full h-full origin-top lg:scale-[0.85] 2xl:scale-100 transition-transform duration-500">
-            <div className="container mx-auto px-6 md:px-12 lg:px-20 relative z-10 min-h-screen flex items-center py-12 sm:py-16 lg:py-20 pt-32 lg:pt-40 pb-32 lg:pb-40 max-w-[1600px]">
-              <div className="grid lg:grid-cols-2 gap-12 lg:gap-32 items-center w-full">
+          <div className="flex-1 w-full origin-top lg:scale-[0.9] transition-transform duration-500 flex flex-col justify-center">
+            <div className="container mx-auto px-6 md:px-12 lg:px-24 relative z-10 py-12 sm:py-16 lg:py-20 pt-24 lg:pt-32 pb-16 lg:pb-24 max-w-[1600px]">
+              <div className="grid lg:grid-cols-2 gap-12 lg:gap-24 items-center w-full">
                 {/* Left side - Hero content */}
-                <div className="text-center lg:text-left space-y-8 md:space-y-10 max-w-[650px] mx-auto lg:mx-0">
+                <div className="text-center lg:text-left space-y-8 md:space-y-12 max-w-[650px] mx-auto lg:mx-0">
                   <div
                     className={`hidden lg:inline-flex items-center gap-2.5 rounded-full bg-gradient-to-r from-primary/10 to-chart-2/10 backdrop-blur-md px-6 py-3 text-sm font-semibold text-white mb-4 border border-primary/20 transition-all duration-700 hover:bg-primary/20 hover:scale-105 hover:border-primary/40 ${
                       isVisible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
@@ -147,9 +147,9 @@ export default function PND50Landing() {
                 </div>
               </div>
             </div>
-
-            <LandingFooter />
           </div>
+
+          <LandingFooter />
         </AnimatedGridBackground>
       </section>
     </main>
