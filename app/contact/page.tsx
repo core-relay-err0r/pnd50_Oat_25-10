@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { MapPin, Phone, Clock, Send, Check, Copy, MessageSquare, ArrowLeft } from "lucide-react"
 import Link from "next/link"
 
@@ -201,7 +200,7 @@ export default function ContactPage() {
 
                   <div className="space-y-2">
                     <Label htmlFor="companyName" className="text-base md:text-sm">
-                      Company Name (optional) 
+                      Company Name (optional)
                     </Label>
                     <Input
                       id="companyName"
@@ -213,8 +212,6 @@ export default function ContactPage() {
                       className="h-12 text-base"
                     />
                   </div>
-
-                  
 
                   <div className="space-y-2">
                     <Label htmlFor="message" className="text-base md:text-sm">
@@ -448,15 +445,14 @@ export default function ContactPage() {
 
             <div className="rounded-2xl overflow-hidden shadow-2xl border-2 border-border hover:border-primary transition-all duration-300">
               <iframe
-                src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8&q=Bhiraj+Tower+at+EmQuartier,+689+Sukhumvit+Rd,+Khlong+Tan+Nuea,+Watthana,+Bangkok+10110&zoom=16&maptype=roadmap"
+                src="https://maps.google.com/maps?q=Bhiraj+Tower+at+EmQuartier,+689+Sukhumvit+Rd,+Khlong+Tan+Nuea,+Watthana,+Bangkok+10110&t=&z=16&ie=UTF8&iwloc=&output=embed"
                 width="100%"
                 height="500"
                 style={{ border: 0 }}
                 allowFullScreen
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
-                title="PND50 Office Location"
-                className="w-full h-80 md:h-[500px]"
+                className="w-full h-[400px] md:h-[500px]"
               ></iframe>
             </div>
 
