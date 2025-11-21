@@ -128,6 +128,7 @@
   body {
     @apply bg-background text-foreground;
   }
+  /* Removed the global font-size scaling to rely on the component-level transform instead */
 }
 
 @keyframes accordion-down {

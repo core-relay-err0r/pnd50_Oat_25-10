@@ -45,33 +45,29 @@ export default function PND50Landing() {
   }, [wordIndex, words])
 
   return (
-    <main className="min-h-screen overflow-x-hidden">
-      <section className="relative w-full min-h-screen flex flex-col bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
+    <main className="min-h-screen">
+      <section className="relative w-full min-h-screen flex flex-col bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 overflow-hidden">
         <AnimatedGridBackground className="min-h-screen flex-1">
-          {/* Added a scaling wrapper to create the zoomed-out effect on laptops, with width compensation */}
-          <div className="w-full origin-top lg:scale-[0.85] lg:w-[117.65%]">
-            <div
-              className="absolute top-20 left-10 w-96 h-96 bg-primary/20 rounded-full blur-3xl pointer-events-none"
-              style={{
-                transform: `translate(${mousePosition.x}px, ${mousePosition.y}px)`,
-                transition: "transform 0.5s ease-out",
-              }}
-            />
-            <div
-              className="absolute bottom-20 right-10 w-96 h-96 bg-chart-2/20 rounded-full blur-3xl pointer-events-none"
-              style={{
-                transform: `translate(${-mousePosition.x}px, ${-mousePosition.y}px)`,
-                transition: "transform 0.5s ease-out",
-              }}
-            />
+          <div
+            className="absolute top-20 left-10 w-96 h-96 bg-primary/20 rounded-full blur-3xl pointer-events-none"
+            style={{
+              transform: `translate(${mousePosition.x}px, ${mousePosition.y}px)`,
+              transition: "transform 0.5s ease-out",
+            }}
+          />
+          <div
+            className="absolute bottom-20 right-10 w-96 h-96 bg-chart-2/20 rounded-full blur-3xl pointer-events-none"
+            style={{
+              transform: `translate(${-mousePosition.x}px, ${-mousePosition.y}px)`,
+              transition: "transform 0.5s ease-out",
+            }}
+          />
 
-            {/* Increased padding and max-width for a more airy, breathable layout */}
-            <div className="container mx-auto px-6 md:px-12 lg:px-20 relative z-10 min-h-screen flex items-center py-24 lg:py-32 pt-32 lg:pt-48 pb-40 lg:pb-64">
-              {/* Increased grid gap to separate content and testimonials */}
-              <div className="grid lg:grid-cols-2 gap-16 lg:gap-32 items-center w-full">
+          <div className="w-full h-full origin-top lg:scale-[0.85] 2xl:scale-100 transition-transform duration-500">
+            <div className="container mx-auto px-6 md:px-12 lg:px-20 relative z-10 min-h-screen flex items-center py-12 sm:py-16 lg:py-20 pt-32 lg:pt-40 pb-32 lg:pb-40 max-w-[1600px]">
+              <div className="grid lg:grid-cols-2 gap-12 lg:gap-32 items-center w-full">
                 {/* Left side - Hero content */}
-                {/* Increased vertical spacing between elements */}
-                <div className="text-center lg:text-left space-y-10 md:space-y-12">
+                <div className="text-center lg:text-left space-y-8 md:space-y-10 max-w-[650px] mx-auto lg:mx-0">
                   <div
                     className={`hidden lg:inline-flex items-center gap-2.5 rounded-full bg-gradient-to-r from-primary/10 to-chart-2/10 backdrop-blur-md px-6 py-3 text-sm font-semibold text-white mb-4 border border-primary/20 transition-all duration-700 hover:bg-primary/20 hover:scale-105 hover:border-primary/40 ${
                       isVisible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
@@ -85,7 +81,7 @@ export default function PND50Landing() {
                   </div>
 
                   <h1
-                    className={`text-6xl sm:text-7xl md:text-8xl lg:text-7xl xl:text-8xl font-bold mb-8 leading-tight tracking-tight transition-all duration-700 delay-100 ${
+                    className={`text-6xl sm:text-7xl md:text-8xl lg:text-7xl xl:text-8xl font-bold mb-6 leading-tight tracking-tight transition-all duration-700 delay-100 ${
                       isVisible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
                     }`}
                   >
@@ -126,9 +122,8 @@ export default function PND50Landing() {
                     <ShuffleTestimonials />
                   </div>
 
-                  {/* Constrained max-width and increased line-height for readability */}
                   <p
-                    className={`text-base md:text-lg lg:text-xl max-w-[600px] mx-auto lg:mx-0 leading-loose transition-all duration-700 delay-200 text-slate-300 ${
+                    className={`text-base md:text-lg lg:text-xl max-w-2xl mx-auto lg:mx-0 leading-relaxed transition-all duration-700 delay-200 text-slate-300 ${
                       isVisible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
                     }`}
                   >
