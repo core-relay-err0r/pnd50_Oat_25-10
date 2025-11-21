@@ -128,10 +128,10 @@
   body {
     @apply bg-background text-foreground;
   }
-  /* Added global 80% zoom for desktop screens to improve scaling and information density */
+  /* Added global 90% zoom for desktop screens to improve scaling and information density */
   @media (min-width: 1024px) {
     html {
-      font-size: 80%;
+      font-size: 90%;
     }
   }
 }
