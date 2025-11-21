@@ -5,6 +5,7 @@ import { useEffect, useState, useMemo } from "react"
 import { ShuffleTestimonials } from "@/components/ShuffleTestimonials"
 import { motion } from "framer-motion"
 import { LandingFooter } from "@/components/landing-footer"
+import { MouseFollowerBackground } from "@/components/ui/mouse-follower-background"
 
 const AnimatedGridBackground = dynamic(
   () => import("@/components/ui/animated-grid-background").then((mod) => mod.AnimatedGridBackground),
@@ -13,24 +14,11 @@ const AnimatedGridBackground = dynamic(
 
 export default function PND50Landing() {
   const [isVisible, setIsVisible] = useState(false)
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
   const [wordIndex, setWordIndex] = useState(0)
   const words = useMemo(() => ["Accounting", "Consultant", "Compliant"], [])
 
   useEffect(() => {
     setIsVisible(true)
-  }, [])
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({
-        x: (e.clientX / window.innerWidth - 0.5) * 20,
-        y: (e.clientY / window.innerHeight - 0.5) * 20,
-      })
-    }
-
-    window.addEventListener("mousemove", handleMouseMove)
-    return () => window.removeEventListener("mousemove", handleMouseMove)
   }, [])
 
   useEffect(() => {
@@ -48,20 +36,7 @@ export default function PND50Landing() {
     <main className="min-h-screen">
       <section className="relative w-full min-h-screen flex flex-col bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
         <AnimatedGridBackground className="min-h-screen flex-1">
-          <div
-            className="absolute top-20 left-10 w-96 h-96 bg-primary/20 rounded-full blur-3xl pointer-events-none"
-            style={{
-              transform: `translate(${mousePosition.x}px, ${mousePosition.y}px)`,
-              transition: "transform 0.5s ease-out",
-            }}
-          />
-          <div
-            className="absolute bottom-20 right-10 w-96 h-96 bg-chart-2/20 rounded-full blur-3xl pointer-events-none"
-            style={{
-              transform: `translate(${-mousePosition.x}px, ${-mousePosition.y}px)`,
-              transition: "transform 0.5s ease-out",
-            }}
-          />
+          <MouseFollowerBackground />
 
           <div className="container mx-auto px-8 sm:px-12 md:px-16 lg:px-24 xl:px-32 2xl:px-40 max-w-[1400px] relative z-10 min-h-screen flex items-center py-12 sm:py-16 lg:py-20 pt-[100px] lg:pt-12 pb-32 lg:pb-20">
             <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 xl:gap-24 items-center w-full">
