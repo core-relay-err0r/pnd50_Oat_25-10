@@ -59,7 +59,7 @@ const AboutClientPage = () => {
                 </span>
               </h1>
 
-              <p className="md:text-xl text-slate-600 leading-relaxed mb-8 text-sm">
+              <p className="text-slate-600 leading-relaxed mb-8 text-base">
                 PND50 is an accounting and advisory firm based in Thailand, helping foreign-owned businesses navigate
                 Thai accounting and compliance with clarity and confidence.
               </p>
