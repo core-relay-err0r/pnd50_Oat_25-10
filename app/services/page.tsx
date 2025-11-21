@@ -104,7 +104,7 @@ export default function ServicesPage() {
       <section className="py-16 md:py-24 bg-gradient-to-b from-background to-primary/5">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl text-center">
           <h2 className="text-3xl md:text-5xl font-bold text-foreground mb-6">Ready to Get Started?</h2>
-          <p className="text-xl text-muted-foreground mb-8 leading-relaxed">
+          <p className="text-muted-foreground mb-8 leading-relaxed text-lg">
             Schedule a free consultation to discuss how we can support your business in Thailand
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
