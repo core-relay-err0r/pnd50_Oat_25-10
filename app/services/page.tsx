@@ -79,7 +79,7 @@ export default function ServicesPage() {
             <h1 className="text-3xl md:text-6xl font-bold text-foreground mb-6 leading-tight">
               Professional Services for Your Business
             </h1>
-            <p className="text-xl text-muted-foreground leading-relaxed">
+            <p className="text-muted-foreground leading-relaxed text-base">
               From accounting to compliance, we provide comprehensive services tailored for foreign-owned businesses
               operating in Thailand.
             </p>
