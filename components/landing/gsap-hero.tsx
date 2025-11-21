@@ -126,10 +126,9 @@ export function GSAPHero() {
           className="absolute bottom-1/4 right-1/4 w-[600px] h-[600px] bg-indigo-500/10 rounded-full blur-[120px] pointer-events-none mix-blend-screen opacity-60"
         />
 
-        {/* Main Content Container - Centered */}
-        <div className="relative z-10 h-full flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div className="relative z-10 h-full flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
           {/* Top Badge */}
-          <div className="scale-in mb-8 inline-flex items-center gap-2 rounded-full bg-white/5 border border-white/10 px-4 py-1.5 text-sm font-medium text-slate-300 backdrop-blur-sm hover:bg-white/10 transition-colors cursor-default">
+          <div className="scale-in mb-6 inline-flex items-center gap-2 rounded-full bg-white/5 border border-white/10 px-4 py-1.5 text-sm font-medium text-slate-300 backdrop-blur-sm hover:bg-white/10 transition-colors cursor-default">
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
@@ -137,45 +136,44 @@ export function GSAPHero() {
             Thailand's #1 Corporate Services
           </div>
 
-          {/* Main Headline */}
-          <div className="text-center space-y-2 mb-8 relative">
+          <div className="text-center space-y-3 mb-6 relative">
             <div className="overflow-hidden">
-              <h1 className="reveal-text text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-bold tracking-tight text-white leading-[0.9]">
+              <h1 className="reveal-text text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight text-white leading-[1.1]">
                 AI-Powered
               </h1>
             </div>
-            <div className="overflow-hidden flex justify-center items-center gap-4 flex-wrap">
-              <h1 className="reveal-text text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-bold tracking-tight text-slate-500 leading-[0.9]">
+            <div className="overflow-hidden flex justify-center items-center gap-3 md:gap-4 flex-wrap">
+              <h1 className="reveal-text text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight text-slate-500 leading-[1.1]">
                 Boutique
               </h1>
-              <div className="reveal-text relative h-[0.9em] min-w-[200px] sm:min-w-[300px] md:min-w-[400px] overflow-hidden text-left">
-                {words.map((word, index) => (
-                  <span
-                    key={index}
-                    className={`absolute left-0 top-0 bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-bold tracking-tight transition-all duration-500 ease-in-out transform ${
-                      index === currentWordIndex
-                        ? "translate-y-0 opacity-100 blur-0"
-                        : "translate-y-full opacity-0 blur-sm"
-                    }`}
-                  >
-                    {word}
-                  </span>
-                ))}
+              <div className="reveal-text relative inline-block">
+                <div className="relative h-[1.2em] w-[280px] sm:w-[400px] md:w-[500px] lg:w-[600px] overflow-hidden">
+                  {words.map((word, index) => (
+                    <span
+                      key={index}
+                      className={`absolute left-0 top-0 w-full bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight transition-all duration-500 ease-in-out transform ${
+                        index === currentWordIndex
+                          ? "translate-y-0 opacity-100 blur-0"
+                          : "translate-y-full opacity-0 blur-sm"
+                      }`}
+                    >
+                      {word}
+                    </span>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
 
-          {/* Subheadline */}
-          <div className="fade-in max-w-2xl mx-auto text-center mb-12">
-            <p className="text-lg sm:text-xl text-slate-400 leading-relaxed">
+          <div className="fade-in max-w-xl mx-auto text-center mb-8">
+            <p className="text-base sm:text-lg text-slate-400 leading-relaxed">
               Talk to an expert, not a robot. We combine dedicated human advisors with
               <span className="text-white font-semibold"> AI precision</span> to make your business
               <span className="text-emerald-400 font-semibold"> 5x faster</span> and compliant.
             </p>
           </div>
 
-          {/* CTAs */}
-          <div className="fade-in flex flex-col sm:flex-row items-center gap-4 mb-16">
+          <div className="fade-in flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
             <HomepageCtas />
             <div className="flex items-center gap-2 text-sm text-slate-500">
               <CheckCircle2 className="w-4 h-4 text-emerald-500" />
@@ -183,23 +181,19 @@ export function GSAPHero() {
             </div>
           </div>
 
-          {/* Social Proof / Footer Area */}
-          <div className="fade-in absolute bottom-8 left-0 right-0 w-full">
-            <div className="container mx-auto px-4">
-              <p className="text-center text-sm text-slate-600 mb-6 font-medium uppercase tracking-wider">
-                Trusted by innovative teams
-              </p>
-              <div className="flex flex-wrap justify-center items-center gap-8 md:gap-16 opacity-50 grayscale hover:grayscale-0 transition-all duration-500">
-                {/* Simple text logos for demo - replace with SVGs in production */}
-                {["TechStart", "GlobalVentures", "AsiaCorp", "FutureScale", "NextGen"].map((logo) => (
-                  <span
-                    key={logo}
-                    className="text-lg font-bold text-slate-400 hover:text-white transition-colors cursor-pointer"
-                  >
-                    {logo}
-                  </span>
-                ))}
-              </div>
+          <div className="fade-in w-full mt-8">
+            <p className="text-center text-xs text-slate-600 mb-4 font-medium uppercase tracking-wider">
+              Trusted by innovative teams
+            </p>
+            <div className="flex flex-wrap justify-center items-center gap-6 md:gap-12 opacity-40 grayscale hover:grayscale-0 hover:opacity-60 transition-all duration-500">
+              {["TechStart", "GlobalVentures", "AsiaCorp", "FutureScale", "NextGen"].map((logo) => (
+                <span
+                  key={logo}
+                  className="text-sm font-bold text-slate-400 hover:text-white transition-colors cursor-pointer"
+                >
+                  {logo}
+                </span>
+              ))}
             </div>
           </div>
         </div>
