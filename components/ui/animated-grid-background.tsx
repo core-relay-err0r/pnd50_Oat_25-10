@@ -77,7 +77,7 @@ export function AnimatedGridBackground({
       ctx.clearRect(0, 0, canvas.width, canvas.height)
 
       // Draw grid
-      ctx.strokeStyle = "rgba(59, 130, 246, 0.1)"
+      ctx.strokeStyle = "rgba(59, 130, 246, 0.15)"
       ctx.lineWidth = 1
       const gridSize = 50
 
@@ -133,11 +133,11 @@ export function AnimatedGridBackground({
   return (
     <div
       className={cn(
-        "relative flex flex-col items-center justify-center bg-slate-900 overflow-x-hidden min-h-full",
+        "relative flex flex-col items-center justify-center bg-background overflow-x-hidden min-h-full",
         className,
       )}
     >
-      <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" style={{ opacity: 0.6 }} />
+      <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" style={{ opacity: 0.5 }} />
 
       <div className="relative z-10 w-full flex flex-col flex-1">{children}</div>
     </div>

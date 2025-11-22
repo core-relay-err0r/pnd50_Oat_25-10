@@ -3,9 +3,16 @@
 import { useEffect, useRef, useState } from "react"
 import { gsap } from "gsap"
 import { useGSAP } from "@gsap/react"
+import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { HomepageCtas } from "@/components/HomepageCtas"
+import { ShuffleTestimonials } from "@/components/ShuffleTestimonials"
+import { LandingFooter } from "@/components/landing-footer"
 import dynamic from "next/dynamic"
-import { CheckCircle2 } from "lucide-react"
+
+// Register ScrollTrigger
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger)
+}
 
 const AnimatedGridBackground = dynamic(
   () => import("@/components/ui/animated-grid-background").then((mod) => mod.AnimatedGridBackground),
@@ -14,22 +21,21 @@ const AnimatedGridBackground = dynamic(
 
 export function GSAPHero() {
   const containerRef = useRef<HTMLDivElement>(null)
+  const textRef = useRef<HTMLHeadingElement>(null)
   const blob1Ref = useRef<HTMLDivElement>(null)
   const blob2Ref = useRef<HTMLDivElement>(null)
-  const cursorRef = useRef<HTMLDivElement>(null)
+  const wordsRef = useRef<HTMLDivElement>(null)
 
-  const words = ["Accounting", "Consulting", "Compliance"]
+  const words = ["Accounting", "Consultant", "Compliant"]
   const [currentWordIndex, setCurrentWordIndex] = useState(0)
 
-  // Mouse follow effect for blobs and custom cursor
+  // Mouse follow effect for blobs
   useGSAP(
     () => {
       const xTo1 = gsap.quickTo(blob1Ref.current, "x", { duration: 0.8, ease: "power3" })
       const yTo1 = gsap.quickTo(blob1Ref.current, "y", { duration: 0.8, ease: "power3" })
       const xTo2 = gsap.quickTo(blob2Ref.current, "x", { duration: 1.2, ease: "power2" })
       const yTo2 = gsap.quickTo(blob2Ref.current, "y", { duration: 1.2, ease: "power2" })
-      const cursorX = gsap.quickTo(cursorRef.current, "x", { duration: 0.2, ease: "power3" })
-      const cursorY = gsap.quickTo(cursorRef.current, "y", { duration: 0.2, ease: "power3" })
 
       const handleMouseMove = (e: MouseEvent) => {
         const { clientX, clientY } = e
@@ -39,15 +45,11 @@ export function GSAPHero() {
         const x = (clientX / innerWidth - 0.5) * 2
         const y = (clientY / innerHeight - 0.5) * 2
 
-        // Move blobs
+        // Move blobs with different intensities
         xTo1(x * 50)
         yTo1(y * 50)
         xTo2(x * -80)
         yTo2(y * -80)
-
-        // Move cursor
-        cursorX(clientX)
-        cursorY(clientY)
       }
 
       window.addEventListener("mousemove", handleMouseMove)
@@ -56,44 +58,32 @@ export function GSAPHero() {
     { scope: containerRef },
   )
 
-  // Intro Animation - Staggered Reveal
+  // Intro Animation
   useGSAP(
     () => {
       const tl = gsap.timeline()
 
-      // Initial states
-      gsap.set(".reveal-text", { y: 100, opacity: 0 })
-      gsap.set(".fade-in", { opacity: 0, y: 20 })
-      gsap.set(".scale-in", { scale: 0.8, opacity: 0 })
+      // Initial state
+      gsap.set(".hero-element", { y: 50, opacity: 0 })
+      gsap.set(".hero-badge", { y: -20, opacity: 0, scale: 0.8 })
 
-      tl.to(".scale-in", {
-        scale: 1,
+      tl.to(".hero-badge", {
+        y: 0,
         opacity: 1,
-        duration: 1,
-        ease: "elastic.out(1, 0.5)",
-      })
-        .to(
-          ".reveal-text",
-          {
-            y: 0,
-            opacity: 1,
-            stagger: 0.15,
-            duration: 1,
-            ease: "power4.out",
-          },
-          "-=0.5",
-        )
-        .to(
-          ".fade-in",
-          {
-            opacity: 1,
-            y: 0,
-            stagger: 0.1,
-            duration: 0.8,
-            ease: "power2.out",
-          },
-          "-=0.8",
-        )
+        scale: 1,
+        duration: 0.8,
+        ease: "back.out(1.7)",
+      }).to(
+        ".hero-element",
+        {
+          y: 0,
+          opacity: 1,
+          stagger: 0.1,
+          duration: 0.8,
+          ease: "power3.out",
+        },
+        "-=0.4",
+      )
     },
     { scope: containerRef },
   )
@@ -102,102 +92,116 @@ export function GSAPHero() {
   useEffect(() => {
     const interval = setInterval(() => {
       const nextIndex = (currentWordIndex + 1) % words.length
-      setCurrentWordIndex(nextIndex)
+
+      const tl = gsap.timeline()
+
+      // Exit current word
+      tl.to(`.word-${currentWordIndex}`, {
+        y: -50,
+        opacity: 0,
+        duration: 0.4,
+        ease: "power2.in",
+      })
+
+        // Enter next word
+        .fromTo(
+          `.word-${nextIndex}`,
+          { y: 50, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.4,
+            ease: "power2.out",
+            onStart: () => setCurrentWordIndex(nextIndex),
+          },
+          "-=0.1",
+        )
     }, 3000)
+
     return () => clearInterval(interval)
   }, [currentWordIndex, words.length])
 
   return (
-    <main className="h-screen w-full overflow-hidden relative bg-slate-950 text-white" ref={containerRef}>
-      {/* Custom Cursor */}
-      <div
-        ref={cursorRef}
-        className="fixed top-0 left-0 w-8 h-8 rounded-full border border-white/20 pointer-events-none z-50 -translate-x-1/2 -translate-y-1/2 hidden lg:block mix-blend-difference"
-      />
+    <main className="min-h-screen" ref={containerRef}>
+      <section className="relative w-full min-h-screen flex flex-col bg-gradient-to-b from-slate-50 via-white to-slate-50 overflow-hidden">
+        <AnimatedGridBackground className="min-h-screen flex-1">
+          {/* Blobs */}
+          <div
+            ref={blob1Ref}
+            className="absolute top-20 left-10 w-96 h-96 bg-primary/10 rounded-full blur-[100px] pointer-events-none mix-blend-multiply"
+          />
+          <div
+            ref={blob2Ref}
+            className="absolute bottom-20 right-10 w-96 h-96 bg-chart-2/10 rounded-full blur-[100px] pointer-events-none mix-blend-multiply"
+          />
 
-      <AnimatedGridBackground className="h-full w-full absolute inset-0">
-        {/* Ambient Blobs */}
-        <div
-          ref={blob1Ref}
-          className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-primary/20 rounded-full blur-[120px] pointer-events-none mix-blend-screen opacity-60"
-        />
-        <div
-          ref={blob2Ref}
-          className="absolute bottom-1/4 right-1/4 w-[600px] h-[600px] bg-indigo-500/10 rounded-full blur-[120px] pointer-events-none mix-blend-screen opacity-60"
-        />
-
-        <div className="relative z-10 h-full flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
-          {/* Top Badge */}
-          <div className="scale-in mb-6 inline-flex items-center gap-2 rounded-full bg-white/5 border border-white/10 px-4 py-1.5 text-sm font-medium text-slate-300 backdrop-blur-sm hover:bg-white/10 transition-colors cursor-default">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-            </span>
-            Thailand's #1 Corporate Services
-          </div>
-
-          <div className="text-center space-y-3 mb-6 relative">
-            <div className="overflow-hidden">
-              <h1 className="reveal-text text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight text-white leading-[1.1]">
-                AI-Powered
-              </h1>
-            </div>
-            <div className="overflow-hidden flex justify-center items-center gap-3 md:gap-4 flex-wrap">
-              <h1 className="reveal-text text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight text-slate-500 leading-[1.1]">
-                Boutique
-              </h1>
-              <div className="reveal-text relative inline-block">
-                <div className="relative h-[1.2em] w-[280px] sm:w-[400px] md:w-[500px] lg:w-[600px] overflow-hidden">
-                  {words.map((word, index) => (
-                    <span
-                      key={index}
-                      className={`absolute left-0 top-0 w-full bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight transition-all duration-500 ease-in-out transform ${
-                        index === currentWordIndex
-                          ? "translate-y-0 opacity-100 blur-0"
-                          : "translate-y-full opacity-0 blur-sm"
-                      }`}
-                    >
-                      {word}
+          <div className="flex-1 w-full flex flex-col lg:scale-[0.85] lg:origin-top lg:mt-24">
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex-1 flex items-center py-12 sm:py-16 lg:py-20 pt-[100px] lg:pt-12 pb-32 lg:pb-20">
+              <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center w-full">
+                {/* Left side - Hero content */}
+                <div className="text-center lg:text-left space-y-6 md:space-y-8">
+                  <div className="hero-badge inline-flex items-center gap-2.5 rounded-full bg-white/80 backdrop-blur-md px-6 py-3 text-sm font-semibold text-slate-800 mb-2 border border-slate-200 shadow-sm transition-all duration-300 hover:bg-white hover:shadow-md">
+                    <span className="relative flex h-2.5 w-2.5">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
                     </span>
-                  ))}
+                    <span className="leading-tight">Thailand's Leading Tech-Driven Corporate Services Firm.</span>
+                  </div>
+
+                  <h1
+                    ref={textRef}
+                    className="hero-element text-6xl sm:text-7xl md:text-8xl lg:text-7xl xl:text-8xl font-bold mb-4 leading-tight tracking-tight"
+                  >
+                    <span className="bg-gradient-to-r from-primary via-blue-600 to-primary bg-clip-text text-transparent animate-gradient-shift inline-block pb-2 leading-[1.15]">
+                      AI Boutique
+                    </span>
+                    <br />
+                    <span className="relative inline-block w-full h-[1.15em] overflow-hidden" ref={wordsRef}>
+                      {words.map((word, index) => (
+                        <span
+                          key={index}
+                          className={`word-${index} absolute left-1/2 lg:left-0 -translate-x-1/2 lg:translate-x-0 text-slate-900 font-bold whitespace-nowrap ${
+                            index === currentWordIndex ? "opacity-100 translate-y-0" : "opacity-0 translate-y-[50px]"
+                          }`}
+                          style={{
+                            display:
+                              index === currentWordIndex || index === (currentWordIndex + 1) % words.length
+                                ? "block"
+                                : "none",
+                          }}
+                        >
+                          {word}
+                        </span>
+                      ))}
+                    </span>
+                  </h1>
+
+                  <div className="hero-element flex lg:hidden justify-center my-8 scale-75">
+                    <ShuffleTestimonials />
+                  </div>
+
+                  <p className="hero-element text-base md:text-lg lg:text-xl max-w-2xl mx-auto lg:mx-0 leading-relaxed text-slate-600">
+                    You Talk to an Expert, Not a Robot. We connect you with a dedicated human advisor who speaks your
+                    native language. Our AI makes them <span className="text-primary font-semibold">5x faster</span> and{" "}
+                    <span className="text-emerald-600 font-semibold">totally error-free</span>.
+                  </p>
+
+                  <div className="hero-element pt-4">
+                    <HomepageCtas />
+                  </div>
+                </div>
+
+                {/* Right side - Testimonial cards */}
+                <div className="hero-element hidden lg:flex items-center justify-center">
+                  <ShuffleTestimonials />
                 </div>
               </div>
             </div>
           </div>
 
-          <div className="fade-in max-w-xl mx-auto text-center mb-8">
-            <p className="text-base sm:text-lg text-slate-400 leading-relaxed">
-              Talk to an expert, not a robot. We combine dedicated human advisors with
-              <span className="text-white font-semibold"> AI precision</span> to make your business
-              <span className="text-emerald-400 font-semibold"> 5x faster</span> and compliant.
-            </p>
-          </div>
-
-          <div className="fade-in flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
-            <HomepageCtas />
-            <div className="flex items-center gap-2 text-sm text-slate-500">
-              <CheckCircle2 className="w-4 h-4 text-emerald-500" />
-              <span>No credit card required</span>
-            </div>
-          </div>
-
-          <div className="fade-in w-full mt-8">
-            <p className="text-center text-xs text-slate-600 mb-4 font-medium uppercase tracking-wider">
-              Trusted by innovative teams
-            </p>
-            <div className="flex flex-wrap justify-center items-center gap-6 md:gap-12 opacity-40 grayscale hover:grayscale-0 hover:opacity-60 transition-all duration-500">
-              {["TechStart", "GlobalVentures", "AsiaCorp", "FutureScale", "NextGen"].map((logo) => (
-                <span
-                  key={logo}
-                  className="text-sm font-bold text-slate-400 hover:text-white transition-colors cursor-pointer"
-                >
-                  {logo}
-                </span>
-              ))}
-            </div>
-          </div>
-        </div>
-      </AnimatedGridBackground>
+          <LandingFooter />
+        </AnimatedGridBackground>
+      </section>
     </main>
   )
 }
