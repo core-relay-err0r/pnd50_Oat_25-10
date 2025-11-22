@@ -19,6 +19,19 @@ const AnimatedGridBackground = dynamic(
   { ssr: false },
 )
 
+const SplitText = ({ children, className }: { children: string; className?: string }) => {
+  return (
+    <span className={className}>
+      {children.split("").map((char, i) => (
+        <span key={i} className="char inline-block">
+          {char === " " ? "\u00A0" : char}
+        </span>
+      ))}
+    </span>
+  )
+}
+// </CHANGE>
+
 export function GSAPHero() {
   const containerRef = useRef<HTMLDivElement>(null)
   const textRef = useRef<HTMLHeadingElement>(null)
@@ -64,8 +77,10 @@ export function GSAPHero() {
       const tl = gsap.timeline()
 
       // Initial state
-      gsap.set(".hero-element", { y: 50, opacity: 0 })
+      gsap.set(".hero-element", { y: 30, opacity: 0 })
       gsap.set(".hero-badge", { y: -20, opacity: 0, scale: 0.8 })
+      gsap.set(".char", { y: 100, opacity: 0, rotateX: -90 }) // Prepare chars for 3D flip
+      // </CHANGE>
 
       tl.to(".hero-badge", {
         y: 0,
@@ -73,17 +88,31 @@ export function GSAPHero() {
         scale: 1,
         duration: 0.8,
         ease: "back.out(1.7)",
-      }).to(
-        ".hero-element",
-        {
-          y: 0,
-          opacity: 1,
-          stagger: 0.1,
-          duration: 0.8,
-          ease: "power3.out",
-        },
-        "-=0.4",
-      )
+      })
+        .to(
+          ".char",
+          {
+            y: 0,
+            opacity: 1,
+            rotateX: 0,
+            stagger: 0.02,
+            duration: 1,
+            ease: "elastic.out(1, 0.5)",
+          },
+          "-=0.5",
+        )
+        // </CHANGE>
+        .to(
+          ".hero-element",
+          {
+            y: 0,
+            opacity: 1,
+            stagger: 0.1,
+            duration: 0.8,
+            ease: "power3.out",
+          },
+          "-=0.8", // Overlap with title animation
+        )
     },
     { scope: containerRef },
   )
@@ -97,24 +126,26 @@ export function GSAPHero() {
 
       // Exit current word
       tl.to(`.word-${currentWordIndex}`, {
-        y: -50,
+        y: -40,
+        rotationX: 90, // Added 3D rotation effect
         opacity: 0,
-        duration: 0.4,
-        ease: "power2.in",
+        duration: 0.5,
+        ease: "back.in(1.7)",
       })
 
         // Enter next word
         .fromTo(
           `.word-${nextIndex}`,
-          { y: 50, opacity: 0 },
+          { y: 40, rotationX: -90, opacity: 0 }, // Added 3D rotation start state
           {
             y: 0,
+            rotationX: 0,
             opacity: 1,
-            duration: 0.4,
-            ease: "power2.out",
+            duration: 0.5,
+            ease: "back.out(1.7)",
             onStart: () => setCurrentWordIndex(nextIndex),
           },
-          "-=0.1",
+          "-=0.2",
         )
     }, 3000)
 
@@ -139,8 +170,8 @@ export function GSAPHero() {
             <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex-1 flex items-center py-12 sm:py-16 lg:py-20 pt-[100px] lg:pt-12 pb-32 lg:pb-20">
               <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center w-full">
                 {/* Left side - Hero content */}
-                <div className="text-center lg:text-left space-y-6 md:space-y-8">
-                  <div className="hero-badge inline-flex items-center gap-2.5 rounded-full bg-white/80 backdrop-blur-md px-6 py-3 text-sm font-semibold text-slate-800 mb-2 border border-slate-200 shadow-sm transition-all duration-300 hover:bg-white hover:shadow-md">
+                <div className="text-center lg:text-left space-y-6 md:space-y-8 perspective-1000">
+                  <div className="hero-badge inline-flex items-center gap-2.5 rounded-full bg-white/80 backdrop-blur-md px-6 py-3 text-sm font-semibold text-slate-800 mb-2 border border-slate-200 shadow-sm transition-all duration-300 hover:bg-white hover:shadow-md hover:scale-105 cursor-default">
                     <span className="relative flex h-2.5 w-2.5">
                       <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                       <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
@@ -150,17 +181,21 @@ export function GSAPHero() {
 
                   <h1
                     ref={textRef}
-                    className="hero-element text-6xl sm:text-7xl md:text-8xl lg:text-7xl xl:text-8xl font-bold mb-4 leading-tight tracking-tight"
+                    className="text-6xl sm:text-7xl md:text-8xl lg:text-7xl xl:text-8xl font-bold mb-4 leading-tight tracking-tight"
                   >
                     <span className="bg-gradient-to-r from-primary via-blue-600 to-primary bg-clip-text text-transparent animate-gradient-shift inline-block pb-2 leading-[1.15]">
-                      AI Boutique
+                      <SplitText>AI Boutique</SplitText>
                     </span>
+                    {/* </CHANGE> */}
                     <br />
-                    <span className="relative inline-block w-full h-[1.15em] overflow-hidden" ref={wordsRef}>
+                    <span
+                      className="relative inline-block w-full h-[1.15em] overflow-hidden perspective-1000"
+                      ref={wordsRef}
+                    >
                       {words.map((word, index) => (
                         <span
                           key={index}
-                          className={`word-${index} absolute left-1/2 lg:left-0 -translate-x-1/2 lg:translate-x-0 text-slate-900 font-bold whitespace-nowrap ${
+                          className={`word-${index} absolute left-1/2 lg:left-0 -translate-x-1/2 lg:translate-x-0 text-slate-900 font-bold whitespace-nowrap origin-bottom ${
                             index === currentWordIndex ? "opacity-100 translate-y-0" : "opacity-0 translate-y-[50px]"
                           }`}
                           style={{
@@ -193,7 +228,10 @@ export function GSAPHero() {
 
                 {/* Right side - Testimonial cards */}
                 <div className="hero-element hidden lg:flex items-center justify-center">
-                  <ShuffleTestimonials />
+                  <div className="animate-float">
+                    <ShuffleTestimonials />
+                  </div>
+                  {/* </CHANGE> */}
                 </div>
               </div>
             </div>
@@ -202,6 +240,18 @@ export function GSAPHero() {
           <LandingFooter />
         </AnimatedGridBackground>
       </section>
+      <style jsx global>{`
+        .perspective-1000 {
+          perspective: 1000px;
+        }
+        @keyframes float {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-20px); }
+        }
+        .animate-float {
+          animation: float 6s ease-in-out infinite;
+        }
+      `}</style>
     </main>
   )
 }
