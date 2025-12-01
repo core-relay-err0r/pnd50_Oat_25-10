@@ -4,7 +4,7 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { ArrowRight, ArrowLeft, Mail, MessageSquare, Target, CheckCircle2, Heart } from "lucide-react"
 import { useEffect, useRef } from "react"
-import { LogoCloud } from "@/components/ui/logo-cloud"
+import { LogoCloud } from "@/components/ui/logo-cloud-3"
 import { cn } from "@/lib/utils"
 
 const logos = [
@@ -226,25 +226,26 @@ const AboutClientPage = () => {
       {/* Our Success Stories Section */}
       <section className="py-12 sm:py-24 md:py-32 bg-muted/30 relative overflow-hidden">
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-chart-2/5 rounded-full blur-3xl"></div>
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="max-w-7xl mx-auto">
-            <div
-              aria-hidden="true"
-              className={cn(
-                "-top-1/2 -translate-x-1/2 pointer-events-none absolute left-1/2 h-[120vmin] w-[120vmin] rounded-b-full",
-                "bg-[radial-gradient(ellipse_at_center,var(--color-foreground)_0.1,transparent_50%)]",
-                "blur-[30px] opacity-10",
-              )}
-            />
-            <div className="w-full">
-              <h2 className="mb-5 text-center">
-                <span className="block font-medium text-2xl text-muted-foreground">Already trusted by</span>
-                <span className="font-black text-2xl text-primary tracking-tight md:text-3xl">Best in the Game</span>
-              </h2>
+        <div className="relative mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+          <div
+            aria-hidden="true"
+            className={cn(
+              "-z-10 -top-1/2 -translate-x-1/2 pointer-events-none absolute left-1/2 h-[120vmin] w-[120vmin] rounded-b-full",
+              "bg-[radial-gradient(ellipse_at_center,var(--color-foreground)_0.1,transparent_50%)]",
+              "blur-[30px]",
+            )}
+          />
 
-              <LogoCloud logos={logos} />
-            </div>
-          </div>
+          <h2 className="mb-5 text-center font-medium text-foreground text-xl tracking-tight md:text-3xl">
+            <span className="text-muted-foreground">Trusted by experts.</span>
+            <br />
+            <span className="font-semibold">Used by the leaders.</span>
+          </h2>
+          <div className="mx-auto my-5 h-px max-w-sm bg-border [mask-image:linear-gradient(to_right,transparent,black,transparent)]" />
+
+          <LogoCloud logos={logos} />
+
+          <div className="mt-5 h-px bg-border [mask-image:linear-gradient(to_right,transparent,black,transparent)]" />
         </div>
       </section>
 
