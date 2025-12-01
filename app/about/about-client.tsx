@@ -237,7 +237,7 @@ const AboutClientPage = () => {
           />
 
           <h2 className="mb-5 text-center font-medium text-foreground text-xl tracking-tight md:text-3xl">
-            <span className="text-muted-foreground">Trusted by experts.</span>
+            <span className="text-muted-foreground">Trusted by Expat Businesses Across Thailand</span>
             <br />
             <span className="font-semibold">Used by the leaders.</span>
           </h2>
