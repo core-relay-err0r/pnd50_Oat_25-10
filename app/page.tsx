@@ -3,6 +3,7 @@ import dynamic from "next/dynamic"
 import { HomepageCtas } from "@/components/HomepageCtas"
 import { useEffect, useState, useMemo } from "react"
 import { ShuffleTestimonials } from "@/components/ShuffleTestimonials"
+import { StaggerTestimonials } from "@/components/ui/stagger-testimonials"
 import { motion } from "framer-motion"
 import { LandingFooter } from "@/components/landing-footer"
 
@@ -143,7 +144,7 @@ export default function PND50Landing() {
 
                 {/* Right side - Testimonial cards */}
                 <div className="hidden lg:flex items-center justify-center">
-                  <ShuffleTestimonials />
+                  <StaggerTestimonials />
                 </div>
               </div>
             </div>

@@ -4,43 +4,7 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { ArrowRight, ArrowLeft, Mail, MessageSquare, Target, CheckCircle2, Heart } from "lucide-react"
 import { useEffect, useRef } from "react"
-import { LogoCloud } from "@/components/ui/logo-cloud-3"
-import { cn } from "@/lib/utils"
-
-const logos = [
-  {
-    src: "https://static.tildacdn.one/tild3766-3263-4338-b034-646463343463/aggio_BIG_01-01.svg",
-    alt: "Aggio Logo",
-  },
-  {
-    src: "https://static.tildacdn.one/tild3766-3263-4338-b034-646463343463/aggio_BIG_01-01.svg",
-    alt: "Aggio Logo",
-  },
-  {
-    src: "https://static.tildacdn.one/tild3766-3263-4338-b034-646463343463/aggio_BIG_01-01.svg",
-    alt: "Aggio Logo",
-  },
-  {
-    src: "https://static.tildacdn.one/tild3766-3263-4338-b034-646463343463/aggio_BIG_01-01.svg",
-    alt: "Aggio Logo",
-  },
-  {
-    src: "https://static.tildacdn.one/tild3766-3263-4338-b034-646463343463/aggio_BIG_01-01.svg",
-    alt: "Aggio Logo",
-  },
-  {
-    src: "https://static.tildacdn.one/tild3766-3263-4338-b034-646463343463/aggio_BIG_01-01.svg",
-    alt: "Aggio Logo",
-  },
-  {
-    src: "https://static.tildacdn.one/tild3766-3263-4338-b034-646463343463/aggio_BIG_01-01.svg",
-    alt: "Aggio Logo",
-  },
-  {
-    src: "https://static.tildacdn.one/tild3766-3263-4338-b034-646463343463/aggio_BIG_01-01.svg",
-    alt: "Aggio Logo",
-  },
-]
+import { Testimonial } from "@/components/ui/testimonial-card"
 
 const AboutClientPage = () => {
   const observerRef = useRef<IntersectionObserver | null>(null)
@@ -226,26 +190,46 @@ const AboutClientPage = () => {
       {/* Our Success Stories Section */}
       <section className="py-12 sm:py-24 md:py-32 bg-muted/30 relative overflow-hidden">
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-chart-2/5 rounded-full blur-3xl"></div>
-        <div className="relative mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
-          <div
-            aria-hidden="true"
-            className={cn(
-              "-z-10 -top-1/2 -translate-x-1/2 pointer-events-none absolute left-1/2 h-[120vmin] w-[120vmin] rounded-b-full",
-              "bg-[radial-gradient(ellipse_at_center,var(--color-foreground)_0.1,transparent_50%)]",
-              "blur-[30px]",
-            )}
-          />
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="max-w-7xl mx-auto">
+            <div className="text-center mb-12 sm:mb-16">
+              <p className="text-sm font-semibold text-primary mb-3 tracking-wide uppercase">Our Success Stories</p>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4 leading-tight">
+                Trusted by Businesses Across Thailand
+              </h2>
+              <p className="sm:text-lg text-muted-foreground max-w-3xl mx-auto text-sm">
+                We&#39;re proud to support international startups — especially from Russia and Vietnam. Helping them
+                manage accounting, tax, and compliance with confidence in Thailand.
+              </p>
+            </div>
 
-          <h2 className="mb-5 text-center font-medium text-foreground text-xl tracking-tight md:text-3xl">
-            <span className="text-muted-foreground">Trusted by Expat Businesses Across Thailand</span>
-            <br />
-            <span className="font-semibold">Used by the leaders.</span>
-          </h2>
-          <div className="mx-auto my-5 h-px max-w-sm bg-border [mask-image:linear-gradient(to_right,transparent,black,transparent)]" />
-
-          <LogoCloud logos={logos} />
-
-          <div className="mt-5 h-px bg-border [mask-image:linear-gradient(to_right,transparent,black,transparent)]" />
+            <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+              <Testimonial
+                name="Sarah Mitchell"
+                role="Operations Manager"
+                company="TechStart Asia"
+                rating={5}
+                image="https://i.pravatar.cc/150?u=sarah"
+                testimonial="PND50 transformed our accounting process completely. Their AI-powered system made compliance effortless and saved our team countless hours every month. The real-time support in English was invaluable."
+              />
+              <Testimonial
+                name="Michael Chen"
+                role="CEO"
+                company="Digital Commerce Co."
+                rating={5}
+                image="https://i.pravatar.cc/150?u=michael"
+                testimonial="As a foreign company navigating Thai regulations, PND50 was a game-changer. They handle everything with precision and clarity. No more confusion about deadlines or compliance requirements."
+              />
+              <Testimonial
+                name="Priya Sharma"
+                role="Finance Director"
+                company="Southeast Ventures"
+                rating={5}
+                image="https://i.pravatar.cc/150?u=priya"
+                testimonial="The combination of expert accountants and modern technology sets PND50 apart. They're proactive, transparent, and make financial reporting stress-free. Highly recommend for any international business in Thailand."
+              />
+            </div>
+          </div>
         </div>
       </section>
 
