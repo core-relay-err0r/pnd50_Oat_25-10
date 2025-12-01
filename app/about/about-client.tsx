@@ -4,7 +4,43 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { ArrowRight, ArrowLeft, Mail, MessageSquare, Target, CheckCircle2, Heart } from "lucide-react"
 import { useEffect, useRef } from "react"
-import { Testimonial } from "@/components/ui/testimonial-card"
+import { LogoCloud } from "@/components/ui/logo-cloud"
+import { cn } from "@/lib/utils"
+
+const logos = [
+  {
+    src: "https://svgl.app/library/nvidia-wordmark-light.svg",
+    alt: "Nvidia Logo",
+  },
+  {
+    src: "https://svgl.app/library/supabase_wordmark_light.svg",
+    alt: "Supabase Logo",
+  },
+  {
+    src: "https://svgl.app/library/openai_wordmark_light.svg",
+    alt: "OpenAI Logo",
+  },
+  {
+    src: "https://svgl.app/library/turso-wordmark-light.svg",
+    alt: "Turso Logo",
+  },
+  {
+    src: "https://svgl.app/library/vercel_wordmark.svg",
+    alt: "Vercel Logo",
+  },
+  {
+    src: "https://svgl.app/library/github_wordmark_light.svg",
+    alt: "GitHub Logo",
+  },
+  {
+    src: "https://svgl.app/library/claude-ai-wordmark-icon_light.svg",
+    alt: "Claude AI Logo",
+  },
+  {
+    src: "https://svgl.app/library/clerk-wordmark-light.svg",
+    alt: "Clerk Logo",
+  },
+]
 
 const AboutClientPage = () => {
   const observerRef = useRef<IntersectionObserver | null>(null)
@@ -192,42 +228,21 @@ const AboutClientPage = () => {
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-chart-2/5 rounded-full blur-3xl"></div>
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="max-w-7xl mx-auto">
-            <div className="text-center mb-12 sm:mb-16">
-              <p className="text-sm font-semibold text-primary mb-3 tracking-wide uppercase">Our Success Stories</p>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4 leading-tight">
-                Trusted by Businesses Across Thailand
+            <div
+              aria-hidden="true"
+              className={cn(
+                "-top-1/2 -translate-x-1/2 pointer-events-none absolute left-1/2 h-[120vmin] w-[120vmin] rounded-b-full",
+                "bg-[radial-gradient(ellipse_at_center,var(--color-foreground)_0.1,transparent_50%)]",
+                "blur-[30px] opacity-10",
+              )}
+            />
+            <div className="w-full">
+              <h2 className="mb-5 text-center">
+                <span className="block font-medium text-2xl text-muted-foreground">Already trusted by</span>
+                <span className="font-black text-2xl text-primary tracking-tight md:text-3xl">Best in the Game</span>
               </h2>
-              <p className="sm:text-lg text-muted-foreground max-w-3xl mx-auto text-sm">
-                We&#39;re proud to support international startups — especially from Russia and Vietnam. Helping them
-                manage accounting, tax, and compliance with confidence in Thailand.
-              </p>
-            </div>
 
-            <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-              <Testimonial
-                name="Sarah Mitchell"
-                role="Operations Manager"
-                company="TechStart Asia"
-                rating={5}
-                image="https://i.pravatar.cc/150?u=sarah"
-                testimonial="PND50 transformed our accounting process completely. Their AI-powered system made compliance effortless and saved our team countless hours every month. The real-time support in English was invaluable."
-              />
-              <Testimonial
-                name="Michael Chen"
-                role="CEO"
-                company="Digital Commerce Co."
-                rating={5}
-                image="https://i.pravatar.cc/150?u=michael"
-                testimonial="As a foreign company navigating Thai regulations, PND50 was a game-changer. They handle everything with precision and clarity. No more confusion about deadlines or compliance requirements."
-              />
-              <Testimonial
-                name="Priya Sharma"
-                role="Finance Director"
-                company="Southeast Ventures"
-                rating={5}
-                image="https://i.pravatar.cc/150?u=priya"
-                testimonial="The combination of expert accountants and modern technology sets PND50 apart. They're proactive, transparent, and make financial reporting stress-free. Highly recommend for any international business in Thailand."
-              />
+              <LogoCloud logos={logos} />
             </div>
           </div>
         </div>
