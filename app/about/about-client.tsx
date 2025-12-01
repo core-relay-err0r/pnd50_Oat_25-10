@@ -9,36 +9,36 @@ import { cn } from "@/lib/utils"
 
 const logos = [
   {
-    src: "https://svgl.app/library/nvidia-wordmark-light.svg",
-    alt: "Nvidia Logo",
+    src: "https://static.tildacdn.one/tild3766-3263-4338-b034-646463343463/aggio_BIG_01-01.svg",
+    alt: "Aggio Logo",
   },
   {
-    src: "https://svgl.app/library/supabase_wordmark_light.svg",
-    alt: "Supabase Logo",
+    src: "https://static.tildacdn.one/tild3766-3263-4338-b034-646463343463/aggio_BIG_01-01.svg",
+    alt: "Aggio Logo",
   },
   {
-    src: "https://svgl.app/library/openai_wordmark_light.svg",
-    alt: "OpenAI Logo",
+    src: "https://static.tildacdn.one/tild3766-3263-4338-b034-646463343463/aggio_BIG_01-01.svg",
+    alt: "Aggio Logo",
   },
   {
-    src: "https://svgl.app/library/turso-wordmark-light.svg",
-    alt: "Turso Logo",
+    src: "https://static.tildacdn.one/tild3766-3263-4338-b034-646463343463/aggio_BIG_01-01.svg",
+    alt: "Aggio Logo",
   },
   {
-    src: "https://svgl.app/library/vercel_wordmark.svg",
-    alt: "Vercel Logo",
+    src: "https://static.tildacdn.one/tild3766-3263-4338-b034-646463343463/aggio_BIG_01-01.svg",
+    alt: "Aggio Logo",
   },
   {
-    src: "https://svgl.app/library/github_wordmark_light.svg",
-    alt: "GitHub Logo",
+    src: "https://static.tildacdn.one/tild3766-3263-4338-b034-646463343463/aggio_BIG_01-01.svg",
+    alt: "Aggio Logo",
   },
   {
-    src: "https://svgl.app/library/claude-ai-wordmark-icon_light.svg",
-    alt: "Claude AI Logo",
+    src: "https://static.tildacdn.one/tild3766-3263-4338-b034-646463343463/aggio_BIG_01-01.svg",
+    alt: "Aggio Logo",
   },
   {
-    src: "https://svgl.app/library/clerk-wordmark-light.svg",
-    alt: "Clerk Logo",
+    src: "https://static.tildacdn.one/tild3766-3263-4338-b034-646463343463/aggio_BIG_01-01.svg",
+    alt: "Aggio Logo",
   },
 ]
 
