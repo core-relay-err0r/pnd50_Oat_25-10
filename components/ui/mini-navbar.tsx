@@ -80,9 +80,17 @@ export function Navbar() {
     { label: "FAQ", href: "/faq" },
   ]
 
+  const isContactActive = pathname === "/contact"
+
   const contactButtonElement = (
     <Link href="/contact" className="w-full sm:w-auto">
-      <button className="px-4 py-2 sm:px-3 text-xs sm:text-sm bg-[rgba(31,31,31,0.62)] text-gray-300 rounded-full hover:text-white transition-colors duration-200 w-full sm:w-auto">
+      <button
+        className={`px-4 py-2 sm:px-3 text-xs sm:text-sm rounded-full transition-colors duration-200 w-full sm:w-auto ${
+          isContactActive
+            ? "bg-white/20 text-white font-medium"
+            : "bg-[rgba(31,31,31,0.62)] text-gray-300 hover:text-white"
+        }`}
+      >
         Contact
       </button>
     </Link>
