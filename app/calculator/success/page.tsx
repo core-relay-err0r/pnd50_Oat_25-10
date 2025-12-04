@@ -112,7 +112,7 @@ export default function CalculatorSuccessPage() {
             className="max-w-2xl mx-auto space-y-6"
           >
             {/* Quote Delivered Card */}
-            <div className="p-6 bg-green-500/10 border border-green-500/20 rounded-xl backdrop-blur-sm">
+            <div className="p-6 bg-green-500/10 border border-green-500/20 rounded-xl backdrop-blur-sm border-none">
               <div className="flex items-start gap-4">
                 <Mail className="h-6 w-6 text-green-400 mt-1 flex-shrink-0" />
                 <div>
@@ -126,7 +126,7 @@ export default function CalculatorSuccessPage() {
             </div>
 
             {/* What Happens Next Card */}
-            <div className="p-6 bg-primary/10 border border-primary/20 rounded-xl backdrop-blur-sm">
+            <div className="p-6 bg-primary/10 border border-primary/20 rounded-xl backdrop-blur-sm border-none border-none">
               <div className="flex items-start gap-4">
                 <Clock className="h-6 w-6 text-primary mt-1 flex-shrink-0" />
                 <div>
@@ -144,7 +144,7 @@ export default function CalculatorSuccessPage() {
             </div>
 
             {/* Immediate Assistance Card */}
-            <div className="p-6 bg-white/5 border border-white/10 rounded-xl backdrop-blur-sm">
+            <div className="p-6 bg-white/5 border border-white/10 rounded-xl backdrop-blur-sm border-none">
               <h3 className="text-lg font-semibold text-white mb-3">Need Immediate Assistance?</h3>
               <p className="text-slate-300 mb-4">
                 If you have urgent questions or need to speak with us immediately, feel free to reach out:
