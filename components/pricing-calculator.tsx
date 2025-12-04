@@ -2,23 +2,11 @@
 
 import { useState, useEffect, useMemo } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import {
-  Building2,
-  Calculator,
-  FileText,
-  Briefcase,
-  ChevronDown,
-  Check,
-  ArrowLeft,
-  Send,
-  X,
-  Sparkles,
-} from "lucide-react"
+import { Building2, Calculator, FileText, Briefcase, ChevronDown, Check, Send, X, Sparkles } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Checkbox } from "@/components/ui/checkbox"
-import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { AnimatedGridBackground } from "@/components/ui/animated-grid-background"
 
@@ -241,13 +229,12 @@ export function PricingCalculator() {
       >
         {/* Header */}
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 pt-6">
-          <motion.div className="my-6"
+          <motion.div
+            className="my-6"
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.2, duration: 0.4 }}
-          >
-            
-          </motion.div>
+          ></motion.div>
         </div>
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12">
@@ -353,29 +340,66 @@ export function PricingCalculator() {
                                   key={service.id}
                                   initial={{ opacity: 0, x: -20 }}
                                   animate={{ opacity: 1, x: 0 }}
-                                  className={`flex items-center justify-between p-4 rounded-xl cursor-pointer transition-all duration-200 ${
+                                  className={`flex flex-col p-4 rounded-xl cursor-pointer transition-all duration-200 ${
                                     isSelected
                                       ? "bg-primary/10 border border-primary/30"
                                       : "bg-slate-800/30 border border-transparent hover:bg-slate-800/50"
                                   }`}
-                                  onClick={() => toggleService(categoryKey, service)}
                                 >
-                                  <div className="flex items-center gap-3">
-                                    <Checkbox
-                                      checked={isSelected}
-                                      className="data-[state=checked]:bg-primary data-[state=checked]:border-primary"
-                                    />
-                                    <div>
-                                      <p className="font-medium text-white">{service.name}</p>
-                                      <p className="text-xs text-slate-400">{service.type}</p>
+                                  <div
+                                    className="flex items-center justify-between"
+                                    onClick={() => toggleService(categoryKey, service)}
+                                  >
+                                    <div className="flex items-center gap-3">
+                                      <Checkbox
+                                        checked={isSelected}
+                                        className="data-[state=checked]:bg-primary data-[state=checked]:border-primary"
+                                      />
+                                      <div>
+                                        <p className="font-medium text-white">{service.name}</p>
+                                        <p className="text-xs text-slate-400">{service.type}</p>
+                                      </div>
+                                    </div>
+                                    <div className="text-right">
+                                      <p className="font-semibold text-primary">฿{formatPrice(service.price)}</p>
+                                      {service.type === "Per Employee/Month" && (
+                                        <p className="text-xs text-slate-400">/employee/month</p>
+                                      )}
                                     </div>
                                   </div>
-                                  <div className="text-right">
-                                    <p className="font-semibold text-primary">฿{formatPrice(service.price)}</p>
-                                    {service.type === "Per Employee/Month" && (
-                                      <p className="text-xs text-slate-400">/employee/month</p>
-                                    )}
-                                  </div>
+
+                                  {isSelected && service.variableType === "employees" && (
+                                    <motion.div
+                                      initial={{ opacity: 0, height: 0 }}
+                                      animate={{ opacity: 1, height: "auto" }}
+                                      exit={{ opacity: 0, height: 0 }}
+                                      className="mt-4 pt-4 border-t border-slate-700/50"
+                                      onClick={(e) => e.stopPropagation()}
+                                    >
+                                      <Label
+                                        htmlFor={`employees-${service.id}`}
+                                        className="text-sm text-slate-300 mb-2 block"
+                                      >
+                                        How many employees?
+                                      </Label>
+                                      <div className="flex items-center gap-3">
+                                        <Input
+                                          id={`employees-${service.id}`}
+                                          type="number"
+                                          min={1}
+                                          value={variables[service.id] || 1}
+                                          onChange={(e) => {
+                                            const value = Math.max(1, Number.parseInt(e.target.value) || 1)
+                                            setVariables({ ...variables, [service.id]: value })
+                                          }}
+                                          className="w-24 bg-slate-800 border-slate-600 text-white"
+                                        />
+                                        <span className="text-sm text-slate-400">
+                                          = ฿{formatPrice(service.price * (variables[service.id] || 1))}/month
+                                        </span>
+                                      </div>
+                                    </motion.div>
+                                  )}
                                 </motion.div>
                               )
                             })}
