@@ -251,27 +251,27 @@ export function PricingCalculator() {
           {/* Title Section */}
           <div className="text-center mb-12">
             <motion.div
+              className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 rounded-full mb-6"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
-              className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 rounded-full border border-primary/20 mb-6"
             >
               <Sparkles className="w-4 h-4 text-primary" />
               <span className="text-sm font-medium text-primary">Instant Quote Calculator</span>
             </motion.div>
             <motion.h1
+              className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
-              className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4"
             >
               Build Your Custom Quote
             </motion.h1>
             <motion.p
+              className="text-lg text-slate-400 max-w-2xl mx-auto"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5 }}
-              className="text-lg text-slate-400 max-w-2xl mx-auto"
             >
               Select the services you need and get an instant price estimate. No hidden fees.
             </motion.p>
@@ -279,10 +279,10 @@ export function PricingCalculator() {
 
           {/* Main Content Grid */}
           <motion.div
+            className="grid lg:grid-cols-3 gap-8 max-w-7xl mx-auto"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6, duration: 0.5 }}
-            className="grid lg:grid-cols-3 gap-8 max-w-7xl mx-auto"
           >
             {/* Left Column - Service Selection */}
             <div className="lg:col-span-2 space-y-4">
@@ -303,10 +303,8 @@ export function PricingCalculator() {
                     {/* Category Button */}
                     <button
                       onClick={() => toggleCategory(categoryKey)}
-                      className={`w-full flex items-center justify-between p-5 rounded-2xl transition-all duration-300 border-none ${
-                        isExpanded
-                          ? "bg-slate-800/80 border-2 border-primary/50"
-                          : "bg-slate-800/50 border-2 border-slate-700/50 hover:border-slate-600"
+                      className={`w-full flex items-center justify-between p-5 rounded-2xl transition-all duration-300 ${
+                        isExpanded ? "bg-slate-800/80" : "bg-slate-800/50 hover:bg-slate-800/70"
                       }`}
                     >
                       <div className="flex items-center gap-4">
@@ -342,7 +340,7 @@ export function PricingCalculator() {
                           transition={{ duration: 0.3 }}
                           className="overflow-hidden"
                         >
-                          <div className="p-4 space-y-2 bg-slate-900/50 rounded-b-2xl border-x-2 border-b-2 border-slate-700/50 -mt-2">
+                          <div className="p-4 space-y-2 bg-slate-900/50 rounded-b-2xl -mt-2">
                             {category.services.map((service) => {
                               const isSelected = selectedServices.some((s) => s.id === service.id)
                               return (
@@ -351,9 +349,7 @@ export function PricingCalculator() {
                                   initial={{ opacity: 0, x: -20 }}
                                   animate={{ opacity: 1, x: 0 }}
                                   className={`flex flex-col p-4 rounded-xl cursor-pointer transition-all duration-200 ${
-                                    isSelected
-                                      ? "bg-primary/10 border border-primary/30"
-                                      : "bg-slate-800/30 border border-transparent hover:bg-slate-800/50"
+                                    isSelected ? "bg-primary/10" : "bg-slate-800/30 hover:bg-slate-800/50"
                                   }`}
                                 >
                                   <div
@@ -383,7 +379,7 @@ export function PricingCalculator() {
                                       initial={{ opacity: 0, height: 0 }}
                                       animate={{ opacity: 1, height: "auto" }}
                                       exit={{ opacity: 0, height: 0 }}
-                                      className="mt-4 pt-4 border-t border-slate-700/50"
+                                      className="mt-4 pt-4"
                                       onClick={(e) => e.stopPropagation()}
                                     >
                                       <Label
@@ -437,10 +433,10 @@ export function PricingCalculator() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -20 }}
                   transition={{ duration: 0.5, ease: "easeOut" }}
-                  className="bg-slate-800/80 backdrop-blur-xl rounded-2xl border border-slate-700/50 overflow-hidden"
+                  className="bg-slate-800/80 backdrop-blur-xl rounded-2xl overflow-hidden"
                 >
                   {/* Panel Header */}
-                  <div className="p-6 border-b border-slate-700/50 border-none">
+                  <div className="p-6">
                     <div className="flex items-center gap-3 mb-2">
                       <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-cyan-500 flex items-center justify-center">
                         <FileText className="w-5 h-5 text-white" />
@@ -453,7 +449,7 @@ export function PricingCalculator() {
                   </div>
 
                   {/* Selected Services List */}
-                  <div className="p-4 max-h-[300px] overflow-y-auto space-y-2 border-none">
+                  <div className="p-4 max-h-[300px] overflow-y-auto space-y-2">
                     {selectedServices.length === 0 ? (
                       <div className="text-center py-8 text-slate-400">
                         <Calculator className="w-12 h-12 mx-auto mb-3 opacity-50" />
@@ -487,7 +483,7 @@ export function PricingCalculator() {
 
                   {/* Price Summary */}
                   {selectedServices.length > 0 && (
-                    <div className="p-4 border-t border-slate-700/50 space-y-3">
+                    <div className="p-4 space-y-3">
                       {preliminaryTotal.oneTime > 0 && (
                         <div className="flex justify-between text-sm">
                           <span className="text-slate-400">One-time Fees</span>
@@ -506,7 +502,7 @@ export function PricingCalculator() {
                           <span className="text-white font-medium">฿{formatPrice(preliminaryTotal.annual)}/yr</span>
                         </div>
                       )}
-                      <div className="pt-3 border-t border-slate-700/50">
+                      <div className="pt-3">
                         <div className="flex justify-between">
                           <span className="text-white font-semibold">Year 1 Total</span>
                           <span className="text-xl font-bold text-primary">
@@ -519,7 +515,7 @@ export function PricingCalculator() {
                   )}
 
                   {/* Action Button */}
-                  <div className="p-4 border-t border-slate-700/50 border-none">
+                  <div className="p-4">
                     <Button
                       onClick={handleCalculate}
                       disabled={selectedServices.length === 0}
