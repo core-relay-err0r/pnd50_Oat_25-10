@@ -246,13 +246,7 @@ export function PricingCalculator() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.2, duration: 0.4 }}
           >
-            <Link
-              href="/"
-              className="inline-flex items-center gap-2 text-slate-400 hover:text-primary transition-colors group mb-6"
-            >
-              <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-              <span className="text-sm font-medium">Back to Home</span>
-            </Link>
+            
           </motion.div>
         </div>
 
