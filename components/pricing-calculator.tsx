@@ -440,7 +440,7 @@ export function PricingCalculator() {
                   className="bg-slate-800/80 backdrop-blur-xl rounded-2xl border border-slate-700/50 overflow-hidden"
                 >
                   {/* Panel Header */}
-                  <div className="p-6 border-b border-slate-700/50">
+                  <div className="p-6 border-b border-slate-700/50 border-none">
                     <div className="flex items-center gap-3 mb-2">
                       <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-cyan-500 flex items-center justify-center">
                         <FileText className="w-5 h-5 text-white" />
@@ -453,7 +453,7 @@ export function PricingCalculator() {
                   </div>
 
                   {/* Selected Services List */}
-                  <div className="p-4 max-h-[300px] overflow-y-auto space-y-2">
+                  <div className="p-4 max-h-[300px] overflow-y-auto space-y-2 border-none">
                     {selectedServices.length === 0 ? (
                       <div className="text-center py-8 text-slate-400">
                         <Calculator className="w-12 h-12 mx-auto mb-3 opacity-50" />
@@ -519,7 +519,7 @@ export function PricingCalculator() {
                   )}
 
                   {/* Action Button */}
-                  <div className="p-4 border-t border-slate-700/50">
+                  <div className="p-4 border-t border-slate-700/50 border-none">
                     <Button
                       onClick={handleCalculate}
                       disabled={selectedServices.length === 0}
