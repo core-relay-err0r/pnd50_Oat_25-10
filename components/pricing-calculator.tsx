@@ -541,7 +541,7 @@ export function PricingCalculator() {
 
                   <div className="space-y-4 mb-6">
                     <div>
-                      <Label className="text-slate-300 mb-2 block">Name</Label>
+                      <Label className="text-slate-300 mb-2 block">Name / Company     </Label>
                       <Input
                         placeholder="Your name"
                         value={contactInfo.name}
