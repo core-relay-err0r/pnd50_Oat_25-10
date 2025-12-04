@@ -283,24 +283,24 @@ const AboutClientPage = () => {
             </section>
 
             {/* Call to Action Section */}
-            <section className="py-12 sm:py-24 md:py-32 bg-gradient-to-br from-primary via-primary/90 to-chart-2 relative overflow-hidden">
+            <section className="py-12 sm:py-24 md:py-32 bg-slate-800/50 relative overflow-hidden">
               <div className="absolute inset-0 opacity-10">
                 <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAxMCAwIEwgMCAwIDAgMTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmlkKSIvPjwvc3ZnPg==')]"></div>
               </div>
-              <div className="absolute top-10 left-10 w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
-              <div className="absolute bottom-10 right-10 w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
+              <div className="absolute top-10 left-10 w-64 h-64 bg-primary/20 rounded-full blur-3xl"></div>
+              <div className="absolute bottom-10 right-10 w-64 h-64 bg-cyan-500/20 rounded-full blur-3xl"></div>
 
               <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-                <h2 className="text-4xl font-bold text-primary-foreground mb-6 leading-tight md:text-5xl">
+                <h2 className="text-4xl font-bold text-white mb-6 leading-tight md:text-5xl">
                   Let's Simplify Accounting in Thailand — Together.
                 </h2>
-                <p className="text-primary-foreground/90 max-w-3xl mx-auto mb-12 leading-relaxed md:text-lg text-lg">
+                <p className="text-slate-300 max-w-3xl mx-auto mb-12 leading-relaxed md:text-lg text-lg">
                   Your business deserves clear, compliant, and modern accounting support. Reach out today to see how we
                   can help.
                 </p>
 
                 <div className="flex flex-wrap justify-center gap-4">
-                  <Button asChild size="lg" variant="secondary" className="group">
+                  <Button asChild size="lg" className="bg-primary hover:bg-primary/90 group">
                     <Link href="/contact" className="flex items-center gap-2">
                       <Mail className="w-5 h-5" />
                       Contact Us
@@ -311,7 +311,7 @@ const AboutClientPage = () => {
                     asChild
                     size="lg"
                     variant="outline"
-                    className="bg-transparent border-white/20 text-white hover:bg-white/10"
+                    className="bg-transparent border-slate-600 text-white hover:bg-slate-700/50"
                   >
                     <Link href="/calculator" className="flex items-center gap-2">
                       <MessageSquare className="w-5 h-5" />
