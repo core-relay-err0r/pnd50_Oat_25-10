@@ -17,7 +17,7 @@ export function HomepageCtas() {
       </Link>
       <Link href="/contact" className="w-full sm:w-auto">
         <div
-          className="w-full sm:w-auto flex items-center justify-center gap-2 px-8 text-lg font-bold rounded-lg cursor-pointer transition-all duration-300 user-select-none border-2 border-white/30 bg-white/5 backdrop-blur-sm hover:bg-white/10 hover:border-white/50 hover:scale-102 text-white border-t border-b border-l border-r"
+          className="w-full sm:w-auto flex items-center justify-center gap-2 px-8 text-lg font-bold rounded-lg cursor-pointer transition-all duration-300 user-select-none border-2 border-white/30 bg-white/5 backdrop-blur-sm hover:bg-white/10 hover:border-white/50 hover:scale-102 text-white border-t-[px] border-l-[21px]r-l-[21px] border-b-2 border-r-2"
           style={{ minHeight: "60px", height: "60px" }}
         >
           <span>Contact Us</span>
