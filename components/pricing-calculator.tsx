@@ -541,9 +541,9 @@ export function PricingCalculator() {
 
                   <div className="space-y-4 mb-6">
                     <div>
-                      <Label className="text-slate-300 mb-2 block">Name / Company     </Label>
+                      <Label className="text-slate-300 mb-2 block">Name / Company</Label>
                       <Input
-                        placeholder="Your name"
+                        placeholder="Your name / Company"
                         value={contactInfo.name}
                         onChange={(e) => setContactInfo({ ...contactInfo, name: e.target.value })}
                         className="bg-slate-900 border-slate-700 text-white"
