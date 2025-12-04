@@ -1,12 +1,16 @@
-import type { Metadata } from "next"
+"use client"
 import { Rocket, Zap, ArrowLeft, TrendingUp, ArrowRight } from "lucide-react"
 import Link from "next/link"
 import ServiceSlider from "@/components/service-slider"
+import { motion } from "framer-motion"
 
-export const metadata: Metadata = {
-  title: "Our Services | PND50",
-  description:
-    "Comprehensive accounting, tax, payroll, and corporate services for foreign-owned businesses in Thailand.",
+const pageVariants = {
+  initial: { opacity: 0, y: 20 },
+  animate: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] },
+  },
 }
 
 const packages = [
@@ -59,7 +63,7 @@ const packages = [
 
 export default function ServicesPage() {
   return (
-    <div className="min-h-screen bg-background">
+    <motion.div initial="initial" animate="animate" variants={pageVariants} className="min-h-screen bg-background">
       {/* Hero Section */}
       <section className="relative bg-gradient-to-b from-primary/5 to-background py-8 md:py-12 pt-[100px] lg:pt-[100px]">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
@@ -124,6 +128,6 @@ export default function ServicesPage() {
           </div>
         </div>
       </section>
-    </div>
+    </motion.div>
   )
 }

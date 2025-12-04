@@ -7,6 +7,16 @@ import { ArrowLeft, BookOpen, Flame, MessageCircle, FileText, Phone, Search, Che
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
+import { motion } from "framer-motion"
+
+const pageVariants = {
+  initial: { opacity: 0, y: 20 },
+  animate: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] },
+  },
+}
 
 const faqCategories = [
   {
@@ -247,7 +257,7 @@ export default function FAQPage() {
     .filter((category) => category.questions.length > 0)
 
   return (
-    <div className="min-h-screen bg-background">
+    <motion.div initial="initial" animate="animate" variants={pageVariants} className="min-h-screen bg-background">
       {/* Hero Section */}
       <div className="relative bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 border-b border-border overflow-hidden pt-[80px]">
         {/* Background Image */}
@@ -447,6 +457,6 @@ export default function FAQPage() {
           </section>
         </div>
       </div>
-    </div>
+    </motion.div>
   )
 }

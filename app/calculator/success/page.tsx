@@ -1,11 +1,23 @@
+"use client"
+
 import { CheckCircle, Clock, ArrowLeft, Mail } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import Link from "next/link"
+import { motion } from "framer-motion"
+
+const pageVariants = {
+  initial: { opacity: 0, y: 20 },
+  animate: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] },
+  },
+}
 
 export default function CalculatorSuccessPage() {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <motion.div initial="initial" animate="animate" variants={pageVariants} className="min-h-screen bg-gray-50">
       <div className="container mx-auto px-4 py-12 max-w-2xl">
         <Card className="bg-white shadow-lg border-0">
           <CardHeader className="text-center pb-6">
@@ -81,6 +93,6 @@ export default function CalculatorSuccessPage() {
           </CardContent>
         </Card>
       </div>
-    </div>
+    </motion.div>
   )
 }

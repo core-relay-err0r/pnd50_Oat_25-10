@@ -9,6 +9,16 @@ import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 import { MapPin, Phone, Clock, Send, Check, Copy, MessageSquare, ArrowLeft } from "lucide-react"
 import Link from "next/link"
+import { motion } from "framer-motion"
+
+const pageVariants = {
+  initial: { opacity: 0, y: 20 },
+  animate: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] },
+  },
+}
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -86,7 +96,7 @@ export default function ContactPage() {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <motion.div initial="initial" animate="animate" variants={pageVariants} className="min-h-screen bg-background">
       {/* Hero Section */}
       <section className="relative pt-32 pb-12 md:py-24 bg-gradient-to-br from-primary/10 via-background to-chart-2/10 overflow-hidden">
         <div className="absolute inset-0 opacity-30">
@@ -470,6 +480,6 @@ export default function ContactPage() {
           </div>
         </div>
       </section>
-    </div>
+    </motion.div>
   )
 }

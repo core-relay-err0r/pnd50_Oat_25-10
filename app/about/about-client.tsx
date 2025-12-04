@@ -5,6 +5,16 @@ import { Button } from "@/components/ui/button"
 import { ArrowRight, ArrowLeft, Mail, MessageSquare, Target, CheckCircle2, Heart } from "lucide-react"
 import { useEffect, useRef } from "react"
 import { Testimonial } from "@/components/ui/testimonial-card"
+import { motion } from "framer-motion"
+
+const pageVariants = {
+  initial: { opacity: 0, y: 20 },
+  animate: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] },
+  },
+}
 
 const AboutClientPage = () => {
   const observerRef = useRef<IntersectionObserver | null>(null)
@@ -28,7 +38,7 @@ const AboutClientPage = () => {
   }, [])
 
   return (
-    <div className="min-h-screen bg-background">
+    <motion.div initial="initial" animate="animate" variants={pageVariants} className="min-h-screen bg-background">
       {/* Hero Section */}
       <section className="relative pb-24 bg-gradient-to-br from-blue-50 via-slate-50 to-teal-50 overflow-hidden md:pb-32 md:pt-28 pt-24 px-4 sm:px-6 lg:px-8">
         <div className="container mx-auto px-4 sm:px-6 relative z-10 lg:px-0">
@@ -280,7 +290,7 @@ const AboutClientPage = () => {
           </div>
         </div>
       </section>
-    </div>
+    </motion.div>
   )
 }
 
