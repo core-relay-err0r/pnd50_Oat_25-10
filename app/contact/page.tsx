@@ -414,27 +414,7 @@ export default function ContactPage() {
               </div>
 
               {/* Business Hours */}
-              <div className="bg-gradient-to-br from-primary/5 to-chart-2/5 rounded-2xl p-6 md:p-8 border-2 border-border hover:border-primary transition-all duration-300 hover:shadow-xl">
-                <div className="flex items-start gap-4 mb-6">
-                  <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
-                    <Clock className="w-6 h-6 text-primary" />
-                  </div>
-                  <div>
-                    <h3 className="text-xl md:text-2xl font-bold text-foreground mb-2">Business Hours</h3>
-                    <p className="text-muted-foreground text-sm md:text-base">We're here when you need us</p>
-                  </div>
-                </div>
-                <div className="space-y-3 text-muted-foreground">
-                  <div className="flex justify-between items-center">
-                    <span className="font-medium">Monday - Friday:</span>
-                    <span className="text-foreground font-semibold">9:00 AM - 6:00 PM</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="font-medium">Saturday - Sunday:</span>
-                    <span className="text-foreground font-semibold">Closed</span>
-                  </div>
-                </div>
-              </div>
+              
 
               {/* Social Media */}
             </div>
