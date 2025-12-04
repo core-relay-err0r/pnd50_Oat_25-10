@@ -95,8 +95,7 @@ export function PricingCalculator() {
   const router = useRouter()
   const [expandedCategory, setExpandedCategory] = useState<ServiceCategory | null>(null)
   const [selectedServices, setSelectedServices] = useState<SelectedService[]>([])
-  const [step, setStep] = useState<"selection" | "variables" | "contact">("selection")
-  const [variables, setVariables] = useState<Record<string, number>>({})
+  const [step, setStep] = useState<"selection" | "contact">("selection")
   const [contactInfo, setContactInfo] = useState<ContactInfo>({ name: "", email: "", phone: "" })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
@@ -154,7 +153,7 @@ export function PricingCalculator() {
     let annual = 0
 
     selectedServices.forEach((service) => {
-      const quantity = variables[service.id] || 1
+      const quantity = service.quantity || 1
       const price = service.price * quantity
 
       if (service.type === "One-Time" || service.type === "Project") {
@@ -167,19 +166,10 @@ export function PricingCalculator() {
     })
 
     return { oneTime, monthly, annual, yearTotal: oneTime + monthly * 12 + annual }
-  }, [selectedServices, variables])
+  }, [selectedServices])
 
   // Handle Calculate button click
   const handleCalculate = () => {
-    if (servicesNeedingVariables.length > 0) {
-      setStep("variables")
-    } else {
-      setStep("contact")
-    }
-  }
-
-  // Handle variable submission
-  const handleVariablesSubmit = () => {
     setStep("contact")
   }
 
@@ -387,15 +377,22 @@ export function PricingCalculator() {
                                           id={`employees-${service.id}`}
                                           type="number"
                                           min={1}
-                                          value={variables[service.id] || 1}
+                                          value={selectedServices.find((s) => s.id === service.id)?.quantity || 1}
                                           onChange={(e) => {
                                             const value = Math.max(1, Number.parseInt(e.target.value) || 1)
-                                            setVariables({ ...variables, [service.id]: value })
+                                            setSelectedServices((prev) =>
+                                              prev.map((s) => (s.id === service.id ? { ...s, quantity: value } : s)),
+                                            )
                                           }}
                                           className="w-24 bg-slate-800 border-slate-600 text-white"
                                         />
                                         <span className="text-sm text-slate-400">
-                                          = ฿{formatPrice(service.price * (variables[service.id] || 1))}/month
+                                          = ฿
+                                          {formatPrice(
+                                            service.price *
+                                              (selectedServices.find((s) => s.id === service.id)?.quantity || 1),
+                                          )}
+                                          /month
                                         </span>
                                       </div>
                                     </motion.div>
@@ -453,7 +450,9 @@ export function PricingCalculator() {
                             <p className="text-xs text-slate-400">{service.type}</p>
                           </div>
                           <div className="flex items-center gap-2">
-                            <span className="text-sm font-semibold text-primary">฿{formatPrice(service.price)}</span>
+                            <span className="text-sm font-semibold text-primary">
+                              ฿{formatPrice(service.price * (service.quantity || 1))}
+                            </span>
                             <button
                               onClick={() => setSelectedServices(selectedServices.filter((s) => s.id !== service.id))}
                               className="p-1 hover:bg-slate-600 rounded transition-colors"
@@ -513,63 +512,6 @@ export function PricingCalculator() {
               </div>
             </div>
           </motion.div>
-
-          {/* Variables Modal */}
-          <AnimatePresence>
-            {step === "variables" && (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
-                onClick={() => setStep("selection")}
-              >
-                <motion.div
-                  initial={{ scale: 0.9, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  exit={{ scale: 0.9, opacity: 0 }}
-                  className="bg-slate-800 rounded-2xl border border-slate-700 p-6 w-full max-w-md"
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  <h3 className="text-xl font-semibold text-white mb-2">Additional Details</h3>
-                  <p className="text-sm text-slate-400 mb-6">Help us calculate your exact pricing</p>
-
-                  <div className="space-y-4">
-                    {servicesNeedingVariables.map((service) => (
-                      <div key={service.id}>
-                        <Label className="text-slate-300 mb-2 block">{service.name}</Label>
-                        <Input
-                          type="number"
-                          min="1"
-                          placeholder={
-                            service.variableType === "employees" ? "Number of employees" : "Number of transactions"
-                          }
-                          value={variables[service.id] || ""}
-                          onChange={(e) =>
-                            setVariables({ ...variables, [service.id]: Number.parseInt(e.target.value) || 1 })
-                          }
-                          className="bg-slate-900 border-slate-700 text-white"
-                        />
-                      </div>
-                    ))}
-                  </div>
-
-                  <div className="flex gap-3 mt-6">
-                    <Button
-                      variant="outline"
-                      onClick={() => setStep("selection")}
-                      className="flex-1 border-slate-600 text-slate-300 hover:bg-slate-700"
-                    >
-                      Back
-                    </Button>
-                    <Button onClick={handleVariablesSubmit} className="flex-1 bg-primary hover:bg-primary/90">
-                      Continue
-                    </Button>
-                  </div>
-                </motion.div>
-              </motion.div>
-            )}
-          </AnimatePresence>
 
           {/* Contact Form Modal */}
           <AnimatePresence>
@@ -632,7 +574,7 @@ export function PricingCalculator() {
                   <div className="flex gap-3">
                     <Button
                       variant="outline"
-                      onClick={() => setStep(servicesNeedingVariables.length > 0 ? "variables" : "selection")}
+                      onClick={() => setStep("selection")}
                       className="flex-1 border-slate-600 text-slate-300 hover:bg-slate-700"
                     >
                       Back
