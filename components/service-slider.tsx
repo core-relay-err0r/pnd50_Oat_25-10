@@ -218,7 +218,7 @@ const ServiceSlider: React.FC = () => {
                 whileTap={{ scale: 0.98, cursor: "grabbing" }}
                 style={{ cursor: "grab" }}
               >
-                <div className="group border border-border rounded-2xl p-6 md:p-8 h-full hover:shadow-2xl hover:border-primary/50 transition-all duration-300 flex flex-col bg-teal-50">
+                <div className="group bg-card border border-border rounded-2xl p-6 md:p-8 h-full hover:shadow-2xl hover:border-primary/50 transition-all duration-300 flex flex-col">
                   {/* Icon */}
                   <div className="w-12 h-12 md:w-14 md:h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-primary group-hover:scale-110 transition-all duration-300 flex-shrink-0">
                     <Icon className="w-6 h-6 md:w-7 md:h-7 text-primary group-hover:text-primary-foreground transition-colors" />

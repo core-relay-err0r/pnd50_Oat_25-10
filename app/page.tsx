@@ -45,7 +45,13 @@ export default function PND50Landing() {
   }, [wordIndex, words])
 
   return (
-    <main className="min-h-screen">
+    <motion.main
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -20 }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
+      className="min-h-screen"
+    >
       <section className="relative w-full min-h-screen flex flex-col bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
         <AnimatedGridBackground className="min-h-screen flex-1">
           <div
@@ -68,22 +74,24 @@ export default function PND50Landing() {
               <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center w-full">
                 {/* Left side - Hero content */}
                 <div className="text-center lg:text-left space-y-6 md:space-y-8">
-                  <div
-                    className={`hidden lg:inline-flex items-center gap-2.5 rounded-full bg-gradient-to-r from-primary/10 to-chart-2/10 backdrop-blur-md px-6 py-3 text-sm font-semibold text-white mb-2 border border-primary/20 transition-all duration-700 hover:bg-primary/20 hover:scale-105 hover:border-primary/40 border-none  border-none ${
-                      isVisible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
-                    }`}
+                  <motion.div
+                    className={`hidden lg:inline-flex items-center gap-2.5 rounded-full bg-gradient-to-r from-primary/10 to-chart-2/10 backdrop-blur-md px-6 py-3 text-sm font-semibold text-white mb-2 border border-primary/20 hover:bg-primary/20 hover:scale-105 hover:border-primary/40 border-none`}
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.2, duration: 0.4 }}
                   >
                     <span className="relative flex h-2.5 w-2.5">
                       <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                       <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
                     </span>
                     <span className="leading-tight">Thailand's Leading Tech-Driven Corporate Services Firm.</span>
-                  </div>
+                  </motion.div>
 
-                  <h1
-                    className={`text-6xl sm:text-7xl md:text-8xl lg:text-7xl xl:text-8xl font-bold mb-4 leading-tight tracking-tight transition-all duration-700 delay-100 ${
-                      isVisible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
-                    }`}
+                  <motion.h1
+                    className="text-6xl sm:text-7xl md:text-8xl lg:text-7xl xl:text-8xl font-bold mb-4 leading-tight tracking-tight"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.3, duration: 0.5 }}
                   >
                     <span className="bg-gradient-to-r from-primary via-chart-2 to-primary bg-clip-text text-transparent animate-gradient-shift inline-block pb-2 leading-[1.15]">
                       AI Boutique
@@ -112,39 +120,42 @@ export default function PND50Landing() {
                         </motion.span>
                       ))}
                     </span>
-                  </h1>
+                  </motion.h1>
 
-                  <div
-                    className={`flex lg:hidden justify-center my-8 transition-all duration-700 delay-300 scale-75 ${
-                      isVisible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
-                    }`}
-                  >
+                  <div className="flex lg:hidden justify-center my-8 scale-75">
                     <ShuffleTestimonials />
                   </div>
 
-                  <p
-                    className={`text-base md:text-lg lg:text-xl max-w-2xl mx-auto lg:mx-0 leading-relaxed transition-all duration-700 delay-200 text-slate-300 ${
-                      isVisible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
-                    }`}
+                  <motion.p
+                    className="text-base md:text-lg lg:text-xl max-w-2xl mx-auto lg:mx-0 leading-relaxed text-slate-300"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.4, duration: 0.5 }}
                   >
                     You Talk to an Expert, Not a Robot. We connect you with a dedicated human advisor who speaks your
                     native language. Our AI makes them <span className="text-primary font-semibold">5x faster</span> and{" "}
                     <span className="text-chart-2 font-semibold">totally error-free</span>.
-                  </p>
+                  </motion.p>
 
-                  <div
-                    className={`pt-4 transition-all duration-700 delay-500 ${
-                      isVisible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
-                    }`}
+                  <motion.div
+                    className="pt-4"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.5, duration: 0.5 }}
                   >
                     <HomepageCtas />
-                  </div>
+                  </motion.div>
                 </div>
 
                 {/* Right side - Testimonial cards */}
-                <div className="hidden lg:flex items-center justify-center">
+                <motion.div
+                  className="hidden lg:flex items-center justify-center"
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.6, duration: 0.5 }}
+                >
                   <ShuffleTestimonials />
-                </div>
+                </motion.div>
               </div>
             </div>
           </div>
@@ -152,6 +163,6 @@ export default function PND50Landing() {
           <LandingFooter />
         </AnimatedGridBackground>
       </section>
-    </main>
+    </motion.main>
   )
 }

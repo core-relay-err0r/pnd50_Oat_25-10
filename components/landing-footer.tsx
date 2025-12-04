@@ -2,7 +2,7 @@ import Link from "next/link"
 
 export function LandingFooter() {
   return (
-    <footer className="w-full mt-auto z-20 pt-20 pb-6 px-4 bg-gradient-to-t from-slate-950 via-slate-900/90 to-transparent">
+    <footer className="absolute bottom-0 left-0 right-0 z-20 pt-20 pb-6 px-4 bg-gradient-to-t from-slate-950 via-slate-900/90 to-transparent">
       <div className="container mx-auto">
         <div className="text-center">
           <p className="text-xs md:text-sm font-medium text-slate-400">
