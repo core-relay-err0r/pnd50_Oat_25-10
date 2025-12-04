@@ -84,8 +84,8 @@ const AboutClientPage = () => {
                   href="/"
                   className="inline-flex items-center gap-2 text-slate-400 hover:text-primary transition-colors group mb-6 sm:mb-8 touch-manipulation"
                 >
-                  <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-                  <span className="text-sm font-medium">Back to Home</span>
+                  
+                  
                 </Link>
 
                 <div className="flex flex-col lg:grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
