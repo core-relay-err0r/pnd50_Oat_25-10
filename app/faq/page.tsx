@@ -314,7 +314,7 @@ export default function FAQPage() {
           />
 
           <motion.div initial="initial" animate="animate" variants={pageVariants} className="flex-1 flex flex-col">
-            <div className="relative overflow-hidden pt-[80px]">
+            <div className="relative overflow-hidden pt-[80px] min-h-[60vh]">
               <div className="absolute inset-0 z-0">
                 <Image
                   src="/professional-consultation-questions-answers-help.jpg"
@@ -369,113 +369,113 @@ export default function FAQPage() {
                   </div>
                 </div>
               </div>
+            </div>
 
-              <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-24">
-                <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-8 sm:mb-12">
-                  {faqCategories.map((category) => (
-                    <button
-                      key={category.id}
-                      onClick={() => setActiveCategory(category.id)}
-                      className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-medium transition-all duration-300 touch-manipulation ${
-                        activeCategory === category.id
-                          ? "bg-primary text-primary-foreground shadow-lg shadow-primary/25"
-                          : "bg-white/5 text-slate-300 hover:bg-white/10 border border-white/10"
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-24">
+              <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-8 sm:mb-12">
+                {faqCategories.map((category) => (
+                  <button
+                    key={category.id}
+                    onClick={() => setActiveCategory(category.id)}
+                    className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-medium transition-all duration-300 touch-manipulation ${
+                      activeCategory === category.id
+                        ? "bg-primary text-primary-foreground shadow-lg shadow-primary/25"
+                        : "bg-white/5 text-slate-300 hover:bg-white/10 border border-white/10"
+                    }`}
+                  >
+                    <category.icon className="w-3 h-3 sm:w-4 sm:h-4" />
+                    {category.title}
+                    <span
+                      className={`ml-1 px-1.5 sm:px-2 py-0.5 rounded-full text-[10px] sm:text-xs ${
+                        activeCategory === category.id ? "bg-white/20" : "bg-white/10"
                       }`}
                     >
-                      <category.icon className="w-3 h-3 sm:w-4 sm:h-4" />
-                      {category.title}
-                      <span
-                        className={`ml-1 px-1.5 sm:px-2 py-0.5 rounded-full text-[10px] sm:text-xs ${
-                          activeCategory === category.id ? "bg-white/20" : "bg-white/10"
-                        }`}
-                      >
-                        {category.questions.length}
-                      </span>
-                    </button>
-                  ))}
-                </div>
+                      {category.questions.length}
+                    </span>
+                  </button>
+                ))}
+              </div>
 
-                <div className="max-w-4xl mx-auto space-y-3 sm:space-y-4">
-                  {filteredFaqs.length > 0 ? (
-                    filteredFaqs.map((faq) => (
-                      <div
-                        key={faq.id}
-                        className="bg-white/5 backdrop-blur-sm rounded-xl sm:rounded-2xl border border-white/10 overflow-hidden transition-all duration-300 hover:border-primary/30"
+              <div className="max-w-4xl mx-auto space-y-3 sm:space-y-4">
+                {filteredFaqs.length > 0 ? (
+                  filteredFaqs.map((faq) => (
+                    <div
+                      key={faq.id}
+                      className="bg-white/5 backdrop-blur-sm rounded-xl sm:rounded-2xl border border-white/10 overflow-hidden transition-all duration-300 hover:border-primary/30"
+                    >
+                      <button
+                        onClick={() => toggleItem(faq.id)}
+                        className="w-full flex items-center justify-between p-4 sm:p-6 text-left touch-manipulation"
                       >
-                        <button
-                          onClick={() => toggleItem(faq.id)}
-                          className="w-full flex items-center justify-between p-4 sm:p-6 text-left touch-manipulation"
-                        >
-                          <div className="flex items-start gap-3 sm:gap-4 flex-1 min-w-0">
-                            <div className="flex-shrink-0 w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-primary/10 flex items-center justify-center">
-                              <HelpCircle className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
-                            </div>
-                            <span className="text-sm sm:text-base md:text-lg font-semibold text-white leading-tight">
-                              {faq.question}
-                            </span>
+                        <div className="flex items-start gap-3 sm:gap-4 flex-1 min-w-0">
+                          <div className="flex-shrink-0 w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-primary/10 flex items-center justify-center">
+                            <HelpCircle className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
                           </div>
-                          <ChevronDown
-                            className={`w-5 h-5 sm:w-6 sm:h-6 text-slate-400 transition-transform duration-300 flex-shrink-0 ml-2 sm:ml-4 ${
-                              openItems.includes(faq.id) ? "rotate-180" : ""
-                            }`}
-                          />
-                        </button>
+                          <span className="text-sm sm:text-base md:text-lg font-semibold text-white leading-tight">
+                            {faq.question}
+                          </span>
+                        </div>
+                        <ChevronDown
+                          className={`w-5 h-5 sm:w-6 sm:h-6 text-slate-400 transition-transform duration-300 flex-shrink-0 ml-2 sm:ml-4 ${
+                            openItems.includes(faq.id) ? "rotate-180" : ""
+                          }`}
+                        />
+                      </button>
 
-                        <AnimatePresence>
-                          {openItems.includes(faq.id) && (
-                            <motion.div
-                              initial={{ height: 0, opacity: 0 }}
-                              animate={{ height: "auto", opacity: 1 }}
-                              exit={{ height: 0, opacity: 0 }}
-                              transition={{ duration: 0.3 }}
-                            >
-                              <div className="px-4 sm:px-6 pb-4 sm:pb-6 pt-0">
-                                <div className="pl-11 sm:pl-14 border-l-2 border-primary/20 ml-0 sm:ml-0">
-                                  <p className="text-slate-300 leading-relaxed text-sm sm:text-base">{faq.answer}</p>
-                                </div>
+                      <AnimatePresence>
+                        {openItems.includes(faq.id) && (
+                          <motion.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: "auto", opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.3 }}
+                          >
+                            <div className="px-4 sm:px-6 pb-4 sm:pb-6 pt-0">
+                              <div className="pl-11 sm:pl-14 border-l-2 border-primary/20 ml-0 sm:ml-0">
+                                <p className="text-slate-300 leading-relaxed text-sm sm:text-base">{faq.answer}</p>
                               </div>
-                            </motion.div>
-                          )}
-                        </AnimatePresence>
-                      </div>
-                    ))
-                  ) : (
-                    <div className="text-center py-12 sm:py-16">
-                      <div className="w-12 h-12 sm:w-16 sm:h-16 bg-white/5 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <Search className="w-6 h-6 sm:w-8 sm:h-8 text-slate-400" />
-                      </div>
-                      <h3 className="text-lg sm:text-xl font-semibold text-white mb-2">No results found</h3>
-                      <p className="text-slate-400 text-sm sm:text-base">
-                        Try adjusting your search or browse by category
-                      </p>
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
                     </div>
-                  )}
-                </div>
-
-                <div className="mt-12 sm:mt-16 md:mt-24 text-center">
-                  <div className="bg-gradient-to-br from-primary/10 to-chart-2/10 rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-12 border border-primary/20 max-w-3xl mx-auto">
-                    <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3 sm:mb-4">
-                      Still have questions?
-                    </h2>
-                    <p className="text-slate-300 mb-6 sm:mb-8 text-sm sm:text-base md:text-lg">
-                      Our team is here to help. Get personalized answers for your specific situation.
+                  ))
+                ) : (
+                  <div className="text-center py-12 sm:py-16">
+                    <div className="w-12 h-12 sm:w-16 sm:h-16 bg-white/5 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <Search className="w-6 h-6 sm:w-8 sm:h-8 text-slate-400" />
+                    </div>
+                    <h3 className="text-lg sm:text-xl font-semibold text-white mb-2">No results found</h3>
+                    <p className="text-slate-400 text-sm sm:text-base">
+                      Try adjusting your search or browse by category
                     </p>
-                    <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
-                      <Link
-                        href="/calculator"
-                        className="inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground px-6 sm:px-8 py-3 sm:py-4 rounded-lg sm:rounded-xl font-semibold hover:bg-primary/90 transition-all hover:scale-105 shadow-lg text-sm sm:text-base"
-                      >
-                        Schedule Consultation
-                        <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
-                      </Link>
-                      <Link
-                        href="/contact"
-                        className="inline-flex items-center justify-center gap-2 bg-white/5 border border-white/20 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg sm:rounded-xl font-semibold hover:bg-white/10 transition-all text-sm sm:text-base"
-                      >
-                        <MessageSquare className="w-4 h-4 sm:w-5 sm:h-5" />
-                        Contact Us
-                      </Link>
-                    </div>
+                  </div>
+                )}
+              </div>
+
+              <div className="mt-12 sm:mt-16 md:mt-24 text-center">
+                <div className="bg-gradient-to-br from-primary/10 to-chart-2/10 rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-12 border border-primary/20 max-w-3xl mx-auto">
+                  <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3 sm:mb-4">
+                    Still have questions?
+                  </h2>
+                  <p className="text-slate-300 mb-6 sm:mb-8 text-sm sm:text-base md:text-lg">
+                    Our team is here to help. Get personalized answers for your specific situation.
+                  </p>
+                  <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
+                    <Link
+                      href="/calculator"
+                      className="inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground px-6 sm:px-8 py-3 sm:py-4 rounded-lg sm:rounded-xl font-semibold hover:bg-primary/90 transition-all hover:scale-105 shadow-lg text-sm sm:text-base"
+                    >
+                      Schedule Consultation
+                      <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
+                    </Link>
+                    <Link
+                      href="/contact"
+                      className="inline-flex items-center justify-center gap-2 bg-white/5 border border-white/20 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg sm:rounded-xl font-semibold hover:bg-white/10 transition-all text-sm sm:text-base"
+                    >
+                      <MessageSquare className="w-4 h-4 sm:w-5 sm:h-5" />
+                      Contact Us
+                    </Link>
                   </div>
                 </div>
               </div>
