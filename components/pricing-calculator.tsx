@@ -241,7 +241,7 @@ export function PricingCalculator() {
       >
         {/* Header */}
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 pt-6">
-          <motion.div
+          <motion.div className="my-6"
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.2, duration: 0.4 }}
