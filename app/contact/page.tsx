@@ -1,15 +1,14 @@
 "use client"
 
 import type React from "react"
-import dynamic from "next/dynamic"
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import { Label } from "@/components/ui/label"
-import { MapPin, Phone, Send, Check, Copy, MessageSquare, ArrowLeft } from "lucide-react"
+import { MapPin, Phone, Clock, Send, MessageSquare, ArrowLeft, ArrowRight, Loader2, Mail } from "lucide-react"
 import Link from "next/link"
 import { motion } from "framer-motion"
+import dynamic from "next/dynamic"
 import { LandingFooter } from "@/components/landing-footer"
 
 const AnimatedGridBackground = dynamic(
@@ -27,18 +26,21 @@ const pageVariants = {
 }
 
 export default function ContactPage() {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     phone: "",
     whatsapp: "",
     companyName: "",
+    serviceType: "",
     message: "",
+    company: "",
+    subject: "",
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle")
   const [copiedItem, setCopiedItem] = useState<string | null>(null)
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -51,11 +53,6 @@ export default function ContactPage() {
     return () => window.removeEventListener("mousemove", handleMouseMove)
   }, [])
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target
-    setFormData((prev) => ({ ...prev, [name]: value }))
-  }
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
@@ -64,8 +61,20 @@ export default function ContactPage() {
     try {
       const response = await fetch("/api/send-contact", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: formData.email,
+          telephone: formData.phone,
+          whatsappId: formData.whatsapp,
+          companyName: formData.companyName,
+          serviceType: formData.serviceType,
+          message: formData.message,
+          name: formData.name,
+          company: formData.company,
+          subject: formData.subject,
+        }),
       })
 
       if (response.ok) {
@@ -76,29 +85,44 @@ export default function ContactPage() {
           phone: "",
           whatsapp: "",
           companyName: "",
+          serviceType: "",
           message: "",
+          company: "",
+          subject: "",
         })
       } else {
         setSubmitStatus("error")
       }
     } catch (error) {
+      console.error("Error submitting form:", error)
       setSubmitStatus("error")
     } finally {
       setIsSubmitting(false)
     }
   }
 
-  const copyToClipboard = (text: string, item: string) => {
-    navigator.clipboard.writeText(text)
-    setCopiedItem(item)
-    setTimeout(() => setCopiedItem(null), 2000)
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    })
+  }
+
+  const copyToClipboard = async (text: string, itemId: string) => {
+    try {
+      await navigator.clipboard.writeText(text)
+      setCopiedItem(itemId)
+      setTimeout(() => setCopiedItem(null), 2000)
+    } catch (err) {
+      console.error("Failed to copy:", err)
+    }
   }
 
   return (
     <main className="min-h-screen">
       <section className="relative w-full min-h-screen flex flex-col bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
         <AnimatedGridBackground className="min-h-screen flex-1">
-          {/* Floating parallax blobs */}
+          {/* Floating blur blobs */}
           <div
             className="absolute top-20 left-10 w-96 h-96 bg-primary/20 rounded-full blur-3xl pointer-events-none"
             style={{
@@ -114,12 +138,7 @@ export default function ContactPage() {
             }}
           />
 
-          <motion.div
-            initial="initial"
-            animate="animate"
-            variants={pageVariants}
-            className="flex-1 w-full flex flex-col lg:scale-[0.85] lg:origin-top lg:mt-24"
-          >
+          <motion.div initial="initial" animate="animate" variants={pageVariants} className="flex-1 flex flex-col">
             {/* Hero Section */}
             <section className="relative pt-32 pb-12 md:py-24 overflow-hidden">
               <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -131,352 +150,199 @@ export default function ContactPage() {
                   <span className="text-sm font-medium">Back to Home</span>
                 </Link>
 
-                <div className="max-w-3xl mx-auto text-center">
-                  <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 backdrop-blur-sm px-4 py-2 text-sm font-medium text-primary mb-6 border border-primary/20">
+                <div className="max-w-4xl">
+                  <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-medium mb-6">
                     <MessageSquare className="w-4 h-4" />
-                    Get In Touch
+                    Get in Touch
                   </div>
-                  <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold text-white mb-4 md:mb-6 leading-tight">
+                  <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 tracking-tight">
                     Let's Start a Conversation
                   </h1>
-                  <p className="md:text-xl text-slate-300 leading-relaxed max-w-2xl mx-auto text-sm">
-                    Whether you have questions about our services, need expert advice, or want to schedule a
-                    consultation, we're here to help your business succeed in Thailand.
+                  <p className="text-lg md:text-xl text-slate-300 leading-relaxed">
+                    Whether you're ready to get started or just exploring, we're here to help with clear answers and
+                    honest advice.
                   </p>
                 </div>
               </div>
             </section>
 
-            {/* Main Content */}
-            <section className="py-12 md:py-24">
+            {/* Contact Form Section */}
+            <section className="py-12 md:py-16">
               <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="grid lg:grid-cols-2 gap-8 md:gap-12 max-w-7xl mx-auto">
-                  {/* Contact Form */}
-                  <div className="order-2 lg:order-1">
-                    <div className="bg-slate-800/50 border border-slate-700 rounded-2xl p-6 md:p-8 shadow-lg hover:border-primary/50 transition-all duration-300">
-                      <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">Send Us a Message</h2>
-                      <p className="text-slate-400 mb-6 md:mb-8">
-                        Fill out the form below and we'll get back to you within 24 hours.
-                      </p>
+                <div className="grid lg:grid-cols-5 gap-12 lg:gap-16">
+                  {/* Left Column - Contact Info */}
+                  <div className="lg:col-span-2 space-y-8">
+                    <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 md:p-8 border border-white/10">
+                      <h2 className="text-xl font-bold text-white mb-6">Contact Information</h2>
+                      <div className="space-y-6">
+                        {[
+                          {
+                            icon: Mail,
+                            label: "Email",
+                            value: "info@pnd50.com",
+                            href: "mailto:info@pnd50.com",
+                          },
+                          {
+                            icon: Phone,
+                            label: "Phone",
+                            value: "+66 2 123 4567",
+                            href: "tel:+6621234567",
+                          },
+                          {
+                            icon: MapPin,
+                            label: "Office",
+                            value: "Bangkok, Thailand",
+                            href: "#",
+                          },
+                          {
+                            icon: Clock,
+                            label: "Hours",
+                            value: "Mon-Fri: 9AM - 6PM (ICT)",
+                            href: "#",
+                          },
+                        ].map((item, index) => (
+                          <a key={index} href={item.href} className="flex items-start gap-4 group">
+                            <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary transition-colors">
+                              <item.icon className="w-5 h-5 text-primary group-hover:text-white transition-colors" />
+                            </div>
+                            <div>
+                              <p className="text-sm text-slate-400">{item.label}</p>
+                              <p className="text-white font-medium">{item.value}</p>
+                            </div>
+                          </a>
+                        ))}
+                      </div>
+                    </div>
 
-                      <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6">
-                        <div className="grid md:grid-cols-2 gap-4 md:gap-6">
-                          <div className="space-y-2">
-                            <Label htmlFor="name" className="text-base md:text-sm text-slate-300">
-                              Your Name *
-                            </Label>
+                    {/* Quick Links */}
+                    <div className="bg-gradient-to-br from-primary/10 to-chart-2/10 rounded-2xl p-6 md:p-8 border border-primary/20">
+                      <h3 className="text-lg font-bold text-white mb-4">Quick Links</h3>
+                      <div className="space-y-3">
+                        <Link
+                          href="/calculator"
+                          className="flex items-center justify-between p-3 rounded-lg bg-white/5 hover:bg-white/10 transition-colors group"
+                        >
+                          <span className="text-slate-300 group-hover:text-white transition-colors">
+                            Schedule Consultation
+                          </span>
+                          <ArrowRight className="w-4 h-4 text-primary" />
+                        </Link>
+                        <Link
+                          href="/faq"
+                          className="flex items-center justify-between p-3 rounded-lg bg-white/5 hover:bg-white/10 transition-colors group"
+                        >
+                          <span className="text-slate-300 group-hover:text-white transition-colors">View FAQs</span>
+                          <ArrowRight className="w-4 h-4 text-primary" />
+                        </Link>
+                        <Link
+                          href="/services"
+                          className="flex items-center justify-between p-3 rounded-lg bg-white/5 hover:bg-white/10 transition-colors group"
+                        >
+                          <span className="text-slate-300 group-hover:text-white transition-colors">Our Services</span>
+                          <ArrowRight className="w-4 h-4 text-primary" />
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Right Column - Contact Form */}
+                  <div className="lg:col-span-3">
+                    <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 md:p-8 border border-white/10">
+                      <h2 className="text-xl font-bold text-white mb-6">Send us a Message</h2>
+                      <form onSubmit={handleSubmit} className="space-y-6">
+                        <div className="grid md:grid-cols-2 gap-6">
+                          <div>
+                            <label className="block text-sm font-medium text-slate-300 mb-2">Full Name *</label>
                             <Input
-                              id="name"
-                              name="name"
                               type="text"
-                              placeholder="John Doe"
+                              name="name"
                               value={formData.name}
                               onChange={handleChange}
                               required
-                              className="h-12 text-base bg-slate-900/50 border-slate-600 text-white placeholder:text-slate-500"
+                              className="bg-white/5 border-white/20 text-white placeholder:text-slate-500 focus:border-primary"
+                              placeholder="Your name"
                             />
                           </div>
-
-                          <div className="space-y-2">
-                            <Label htmlFor="email" className="text-base md:text-sm text-slate-300">
-                              Email Address *
-                            </Label>
+                          <div>
+                            <label className="block text-sm font-medium text-slate-300 mb-2">Email *</label>
                             <Input
-                              id="email"
-                              name="email"
                               type="email"
-                              placeholder="john@company.com"
+                              name="email"
                               value={formData.email}
                               onChange={handleChange}
                               required
-                              className="h-12 text-base bg-slate-900/50 border-slate-600 text-white placeholder:text-slate-500"
+                              className="bg-white/5 border-white/20 text-white placeholder:text-slate-500 focus:border-primary"
+                              placeholder="your@email.com"
                             />
                           </div>
                         </div>
 
-                        <div className="grid md:grid-cols-2 gap-4 md:gap-6">
-                          <div className="space-y-2">
-                            <Label htmlFor="phone" className="text-base md:text-sm text-slate-300">
-                              Phone Number
-                            </Label>
+                        <div className="grid md:grid-cols-2 gap-6">
+                          <div>
+                            <label className="block text-sm font-medium text-slate-300 mb-2">Company</label>
                             <Input
-                              id="phone"
-                              name="phone"
+                              type="text"
+                              name="company"
+                              value={formData.company}
+                              onChange={handleChange}
+                              className="bg-white/5 border-white/20 text-white placeholder:text-slate-500 focus:border-primary"
+                              placeholder="Company name"
+                            />
+                          </div>
+                          <div>
+                            <label className="block text-sm font-medium text-slate-300 mb-2">Phone</label>
+                            <Input
                               type="tel"
-                              placeholder="+66 XX XXX XXXX"
+                              name="phone"
                               value={formData.phone}
                               onChange={handleChange}
-                              className="h-12 text-base bg-slate-900/50 border-slate-600 text-white placeholder:text-slate-500"
-                            />
-                          </div>
-
-                          <div className="space-y-2">
-                            <Label htmlFor="whatsapp" className="text-base md:text-sm text-slate-300">
-                              WhatsApp Number
-                            </Label>
-                            <Input
-                              id="whatsapp"
-                              name="whatsapp"
-                              type="tel"
-                              placeholder="+66 XX XXX XXXX"
-                              value={formData.whatsapp}
-                              onChange={handleChange}
-                              className="h-12 text-base bg-slate-900/50 border-slate-600 text-white placeholder:text-slate-500"
+                              className="bg-white/5 border-white/20 text-white placeholder:text-slate-500 focus:border-primary"
+                              placeholder="+66..."
                             />
                           </div>
                         </div>
 
-                        <div className="space-y-2">
-                          <Label htmlFor="companyName" className="text-base md:text-sm text-slate-300">
-                            Company Name (optional)
-                          </Label>
+                        <div>
+                          <label className="block text-sm font-medium text-slate-300 mb-2">Subject *</label>
                           <Input
-                            id="companyName"
-                            name="companyName"
                             type="text"
-                            placeholder="Your Company Ltd."
-                            value={formData.companyName}
+                            name="subject"
+                            value={formData.subject}
                             onChange={handleChange}
-                            className="h-12 text-base bg-slate-900/50 border-slate-600 text-white placeholder:text-slate-500"
+                            required
+                            className="bg-white/5 border-white/20 text-white placeholder:text-slate-500 focus:border-primary"
+                            placeholder="How can we help?"
                           />
                         </div>
 
-                        <div className="space-y-2">
-                          <Label htmlFor="message" className="text-base md:text-sm text-slate-300">
-                            Message *
-                          </Label>
+                        <div>
+                          <label className="block text-sm font-medium text-slate-300 mb-2">Message *</label>
                           <Textarea
-                            id="message"
                             name="message"
-                            placeholder="Tell us about your needs..."
                             value={formData.message}
                             onChange={handleChange}
                             required
-                            rows={6}
-                            className="resize-none text-base bg-slate-900/50 border-slate-600 text-white placeholder:text-slate-500"
+                            rows={5}
+                            className="bg-white/5 border-white/20 text-white placeholder:text-slate-500 focus:border-primary resize-none"
+                            placeholder="Tell us about your needs..."
                           />
                         </div>
 
-                        {submitStatus === "success" && (
-                          <div className="bg-chart-2/10 border border-chart-2 text-chart-2 px-4 py-3 rounded-lg flex items-center gap-2">
-                            <Check className="w-5 h-5 flex-shrink-0" />
-                            <span>Thank you! We'll get back to you soon.</span>
-                          </div>
-                        )}
-
-                        {submitStatus === "error" && (
-                          <div className="bg-destructive/10 border border-destructive text-destructive px-4 py-3 rounded-lg">
-                            Something went wrong. Please try again or contact us directly.
-                          </div>
-                        )}
-
-                        <Button type="submit" disabled={isSubmitting} className="w-full h-12 text-lg font-semibold">
+                        <Button type="submit" disabled={isSubmitting} className="w-full py-6 text-base font-semibold">
                           {isSubmitting ? (
                             <>
-                              <span className="animate-spin mr-2">⏳</span>
+                              <Loader2 className="w-5 h-5 mr-2 animate-spin" />
                               Sending...
                             </>
                           ) : (
                             <>
-                              <Send className="w-5 h-5 mr-2" />
                               Send Message
+                              <Send className="w-5 h-5 ml-2" />
                             </>
                           )}
                         </Button>
                       </form>
                     </div>
-                  </div>
-
-                  {/* Contact Info */}
-                  <div className="order-1 lg:order-2 space-y-6">
-                    {/* Office Location */}
-                    <div className="bg-slate-800/50 rounded-2xl p-6 md:p-8 border border-slate-700 hover:border-primary/50 transition-all duration-300 hover:shadow-xl">
-                      <div className="flex items-start gap-4 mb-6">
-                        <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
-                          <MapPin className="w-6 h-6 text-primary" />
-                        </div>
-                        <div>
-                          <h3 className="text-xl md:text-2xl font-bold text-white mb-2">Office Location</h3>
-                          <p className="text-slate-400 text-sm md:text-base">Visit us at our Bangkok office</p>
-                        </div>
-                      </div>
-                      <div className="space-y-2 text-slate-300">
-                        <p className="leading-relaxed text-sm md:text-base">
-                          <strong className="text-white">Suite 3065, 30th Floor</strong>
-                          <br />
-                          Bhiraj Tower at EmQuartier
-                          <br />
-                          689 Sukhumvit Rd, Khlong Tan Nuea
-                          <br />
-                          Watthana, Bangkok 10110. Thailand.
-                        </p>
-                      </div>
-                    </div>
-
-                    {/* Contact Details */}
-                    <div className="bg-slate-800/50 rounded-2xl p-6 md:p-8 border border-slate-700 hover:border-primary/50 transition-all duration-300 hover:shadow-xl">
-                      <div className="flex items-start gap-4 mb-6">
-                        <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
-                          <Phone className="w-6 h-6 text-primary" />
-                        </div>
-                        <div>
-                          <h3 className="text-xl md:text-2xl font-bold text-white mb-2">Contact Details</h3>
-                          <p className="text-slate-400 text-sm md:text-base">
-                            Reach out through your preferred channel
-                          </p>
-                        </div>
-                      </div>
-                      <div className="space-y-4">
-                        <div className="flex items-center justify-between gap-3 group">
-                          <div className="flex items-center gap-3 overflow-hidden">
-                            <span className="font-semibold text-white flex-shrink-0">Phone:</span>
-                            <a
-                              href="tel:020172949"
-                              className="text-primary hover:text-primary/90 transition-colors duration-300 font-medium truncate"
-                            >
-                              +66 2 017 2949
-                            </a>
-                          </div>
-                          <button
-                            onClick={() => copyToClipboard("020172949", "phone")}
-                            className="p-2 rounded-lg hover:bg-primary/10 transition-all duration-300 opacity-100 lg:opacity-0 lg:group-hover:opacity-100"
-                            title="Copy phone number"
-                          >
-                            {copiedItem === "phone" ? (
-                              <Check className="w-4 h-4 text-chart-2" />
-                            ) : (
-                              <Copy className="w-4 h-4 text-slate-400" />
-                            )}
-                          </button>
-                        </div>
-
-                        <div className="flex items-center justify-between gap-3 group">
-                          <div className="flex items-center gap-3 overflow-hidden">
-                            <span className="font-semibold text-white flex-shrink-0">Email:</span>
-                            <a
-                              href="mailto:info@pnd50.com"
-                              className="text-primary hover:text-primary/90 transition-colors duration-300 font-medium truncate"
-                            >
-                              info@pnd50.com
-                            </a>
-                          </div>
-                          <button
-                            onClick={() => copyToClipboard("info@pnd50.com", "email")}
-                            className="p-2 rounded-lg hover:bg-primary/10 transition-all duration-300 opacity-100 lg:opacity-0 lg:group-hover:opacity-100"
-                            title="Copy email"
-                          >
-                            {copiedItem === "email" ? (
-                              <Check className="w-4 h-4 text-chart-2" />
-                            ) : (
-                              <Copy className="w-4 h-4 text-slate-400" />
-                            )}
-                          </button>
-                        </div>
-
-                        <div className="flex items-center justify-between gap-3 group">
-                          <div className="flex items-center gap-3 overflow-hidden">
-                            <div className="flex items-center gap-2 flex-shrink-0">
-                              <img
-                                src="/images/telegram-blue-icon.png"
-                                alt="Telegram"
-                                className="w-5 h-5 object-contain"
-                              />
-                              <span className="font-semibold text-[#0088cc]">Telegram:</span>
-                            </div>
-                            <a
-                              href="https://t.me/66843563805"
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-primary hover:text-primary/90 transition-colors duration-300 font-medium truncate"
-                            >
-                              +66 84 356 3805
-                            </a>
-                          </div>
-                          <button
-                            onClick={() => copyToClipboard("0843563805", "telegram")}
-                            className="p-2 rounded-lg hover:bg-primary/10 transition-all duration-300 opacity-100 lg:opacity-0 lg:group-hover:opacity-100"
-                            title="Copy Telegram number"
-                          >
-                            {copiedItem === "telegram" ? (
-                              <Check className="w-4 h-4 text-chart-2" />
-                            ) : (
-                              <Copy className="w-4 h-4 text-slate-400" />
-                            )}
-                          </button>
-                        </div>
-
-                        <div className="flex items-center justify-between gap-3 group">
-                          <div className="flex items-center gap-3 overflow-hidden">
-                            <div className="flex items-center gap-2 flex-shrink-0">
-                              <img
-                                src="/images/whatsapp-green-icon.png"
-                                alt="WhatsApp"
-                                className="w-5 h-5 object-contain"
-                              />
-                              <span className="font-semibold text-chart-2">WhatsApp:</span>
-                            </div>
-                            <a
-                              href="https://wa.me/66843563805"
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-primary hover:text-primary/90 transition-colors duration-300 font-medium truncate"
-                            >
-                              +66 84 356 3805
-                            </a>
-                          </div>
-                          <button
-                            onClick={() => copyToClipboard("0843563805", "whatsapp")}
-                            className="p-2 rounded-lg hover:bg-primary/10 transition-all duration-300 opacity-100 lg:opacity-0 lg:group-hover:opacity-100"
-                            title="Copy WhatsApp number"
-                          >
-                            {copiedItem === "whatsapp" ? (
-                              <Check className="w-4 h-4 text-chart-2" />
-                            ) : (
-                              <Copy className="w-4 h-4 text-slate-400" />
-                            )}
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </section>
-
-            {/* Map Section */}
-            <section className="py-12 md:py-16 bg-slate-900/50">
-              <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="max-w-7xl mx-auto">
-                  <div className="text-center mb-8 md:mb-12">
-                    <h2 className="text-2xl md:text-3xl lg:text-5xl font-bold text-white mb-4">Find Us on the Map</h2>
-                    <p className="md:text-xl text-slate-300 text-sm">
-                      Located in the heart of Bangkok's business district at EmQuartier
-                    </p>
-                  </div>
-
-                  <div className="rounded-2xl overflow-hidden shadow-2xl border border-slate-700 hover:border-primary/50 transition-all duration-300">
-                    <iframe
-                      src="https://maps.google.com/maps?q=Bhiraj+Tower+at+EmQuartier,+689+Sukhumvit+Rd,+Khlong+Tan+Nuea,+Watthana,+Bangkok+10110&t=&z=16&ie=UTF8&iwloc=&output=embed"
-                      width="100%"
-                      height="500"
-                      style={{ border: 0 }}
-                      allowFullScreen
-                      loading="lazy"
-                      referrerPolicy="no-referrer-when-downgrade"
-                      className="w-full h-[400px] md:h-[500px]"
-                    ></iframe>
-                  </div>
-
-                  <div className="mt-8 text-center">
-                    <a
-                      href="https://www.google.com/maps/dir//Bhiraj+Tower+at+EmQuartier,+689+Sukhumvit+Rd,+Khlong+Tan+Nuea,+Watthana,+Bangkok+10110"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 px-8 py-4 bg-primary text-primary-foreground font-semibold rounded-lg hover:bg-primary/90 transition-all duration-300 hover:shadow-lg hover:scale-105"
-                    >
-                      <MapPin className="w-5 h-5" />
-                      Get Directions
-                    </a>
                   </div>
                 </div>
               </div>

@@ -28,6 +28,17 @@ const AboutClientPage = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
 
   useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePosition({
+        x: (e.clientX / window.innerWidth - 0.5) * 20,
+        y: (e.clientY / window.innerHeight - 0.5) * 20,
+      })
+    }
+    window.addEventListener("mousemove", handleMouseMove)
+    return () => window.removeEventListener("mousemove", handleMouseMove)
+  }, [])
+
+  useEffect(() => {
     observerRef.current = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -45,22 +56,11 @@ const AboutClientPage = () => {
     return () => observerRef.current?.disconnect()
   }, [])
 
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({
-        x: (e.clientX / window.innerWidth - 0.5) * 20,
-        y: (e.clientY / window.innerHeight - 0.5) * 20,
-      })
-    }
-    window.addEventListener("mousemove", handleMouseMove)
-    return () => window.removeEventListener("mousemove", handleMouseMove)
-  }, [])
-
   return (
     <main className="min-h-screen">
       <section className="relative w-full min-h-screen flex flex-col bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
         <AnimatedGridBackground className="min-h-screen flex-1">
-          {/* Floating parallax blobs */}
+          {/* Floating blur blobs */}
           <div
             className="absolute top-20 left-10 w-96 h-96 bg-primary/20 rounded-full blur-3xl pointer-events-none"
             style={{
@@ -76,13 +76,8 @@ const AboutClientPage = () => {
             }}
           />
 
-          <motion.div
-            initial="initial"
-            animate="animate"
-            variants={pageVariants}
-            className="flex-1 w-full flex flex-col lg:scale-[0.85] lg:origin-top lg:mt-24"
-          >
-            {/* Hero Section - keeping original layout and images */}
+          <motion.div initial="initial" animate="animate" variants={pageVariants} className="flex-1 flex flex-col">
+            {/* Hero Section - keeping original content but updating colors */}
             <section className="relative pb-24 overflow-hidden md:pb-32 md:pt-28 pt-24 px-4 sm:px-6 lg:px-8">
               <div className="container mx-auto px-4 sm:px-6 relative z-10 lg:px-0">
                 <Link
@@ -96,7 +91,7 @@ const AboutClientPage = () => {
                 <div className="flex flex-col lg:grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
                   {/* Left: Text Content */}
                   <div className="scroll-animate opacity-0 translate-y-[50px] transition-all duration-1000 text-center lg:text-left">
-                    <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 text-sm font-medium text-primary mb-6">
+                    <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 border border-primary/20 px-4 py-2 text-sm font-medium text-primary mb-6">
                       <span className="relative flex h-2 w-2">
                         <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
                         <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
@@ -125,7 +120,7 @@ const AboutClientPage = () => {
                     </Button>
                   </div>
 
-                  {/* Right: Team Portraits - keeping original images */}
+                  {/* Right: Team Portraits - keeping images intact */}
                   <div className="scroll-animate opacity-0 translate-y-[50px] transition-all duration-1000 delay-200 relative w-full h-[400px] md:h-[500px] lg:h-[550px] flex items-center justify-center">
                     <div className="relative w-full max-w-[450px] md:max-w-[550px] lg:max-w-[600px] h-full mx-auto">
                       <div className="absolute top-[8%] left-[2%] w-28 h-28 md:w-36 md:h-36 lg:w-40 lg:h-40 rounded-full opacity-90 z-0 bg-emerald-200"></div>
@@ -154,12 +149,12 @@ const AboutClientPage = () => {
             </section>
 
             {/* Our Mission Section */}
-            <section className="py-12 sm:py-24 md:py-32 relative overflow-hidden">
+            <section className="py-12 sm:py-24 md:py-32 relative overflow-hidden lg:scale-[0.85] lg:origin-center">
               <div className="absolute top-0 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl"></div>
               <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 <div className="max-w-7xl mx-auto">
                   <div className="flex flex-col lg:grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-                    {/* Image - keeping original */}
+                    {/* Image - keeping intact */}
                     <div className="scroll-animate opacity-0 translate-y-[30px] sm:translate-x-[50px] transition-all duration-1000 delay-200 relative w-full min-w-0 lg:order-last order-first">
                       <div className="relative aspect-[3/4] rounded-3xl overflow-hidden shadow-2xl mx-auto max-w-md lg:max-w-full">
                         <img
@@ -169,7 +164,7 @@ const AboutClientPage = () => {
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-slate-950/30 to-transparent"></div>
 
-                        <div className="absolute bottom-4 sm:bottom-6 left-4 sm:left-6 right-4 sm:right-6 bg-slate-900/90 backdrop-blur-md rounded-2xl p-3 sm:p-4 border border-slate-700 max-w-full z-20">
+                        <div className="absolute bottom-4 sm:bottom-6 left-4 sm:left-6 right-4 sm:right-6 bg-slate-900/90 backdrop-blur-md rounded-2xl p-3 sm:p-4 border border-white/10 max-w-full z-20">
                           <div className="grid grid-cols-3 gap-2 sm:gap-3 text-center">
                             <div className="min-w-0">
                               <div className="text-xl sm:text-2xl md:text-3xl font-bold text-primary mb-1">10+</div>
@@ -241,7 +236,7 @@ const AboutClientPage = () => {
             </section>
 
             {/* Our Success Stories Section */}
-            <section className="py-12 sm:py-24 md:py-32 bg-slate-900/50 relative overflow-hidden">
+            <section className="py-12 sm:py-24 md:py-32 relative overflow-hidden">
               <div className="absolute bottom-0 left-0 w-96 h-96 bg-chart-2/5 rounded-full blur-3xl"></div>
               <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 <div className="max-w-7xl mx-auto">

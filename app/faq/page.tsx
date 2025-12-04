@@ -1,14 +1,25 @@
 "use client"
 
-import dynamic from "next/dynamic"
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import Image from "next/image"
-import { ArrowLeft, BookOpen, Flame, MessageCircle, FileText, Phone, Search, ChevronRight, X } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import dynamic from "next/dynamic"
+import {
+  ArrowLeft,
+  BookOpen,
+  Flame,
+  MessageCircle,
+  FileText,
+  Search,
+  ChevronRight,
+  X,
+  ChevronDown,
+  HelpCircle,
+  MessageSquare,
+} from "lucide-react"
 import { Input } from "@/components/ui/input"
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import { motion } from "framer-motion"
+import { AnimatePresence } from "framer-motion"
 import { LandingFooter } from "@/components/landing-footer"
 
 const AnimatedGridBackground = dynamic(
@@ -251,6 +262,8 @@ const faqCategories = [
 
 export default function FAQPage() {
   const [searchQuery, setSearchQuery] = useState("")
+  const [openItems, setOpenItems] = useState<string[]>([])
+  const [activeCategory, setActiveCategory] = useState("all")
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
 
   useEffect(() => {
@@ -275,11 +288,16 @@ export default function FAQPage() {
     }))
     .filter((category) => category.questions.length > 0)
 
+  const toggleItem = (id: string) => {
+    setOpenItems((prev) => (prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]))
+  }
+
+  const filteredFaqs = faqCategories.flatMap((category) => category.questions)
+
   return (
     <main className="min-h-screen">
       <section className="relative w-full min-h-screen flex flex-col bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
         <AnimatedGridBackground className="min-h-screen flex-1">
-          {/* Floating parallax blobs */}
           <div
             className="absolute top-20 left-10 w-96 h-96 bg-primary/20 rounded-full blur-3xl pointer-events-none"
             style={{
@@ -295,15 +313,8 @@ export default function FAQPage() {
             }}
           />
 
-          <motion.div
-            initial="initial"
-            animate="animate"
-            variants={pageVariants}
-            className="flex-1 w-full flex flex-col lg:scale-[0.85] lg:origin-top lg:mt-24"
-          >
-            {/* Hero Section */}
+          <motion.div initial="initial" animate="animate" variants={pageVariants} className="flex-1 flex flex-col">
             <div className="relative overflow-hidden pt-[80px]">
-              {/* Background Image */}
               <div className="absolute inset-0 z-0">
                 <Image
                   src="/professional-consultation-questions-answers-help.jpg"
@@ -312,11 +323,10 @@ export default function FAQPage() {
                   className="object-cover object-center"
                   priority
                 />
-                <div className="absolute inset-0 bg-gradient-to-br from-slate-950/80 via-slate-900/70 to-slate-950/80" />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-transparent to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-br from-slate-950/70 via-slate-900/60 to-slate-950/70" />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent" />
               </div>
 
-              {/* Content */}
               <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-24">
                 <Link
                   href="/"
@@ -352,7 +362,6 @@ export default function FAQPage() {
                       <button
                         onClick={() => setSearchQuery("")}
                         className="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white transition-colors p-1"
-                        aria-label="Clear search"
                       >
                         <X className="w-4 h-4 sm:w-5 sm:h-5" />
                       </button>
@@ -360,149 +369,121 @@ export default function FAQPage() {
                   </div>
                 </div>
               </div>
-            </div>
 
-            {/* Category Navigation */}
-            <div className="border-b border-slate-700/50 bg-slate-900/50">
-              <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
-                <div className="flex gap-2 sm:gap-3 overflow-x-auto pb-2 scrollbar-hide snap-x snap-mandatory md:flex-wrap md:justify-center md:overflow-visible">
-                  {faqCategories.map((category) => {
-                    const Icon = category.icon
-                    return (
-                      <a
-                        key={category.id}
-                        href={`#${category.id}`}
-                        className="group flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full bg-slate-800/50 border border-slate-700 hover:border-primary/50 hover:bg-primary/10 transition-all flex-shrink-0 snap-start touch-manipulation"
+              <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-24">
+                <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-8 sm:mb-12">
+                  {faqCategories.map((category) => (
+                    <button
+                      key={category.id}
+                      onClick={() => setActiveCategory(category.id)}
+                      className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-medium transition-all duration-300 touch-manipulation ${
+                        activeCategory === category.id
+                          ? "bg-primary text-primary-foreground shadow-lg shadow-primary/25"
+                          : "bg-white/5 text-slate-300 hover:bg-white/10 border border-white/10"
+                      }`}
+                    >
+                      <category.icon className="w-3 h-3 sm:w-4 sm:h-4" />
+                      {category.title}
+                      <span
+                        className={`ml-1 px-1.5 sm:px-2 py-0.5 rounded-full text-[10px] sm:text-xs ${
+                          activeCategory === category.id ? "bg-white/20" : "bg-white/10"
+                        }`}
                       >
-                        <Icon className="w-3 h-3 sm:w-4 sm:h-4 text-slate-400 group-hover:text-primary transition-colors" />
-                        <span className="text-xs sm:text-sm font-medium text-white whitespace-nowrap">
-                          {category.title}
-                        </span>
-                        <span className="text-xs px-1.5 sm:px-2 py-0.5 rounded-full bg-slate-700 text-slate-300">
-                          {category.questions.length}
-                        </span>
-                      </a>
-                    )
-                  })}
+                        {category.questions.length}
+                      </span>
+                    </button>
+                  ))}
+                </div>
+
+                <div className="max-w-4xl mx-auto space-y-3 sm:space-y-4">
+                  {filteredFaqs.length > 0 ? (
+                    filteredFaqs.map((faq) => (
+                      <div
+                        key={faq.id}
+                        className="bg-white/5 backdrop-blur-sm rounded-xl sm:rounded-2xl border border-white/10 overflow-hidden transition-all duration-300 hover:border-primary/30"
+                      >
+                        <button
+                          onClick={() => toggleItem(faq.id)}
+                          className="w-full flex items-center justify-between p-4 sm:p-6 text-left touch-manipulation"
+                        >
+                          <div className="flex items-start gap-3 sm:gap-4 flex-1 min-w-0">
+                            <div className="flex-shrink-0 w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-primary/10 flex items-center justify-center">
+                              <HelpCircle className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
+                            </div>
+                            <span className="text-sm sm:text-base md:text-lg font-semibold text-white leading-tight">
+                              {faq.question}
+                            </span>
+                          </div>
+                          <ChevronDown
+                            className={`w-5 h-5 sm:w-6 sm:h-6 text-slate-400 transition-transform duration-300 flex-shrink-0 ml-2 sm:ml-4 ${
+                              openItems.includes(faq.id) ? "rotate-180" : ""
+                            }`}
+                          />
+                        </button>
+
+                        <AnimatePresence>
+                          {openItems.includes(faq.id) && (
+                            <motion.div
+                              initial={{ height: 0, opacity: 0 }}
+                              animate={{ height: "auto", opacity: 1 }}
+                              exit={{ height: 0, opacity: 0 }}
+                              transition={{ duration: 0.3 }}
+                            >
+                              <div className="px-4 sm:px-6 pb-4 sm:pb-6 pt-0">
+                                <div className="pl-11 sm:pl-14 border-l-2 border-primary/20 ml-0 sm:ml-0">
+                                  <p className="text-slate-300 leading-relaxed text-sm sm:text-base">{faq.answer}</p>
+                                </div>
+                              </div>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </div>
+                    ))
+                  ) : (
+                    <div className="text-center py-12 sm:py-16">
+                      <div className="w-12 h-12 sm:w-16 sm:h-16 bg-white/5 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <Search className="w-6 h-6 sm:w-8 sm:h-8 text-slate-400" />
+                      </div>
+                      <h3 className="text-lg sm:text-xl font-semibold text-white mb-2">No results found</h3>
+                      <p className="text-slate-400 text-sm sm:text-base">
+                        Try adjusting your search or browse by category
+                      </p>
+                    </div>
+                  )}
+                </div>
+
+                <div className="mt-12 sm:mt-16 md:mt-24 text-center">
+                  <div className="bg-gradient-to-br from-primary/10 to-chart-2/10 rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-12 border border-primary/20 max-w-3xl mx-auto">
+                    <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3 sm:mb-4">
+                      Still have questions?
+                    </h2>
+                    <p className="text-slate-300 mb-6 sm:mb-8 text-sm sm:text-base md:text-lg">
+                      Our team is here to help. Get personalized answers for your specific situation.
+                    </p>
+                    <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
+                      <Link
+                        href="/calculator"
+                        className="inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground px-6 sm:px-8 py-3 sm:py-4 rounded-lg sm:rounded-xl font-semibold hover:bg-primary/90 transition-all hover:scale-105 shadow-lg text-sm sm:text-base"
+                      >
+                        Schedule Consultation
+                        <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
+                      </Link>
+                      <Link
+                        href="/contact"
+                        className="inline-flex items-center justify-center gap-2 bg-white/5 border border-white/20 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg sm:rounded-xl font-semibold hover:bg-white/10 transition-all text-sm sm:text-base"
+                      >
+                        <MessageSquare className="w-4 h-4 sm:w-5 sm:h-5" />
+                        Contact Us
+                      </Link>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
-
-            {/* FAQ Content */}
-            <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20">
-              <div className="max-w-5xl mx-auto space-y-12 sm:space-y-16">
-                {filteredCategories.length > 0 ? (
-                  filteredCategories.map((category) => {
-                    const Icon = category.icon
-
-                    return (
-                      <section key={category.id} id={category.id} className="scroll-mt-20 sm:scroll-mt-24">
-                        <div className="flex items-start sm:items-center justify-between mb-6 sm:mb-8 gap-4">
-                          <div className="flex items-start sm:items-center gap-3 sm:gap-4">
-                            <div>
-                              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white leading-tight">
-                                {category.title}
-                              </h2>
-                              <p className="text-xs sm:text-sm text-slate-400 mt-1">
-                                {category.questions.length} {category.questions.length === 1 ? "question" : "questions"}
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-
-                        <Accordion type="single" collapsible className="space-y-3 sm:space-y-4">
-                          {category.questions.map((q) => (
-                            <AccordionItem
-                              key={q.id}
-                              value={q.id}
-                              className="group bg-slate-800/50 border border-slate-700 rounded-xl sm:rounded-2xl px-4 sm:px-6 md:px-8 data-[state=open]:shadow-xl data-[state=open]:border-primary/30 transition-all duration-300 hover:shadow-lg hover:border-slate-600"
-                            >
-                              <AccordionTrigger className="text-left hover:no-underline py-4 sm:py-6 touch-manipulation">
-                                <div className="flex items-start gap-2 sm:gap-3 pr-2 sm:pr-4">
-                                  <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 text-primary mt-0.5 sm:mt-1 flex-shrink-0 group-data-[state=open]:rotate-90 transition-transform" />
-                                  <span className="font-semibold text-white text-sm sm:text-base md:text-lg leading-relaxed text-balance">
-                                    {q.question}
-                                  </span>
-                                </div>
-                              </AccordionTrigger>
-                              <AccordionContent className="text-slate-300 text-sm sm:text-base leading-relaxed space-y-3 sm:space-y-4 pb-4 sm:pb-6 pl-6 sm:pl-8">
-                                {q.answer}
-                              </AccordionContent>
-                            </AccordionItem>
-                          ))}
-                        </Accordion>
-                      </section>
-                    )
-                  })
-                ) : (
-                  <div className="text-center py-12 sm:py-16 px-4">
-                    <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-slate-800 flex items-center justify-center mx-auto mb-4 sm:mb-6">
-                      <Search className="w-8 h-8 sm:w-10 sm:h-10 text-slate-400" />
-                    </div>
-                    <h3 className="text-xl sm:text-2xl font-bold text-white mb-2 sm:mb-3">No results found</h3>
-                    <p className="text-sm sm:text-base text-slate-400 mb-4 sm:mb-6 max-w-md mx-auto">
-                      We couldn't find any FAQs matching "{searchQuery}". Try different keywords or browse all
-                      categories.
-                    </p>
-                    <Button
-                      onClick={() => setSearchQuery("")}
-                      variant="outline"
-                      className="touch-manipulation bg-slate-800 border-slate-700 text-white hover:bg-slate-700"
-                    >
-                      Clear Search
-                    </Button>
-                  </div>
-                )}
-
-                {/* Still Have Questions CTA */}
-                <section className="mt-12 sm:mt-16 md:mt-20">
-                  <div className="relative overflow-hidden bg-gradient-to-br from-primary/20 via-primary/10 to-transparent border border-primary/20 rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-12">
-                    <div className="absolute top-0 right-0 w-48 h-48 sm:w-64 sm:h-64 bg-primary/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-                    <div className="absolute bottom-0 left-0 w-48 h-48 sm:w-64 sm:h-64 bg-primary/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
-
-                    <div className="relative z-10 flex flex-col md:flex-row items-start gap-4 sm:gap-6">
-                      <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl bg-primary/20 flex items-center justify-center flex-shrink-0 border border-primary/30">
-                        <Phone className="w-6 h-6 sm:w-8 sm:h-8 text-primary" />
-                      </div>
-                      <div className="flex-1">
-                        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3 sm:mb-4 leading-tight">
-                          Still Have Questions?
-                        </h2>
-                        <p className="text-base sm:text-lg text-slate-300 leading-relaxed mb-6 sm:mb-8 max-w-2xl">
-                          Can't find what you're looking for? Our team is ready to guide you step by step — in simple
-                          English, with full transparency. Get personalized answers to your specific situation.
-                        </p>
-                        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-                          <Button
-                            asChild
-                            size="lg"
-                            className="text-sm sm:text-base group w-full sm:w-auto touch-manipulation"
-                          >
-                            <Link href="/contact" className="flex items-center justify-center gap-2">
-                              Contact Us
-                              <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                            </Link>
-                          </Button>
-                          <Button
-                            asChild
-                            size="lg"
-                            variant="outline"
-                            className="text-sm sm:text-base bg-transparent border-white/20 text-white hover:bg-white/10 w-full sm:w-auto touch-manipulation"
-                          >
-                            <Link href="/calculator">Get Free Consultation</Link>
-                          </Button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </section>
-              </div>
-            </div>
           </motion.div>
-
-          <LandingFooter />
         </AnimatedGridBackground>
       </section>
+      <LandingFooter />
     </main>
   )
 }
