@@ -1,7 +1,7 @@
 "use client"
 
-import dynamic from "next/dynamic"
 import type React from "react"
+import dynamic from "next/dynamic"
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -10,6 +10,7 @@ import { Label } from "@/components/ui/label"
 import { MapPin, Phone, Send, Check, Copy, MessageSquare, ArrowLeft } from "lucide-react"
 import Link from "next/link"
 import { motion } from "framer-motion"
+import { LandingFooter } from "@/components/landing-footer"
 
 const AnimatedGridBackground = dynamic(
   () => import("@/components/ui/animated-grid-background").then((mod) => mod.AnimatedGridBackground),
@@ -26,19 +27,18 @@ const pageVariants = {
 }
 
 export default function ContactPage() {
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     phone: "",
     whatsapp: "",
     companyName: "",
-    serviceType: "",
     message: "",
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle")
   const [copiedItem, setCopiedItem] = useState<string | null>(null)
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -51,7 +51,7 @@ export default function ContactPage() {
     return () => window.removeEventListener("mousemove", handleMouseMove)
   }, [])
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
     setFormData((prev) => ({ ...prev, [name]: value }))
   }
@@ -76,13 +76,12 @@ export default function ContactPage() {
           phone: "",
           whatsapp: "",
           companyName: "",
-          serviceType: "",
           message: "",
         })
       } else {
         setSubmitStatus("error")
       }
-    } catch {
+    } catch (error) {
       setSubmitStatus("error")
     } finally {
       setIsSubmitting(false)
@@ -96,10 +95,10 @@ export default function ContactPage() {
   }
 
   return (
-    <motion.main initial="initial" animate="animate" variants={pageVariants} className="min-h-screen">
+    <main className="min-h-screen">
       <section className="relative w-full min-h-screen flex flex-col bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
         <AnimatedGridBackground className="min-h-screen flex-1">
-          {/* Floating blur blobs */}
+          {/* Floating parallax blobs */}
           <div
             className="absolute top-20 left-10 w-96 h-96 bg-primary/20 rounded-full blur-3xl pointer-events-none"
             style={{
@@ -115,7 +114,12 @@ export default function ContactPage() {
             }}
           />
 
-          <div className="flex-1 w-full flex flex-col lg:scale-[0.85] lg:origin-top lg:mt-24">
+          <motion.div
+            initial="initial"
+            animate="animate"
+            variants={pageVariants}
+            className="flex-1 w-full flex flex-col lg:scale-[0.85] lg:origin-top lg:mt-24"
+          >
             {/* Hero Section */}
             <section className="relative pt-32 pb-12 md:py-24 overflow-hidden">
               <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -128,7 +132,7 @@ export default function ContactPage() {
                 </Link>
 
                 <div className="max-w-3xl mx-auto text-center">
-                  <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 backdrop-blur-sm px-4 py-2 text-sm font-medium text-primary mb-6">
+                  <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 backdrop-blur-sm px-4 py-2 text-sm font-medium text-primary mb-6 border border-primary/20">
                     <MessageSquare className="w-4 h-4" />
                     Get In Touch
                   </div>
@@ -149,7 +153,7 @@ export default function ContactPage() {
                 <div className="grid lg:grid-cols-2 gap-8 md:gap-12 max-w-7xl mx-auto">
                   {/* Contact Form */}
                   <div className="order-2 lg:order-1">
-                    <div className="bg-slate-800/50 backdrop-blur-sm border border-slate-700 rounded-2xl p-6 md:p-8 shadow-lg hover:border-primary/50 transition-all duration-300">
+                    <div className="bg-slate-800/50 border border-slate-700 rounded-2xl p-6 md:p-8 shadow-lg hover:border-primary/50 transition-all duration-300">
                       <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">Send Us a Message</h2>
                       <p className="text-slate-400 mb-6 md:mb-8">
                         Fill out the form below and we'll get back to you within 24 hours.
@@ -169,7 +173,7 @@ export default function ContactPage() {
                               value={formData.name}
                               onChange={handleChange}
                               required
-                              className="h-12 text-base bg-slate-900/50 border-slate-700 text-white placeholder:text-slate-500"
+                              className="h-12 text-base bg-slate-900/50 border-slate-600 text-white placeholder:text-slate-500"
                             />
                           </div>
 
@@ -185,7 +189,7 @@ export default function ContactPage() {
                               value={formData.email}
                               onChange={handleChange}
                               required
-                              className="h-12 text-base bg-slate-900/50 border-slate-700 text-white placeholder:text-slate-500"
+                              className="h-12 text-base bg-slate-900/50 border-slate-600 text-white placeholder:text-slate-500"
                             />
                           </div>
                         </div>
@@ -202,7 +206,7 @@ export default function ContactPage() {
                               placeholder="+66 XX XXX XXXX"
                               value={formData.phone}
                               onChange={handleChange}
-                              className="h-12 text-base bg-slate-900/50 border-slate-700 text-white placeholder:text-slate-500"
+                              className="h-12 text-base bg-slate-900/50 border-slate-600 text-white placeholder:text-slate-500"
                             />
                           </div>
 
@@ -217,7 +221,7 @@ export default function ContactPage() {
                               placeholder="+66 XX XXX XXXX"
                               value={formData.whatsapp}
                               onChange={handleChange}
-                              className="h-12 text-base bg-slate-900/50 border-slate-700 text-white placeholder:text-slate-500"
+                              className="h-12 text-base bg-slate-900/50 border-slate-600 text-white placeholder:text-slate-500"
                             />
                           </div>
                         </div>
@@ -233,7 +237,7 @@ export default function ContactPage() {
                             placeholder="Your Company Ltd."
                             value={formData.companyName}
                             onChange={handleChange}
-                            className="h-12 text-base bg-slate-900/50 border-slate-700 text-white placeholder:text-slate-500"
+                            className="h-12 text-base bg-slate-900/50 border-slate-600 text-white placeholder:text-slate-500"
                           />
                         </div>
 
@@ -249,7 +253,7 @@ export default function ContactPage() {
                             onChange={handleChange}
                             required
                             rows={6}
-                            className="resize-none text-base bg-slate-900/50 border-slate-700 text-white placeholder:text-slate-500"
+                            className="resize-none text-base bg-slate-900/50 border-slate-600 text-white placeholder:text-slate-500"
                           />
                         </div>
 
@@ -269,7 +273,7 @@ export default function ContactPage() {
                         <Button type="submit" disabled={isSubmitting} className="w-full h-12 text-lg font-semibold">
                           {isSubmitting ? (
                             <>
-                              <span className="animate-spin mr-2">...</span>
+                              <span className="animate-spin mr-2">⏳</span>
                               Sending...
                             </>
                           ) : (
@@ -283,12 +287,12 @@ export default function ContactPage() {
                     </div>
                   </div>
 
-                  {/* Contact Information */}
+                  {/* Contact Info */}
                   <div className="order-1 lg:order-2 space-y-6">
                     {/* Office Location */}
-                    <div className="bg-slate-800/50 backdrop-blur-sm rounded-2xl p-6 md:p-8 border border-slate-700 hover:border-primary/50 transition-all duration-300">
+                    <div className="bg-slate-800/50 rounded-2xl p-6 md:p-8 border border-slate-700 hover:border-primary/50 transition-all duration-300 hover:shadow-xl">
                       <div className="flex items-start gap-4 mb-6">
-                        <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-primary/20 flex items-center justify-center">
+                        <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
                           <MapPin className="w-6 h-6 text-primary" />
                         </div>
                         <div>
@@ -310,9 +314,9 @@ export default function ContactPage() {
                     </div>
 
                     {/* Contact Details */}
-                    <div className="bg-slate-800/50 backdrop-blur-sm rounded-2xl p-6 md:p-8 border border-slate-700 hover:border-primary/50 transition-all duration-300">
+                    <div className="bg-slate-800/50 rounded-2xl p-6 md:p-8 border border-slate-700 hover:border-primary/50 transition-all duration-300 hover:shadow-xl">
                       <div className="flex items-start gap-4 mb-6">
-                        <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-primary/20 flex items-center justify-center">
+                        <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
                           <Phone className="w-6 h-6 text-primary" />
                         </div>
                         <div>
@@ -477,9 +481,11 @@ export default function ContactPage() {
                 </div>
               </div>
             </section>
-          </div>
+          </motion.div>
+
+          <LandingFooter />
         </AnimatedGridBackground>
       </section>
-    </motion.main>
+    </main>
   )
 }

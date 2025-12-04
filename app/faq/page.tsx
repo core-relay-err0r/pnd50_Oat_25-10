@@ -3,11 +3,13 @@
 import dynamic from "next/dynamic"
 import { useState, useEffect } from "react"
 import Link from "next/link"
+import Image from "next/image"
 import { ArrowLeft, BookOpen, Flame, MessageCircle, FileText, Phone, Search, ChevronRight, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import { motion } from "framer-motion"
+import { LandingFooter } from "@/components/landing-footer"
 
 const AnimatedGridBackground = dynamic(
   () => import("@/components/ui/animated-grid-background").then((mod) => mod.AnimatedGridBackground),
@@ -274,10 +276,10 @@ export default function FAQPage() {
     .filter((category) => category.questions.length > 0)
 
   return (
-    <motion.main initial="initial" animate="animate" variants={pageVariants} className="min-h-screen">
+    <main className="min-h-screen">
       <section className="relative w-full min-h-screen flex flex-col bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
         <AnimatedGridBackground className="min-h-screen flex-1">
-          {/* Floating blur blobs */}
+          {/* Floating parallax blobs */}
           <div
             className="absolute top-20 left-10 w-96 h-96 bg-primary/20 rounded-full blur-3xl pointer-events-none"
             style={{
@@ -293,9 +295,28 @@ export default function FAQPage() {
             }}
           />
 
-          <div className="flex-1 w-full flex flex-col lg:scale-[0.85] lg:origin-top lg:mt-24">
+          <motion.div
+            initial="initial"
+            animate="animate"
+            variants={pageVariants}
+            className="flex-1 w-full flex flex-col lg:scale-[0.85] lg:origin-top lg:mt-24"
+          >
             {/* Hero Section */}
             <div className="relative overflow-hidden pt-[80px]">
+              {/* Background Image */}
+              <div className="absolute inset-0 z-0">
+                <Image
+                  src="/professional-consultation-questions-answers-help.jpg"
+                  alt="Professional consultation and support"
+                  fill
+                  className="object-cover object-center"
+                  priority
+                />
+                <div className="absolute inset-0 bg-gradient-to-br from-slate-950/80 via-slate-900/70 to-slate-950/80" />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-transparent to-transparent" />
+              </div>
+
+              {/* Content */}
               <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-24">
                 <Link
                   href="/"
@@ -306,7 +327,7 @@ export default function FAQPage() {
                 </Link>
 
                 <div className="max-w-4xl">
-                  <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-primary/10 backdrop-blur-sm text-primary text-xs sm:text-sm font-medium mb-4 sm:mb-6">
+                  <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-primary/10 backdrop-blur-sm border border-primary/20 text-primary text-xs sm:text-sm font-medium mb-4 sm:mb-6">
                     <FileText className="w-3 h-3 sm:w-4 sm:h-4" />
                     Real Questions from Clients
                   </div>
@@ -325,7 +346,7 @@ export default function FAQPage() {
                       placeholder="Search FAQs..."
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
-                      className="pl-10 sm:pl-12 pr-10 sm:pr-12 py-4 sm:py-6 text-sm sm:text-base bg-slate-800/50 backdrop-blur-sm border-slate-700 text-white placeholder:text-slate-400 focus:bg-slate-800/70 focus:border-primary/50 transition-all w-full"
+                      className="pl-10 sm:pl-12 pr-10 sm:pr-12 py-4 sm:py-6 text-sm sm:text-base bg-white/10 backdrop-blur-sm border-white/20 text-white placeholder:text-slate-400 focus:bg-white/15 focus:border-primary/50 transition-all w-full"
                     />
                     {searchQuery && (
                       <button
@@ -341,8 +362,8 @@ export default function FAQPage() {
               </div>
             </div>
 
-            {/* Category tabs */}
-            <div className="border-b border-slate-700 bg-slate-900/50">
+            {/* Category Navigation */}
+            <div className="border-b border-slate-700/50 bg-slate-900/50">
               <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
                 <div className="flex gap-2 sm:gap-3 overflow-x-auto pb-2 scrollbar-hide snap-x snap-mandatory md:flex-wrap md:justify-center md:overflow-visible">
                   {faqCategories.map((category) => {
@@ -351,13 +372,13 @@ export default function FAQPage() {
                       <a
                         key={category.id}
                         href={`#${category.id}`}
-                        className="group flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full bg-slate-800 border border-slate-700 hover:border-primary/50 hover:bg-primary/10 transition-all flex-shrink-0 snap-start touch-manipulation"
+                        className="group flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full bg-slate-800/50 border border-slate-700 hover:border-primary/50 hover:bg-primary/10 transition-all flex-shrink-0 snap-start touch-manipulation"
                       >
                         <Icon className="w-3 h-3 sm:w-4 sm:h-4 text-slate-400 group-hover:text-primary transition-colors" />
                         <span className="text-xs sm:text-sm font-medium text-white whitespace-nowrap">
                           {category.title}
                         </span>
-                        <span className="text-xs px-1.5 sm:px-2 py-0.5 rounded-full bg-slate-700 text-slate-400">
+                        <span className="text-xs px-1.5 sm:px-2 py-0.5 rounded-full bg-slate-700 text-slate-300">
                           {category.questions.length}
                         </span>
                       </a>
@@ -373,6 +394,7 @@ export default function FAQPage() {
                 {filteredCategories.length > 0 ? (
                   filteredCategories.map((category) => {
                     const Icon = category.icon
+
                     return (
                       <section key={category.id} id={category.id} className="scroll-mt-20 sm:scroll-mt-24">
                         <div className="flex items-start sm:items-center justify-between mb-6 sm:mb-8 gap-4">
@@ -432,14 +454,14 @@ export default function FAQPage() {
                   </div>
                 )}
 
-                {/* CTA Section */}
+                {/* Still Have Questions CTA */}
                 <section className="mt-12 sm:mt-16 md:mt-20">
                   <div className="relative overflow-hidden bg-gradient-to-br from-primary/20 via-primary/10 to-transparent border border-primary/20 rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-12">
                     <div className="absolute top-0 right-0 w-48 h-48 sm:w-64 sm:h-64 bg-primary/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
                     <div className="absolute bottom-0 left-0 w-48 h-48 sm:w-64 sm:h-64 bg-primary/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
 
                     <div className="relative z-10 flex flex-col md:flex-row items-start gap-4 sm:gap-6">
-                      <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl bg-primary/20 flex items-center justify-center flex-shrink-0">
+                      <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl bg-primary/20 flex items-center justify-center flex-shrink-0 border border-primary/30">
                         <Phone className="w-6 h-6 sm:w-8 sm:h-8 text-primary" />
                       </div>
                       <div className="flex-1">
@@ -465,11 +487,9 @@ export default function FAQPage() {
                             asChild
                             size="lg"
                             variant="outline"
-                            className="text-sm sm:text-base bg-slate-800/50 backdrop-blur-sm border-slate-700 text-white hover:bg-slate-700 w-full sm:w-auto touch-manipulation"
+                            className="text-sm sm:text-base bg-transparent border-white/20 text-white hover:bg-white/10 w-full sm:w-auto touch-manipulation"
                           >
-                            <Link href="/calculator" className="flex items-center justify-center gap-2">
-                              Schedule Consultation
-                            </Link>
+                            <Link href="/calculator">Get Free Consultation</Link>
                           </Button>
                         </div>
                       </div>
@@ -478,9 +498,11 @@ export default function FAQPage() {
                 </section>
               </div>
             </div>
-          </div>
+          </motion.div>
+
+          <LandingFooter />
         </AnimatedGridBackground>
       </section>
-    </motion.main>
+    </main>
   )
 }

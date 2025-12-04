@@ -7,6 +7,7 @@ import { ArrowRight, ArrowLeft, Mail, MessageSquare, Target, CheckCircle2, Heart
 import { useEffect, useRef, useState } from "react"
 import { Testimonial } from "@/components/ui/testimonial-card"
 import { motion } from "framer-motion"
+import { LandingFooter } from "@/components/landing-footer"
 
 const AnimatedGridBackground = dynamic(
   () => import("@/components/ui/animated-grid-background").then((mod) => mod.AnimatedGridBackground),
@@ -27,17 +28,6 @@ const AboutClientPage = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
 
   useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({
-        x: (e.clientX / window.innerWidth - 0.5) * 20,
-        y: (e.clientY / window.innerHeight - 0.5) * 20,
-      })
-    }
-    window.addEventListener("mousemove", handleMouseMove)
-    return () => window.removeEventListener("mousemove", handleMouseMove)
-  }, [])
-
-  useEffect(() => {
     observerRef.current = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -55,11 +45,22 @@ const AboutClientPage = () => {
     return () => observerRef.current?.disconnect()
   }, [])
 
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePosition({
+        x: (e.clientX / window.innerWidth - 0.5) * 20,
+        y: (e.clientY / window.innerHeight - 0.5) * 20,
+      })
+    }
+    window.addEventListener("mousemove", handleMouseMove)
+    return () => window.removeEventListener("mousemove", handleMouseMove)
+  }, [])
+
   return (
-    <motion.main initial="initial" animate="animate" variants={pageVariants} className="min-h-screen">
+    <main className="min-h-screen">
       <section className="relative w-full min-h-screen flex flex-col bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
         <AnimatedGridBackground className="min-h-screen flex-1">
-          {/* Floating blur blobs */}
+          {/* Floating parallax blobs */}
           <div
             className="absolute top-20 left-10 w-96 h-96 bg-primary/20 rounded-full blur-3xl pointer-events-none"
             style={{
@@ -75,8 +76,13 @@ const AboutClientPage = () => {
             }}
           />
 
-          <div className="flex-1 w-full flex flex-col lg:scale-[0.85] lg:origin-top lg:mt-24">
-            {/* Hero Section */}
+          <motion.div
+            initial="initial"
+            animate="animate"
+            variants={pageVariants}
+            className="flex-1 w-full flex flex-col lg:scale-[0.85] lg:origin-top lg:mt-24"
+          >
+            {/* Hero Section - keeping original layout and images */}
             <section className="relative pb-24 overflow-hidden md:pb-32 md:pt-28 pt-24 px-4 sm:px-6 lg:px-8">
               <div className="container mx-auto px-4 sm:px-6 relative z-10 lg:px-0">
                 <Link
@@ -119,14 +125,14 @@ const AboutClientPage = () => {
                     </Button>
                   </div>
 
-                  {/* Right: Team Portraits */}
+                  {/* Right: Team Portraits - keeping original images */}
                   <div className="scroll-animate opacity-0 translate-y-[50px] transition-all duration-1000 delay-200 relative w-full h-[400px] md:h-[500px] lg:h-[550px] flex items-center justify-center">
                     <div className="relative w-full max-w-[450px] md:max-w-[550px] lg:max-w-[600px] h-full mx-auto">
-                      <div className="absolute top-[8%] left-[2%] w-28 h-28 md:w-36 md:h-36 lg:w-40 lg:h-40 rounded-full opacity-90 z-0 bg-emerald-500/30"></div>
-                      <div className="absolute top-[3%] right-[12%] w-20 h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 rounded-full bg-teal-400/50 opacity-80 z-0"></div>
-                      <div className="absolute bottom-[12%] right-[2%] w-24 h-24 md:w-28 md:h-28 lg:w-32 lg:h-32 rounded-full bg-slate-600 opacity-90 z-0"></div>
+                      <div className="absolute top-[8%] left-[2%] w-28 h-28 md:w-36 md:h-36 lg:w-40 lg:h-40 rounded-full opacity-90 z-0 bg-emerald-200"></div>
+                      <div className="absolute top-[3%] right-[12%] w-20 h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 rounded-full bg-teal-400 opacity-80 z-0"></div>
+                      <div className="absolute bottom-[12%] right-[2%] w-24 h-24 md:w-28 md:h-28 lg:w-32 lg:h-32 rounded-full bg-slate-700 opacity-90 z-0"></div>
 
-                      <div className="absolute top-[12%] right-[8%] w-40 h-40 md:w-48 md:h-48 lg:w-56 lg:h-56 rounded-full overflow-hidden border-4 border-slate-700 shadow-xl z-10 hover:scale-105 transition-transform duration-300">
+                      <div className="absolute top-[12%] right-[8%] w-40 h-40 md:w-48 md:h-48 lg:w-56 lg:h-56 rounded-full overflow-hidden border-4 border-white shadow-xl z-10 hover:scale-105 transition-transform duration-300">
                         <img
                           src="/images/design-mode/1762253199-5dad463014758156b5bfb284002cae3f-1%20%281%29.png"
                           alt="Team member"
@@ -134,7 +140,7 @@ const AboutClientPage = () => {
                         />
                       </div>
 
-                      <div className="absolute bottom-[8%] left-[12%] w-48 h-48 md:w-56 md:h-56 lg:w-64 lg:h-64 rounded-full overflow-hidden border-4 border-slate-700 shadow-xl z-10 hover:scale-105 transition-transform duration-300">
+                      <div className="absolute bottom-[8%] left-[12%] w-48 h-48 md:w-56 md:h-56 lg:w-64 lg:h-64 rounded-full overflow-hidden border-4 border-white shadow-xl z-10 hover:scale-105 transition-transform duration-300">
                         <img
                           src="/images/design-mode/1762253343-033ac0ccd097640356a38028c4f0f916-1.png.jpeg"
                           alt="Team member"
@@ -149,11 +155,11 @@ const AboutClientPage = () => {
 
             {/* Our Mission Section */}
             <section className="py-12 sm:py-24 md:py-32 relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-96 h-96 bg-primary/10 rounded-full blur-3xl"></div>
+              <div className="absolute top-0 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl"></div>
               <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 <div className="max-w-7xl mx-auto">
                   <div className="flex flex-col lg:grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-                    {/* Image */}
+                    {/* Image - keeping original */}
                     <div className="scroll-animate opacity-0 translate-y-[30px] sm:translate-x-[50px] transition-all duration-1000 delay-200 relative w-full min-w-0 lg:order-last order-first">
                       <div className="relative aspect-[3/4] rounded-3xl overflow-hidden shadow-2xl mx-auto max-w-md lg:max-w-full">
                         <img
@@ -161,9 +167,9 @@ const AboutClientPage = () => {
                           alt="Professional team consultation meeting"
                           className="w-full h-full object-cover parallax-image"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/50 to-transparent"></div>
+                        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/30 to-transparent"></div>
 
-                        <div className="absolute bottom-4 sm:bottom-6 left-4 sm:left-6 right-4 sm:right-6 bg-slate-900/90 backdrop-blur-md rounded-2xl p-3 sm:p-4 max-w-full z-20">
+                        <div className="absolute bottom-4 sm:bottom-6 left-4 sm:left-6 right-4 sm:right-6 bg-slate-900/90 backdrop-blur-md rounded-2xl p-3 sm:p-4 border border-slate-700 max-w-full z-20">
                           <div className="grid grid-cols-3 gap-2 sm:gap-3 text-center">
                             <div className="min-w-0">
                               <div className="text-xl sm:text-2xl md:text-3xl font-bold text-primary mb-1">10+</div>
@@ -236,7 +242,7 @@ const AboutClientPage = () => {
 
             {/* Our Success Stories Section */}
             <section className="py-12 sm:py-24 md:py-32 bg-slate-900/50 relative overflow-hidden">
-              <div className="absolute bottom-0 left-0 w-96 h-96 bg-chart-2/10 rounded-full blur-3xl"></div>
+              <div className="absolute bottom-0 left-0 w-96 h-96 bg-chart-2/5 rounded-full blur-3xl"></div>
               <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 <div className="max-w-7xl mx-auto">
                   <div className="text-center mb-12 sm:mb-16">
@@ -283,24 +289,24 @@ const AboutClientPage = () => {
             </section>
 
             {/* Call to Action Section */}
-            <section className="py-12 sm:py-24 md:py-32 bg-slate-800/50 relative overflow-hidden">
+            <section className="py-12 sm:py-24 md:py-32 bg-gradient-to-br from-primary via-primary/90 to-chart-2 relative overflow-hidden">
               <div className="absolute inset-0 opacity-10">
                 <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAxMCAwIEwgMCAwIDAgMTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmlkKSIvPjwvc3ZnPg==')]"></div>
               </div>
-              <div className="absolute top-10 left-10 w-64 h-64 bg-primary/20 rounded-full blur-3xl"></div>
-              <div className="absolute bottom-10 right-10 w-64 h-64 bg-cyan-500/20 rounded-full blur-3xl"></div>
+              <div className="absolute top-10 left-10 w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
+              <div className="absolute bottom-10 right-10 w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
 
               <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-                <h2 className="text-4xl font-bold text-white mb-6 leading-tight md:text-5xl">
+                <h2 className="text-4xl font-bold text-primary-foreground mb-6 leading-tight md:text-5xl">
                   Let's Simplify Accounting in Thailand — Together.
                 </h2>
-                <p className="text-slate-300 max-w-3xl mx-auto mb-12 leading-relaxed md:text-lg text-lg">
+                <p className="text-primary-foreground/90 max-w-3xl mx-auto mb-12 leading-relaxed md:text-lg text-lg">
                   Your business deserves clear, compliant, and modern accounting support. Reach out today to see how we
                   can help.
                 </p>
 
                 <div className="flex flex-wrap justify-center gap-4">
-                  <Button asChild size="lg" className="bg-primary hover:bg-primary/90 group">
+                  <Button asChild size="lg" variant="secondary" className="group">
                     <Link href="/contact" className="flex items-center gap-2">
                       <Mail className="w-5 h-5" />
                       Contact Us
@@ -311,7 +317,7 @@ const AboutClientPage = () => {
                     asChild
                     size="lg"
                     variant="outline"
-                    className="bg-transparent border-slate-600 text-white hover:bg-slate-700/50"
+                    className="bg-transparent border-white/20 text-white hover:bg-white/10"
                   >
                     <Link href="/calculator" className="flex items-center gap-2">
                       <MessageSquare className="w-5 h-5" />
@@ -321,10 +327,12 @@ const AboutClientPage = () => {
                 </div>
               </div>
             </section>
-          </div>
+          </motion.div>
+
+          <LandingFooter />
         </AnimatedGridBackground>
       </section>
-    </motion.main>
+    </main>
   )
 }
 

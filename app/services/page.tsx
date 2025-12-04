@@ -5,6 +5,7 @@ import Link from "next/link"
 import ServiceSlider from "@/components/service-slider"
 import { motion } from "framer-motion"
 import { useEffect, useState } from "react"
+import { LandingFooter } from "@/components/landing-footer"
 
 const AnimatedGridBackground = dynamic(
   () => import("@/components/ui/animated-grid-background").then((mod) => mod.AnimatedGridBackground),
@@ -83,10 +84,10 @@ export default function ServicesPage() {
   }, [])
 
   return (
-    <motion.main initial="initial" animate="animate" variants={pageVariants} className="min-h-screen">
+    <main className="min-h-screen">
       <section className="relative w-full min-h-screen flex flex-col bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
         <AnimatedGridBackground className="min-h-screen flex-1">
-          {/* Floating blur blobs */}
+          {/* Floating parallax blobs */}
           <div
             className="absolute top-20 left-10 w-96 h-96 bg-primary/20 rounded-full blur-3xl pointer-events-none"
             style={{
@@ -102,7 +103,12 @@ export default function ServicesPage() {
             }}
           />
 
-          <div className="flex-1 w-full flex flex-col lg:scale-[0.85] lg:origin-top lg:mt-24">
+          <motion.div
+            initial="initial"
+            animate="animate"
+            variants={pageVariants}
+            className="flex-1 w-full flex flex-col lg:scale-[0.85] lg:origin-top lg:mt-24"
+          >
             {/* Hero Section */}
             <section className="relative py-8 md:py-12 pt-[100px] lg:pt-[100px]">
               <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
@@ -110,8 +116,8 @@ export default function ServicesPage() {
                   href="/"
                   className="inline-flex items-center gap-2 text-slate-400 hover:text-primary transition-colors group mb-6 sm:mb-8 touch-manipulation"
                 >
-                  
-                  
+                  <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+                  <span className="text-sm font-medium">Back to Home</span>
                 </Link>
 
                 <div className="text-center max-w-3xl mx-auto">
@@ -158,16 +164,18 @@ export default function ServicesPage() {
                   </Link>
                   <Link
                     href="/contact"
-                    className="inline-flex items-center justify-center gap-2 bg-white/10 backdrop-blur-sm text-white px-8 py-4 rounded-lg font-semibold hover:bg-white/20 transition-all"
+                    className="inline-flex items-center justify-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 text-white px-8 py-4 rounded-lg font-semibold hover:bg-white/20 transition-all"
                   >
                     Contact Us
                   </Link>
                 </div>
               </div>
             </section>
-          </div>
+          </motion.div>
+
+          <LandingFooter />
         </AnimatedGridBackground>
       </section>
-    </motion.main>
+    </main>
   )
 }
