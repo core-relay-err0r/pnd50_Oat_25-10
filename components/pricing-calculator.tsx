@@ -201,16 +201,28 @@ export function PricingCalculator() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -20 }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
+      className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950"
+    >
       {/* Header */}
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 pt-6">
-        <Link
-          href="/"
-          className="inline-flex items-center gap-2 text-slate-400 hover:text-primary transition-colors group mb-6"
+        <motion.div
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.2, duration: 0.4 }}
         >
-          <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-          <span className="text-sm font-medium">Back to Home</span>
-        </Link>
+          <Link
+            href="/"
+            className="inline-flex items-center gap-2 text-slate-400 hover:text-primary transition-colors group mb-6"
+          >
+            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+            <span className="text-sm font-medium">Back to Home</span>
+          </Link>
+        </motion.div>
       </div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12">
@@ -219,6 +231,7 @@ export function PricingCalculator() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
             className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 rounded-full border border-primary/20 mb-6"
           >
             <Sparkles className="w-4 h-4 text-primary" />
@@ -227,7 +240,7 @@ export function PricingCalculator() {
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
+            transition={{ delay: 0.4 }}
             className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4"
           >
             Build Your Custom Quote
@@ -235,14 +248,20 @@ export function PricingCalculator() {
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
+            transition={{ delay: 0.5 }}
             className="text-lg text-slate-400 max-w-2xl mx-auto"
           >
             Select the services you need and get an instant price estimate. No hidden fees.
           </motion.p>
         </div>
 
-        <div className="grid lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+        {/* Main Content Grid */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.6, duration: 0.5 }}
+          className="grid lg:grid-cols-3 gap-8 max-w-7xl mx-auto"
+        >
           {/* Left Column - Service Selection */}
           <div className="lg:col-span-2 space-y-4">
             {(Object.keys(servicesData) as ServiceCategory[]).map((categoryKey, index) => {
@@ -350,7 +369,7 @@ export function PricingCalculator() {
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 }}
+                transition={{ delay: 0.6, duration: 0.5 }}
                 className="bg-slate-800/80 backdrop-blur-xl rounded-2xl border border-slate-700/50 overflow-hidden"
               >
                 {/* Panel Header */}
@@ -443,7 +462,7 @@ export function PricingCalculator() {
               </motion.div>
             </div>
           </div>
-        </div>
+        </motion.div>
 
         {/* Variables Modal */}
         <AnimatePresence>
@@ -596,6 +615,6 @@ export function PricingCalculator() {
           )}
         </AnimatePresence>
       </div>
-    </div>
+    </motion.div>
   )
 }
