@@ -4,7 +4,7 @@ import { Resend } from "resend"
 const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null
 
 // Company email to receive all quote requests
-const COMPANY_EMAIL = "oat3653377@gmail.com"
+const COMPANY_EMAIL = "info@pnd50.com"
 
 export async function POST(request: NextRequest) {
   if (!resend) {
@@ -124,7 +124,7 @@ export async function POST(request: NextRequest) {
             <div style="text-align: center; margin: 30px 0;">
               <p style="color: #666;">Questions? Contact us anytime:</p>
               <p style="margin: 10px 0;">
-                <strong>Email:</strong> oat3653377@gmail.com<br>
+                <strong>Email:</strong> info@pnd50.com<br>
               </p>
             </div>
           </div>
