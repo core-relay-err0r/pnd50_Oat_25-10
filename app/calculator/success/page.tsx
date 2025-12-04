@@ -1,10 +1,16 @@
 "use client"
 
-import { CheckCircle, Clock, ArrowLeft, Mail } from "lucide-react"
+import { useState, useEffect } from "react"
+import { CheckCircle, Clock, ArrowLeft, Mail, Sparkles } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import Link from "next/link"
 import { motion } from "framer-motion"
+import dynamic from "next/dynamic"
+
+const AnimatedGridBackground = dynamic(
+  () => import("@/components/ui/animated-grid-background").then((mod) => mod.AnimatedGridBackground),
+  { ssr: false },
+)
 
 const pageVariants = {
   initial: { opacity: 0, y: 20 },
@@ -16,27 +22,102 @@ const pageVariants = {
 }
 
 export default function CalculatorSuccessPage() {
-  return (
-    <motion.div initial="initial" animate="animate" variants={pageVariants} className="min-h-screen bg-gray-50">
-      <div className="container mx-auto px-4 py-12 max-w-2xl">
-        <Card className="bg-white shadow-lg border-0">
-          <CardHeader className="text-center pb-6">
-            <div className="flex justify-center mb-6">
-              <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center">
-                <CheckCircle className="h-12 w-12 text-green-600" />
-              </div>
-            </div>
-            <CardTitle className="text-3xl font-bold text-gray-900 mb-3">Quote Sent Successfully!</CardTitle>
-            <p className="text-lg text-gray-600">Thank you for your interest in PND50 Accounting Services</p>
-          </CardHeader>
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
 
-          <CardContent className="space-y-8">
-            <div className="p-6 bg-green-50 border border-green-200 rounded-lg">
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePosition({
+        x: (e.clientX - window.innerWidth / 2) / 50,
+        y: (e.clientY - window.innerHeight / 2) / 50,
+      })
+    }
+    window.addEventListener("mousemove", handleMouseMove)
+    return () => window.removeEventListener("mousemove", handleMouseMove)
+  }, [])
+
+  return (
+    <AnimatedGridBackground className="min-h-screen">
+      {/* Floating parallax blobs */}
+      <div
+        className="absolute top-20 left-10 w-96 h-96 bg-primary/20 rounded-full blur-3xl pointer-events-none"
+        style={{
+          transform: `translate(${mousePosition.x}px, ${mousePosition.y}px)`,
+          transition: "transform 0.5s ease-out",
+        }}
+      />
+      <div
+        className="absolute bottom-20 right-10 w-96 h-96 bg-chart-2/20 rounded-full blur-3xl pointer-events-none"
+        style={{
+          transform: `translate(${-mousePosition.x}px, ${-mousePosition.y}px)`,
+          transition: "transform 0.5s ease-out",
+        }}
+      />
+
+      <motion.div initial="initial" animate="animate" variants={pageVariants} className="relative z-10 min-h-screen">
+        {/* Header with back button */}
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-4">
+          <Link href="/calculator">
+            <Button variant="ghost" className="text-slate-400 hover:text-white hover:bg-white/10">
+              <ArrowLeft className="mr-2 h-4 w-4" />
+              Back to Calculator
+            </Button>
+          </Link>
+        </div>
+
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12">
+          {/* Title Section */}
+          <div className="text-center mb-12">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="flex justify-center mb-6"
+            >
+              <div className="w-20 h-20 bg-green-500/20 rounded-full flex items-center justify-center border border-green-500/30">
+                <CheckCircle className="h-12 w-12 text-green-400" />
+              </div>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+              className="inline-flex items-center gap-2 px-4 py-2 bg-green-500/10 rounded-full border border-green-500/20 mb-6"
+            >
+              <Sparkles className="w-4 h-4 text-green-400" />
+              <span className="text-sm font-medium text-green-400">Quote Submitted Successfully</span>
+            </motion.div>
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 }}
+              className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4"
+            >
+              Thank You!
+            </motion.h1>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5 }}
+              className="text-lg text-slate-400 max-w-2xl mx-auto"
+            >
+              Your quote request has been received. Our team will review your requirements and get back to you shortly.
+            </motion.p>
+          </div>
+
+          {/* Info Cards */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6, duration: 0.5 }}
+            className="max-w-2xl mx-auto space-y-6"
+          >
+            {/* Quote Delivered Card */}
+            <div className="p-6 bg-green-500/10 border border-green-500/20 rounded-xl backdrop-blur-sm">
               <div className="flex items-start gap-4">
-                <Mail className="h-6 w-6 text-green-600 mt-1" />
+                <Mail className="h-6 w-6 text-green-400 mt-1 flex-shrink-0" />
                 <div>
-                  <h3 className="text-lg font-semibold text-green-900 mb-2">Your Quote Has Been Delivered</h3>
-                  <p className="text-green-700">
+                  <h3 className="text-lg font-semibold text-white mb-2">Your Quote Has Been Delivered</h3>
+                  <p className="text-slate-300">
                     We've received your business information and sent your detailed accounting services quote to our
                     team for review.
                   </p>
@@ -44,39 +125,44 @@ export default function CalculatorSuccessPage() {
               </div>
             </div>
 
-            <div className="p-6 bg-blue-50 border border-blue-200 rounded-lg">
+            {/* What Happens Next Card */}
+            <div className="p-6 bg-primary/10 border border-primary/20 rounded-xl backdrop-blur-sm">
               <div className="flex items-start gap-4">
-                <Clock className="h-6 w-6 text-blue-600 mt-1" />
+                <Clock className="h-6 w-6 text-primary mt-1 flex-shrink-0" />
                 <div>
-                  <h3 className="text-lg font-semibold text-blue-900 mb-2">What Happens Next?</h3>
-                  <div className="space-y-2 text-blue-700">
+                  <h3 className="text-lg font-semibold text-white mb-2">What Happens Next?</h3>
+                  <div className="space-y-2 text-slate-300">
                     <p>• Our accounting specialists will review your requirements</p>
                     <p>• We'll prepare a customized service proposal for your business</p>
                     <p>
-                      • <strong>We will contact you within 1 business day</strong> to discuss your needs
+                      • <span className="text-white font-medium">We will contact you within 1 business day</span> to
+                      discuss your needs
                     </p>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="p-6 bg-gray-50 border border-gray-200 rounded-lg">
-              <h3 className="text-lg font-semibold text-gray-900 mb-3">Need Immediate Assistance?</h3>
-              <p className="text-gray-700 mb-4">
+            {/* Immediate Assistance Card */}
+            <div className="p-6 bg-white/5 border border-white/10 rounded-xl backdrop-blur-sm">
+              <h3 className="text-lg font-semibold text-white mb-3">Need Immediate Assistance?</h3>
+              <p className="text-slate-300 mb-4">
                 If you have urgent questions or need to speak with us immediately, feel free to reach out:
               </p>
-              <div className="space-y-2 text-gray-700">
+              <div className="space-y-2 text-slate-300">
                 <p>
-                  <strong>Email:</strong> info@pnd50.com
+                  <span className="text-white font-medium">Email:</span> info@pnd50.com
                 </p>
                 <p>
-                  <strong>Business Hours:</strong> Monday - Friday, 9:00 AM - 6:00 PM (Thailand Time)
+                  <span className="text-white font-medium">Business Hours:</span> Monday - Friday, 9:00 AM - 6:00 PM
+                  (Thailand Time)
                 </p>
               </div>
             </div>
 
-            <div className="flex gap-4 pt-6">
-              <Button asChild className="flex-1 bg-blue-600 hover:bg-blue-700 text-white">
+            {/* Action Buttons */}
+            <div className="flex flex-col sm:flex-row gap-4 pt-6">
+              <Button asChild className="flex-1 bg-primary hover:bg-primary/90 text-white">
                 <Link href="/">
                   <ArrowLeft className="mr-2 h-4 w-4" />
                   Back to Home
@@ -85,14 +171,14 @@ export default function CalculatorSuccessPage() {
               <Button
                 asChild
                 variant="outline"
-                className="flex-1 border-gray-300 text-gray-700 hover:bg-gray-50 bg-transparent"
+                className="flex-1 border-white/20 text-white hover:bg-white/10 bg-transparent"
               >
-                <Link href="/calculator">Schedule Another Consultation</Link>
+                <Link href="/calculator">Get Another Quote</Link>
               </Button>
             </div>
-          </CardContent>
-        </Card>
-      </div>
-    </motion.div>
+          </motion.div>
+        </div>
+      </motion.div>
+    </AnimatedGridBackground>
   )
 }
