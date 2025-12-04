@@ -108,8 +108,8 @@ Keep responses brief. Guide them to click categories and select services.
     : `
 🎯 GUIDING USERS:
 - Answer questions about services, pricing, and processes naturally
-- When users ask about getting started, pricing, or next steps, mention: "You can use our Pricing Calculator at /calculator to see exact prices and get a quote"
-- ONLY mention the calculator when it's contextually relevant to their question
+- When users ask about getting started, pricing, or next steps, mention: "You can Schedule a Consultation at /calculator to discuss your needs and get a personalized quote"
+- ONLY mention scheduling a consultation when it's contextually relevant to their question
 - Don't force it into every response - answer their actual question first
 - Be conversational and helpful, not pushy or repetitive
 - If they're just asking informational questions, simply answer them
