@@ -78,65 +78,6 @@ export async function POST(request: NextRequest) {
       </html>
     `
 
-    // Email template for client (confirmation)
-    const clientEmailHtml = `
-      <!DOCTYPE html>
-      <html>
-        <head>
-          <meta charset="utf-8">
-          <title>Your Quote from PND50</title>
-        </head>
-        <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
-          <div style="background: linear-gradient(135deg, #4f46e5 0%, #06b6d4 100%); color: white; padding: 30px; text-align: center; border-radius: 10px 10px 0 0;">
-            <h1 style="margin: 0; font-size: 28px;">PND50</h1>
-            <p style="margin: 10px 0 0 0; font-size: 16px; opacity: 0.9;">Your Service Quote</p>
-          </div>
-          
-          <div style="background: white; padding: 30px; border: 1px solid #e0e0e0; border-radius: 0 0 10px 10px;">
-            <h2 style="color: #4f46e5; margin-top: 0;">Hello ${contactInfo.name},</h2>
-            
-            <p>Thank you for your interest in PND50's services. Below is a summary of your quote request:</p>
-
-            <h3 style="color: #4f46e5;">Selected Services</h3>
-            <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
-              <thead>
-                <tr style="background: #f8f9fa;">
-                  <th style="padding: 12px; text-align: left; border-bottom: 2px solid #4f46e5;">Service</th>
-                  <th style="padding: 12px; text-align: right; border-bottom: 2px solid #4f46e5;">Price</th>
-                </tr>
-              </thead>
-              <tbody>
-                ${servicesHtml}
-              </tbody>
-            </table>
-
-            <div style="background: #4f46e5; color: white; padding: 20px; border-radius: 8px; text-align: center; margin: 20px 0;">
-              <h3 style="margin: 0 0 10px 0;">Total Estimated Price</h3>
-              <div style="font-size: 32px; font-weight: bold;">฿${totalPrice.toLocaleString()}/month</div>
-              <p style="margin: 10px 0 0 0; opacity: 0.9;">Year 1 Total: ฿${(totalPrice * 12).toLocaleString()}</p>
-            </div>
-
-            <div style="background: #e0f2fe; padding: 20px; border-radius: 8px; margin: 20px 0;">
-              <h3 style="margin-top: 0; color: #333;">What's Next?</h3>
-              <p style="margin: 0;">Our team will review your request and get back to you within 1 business day to discuss your needs in detail and answer any questions.</p>
-            </div>
-
-            <div style="text-align: center; margin: 30px 0;">
-              <p style="color: #666;">Questions? Contact us anytime:</p>
-              <p style="margin: 10px 0;">
-                <strong>Email:</strong> info@pnd50.com<br>
-              </p>
-            </div>
-          </div>
-
-          <div style="text-align: center; padding: 20px; color: #666; font-size: 12px;">
-            <p>© ${new Date().getFullYear()} PND50. All rights reserved.</p>
-            <p>This quote is valid for 30 days from the date of issue.</p>
-          </div>
-        </body>
-      </html>
-    `
-
     console.log("[v0] Sending email to company:", COMPANY_EMAIL)
     const companyResult = await resend.emails.send({
       from: "PND50 Quote System <onboarding@resend.dev>",
@@ -146,16 +87,7 @@ export async function POST(request: NextRequest) {
     })
     console.log("[v0] Company email sent:", companyResult)
 
-    console.log("[v0] Sending confirmation email to client:", contactInfo.email)
-    const clientResult = await resend.emails.send({
-      from: "PND50 <onboarding@resend.dev>",
-      to: contactInfo.email,
-      subject: `Your Quote from PND50 - ฿${totalPrice.toLocaleString()}/month`,
-      html: clientEmailHtml,
-    })
-    console.log("[v0] Client email sent:", clientResult)
-
-    return NextResponse.json({ success: true, companyResult, clientResult })
+    return NextResponse.json({ success: true, companyResult })
   } catch (error: unknown) {
     const errorMessage = error instanceof Error ? error.message : "Unknown error"
     console.error("[v0] Error sending quote emails:", error)
