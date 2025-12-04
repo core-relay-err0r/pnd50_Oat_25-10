@@ -290,7 +290,7 @@ export default function ContactPage() {
                     <br />
                     689 Sukhumvit Rd, Khlong Tan Nuea
                     <br />
-                    Watthana, Bangkok 10110
+                    Watthana, Bangkok 10110. Thailand.
                   </p>
                 </div>
               </div>
