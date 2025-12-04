@@ -177,11 +177,31 @@ export function PricingCalculator() {
   const handleSubmit = async () => {
     setIsSubmitting(true)
     try {
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1500))
+      const response = await fetch("/api/send-quote", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          contactInfo,
+          selectedServices: selectedServices.map((s) => ({
+            name: s.name,
+            price: s.price * (s.quantity || 1),
+            quantity: s.quantity,
+          })),
+          totalPrice: preliminaryTotal.yearTotal,
+        }),
+      })
+
+      if (!response.ok) {
+        const errorData = await response.json()
+        throw new Error(errorData.error || "Failed to send quote")
+      }
+
       router.push("/calculator/success")
     } catch (error) {
       console.error("Error submitting quote:", error)
+      alert("Failed to send quote. Please try again.")
     } finally {
       setIsSubmitting(false)
     }
