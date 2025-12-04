@@ -303,7 +303,7 @@ export function PricingCalculator() {
                     {/* Category Button */}
                     <button
                       onClick={() => toggleCategory(categoryKey)}
-                      className={`w-full flex items-center justify-between p-5 rounded-2xl transition-all duration-300 ${
+                      className={`w-full flex items-center justify-between p-5 rounded-2xl transition-all duration-300 border-none ${
                         isExpanded
                           ? "bg-slate-800/80 border-2 border-primary/50"
                           : "bg-slate-800/50 border-2 border-slate-700/50 hover:border-slate-600"
