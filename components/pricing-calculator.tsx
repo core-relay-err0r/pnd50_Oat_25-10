@@ -543,7 +543,7 @@ export function PricingCalculator() {
                   initial={{ scale: 0.9, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
                   exit={{ scale: 0.9, opacity: 0 }}
-                  className="bg-slate-800 rounded-2xl border border-slate-700 p-6 w-full max-w-md"
+                  className="bg-slate-800 rounded-2xl border border-slate-700 p-6 w-full max-w-md border-none"
                   onClick={(e) => e.stopPropagation()}
                 >
                   <div className="text-center mb-6">
