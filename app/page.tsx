@@ -49,14 +49,14 @@ export default function PND50Landing() {
       <section className="relative w-full min-h-screen flex flex-col bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
         <AnimatedGridBackground className="min-h-screen flex-1">
           <div
-            className="absolute top-20 left-10 w-96 h-96 bg-primary/20 rounded-full blur-3xl pointer-events-none"
+            className="absolute top-20 left-10 w-96 h-96 bg-primary/10 rounded-full blur-3xl pointer-events-none"
             style={{
               transform: `translate(${mousePosition.x}px, ${mousePosition.y}px)`,
               transition: "transform 0.5s ease-out",
             }}
           />
           <div
-            className="absolute bottom-20 right-10 w-96 h-96 bg-chart-2/20 rounded-full blur-3xl pointer-events-none"
+            className="absolute bottom-20 right-10 w-96 h-96 bg-accent/10 rounded-full blur-3xl pointer-events-none"
             style={{
               transform: `translate(${-mousePosition.x}px, ${-mousePosition.y}px)`,
               transition: "transform 0.5s ease-out",
@@ -69,16 +69,16 @@ export default function PND50Landing() {
                 {/* Left side - Hero content */}
                 <div className="text-center lg:text-left space-y-6 md:space-y-8">
                   <motion.div
-                    className={`hidden lg:inline-flex items-center gap-2.5 rounded-full bg-gradient-to-r from-primary/10 to-chart-2/10 backdrop-blur-md px-6 py-3 text-sm font-semibold text-white mb-2 border border-primary/20 hover:bg-primary/20 hover:scale-105 hover:border-primary/40 border-none`}
+                    className={`hidden lg:inline-flex items-center gap-2.5 rounded-full bg-slate-800/60 backdrop-blur-md px-6 py-3 text-sm font-medium text-slate-200 mb-2 border border-slate-700/50 hover:bg-slate-800/80 hover:border-slate-600/50 transition-all duration-300`}
                     initial={{ opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.2, duration: 0.4 }}
                   >
-                    <span className="relative flex h-2.5 w-2.5">
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                      <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+                    <span className="relative flex h-2 w-2">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-2 w-2 bg-accent"></span>
                     </span>
-                    <span className="leading-tight">Thailand's Leading Tech-Driven Corporate Services Firm.</span>
+                    <span className="leading-tight">Thailand's Leading Tech-Driven Corporate Services Firm</span>
                   </motion.div>
 
                   <motion.h1
@@ -87,7 +87,7 @@ export default function PND50Landing() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.3, duration: 0.5 }}
                   >
-                    <span className="bg-gradient-to-r from-primary via-chart-2 to-primary bg-clip-text text-transparent animate-gradient-shift inline-block pb-2 leading-[1.15]">
+                    <span className="bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient-shift inline-block pb-2 leading-[1.15]">
                       AI Boutique
                     </span>
                     <br />
@@ -121,14 +121,14 @@ export default function PND50Landing() {
                   </div>
 
                   <motion.p
-                    className="text-base md:text-lg lg:text-xl max-w-2xl mx-auto lg:mx-0 leading-relaxed text-slate-300"
+                    className="text-base md:text-lg lg:text-xl max-w-2xl mx-auto lg:mx-0 leading-relaxed text-slate-400"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.4, duration: 0.5 }}
                   >
                     You Talk to an Expert, Not a Robot. We connect you with a dedicated human advisor who speaks your
-                    native language. Our AI makes them <span className="text-primary font-semibold">5x faster</span> and{" "}
-                    <span className="text-chart-2 font-semibold">totally error-free</span>.
+                    native language. Our AI makes them <span className="text-primary font-medium">5x faster</span> and{" "}
+                    <span className="text-accent font-medium">totally error-free</span>.
                   </motion.p>
 
                   <motion.div
