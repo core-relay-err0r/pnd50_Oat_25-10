@@ -11,12 +11,12 @@ export function LandingFooter() {
               href="https://burakornpartners.com/"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-accent hover:text-accent/80 transition-colors underline decoration-accent/30 underline-offset-4"
+              className="text-primary hover:text-primary/80 transition-colors underline decoration-primary/30 underline-offset-4"
             >
               Burakorn Partners
             </Link>
           </p>
-          <p className="text-[10px] text-slate-500 mt-2">© {new Date().getFullYear()} PND50. All rights reserved.</p>
+          <p className="text-[10px] text-slate-600 mt-2">© {new Date().getFullYear()} PND50. All rights reserved.</p>
         </div>
       </div>
     </footer>

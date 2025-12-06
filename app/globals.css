@@ -4,79 +4,75 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* Updated to more professional, corporate color palette with deeper blues */
-  --background: hsl(210 20% 98%);
-  --foreground: hsl(220 25% 10%);
+  /* Updated color palette for more sophisticated, professional design */
+  --background: hsl(0 0% 100%);
+  --foreground: hsl(0 0% 10%);
   --card: hsl(0 0% 100%);
-  --card-foreground: hsl(220 25% 10%);
+  --card-foreground: hsl(0 0% 10%);
   --popover: hsl(0 0% 100%);
-  --popover-foreground: hsl(220 25% 10%);
-  /* Primary changed to deeper, more professional blue */
-  --primary: hsl(215 80% 50%);
+  --popover-foreground: hsl(0 0% 10%);
+  --primary: hsl(217 91% 60%);
   --primary-foreground: hsl(0 0% 100%);
-  --secondary: hsl(215 20% 94%);
-  --secondary-foreground: hsl(220 25% 10%);
-  --muted: hsl(215 20% 94%);
-  --muted-foreground: hsl(220 15% 45%);
-  /* Accent changed to refined cyan */
-  --accent: hsl(195 70% 45%);
+  --secondary: hsl(210 40% 96%);
+  --secondary-foreground: hsl(0 0% 10%);
+  --muted: hsl(210 40% 96%);
+  --muted-foreground: hsl(0 0% 45%);
+  --accent: hsl(217 91% 60%);
   --accent-foreground: hsl(0 0% 100%);
-  --destructive: hsl(0 70% 50%);
+  --destructive: hsl(0 84% 60%);
   --destructive-foreground: hsl(0 0% 98%);
-  --border: hsl(215 20% 88%);
-  --input: hsl(215 20% 88%);
-  --ring: hsl(215 80% 50%);
-  /* Chart colors updated for professional palette */
-  --chart-1: hsl(215 80% 50%);
-  --chart-2: hsl(195 70% 45%);
-  --chart-3: hsl(220 30% 25%);
-  --chart-4: hsl(45 70% 50%);
-  --chart-5: hsl(15 75% 55%);
-  --radius: 0.625rem;
-  --sidebar-background: hsl(210 20% 98%);
-  --sidebar-foreground: hsl(220 20% 30%);
-  --sidebar-primary: hsl(215 80% 50%);
+  --border: hsl(214 32% 91%);
+  --input: hsl(214 32% 91%);
+  --ring: hsl(217 91% 60%);
+  --chart-1: hsl(217 91% 60%);
+  --chart-2: hsl(142 76% 36%);
+  --chart-3: hsl(197 37% 24%);
+  --chart-4: hsl(43 74% 66%);
+  --chart-5: hsl(27 87% 67%);
+  --radius: 0.75rem;
+  --sidebar-background: hsl(0 0% 98%);
+  --sidebar-foreground: hsl(240 5.3% 26.1%);
+  --sidebar-primary: hsl(217 91% 60%);
   --sidebar-primary-foreground: hsl(0 0% 98%);
-  --sidebar-accent: hsl(215 20% 94%);
-  --sidebar-accent-foreground: hsl(215 80% 50%);
-  --sidebar-border: hsl(215 20% 88%);
-  --sidebar-ring: hsl(215 80% 50%);
+  --sidebar-accent: hsl(210 40% 96%);
+  --sidebar-accent-foreground: hsl(217 91% 60%);
+  --sidebar-border: hsl(214 32% 91%);
+  --sidebar-ring: hsl(217 91% 60%);
 }
 
 .dark {
-  /* Dark mode updated with deeper navy tones for professional look */
-  --background: hsl(220 30% 6%);
-  --foreground: hsl(210 20% 95%);
-  --card: hsl(220 30% 8%);
-  --card-foreground: hsl(210 20% 95%);
-  --popover: hsl(220 30% 8%);
-  --popover-foreground: hsl(210 20% 95%);
-  --primary: hsl(215 75% 60%);
+  --background: hsl(222 47% 11%);
+  --foreground: hsl(210 40% 98%);
+  --card: hsl(222 47% 11%);
+  --card-foreground: hsl(210 40% 98%);
+  --popover: hsl(222 47% 11%);
+  --popover-foreground: hsl(210 40% 98%);
+  --primary: hsl(217 91% 60%);
   --primary-foreground: hsl(0 0% 100%);
-  --secondary: hsl(220 25% 14%);
-  --secondary-foreground: hsl(210 20% 95%);
-  --muted: hsl(220 25% 14%);
-  --muted-foreground: hsl(215 15% 55%);
-  --accent: hsl(195 65% 50%);
-  --accent-foreground: hsl(0 0% 100%);
-  --destructive: hsl(0 60% 45%);
-  --destructive-foreground: hsl(210 20% 95%);
-  --border: hsl(220 25% 14%);
-  --input: hsl(220 25% 14%);
-  --ring: hsl(215 75% 60%);
-  --chart-1: hsl(215 75% 60%);
-  --chart-2: hsl(195 65% 50%);
-  --chart-3: hsl(220 30% 30%);
-  --chart-4: hsl(45 65% 50%);
-  --chart-5: hsl(15 70% 50%);
-  --sidebar-background: hsl(220 30% 6%);
-  --sidebar-foreground: hsl(210 20% 95%);
-  --sidebar-primary: hsl(215 75% 60%);
+  --secondary: hsl(217 33% 17%);
+  --secondary-foreground: hsl(210 40% 98%);
+  --muted: hsl(217 33% 17%);
+  --muted-foreground: hsl(215 20% 65%);
+  --accent: hsl(217 33% 17%);
+  --accent-foreground: hsl(210 40% 98%);
+  --destructive: hsl(0 63% 31%);
+  --destructive-foreground: hsl(210 40% 98%);
+  --border: hsl(217 33% 17%);
+  --input: hsl(217 33% 17%);
+  --ring: hsl(217 91% 60%);
+  --chart-1: hsl(217 91% 60%);
+  --chart-2: hsl(142 76% 36%);
+  --chart-3: hsl(197 37% 24%);
+  --chart-4: hsl(43 74% 66%);
+  --chart-5: hsl(27 87% 67%);
+  --sidebar-background: hsl(222 47% 11%);
+  --sidebar-foreground: hsl(210 40% 98%);
+  --sidebar-primary: hsl(217 91% 60%);
   --sidebar-primary-foreground: hsl(0 0% 98%);
-  --sidebar-accent: hsl(220 25% 14%);
-  --sidebar-accent-foreground: hsl(210 20% 95%);
-  --sidebar-border: hsl(220 25% 14%);
-  --sidebar-ring: hsl(215 75% 60%);
+  --sidebar-accent: hsl(217 33% 17%);
+  --sidebar-accent-foreground: hsl(210 40% 98%);
+  --sidebar-border: hsl(217 33% 17%);
+  --sidebar-ring: hsl(217 91% 60%);
 }
 
 /* Tailwind v4: @theme directive for design system tokens */
@@ -157,17 +153,17 @@
   text-wrap: balance;
 }
 
-/* Updated animated grid to be more subtle for professional look */
+/* Enhanced animated grid with smoother animation */
 .animated-grid {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-  background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-  background-size: 60px 60px;
-  animation: move-grid 40s linear infinite;
-  mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, black 20%, transparent 100%);
+  background-image: linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 50px 50px;
+  animation: move-grid 30s linear infinite;
+  mask-image: radial-gradient(ellipse 60% 60% at 50% 50%, black 30%, transparent 100%);
 }
 
 @keyframes move-grid {
