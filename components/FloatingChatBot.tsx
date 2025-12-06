@@ -4,7 +4,7 @@ import type React from "react"
 import type { SpeechRecognition } from "web-speech-api"
 
 import { useState, useEffect, useRef, useCallback } from "react"
-import { X, Send, EyeOff, Volume2, VolumeX, Mic, MicOff, Square } from "lucide-react"
+import { X, EyeOff, Volume2, VolumeX, Mic, MicOff, Square } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useChat } from "@ai-sdk/react"
 import { DefaultChatTransport } from "ai"
@@ -500,26 +500,49 @@ export function FloatingChatBot() {
                 <div ref={messagesEndRef} />
               </div>
 
-              <div className="p-3 bg-background border-t border-border">
-                <div className="flex items-start gap-2">
-                  <div className="flex-shrink-0 mt-2">
-                    <ColorOrb dimension="20px" tones={{ base: "oklch(22.64% 0 0)" }} spinDuration={15} />
-                  </div>
-                  <div className="flex-1 relative">
-                    <textarea
-                      ref={textareaRef}
-                      value={inputValue}
-                      onChange={(e) => setInputValue(e.target.value)}
-                      onKeyDown={handleKeyDown}
-                      placeholder={isListening ? "Listening..." : "Ask me anything..."}
-                      disabled={status === "in_progress"}
-                      rows={2}
-                      className={`w-full px-3 py-2 border border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent text-sm disabled:opacity-50 disabled:cursor-not-allowed bg-background text-foreground resize-none ${isListening ? "border-primary ring-2 ring-primary/30" : ""}`}
-                      spellCheck={false}
+              <div className="p-3 bg-zinc-900 border-t border-zinc-800">
+                {/* Header with AI Input label and keyboard hints */}
+                <div className="flex items-center justify-between mb-2">
+                  <div className="flex items-center gap-2">
+                    <ColorOrb
+                      dimension="20px"
+                      tones={{
+                        base: "oklch(22.64% 0 0)",
+                        accent1: "oklch(75% 0.18 320)",
+                        accent2: "oklch(80% 0.15 200)",
+                        accent3: "oklch(70% 0.12 250)",
+                      }}
+                      spinDuration={12}
                     />
+                    <span className="text-zinc-300 text-sm font-medium">AI Input</span>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <kbd className="text-zinc-500 flex h-5 items-center justify-center rounded border border-zinc-700 bg-zinc-800 px-1.5 font-sans text-[10px]">
+                      ⌘
+                    </kbd>
+                    <kbd className="text-zinc-400 flex h-5 items-center justify-center rounded border border-zinc-700 bg-zinc-800 px-2 font-sans text-[11px]">
+                      Enter
+                    </kbd>
                   </div>
                 </div>
-                <div className="flex items-center justify-between mt-2 px-1">
+
+                {/* Textarea */}
+                <div className="relative">
+                  <textarea
+                    ref={textareaRef}
+                    value={inputValue}
+                    onChange={(e) => setInputValue(e.target.value)}
+                    onKeyDown={handleKeyDown}
+                    placeholder={isListening ? "Listening..." : "Ask me anything..."}
+                    disabled={status === "in_progress"}
+                    rows={3}
+                    className={`w-full px-3 py-2.5 bg-transparent border border-zinc-700 rounded-lg focus:outline-none focus:ring-1 focus:ring-zinc-600 focus:border-zinc-600 text-sm text-zinc-200 placeholder:text-zinc-500 disabled:opacity-50 disabled:cursor-not-allowed resize-none ${isListening ? "border-primary ring-1 ring-primary/30" : ""}`}
+                    spellCheck={false}
+                  />
+                </div>
+
+                {/* Bottom actions */}
+                <div className="flex items-center justify-between mt-3">
                   <div className="flex items-center gap-1">
                     {recognitionSupported && (
                       <Button
@@ -528,27 +551,21 @@ export function FloatingChatBot() {
                         size="sm"
                         onClick={isListening ? stopListening : startListening}
                         disabled={status === "in_progress"}
-                        className={`h-7 px-2 rounded-lg ${isListening ? "bg-destructive/10 text-destructive hover:bg-destructive/20" : "text-muted-foreground hover:text-foreground"}`}
+                        className={`h-7 px-2 rounded-lg ${isListening ? "bg-destructive/10 text-destructive hover:bg-destructive/20" : "text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800"}`}
                         aria-label={isListening ? "Stop listening" : "Start voice input"}
                       >
                         {isListening ? <MicOff className="w-3.5 h-3.5" /> : <Mic className="w-3.5 h-3.5" />}
                       </Button>
                     )}
                   </div>
-                  <div className="flex items-center gap-2">
-                    <div className="hidden sm:flex items-center gap-1">
-                      <KeyHint>Enter</KeyHint>
-                      <span className="text-muted-foreground text-[10px]">to send</span>
-                    </div>
-                    <Button
-                      onClick={handleSend}
-                      disabled={status === "in_progress" || !inputValue.trim()}
-                      size="sm"
-                      className="h-7 px-3 rounded-lg bg-primary hover:bg-primary/90 text-primary-foreground disabled:opacity-50"
-                    >
-                      <Send className="w-3.5 h-3.5" />
-                    </Button>
-                  </div>
+                  <Button
+                    onClick={handleSend}
+                    disabled={status === "in_progress" || !inputValue.trim()}
+                    size="sm"
+                    className="h-8 px-4 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-200 border border-zinc-700 disabled:opacity-50 font-medium text-sm"
+                  >
+                    Ask AI
+                  </Button>
                 </div>
               </div>
             </div>
