@@ -1,15 +1,14 @@
 "use client"
 
 import type React from "react"
-import type { SpeechRecognition } from "web-speech-api" // Declare SpeechRecognition here
+import type { SpeechRecognition } from "web-speech-api"
 
 import { useState, useEffect, useRef, useCallback } from "react"
-import { X, MessageCircle, Send, EyeOff, Volume2, VolumeX, Mic, MicOff, Square } from "lucide-react"
+import { X, Send, EyeOff, Volume2, VolumeX, Mic, MicOff, Square } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useChat } from "@ai-sdk/react"
 import { DefaultChatTransport } from "ai"
 import { usePathname } from "next/navigation"
-import { useIsMobile } from "@/components/ui/use-mobile"
 import { cx } from "class-variance-authority"
 import { AnimatePresence, motion } from "framer-motion"
 
@@ -34,19 +33,12 @@ const ColorOrb: React.FC<OrbProps> = ({ dimension = "192px", className, tones, s
   }
 
   const palette = { ...fallbackTones, ...tones }
-
   const dimValue = Number.parseInt(dimension.replace("px", ""), 10)
-
   const blurStrength = dimValue < 50 ? Math.max(dimValue * 0.008, 1) : Math.max(dimValue * 0.015, 4)
-
   const contrastStrength = dimValue < 50 ? Math.max(dimValue * 0.004, 1.2) : Math.max(dimValue * 0.008, 1.5)
-
   const pixelDot = dimValue < 50 ? Math.max(dimValue * 0.004, 0.05) : Math.max(dimValue * 0.008, 0.1)
-
   const shadowRange = dimValue < 50 ? Math.max(dimValue * 0.004, 0.5) : Math.max(dimValue * 0.008, 2)
-
   const maskRadius = dimValue < 30 ? "0%" : dimValue < 50 ? "5%" : dimValue < 100 ? "15%" : "25%"
-
   const adjustedContrast =
     dimValue < 30 ? 1.1 : dimValue < 50 ? Math.max(contrastStrength * 1.2, 1.3) : contrastStrength
 
@@ -76,7 +68,6 @@ const ColorOrb: React.FC<OrbProps> = ({ dimension = "192px", className, tones, s
           inherits: false;
           initial-value: 0deg;
         }
-
         .color-orb {
           display: grid;
           grid-template-areas: "stack";
@@ -85,7 +76,6 @@ const ColorOrb: React.FC<OrbProps> = ({ dimension = "192px", className, tones, s
           position: relative;
           transform: scale(1.1);
         }
-
         .color-orb::before,
         .color-orb::after {
           content: "";
@@ -96,75 +86,35 @@ const ColorOrb: React.FC<OrbProps> = ({ dimension = "192px", className, tones, s
           border-radius: 50%;
           transform: translateZ(0);
         }
-
         .color-orb::before {
           background:
-            conic-gradient(
-              from calc(var(--angle) * 2) at 25% 70%,
-              var(--accent3),
-              transparent 20% 80%,
-              var(--accent3)
-            ),
-            conic-gradient(
-              from calc(var(--angle) * 2) at 45% 75%,
-              var(--accent2),
-              transparent 30% 60%,
-              var(--accent2)
-            ),
-            conic-gradient(
-              from calc(var(--angle) * -3) at 80% 20%,
-              var(--accent1),
-              transparent 40% 60%,
-              var(--accent1)
-            ),
-            conic-gradient(
-              from calc(var(--angle) * 2) at 15% 5%,
-              var(--accent2),
-              transparent 10% 90%,
-              var(--accent2)
-            ),
-            conic-gradient(
-              from calc(var(--angle) * 1) at 20% 80%,
-              var(--accent1),
-              transparent 10% 90%,
-              var(--accent1)
-            ),
-            conic-gradient(
-              from calc(var(--angle) * -2) at 85% 10%,
-              var(--accent3),
-              transparent 20% 80%,
-              var(--accent3)
-            );
+            conic-gradient(from calc(var(--angle) * 2) at 25% 70%, var(--accent3), transparent 20% 80%, var(--accent3)),
+            conic-gradient(from calc(var(--angle) * 2) at 45% 75%, var(--accent2), transparent 30% 60%, var(--accent2)),
+            conic-gradient(from calc(var(--angle) * -3) at 80% 20%, var(--accent1), transparent 40% 60%, var(--accent1)),
+            conic-gradient(from calc(var(--angle) * 2) at 15% 5%, var(--accent2), transparent 10% 90%, var(--accent2)),
+            conic-gradient(from calc(var(--angle) * 1) at 20% 80%, var(--accent1), transparent 10% 90%, var(--accent1)),
+            conic-gradient(from calc(var(--angle) * -2) at 85% 10%, var(--accent3), transparent 20% 80%, var(--accent3));
           box-shadow: inset var(--base) 0 0 var(--shadow) calc(var(--shadow) * 0.2);
           filter: blur(var(--blur)) contrast(var(--contrast));
           animation: spin var(--spin-duration) linear infinite;
         }
-
         .color-orb::after {
-          background-image: radial-gradient(
-            circle at center,
-            var(--base) var(--dot),
-            transparent var(--dot)
-          );
+          background-image: radial-gradient(circle at center, var(--base) var(--dot), transparent var(--dot));
           background-size: calc(var(--dot) * 2) calc(var(--dot) * 2);
           backdrop-filter: blur(calc(var(--blur) * 2)) contrast(calc(var(--contrast) * 2));
           mix-blend-mode: overlay;
         }
-
         .color-orb[style*="--mask: 0%"]::after {
           mask-image: none;
         }
-
         .color-orb:not([style*="--mask: 0%"])::after {
           mask-image: radial-gradient(black var(--mask), transparent 75%);
         }
-
         @keyframes spin {
           to {
             --angle: 360deg;
           }
         }
-
         @media (prefers-reduced-motion: reduce) {
           .color-orb::before {
             animation: none;
@@ -175,13 +125,26 @@ const ColorOrb: React.FC<OrbProps> = ({ dimension = "192px", className, tones, s
   )
 }
 
+function KeyHint({ children, className }: { children: string; className?: string }) {
+  return (
+    <kbd
+      className={cx(
+        "text-muted-foreground flex h-5 w-fit items-center justify-center rounded-sm border border-border bg-muted/50 px-1.5 font-sans text-[10px]",
+        className,
+      )}
+    >
+      {children}
+    </kbd>
+  )
+}
+
 const WELCOME_MESSAGE = {
   id: "welcome-static",
   role: "assistant" as const,
   parts: [
     {
       type: "text" as const,
-      text: "👋 Hi there! I'm Panida, your digital assistant from PND50.\n\nI can help you find the right accounting or tax service for your company — and get your quotation in just a few minutes.\n\nShall we get started? 📋 ✨",
+      text: "Hi there! I'm Panida, your digital assistant from PND50.\n\nI can help you find the right accounting or tax service for your company — and get your quotation in just a few minutes.\n\nShall we get started?",
     },
   ],
   createdAt: new Date(),
@@ -191,8 +154,6 @@ export function FloatingChatBot() {
   const [isOpen, setIsOpen] = useState(false)
   const [isHidden, setIsHidden] = useState(false)
   const pathname = usePathname()
-  const isOnCalculator = pathname === "/calculator"
-  const isMobile = useIsMobile()
 
   const [voiceEnabled, setVoiceEnabled] = useState(false)
   const [isListening, setIsListening] = useState(false)
@@ -204,16 +165,14 @@ export function FloatingChatBot() {
   const synthRef = useRef<SpeechSynthesis | null>(null)
   const lastSpokenMessageRef = useRef<string | null>(null)
   const messagesEndRef = useRef<HTMLDivElement>(null)
+  const textareaRef = useRef<HTMLTextAreaElement>(null)
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      // Check TTS support
       if ("speechSynthesis" in window) {
         setSpeechSupported(true)
         synthRef.current = window.speechSynthesis
       }
-
-      // Check STT support
       const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
       if (SpeechRecognition) {
         setRecognitionSupported(true)
@@ -222,8 +181,6 @@ export function FloatingChatBot() {
         recognitionRef.current.interimResults = false
         recognitionRef.current.lang = "en-US"
       }
-
-      // Load voice preference
       const savedVoicePref = localStorage.getItem("chatbot-voice-enabled")
       if (savedVoicePref === "true") {
         setVoiceEnabled(true)
@@ -252,17 +209,12 @@ export function FloatingChatBot() {
   })
 
   const messages = [WELCOME_MESSAGE, ...aiMessages]
-
   const [inputValue, setInputValue] = useState("")
 
   const speakText = useCallback(
     (text: string) => {
       if (!speechSupported || !synthRef.current || !voiceEnabled) return
-
-      // Cancel any ongoing speech
       synthRef.current.cancel()
-
-      // Clean text for speech (remove emojis and special characters)
       const cleanText = text
         .replace(/[\u{1F600}-\u{1F64F}]/gu, "")
         .replace(/[\u{1F300}-\u{1F5FF}]/gu, "")
@@ -271,15 +223,11 @@ export function FloatingChatBot() {
         .replace(/[\u{2700}-\u{27BF}]/gu, "")
         .replace(/[*#_~`]/g, "")
         .trim()
-
       if (!cleanText) return
-
       const utterance = new SpeechSynthesisUtterance(cleanText)
       utterance.rate = 1.0
       utterance.pitch = 1.1
       utterance.volume = 1.0
-
-      // Try to use a female voice
       const voices = synthRef.current.getVoices()
       const femaleVoice =
         voices.find(
@@ -291,15 +239,12 @@ export function FloatingChatBot() {
             voice.name.includes("Moira") ||
             (voice.lang.startsWith("en") && voice.name.toLowerCase().includes("female")),
         ) || voices.find((voice) => voice.lang.startsWith("en"))
-
       if (femaleVoice) {
         utterance.voice = femaleVoice
       }
-
       utterance.onstart = () => setIsSpeaking(true)
       utterance.onend = () => setIsSpeaking(false)
       utterance.onerror = () => setIsSpeaking(false)
-
       synthRef.current.speak(utterance)
     },
     [speechSupported, voiceEnabled],
@@ -314,14 +259,12 @@ export function FloatingChatBot() {
 
   useEffect(() => {
     if (!voiceEnabled || aiMessages.length === 0) return
-
     const lastMessage = aiMessages[aiMessages.length - 1]
     if (lastMessage.role === "assistant" && status !== "in_progress") {
       const messageText = lastMessage.parts
         .filter((part) => part.type === "text")
         .map((part) => part.text)
         .join(" ")
-
       if (messageText && messageText !== lastSpokenMessageRef.current) {
         lastSpokenMessageRef.current = messageText
         speakText(messageText)
@@ -333,7 +276,6 @@ export function FloatingChatBot() {
     const newValue = !voiceEnabled
     setVoiceEnabled(newValue)
     localStorage.setItem("chatbot-voice-enabled", String(newValue))
-
     if (!newValue && isSpeaking) {
       stopSpeaking()
     }
@@ -341,21 +283,17 @@ export function FloatingChatBot() {
 
   const startListening = useCallback(() => {
     if (!recognitionRef.current || isListening) return
-
     recognitionRef.current.onresult = (event) => {
       const transcript = event.results[0][0].transcript
       setInputValue((prev) => prev + (prev ? " " : "") + transcript)
       setIsListening(false)
     }
-
     recognitionRef.current.onerror = () => {
       setIsListening(false)
     }
-
     recognitionRef.current.onend = () => {
       setIsListening(false)
     }
-
     try {
       recognitionRef.current.start()
       setIsListening(true)
@@ -376,14 +314,30 @@ export function FloatingChatBot() {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
   }, [messages])
 
+  useEffect(() => {
+    if (isOpen) {
+      setTimeout(() => {
+        textareaRef.current?.focus()
+      }, 100)
+    }
+  }, [isOpen])
+
   const handleSend = () => {
     if (!inputValue.trim() || status === "in_progress") return
     sendMessage({ text: inputValue })
     setInputValue("")
   }
 
-  const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === "Enter" && !e.shiftKey) {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === "Escape") {
+      setIsOpen(false)
+      stopSpeaking()
+    }
+    if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) {
+      e.preventDefault()
+      handleSend()
+    }
+    if (e.key === "Enter" && !e.shiftKey && !e.metaKey && !e.ctrlKey) {
       e.preventDefault()
       handleSend()
     }
@@ -408,7 +362,7 @@ export function FloatingChatBot() {
         className="fixed bottom-4 md:bottom-6 right-4 md:right-6 z-50 bg-background hover:bg-muted text-muted-foreground rounded-full shadow-lg hover:shadow-xl px-4 py-2 text-sm transition-all duration-300 hover:scale-105 flex items-center gap-2 border border-border"
         aria-label="Show AI assistant"
       >
-        <MessageCircle className="w-4 h-4" />
+        <ColorOrb dimension="20px" tones={{ base: "oklch(22.64% 0 0)" }} spinDuration={15} />
         <span>Chat with Panida</span>
       </button>
     )
@@ -416,27 +370,32 @@ export function FloatingChatBot() {
 
   return (
     <>
-      {/* Chat Window */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            className="fixed bottom-20 md:bottom-24 right-4 md:right-6 z-50 w-full max-w-[calc(100vw-2rem)] md:w-[380px] md:max-w-[calc(100vw-3rem)]"
+            className="fixed bottom-20 md:bottom-24 right-4 md:right-6 z-50 w-full max-w-[calc(100vw-2rem)] md:w-[400px] md:max-w-[calc(100vw-3rem)]"
             initial={{ opacity: 0, y: 20, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
-            transition={{ type: "spring", stiffness: 400, damping: 30 }}
+            transition={{ type: "spring", stiffness: 500, damping: 35 }}
           >
             <div className="bg-background rounded-2xl shadow-2xl overflow-hidden border border-border">
-              {/* Header */}
-              <div className="bg-primary p-4 flex items-center justify-between">
+              <div className="px-4 py-3 flex items-center justify-between border-b border-border">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-primary-foreground/20 backdrop-blur-sm flex items-center justify-center">
-                    <MessageCircle className="w-5 h-5 text-primary-foreground" />
-                  </div>
+                  <ColorOrb
+                    dimension="28px"
+                    tones={{
+                      base: "oklch(22.64% 0 0)",
+                      accent1: "oklch(65% 0.15 220)",
+                      accent2: "oklch(70% 0.12 180)",
+                      accent3: "oklch(68% 0.14 200)",
+                    }}
+                    spinDuration={15}
+                  />
                   <div>
-                    <h3 className="text-primary-foreground font-semibold">Panida - PND50 Assistant</h3>
-                    <p className="text-primary-foreground/80 text-xs">
-                      {status === "in_progress" ? "Typing..." : isSpeaking ? "Speaking..." : "Online"}
+                    <h3 className="text-foreground font-medium text-sm">PND50 Assistant</h3>
+                    <p className="text-muted-foreground text-xs">
+                      {status === "in_progress" ? "Typing..." : isSpeaking ? "Speaking..." : "Chat with Panida"}
                     </p>
                   </div>
                 </div>
@@ -444,21 +403,19 @@ export function FloatingChatBot() {
                   {speechSupported && (
                     <button
                       onClick={toggleVoice}
-                      className={`text-primary-foreground hover:bg-primary-foreground/20 rounded-lg p-1.5 transition-colors ${voiceEnabled ? "bg-primary-foreground/20" : ""}`}
+                      className={`text-muted-foreground hover:text-foreground hover:bg-muted rounded-lg p-1.5 transition-colors ${voiceEnabled ? "bg-muted text-foreground" : ""}`}
                       aria-label={voiceEnabled ? "Disable voice" : "Enable voice"}
-                      title={voiceEnabled ? "Disable voice" : "Enable voice"}
                     >
-                      {voiceEnabled ? <Volume2 className="w-5 h-5" /> : <VolumeX className="w-5 h-5" />}
+                      {voiceEnabled ? <Volume2 className="w-4 h-4" /> : <VolumeX className="w-4 h-4" />}
                     </button>
                   )}
                   {isSpeaking && (
                     <button
                       onClick={stopSpeaking}
-                      className="text-primary-foreground hover:bg-primary-foreground/20 rounded-lg p-1.5 transition-colors animate-pulse"
+                      className="text-muted-foreground hover:text-foreground hover:bg-muted rounded-lg p-1.5 transition-colors animate-pulse"
                       aria-label="Stop speaking"
-                      title="Stop speaking"
                     >
-                      <Square className="w-4 h-4" />
+                      <Square className="w-3.5 h-3.5" />
                     </button>
                   )}
                   <button
@@ -466,23 +423,23 @@ export function FloatingChatBot() {
                       setIsOpen(false)
                       stopSpeaking()
                     }}
-                    className="text-primary-foreground hover:bg-primary-foreground/20 rounded-lg p-1.5 transition-colors"
+                    className="text-muted-foreground hover:text-foreground hover:bg-muted rounded-lg p-1.5 transition-colors"
                     aria-label="Close chat"
                   >
-                    <X className="w-5 h-5" />
+                    <X className="w-4 h-4" />
                   </button>
                 </div>
               </div>
 
               {/* Messages */}
-              <div className="h-[400px] overflow-y-auto p-4 space-y-4 bg-muted/30">
+              <div className="h-[350px] overflow-y-auto p-4 space-y-3 bg-muted/20">
                 {messages.map((message) => (
                   <div key={message.id} className={`flex ${message.role === "user" ? "justify-end" : "justify-start"}`}>
                     <div
-                      className={`max-w-[80%] rounded-2xl px-4 py-2.5 ${
+                      className={`max-w-[85%] rounded-2xl px-4 py-2.5 ${
                         message.role === "user"
                           ? "bg-primary text-primary-foreground"
-                          : "bg-background text-foreground border border-border"
+                          : "bg-background text-foreground border border-border shadow-sm"
                       }`}
                     >
                       {message.parts.map((part, index) => {
@@ -495,9 +452,9 @@ export function FloatingChatBot() {
                         }
                         return null
                       })}
-                      <div className="flex items-center justify-between mt-1">
+                      <div className="flex items-center justify-between mt-1.5 gap-2">
                         <p
-                          className={`text-xs ${message.role === "user" ? "text-primary-foreground/70" : "text-muted-foreground"}`}
+                          className={`text-[10px] ${message.role === "user" ? "text-primary-foreground/60" : "text-muted-foreground"}`}
                         >
                           {message.createdAt?.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
                         </p>
@@ -510,11 +467,10 @@ export function FloatingChatBot() {
                                 .join(" ")
                               speakText(text)
                             }}
-                            className="text-muted-foreground hover:text-primary transition-colors p-1"
+                            className="text-muted-foreground hover:text-primary transition-colors p-0.5"
                             aria-label="Speak this message"
-                            title="Speak this message"
                           >
-                            <Volume2 className="w-3.5 h-3.5" />
+                            <Volume2 className="w-3 h-3" />
                           </button>
                         )}
                       </div>
@@ -523,20 +479,20 @@ export function FloatingChatBot() {
                 ))}
                 {status === "in_progress" && (
                   <div className="flex justify-start">
-                    <div className="bg-background text-foreground border border-border rounded-2xl px-4 py-2.5">
-                      <div className="flex gap-1">
+                    <div className="bg-background text-foreground border border-border rounded-2xl px-4 py-3 shadow-sm">
+                      <div className="flex gap-1.5">
                         <span
-                          className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce"
+                          className="w-2 h-2 bg-muted-foreground/50 rounded-full animate-bounce"
                           style={{ animationDelay: "0ms" }}
-                        ></span>
+                        />
                         <span
-                          className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce"
+                          className="w-2 h-2 bg-muted-foreground/50 rounded-full animate-bounce"
                           style={{ animationDelay: "150ms" }}
-                        ></span>
+                        />
                         <span
-                          className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce"
+                          className="w-2 h-2 bg-muted-foreground/50 rounded-full animate-bounce"
                           style={{ animationDelay: "300ms" }}
-                        ></span>
+                        />
                       </div>
                     </div>
                   </div>
@@ -544,44 +500,56 @@ export function FloatingChatBot() {
                 <div ref={messagesEndRef} />
               </div>
 
-              {/* Input */}
-              <div className="p-4 bg-background border-t border-border">
-                <div className="flex gap-2">
-                  <input
-                    type="text"
-                    value={inputValue}
-                    onChange={(e) => setInputValue(e.target.value)}
-                    onKeyPress={handleKeyPress}
-                    placeholder={isListening ? "Listening..." : "Type your message..."}
-                    disabled={status === "in_progress"}
-                    className={`flex-1 px-4 py-2.5 border border-input rounded-xl focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent text-sm disabled:opacity-50 disabled:cursor-not-allowed bg-background text-foreground ${isListening ? "border-primary ring-2 ring-primary/50" : ""}`}
-                  />
-                  {recognitionSupported && (
-                    <Button
-                      onClick={isListening ? stopListening : startListening}
+              <div className="p-3 bg-background border-t border-border">
+                <div className="flex items-start gap-2">
+                  <div className="flex-shrink-0 mt-2">
+                    <ColorOrb dimension="20px" tones={{ base: "oklch(22.64% 0 0)" }} spinDuration={15} />
+                  </div>
+                  <div className="flex-1 relative">
+                    <textarea
+                      ref={textareaRef}
+                      value={inputValue}
+                      onChange={(e) => setInputValue(e.target.value)}
+                      onKeyDown={handleKeyDown}
+                      placeholder={isListening ? "Listening..." : "Ask me anything..."}
                       disabled={status === "in_progress"}
-                      className={`rounded-xl px-3 transition-all ${
-                        isListening
-                          ? "bg-destructive hover:bg-destructive/90 text-destructive-foreground animate-pulse"
-                          : "bg-muted hover:bg-muted/80 text-muted-foreground"
-                      }`}
-                      aria-label={isListening ? "Stop listening" : "Start voice input"}
-                      title={isListening ? "Stop listening" : "Start voice input"}
-                    >
-                      {isListening ? <MicOff className="w-4 h-4" /> : <Mic className="w-4 h-4" />}
-                    </Button>
-                  )}
-                  <Button
-                    onClick={handleSend}
-                    disabled={status === "in_progress" || !inputValue.trim()}
-                    className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl px-4 disabled:opacity-50 disabled:cursor-not-allowed"
-                  >
-                    <Send className="w-4 h-4" />
-                  </Button>
+                      rows={2}
+                      className={`w-full px-3 py-2 border border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent text-sm disabled:opacity-50 disabled:cursor-not-allowed bg-background text-foreground resize-none ${isListening ? "border-primary ring-2 ring-primary/30" : ""}`}
+                      spellCheck={false}
+                    />
+                  </div>
                 </div>
-                <p className="text-xs text-muted-foreground mt-2 text-center">
-                  {recognitionSupported ? "Press Enter to send • Click mic to speak" : "Press Enter to send"}
-                </p>
+                <div className="flex items-center justify-between mt-2 px-1">
+                  <div className="flex items-center gap-1">
+                    {recognitionSupported && (
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="sm"
+                        onClick={isListening ? stopListening : startListening}
+                        disabled={status === "in_progress"}
+                        className={`h-7 px-2 rounded-lg ${isListening ? "bg-destructive/10 text-destructive hover:bg-destructive/20" : "text-muted-foreground hover:text-foreground"}`}
+                        aria-label={isListening ? "Stop listening" : "Start voice input"}
+                      >
+                        {isListening ? <MicOff className="w-3.5 h-3.5" /> : <Mic className="w-3.5 h-3.5" />}
+                      </Button>
+                    )}
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="hidden sm:flex items-center gap-1">
+                      <KeyHint>Enter</KeyHint>
+                      <span className="text-muted-foreground text-[10px]">to send</span>
+                    </div>
+                    <Button
+                      onClick={handleSend}
+                      disabled={status === "in_progress" || !inputValue.trim()}
+                      size="sm"
+                      className="h-7 px-3 rounded-lg bg-primary hover:bg-primary/90 text-primary-foreground disabled:opacity-50"
+                    >
+                      <Send className="w-3.5 h-3.5" />
+                    </Button>
+                  </div>
+                </div>
               </div>
             </div>
           </motion.div>
@@ -590,12 +558,10 @@ export function FloatingChatBot() {
 
       {!isOpen && (
         <div className="fixed bottom-4 md:bottom-6 right-4 md:right-6 z-50 flex items-center gap-2">
-          {/* Hide button */}
           <motion.button
             onClick={handleHide}
             className="bg-background hover:bg-muted text-muted-foreground rounded-full shadow-lg hover:shadow-xl p-2.5 transition-colors border border-border hover:border-destructive/30 hover:text-destructive"
             aria-label="Hide AI assistant"
-            title="Hide AI assistant"
             initial={{ opacity: 0, x: 10 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.1 }}
@@ -603,33 +569,26 @@ export function FloatingChatBot() {
             <EyeOff className="w-4 h-4" />
           </motion.button>
 
-          {/* Main chat button - MorphPanel style */}
           <motion.button
             onClick={() => setIsOpen(true)}
-            className="relative bg-background hover:bg-muted text-foreground rounded-full shadow-xl hover:shadow-2xl flex items-center gap-3 px-4 py-3 md:px-5 md:py-3.5 transition-all duration-300 border border-border hover:border-primary/50 group"
+            className="relative bg-background hover:bg-muted/50 text-foreground rounded-full shadow-xl hover:shadow-2xl flex items-center gap-3 px-4 py-2.5 transition-all duration-300 border border-border hover:border-primary/30"
             aria-label="Open chat with Panida"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
-            {/* ColorOrb */}
-            <div className="flex-shrink-0">
-              <ColorOrb
-                dimension="32px"
-                tones={{
-                  base: "oklch(95% 0.02 220)",
-                  accent1: "oklch(65% 0.15 220)",
-                  accent2: "oklch(70% 0.12 180)",
-                  accent3: "oklch(68% 0.14 200)",
-                }}
-                spinDuration={15}
-              />
-            </div>
-
-            {/* Text */}
-            <div className="flex flex-col items-start">
-              <span className="text-sm font-semibold text-foreground leading-tight">PND50 Assistant </span>
-              <span className="text-xs text-muted-foreground leading-tight">Chat with Panida</span>
-            </div>
+            <ColorOrb
+              dimension="28px"
+              tones={{
+                base: "oklch(22.64% 0 0)",
+                accent1: "oklch(65% 0.15 220)",
+                accent2: "oklch(70% 0.12 180)",
+                accent3: "oklch(68% 0.14 200)",
+              }}
+              spinDuration={15}
+            />
+            <span className="text-sm font-medium">Ask AI</span>
           </motion.button>
         </div>
       )}
@@ -641,7 +600,7 @@ export function FloatingChatBot() {
             setIsOpen(false)
             stopSpeaking()
           }}
-          className="fixed bottom-4 md:bottom-6 right-4 md:right-6 z-50 w-12 h-12 bg-primary hover:bg-primary/90 text-primary-foreground rounded-full shadow-xl hover:shadow-2xl flex items-center justify-center transition-colors"
+          className="fixed bottom-4 md:bottom-6 right-4 md:right-6 z-50 w-11 h-11 bg-primary hover:bg-primary/90 text-primary-foreground rounded-full shadow-xl hover:shadow-2xl flex items-center justify-center transition-colors"
           aria-label="Close chat"
           initial={{ scale: 0, rotate: -90 }}
           animate={{ scale: 1, rotate: 0 }}
