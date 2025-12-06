@@ -328,142 +328,115 @@ export function FloatingChatBot() {
     return (
       <>
         {/* Voice Mode Floating Panel */}
-        <div className="fixed inset-0 z-50 pointer-events-none">
-          <div className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 pointer-events-auto">
-            <div className="relative flex flex-col items-center">
-              {/* Close / Exit Voice Mode Button */}
+        <div className="fixed bottom-6 right-6 z-50">
+          <div className="relative flex flex-col items-center bg-slate-900/95 backdrop-blur-md rounded-3xl p-4 shadow-2xl border border-white/10">
+            {/* Close / Exit Voice Mode Button */}
+            <button
+              onClick={() => {
+                toggleVoiceMode()
+                setIsOpen(false)
+              }}
+              className="absolute -top-2 -right-2 z-10 w-8 h-8 bg-slate-700 hover:bg-red-500 text-white rounded-full shadow-lg flex items-center justify-center transition-all duration-300 hover:scale-110 border border-white/10"
+              aria-label="Exit voice mode"
+            >
+              <X className="w-4 h-4" />
+            </button>
+
+            {/* SiriOrb Container */}
+            <div className="relative">
+              <SiriOrb
+                size={isMobile ? "120px" : "140px"}
+                animationDuration={isListening ? 8 : isSpeaking ? 12 : 20}
+                isActive={isListening || isSpeaking}
+                className="drop-shadow-xl"
+              />
+
+              {/* Center Content Overlay */}
+              <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
+                <div className="px-3 py-2">
+                  <p className="text-white font-medium text-sm">Panida</p>
+                  <p className="text-slate-400 text-xs">
+                    {isListening
+                      ? "Listening..."
+                      : isSpeaking
+                        ? "Speaking..."
+                        : status === "in_progress"
+                          ? "Thinking..."
+                          : "Tap to talk"}
+                  </p>
+                  {/* Audio Wave Animation */}
+                  {(isListening || isSpeaking) && (
+                    <div className="flex justify-center gap-0.5 mt-2">
+                      {[...Array(4)].map((_, i) => (
+                        <span
+                          key={i}
+                          className={`w-0.5 rounded-full ${isListening ? "bg-green-400" : "bg-blue-400"}`}
+                          style={{
+                            height: `${Math.random() * 10 + 6}px`,
+                            animation: `pulse 0.5s ease-in-out infinite ${i * 0.1}s`,
+                          }}
+                        />
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            <div className="flex gap-2 mt-3">
               <button
-                onClick={() => {
-                  toggleVoiceMode()
-                  setIsOpen(false)
-                }}
-                className="absolute -top-4 -right-4 z-10 w-10 h-10 bg-slate-800/90 hover:bg-red-500/90 text-white rounded-full shadow-xl flex items-center justify-center transition-all duration-300 hover:scale-110 backdrop-blur-sm border border-white/10"
-                aria-label="Exit voice mode"
+                onClick={isListening ? stopListening : startListening}
+                disabled={status === "in_progress" || isSpeaking}
+                className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 shadow-md ${
+                  isListening
+                    ? "bg-red-500 hover:bg-red-600 text-white scale-105 animate-pulse"
+                    : "bg-white/10 hover:bg-white/20 text-white border border-white/20"
+                } disabled:opacity-50 disabled:cursor-not-allowed`}
+                aria-label={isListening ? "Stop listening" : "Start listening"}
               >
-                <X className="w-5 h-5" />
+                {isListening ? <MicOff className="w-4 h-4" /> : <Mic className="w-4 h-4" />}
               </button>
 
-              {/* SiriOrb Container */}
-              <div className="relative">
-                <SiriOrb
-                  size={isMobile ? "200px" : "280px"}
-                  animationDuration={isListening ? 8 : isSpeaking ? 12 : 20}
-                  isActive={isListening || isSpeaking}
-                  className="drop-shadow-2xl"
-                />
+              {isSpeaking && (
+                <button
+                  onClick={stopSpeaking}
+                  className="w-10 h-10 rounded-full bg-orange-500 hover:bg-orange-600 text-white flex items-center justify-center transition-all duration-300 shadow-md"
+                  aria-label="Stop speaking"
+                >
+                  <Square className="w-4 h-4" />
+                </button>
+              )}
 
-                {/* Center Content Overlay */}
-                <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
-                  <div className="bg-slate-900/60 backdrop-blur-md rounded-2xl px-6 py-4 border border-white/10">
-                    <h3 className="text-white font-semibold text-lg mb-1">Panida</h3>
-                    <p className="text-slate-300 text-sm">
-                      {isListening
-                        ? "Listening..."
-                        : isSpeaking
-                          ? "Speaking..."
-                          : status === "in_progress"
-                            ? "Thinking..."
-                            : "Say something..."}
-                    </p>
-                    {/* Audio Wave Animation */}
-                    {(isListening || isSpeaking) && (
-                      <div className="flex justify-center gap-1 mt-3">
-                        {[...Array(5)].map((_, i) => (
-                          <span
-                            key={i}
-                            className={`w-1 rounded-full ${isListening ? "bg-green-400" : "bg-blue-400"}`}
-                            style={{
-                              height: `${Math.random() * 16 + 8}px`,
-                              animation: `pulse 0.5s ease-in-out infinite ${i * 0.1}s`,
-                            }}
-                          />
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </div>
+              <button
+                onClick={() => {
+                  setVoiceMode(false)
+                  setVoiceEnabled(false)
+                  setContinuousListening(false)
+                  if (isListening) stopListening()
+                  if (isSpeaking) stopSpeaking()
+                }}
+                className="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 text-white border border-white/20 flex items-center justify-center transition-all duration-300 shadow-md"
+                aria-label="Switch to text mode"
+                title="Switch to text mode"
+              >
+                <MessageCircle className="w-4 h-4" />
+              </button>
+            </div>
 
-              {/* Status Text */}
-              <div className="mt-6 text-center">
-                <p className="text-white/80 text-sm font-medium">
-                  {isListening ? "I'm listening to you..." : isSpeaking ? "Let me explain..." : "Tap the orb or speak"}
+            {messages.filter((m) => m.role === "assistant").length > 0 && (
+              <div className="mt-3 max-w-[180px]">
+                <p className="text-slate-400 text-xs line-clamp-2 text-center">
+                  {messages
+                    .filter((m) => m.role === "assistant")
+                    .pop()
+                    ?.parts.filter((p) => p.type === "text")
+                    .map((p) => p.text)
+                    .join(" ")}
                 </p>
               </div>
-
-              {/* Control Buttons */}
-              <div className="flex gap-3 mt-4">
-                <button
-                  onClick={isListening ? stopListening : startListening}
-                  disabled={status === "in_progress" || isSpeaking}
-                  className={`w-14 h-14 rounded-full flex items-center justify-center transition-all duration-300 shadow-lg ${
-                    isListening
-                      ? "bg-red-500 hover:bg-red-600 text-white scale-110 animate-pulse"
-                      : "bg-white/10 hover:bg-white/20 text-white border border-white/20"
-                  } disabled:opacity-50 disabled:cursor-not-allowed`}
-                  aria-label={isListening ? "Stop listening" : "Start listening"}
-                >
-                  {isListening ? <MicOff className="w-6 h-6" /> : <Mic className="w-6 h-6" />}
-                </button>
-
-                {isSpeaking && (
-                  <button
-                    onClick={stopSpeaking}
-                    className="w-14 h-14 rounded-full bg-orange-500 hover:bg-orange-600 text-white flex items-center justify-center transition-all duration-300 shadow-lg"
-                    aria-label="Stop speaking"
-                  >
-                    <Square className="w-6 h-6" />
-                  </button>
-                )}
-
-                <button
-                  onClick={() => {
-                    setVoiceMode(false)
-                    setVoiceEnabled(false)
-                    setContinuousListening(false)
-                    if (isListening) stopListening()
-                    if (isSpeaking) stopSpeaking()
-                  }}
-                  className="w-14 h-14 rounded-full bg-white/10 hover:bg-white/20 text-white border border-white/20 flex items-center justify-center transition-all duration-300 shadow-lg"
-                  aria-label="Switch to text mode"
-                  title="Switch to text mode"
-                >
-                  <MessageCircle className="w-6 h-6" />
-                </button>
-              </div>
-
-              {/* Recent Message Preview */}
-              {aiMessages.length > 0 && (
-                <div className="mt-6 max-w-[280px] md:max-w-[320px]">
-                  <div className="bg-slate-800/80 backdrop-blur-md rounded-xl px-4 py-3 border border-white/10 shadow-xl">
-                    <p className="text-slate-300 text-sm line-clamp-3">
-                      {aiMessages[aiMessages.length - 1].parts
-                        .filter((p) => p.type === "text")
-                        .map((p) => p.text)
-                        .join(" ")
-                        .slice(0, 150)}
-                      {aiMessages[aiMessages.length - 1].parts
-                        .filter((p) => p.type === "text")
-                        .map((p) => p.text)
-                        .join(" ").length > 150
-                        ? "..."
-                        : ""}
-                    </p>
-                  </div>
-                </div>
-              )}
-            </div>
+            )}
           </div>
         </div>
-
-        {/* Background Overlay */}
-        <div
-          className="fixed inset-0 z-40 bg-gradient-to-br from-slate-900/95 via-slate-800/95 to-slate-900/95 backdrop-blur-sm"
-          onClick={() => {
-            toggleVoiceMode()
-            setIsOpen(false)
-          }}
-        />
 
         <style jsx>{`
           @keyframes pulse {
