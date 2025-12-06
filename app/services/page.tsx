@@ -178,14 +178,14 @@ export default function ServicesPage() {
             </motion.section>
 
             <motion.section
-              className="py-16 md:py-24"
+              className="py-8 md:py-12"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.8, duration: 0.5 }}
             >
               <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl text-center">
                 <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">Ready to Get Started?</h2>
-                <p className="text-slate-300 mb-8 leading-relaxed text-lg">
+                <p className="text-slate-300 mb-6 leading-relaxed text-lg">
                   Schedule a free consultation to discuss how we can support your business in Thailand
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
