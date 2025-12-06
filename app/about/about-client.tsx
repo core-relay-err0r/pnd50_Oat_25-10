@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { ArrowRight, ArrowLeft, Mail, MessageSquare, Target, CheckCircle2, Heart } from "lucide-react"
+import { ArrowRight, Mail, MessageSquare, Target, CheckCircle2, Heart } from "lucide-react"
 import { useEffect, useRef } from "react"
 import { Testimonial } from "@/components/ui/testimonial-card"
 import { motion } from "framer-motion"
@@ -29,13 +29,7 @@ const AboutClientPage = () => {
   }, [])
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20 }}
-      transition={{ duration: 0.5, ease: "easeOut" }}
-      className="min-h-screen bg-background"
-    >
+    <div className="min-h-screen bg-background">
       {/* Hero Section */}
       <section className="relative pb-24 bg-gradient-to-br from-blue-50 via-slate-50 to-teal-50 overflow-hidden md:pb-32 md:pt-28 pt-24 px-4 sm:px-6 lg:px-8">
         <div className="container mx-auto px-4 sm:px-6 relative z-10 lg:px-0">
@@ -47,10 +41,7 @@ const AboutClientPage = () => {
             <Link
               href="/"
               className="inline-flex items-center gap-2 text-slate-400 hover:text-primary transition-colors group mb-6 sm:mb-8 touch-manipulation"
-            >
-              
-              
-            </Link>
+            ></Link>
           </motion.div>
 
           <div className="flex flex-col lg:grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
@@ -313,7 +304,7 @@ const AboutClientPage = () => {
           </div>
         </div>
       </section>
-    </motion.div>
+    </div>
   )
 }
 

@@ -3,7 +3,7 @@
 import { useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
-import { ArrowLeft, Building2, Calculator, FileText, Users, ChevronRight, Phone, X, Search } from "lucide-react"
+import { Building2, Calculator, FileText, Users, ChevronRight, Phone, X, Search } from "lucide-react"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
@@ -248,13 +248,7 @@ export default function FAQPage() {
     .filter((category) => category.questions.length > 0)
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20 }}
-      transition={{ duration: 0.5, ease: "easeOut" }}
-      className="min-h-screen bg-background"
-    >
+    <div className="min-h-screen bg-background">
       {/* Hero Section */}
       <div className="relative bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 border-b border-border overflow-hidden pt-[80px] min-h-[60vh]">
         {/* Background Image */}
@@ -281,10 +275,7 @@ export default function FAQPage() {
             <Link
               href="/"
               className="inline-flex items-center gap-2 text-slate-400 hover:text-primary transition-colors group mb-6 sm:mb-8 touch-manipulation"
-            >
-              
-              
-            </Link>
+            ></Link>
           </motion.div>
 
           <div className="max-w-4xl">
@@ -484,6 +475,6 @@ export default function FAQPage() {
           </section>
         </div>
       </div>
-    </motion.div>
+    </div>
   )
 }

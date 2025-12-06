@@ -45,13 +45,7 @@ export default function PND50Landing() {
   }, [wordIndex, words])
 
   return (
-    <motion.main
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20 }}
-      transition={{ duration: 0.5, ease: "easeOut" }}
-      className="min-h-screen"
-    >
+    <main className="min-h-screen">
       <section className="relative w-full min-h-screen flex flex-col bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
         <AnimatedGridBackground className="min-h-screen flex-1">
           <div
@@ -163,6 +157,6 @@ export default function PND50Landing() {
           <LandingFooter />
         </AnimatedGridBackground>
       </section>
-    </motion.main>
+    </main>
   )
 }

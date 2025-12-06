@@ -87,13 +87,7 @@ export default function ContactPage() {
   }
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20 }}
-      transition={{ duration: 0.5, ease: "easeOut" }}
-      className="min-h-screen bg-background"
-    >
+    <div className="min-h-screen bg-background">
       {/* Hero Section */}
       <section className="relative bg-gradient-to-b from-primary/5 to-background pt-28 pb-16 md:pt-32 md:pb-20 overflow-hidden">
         <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
@@ -107,8 +101,8 @@ export default function ContactPage() {
               href="/"
               className="inline-flex items-center gap-2 text-slate-400 hover:text-primary transition-colors group mb-6 sm:mb-8 touch-manipulation"
             >
-              
-              
+              <ArrowLeft className="w-4 h-4" />
+              Back to Home
             </Link>
           </motion.div>
 
@@ -478,6 +472,6 @@ export default function ContactPage() {
           </div>
         </div>
       </section>
-    </motion.div>
+    </div>
   )
 }

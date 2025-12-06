@@ -1,5 +1,5 @@
 "use client"
-import { Rocket, Zap, ArrowLeft, TrendingUp, ArrowRight } from "lucide-react"
+import { Rocket, Zap, TrendingUp, ArrowRight } from "lucide-react"
 import Link from "next/link"
 import ServiceSlider from "@/components/service-slider"
 import { motion } from "framer-motion"
@@ -54,13 +54,7 @@ const packages = [
 
 export default function ServicesPage() {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20 }}
-      transition={{ duration: 0.5, ease: "easeOut" }}
-      className="min-h-screen bg-background"
-    >
+    <div className="min-h-screen bg-background">
       {/* Hero Section */}
       <section className="relative bg-gradient-to-b from-primary/5 to-background py-8 md:py-12 pt-[100px] lg:pt-[100px]">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
@@ -72,10 +66,7 @@ export default function ServicesPage() {
             <Link
               href="/"
               className="inline-flex items-center gap-2 text-slate-400 hover:text-primary transition-colors group mb-6 sm:mb-8 touch-manipulation"
-            >
-              
-              
-            </Link>
+            ></Link>
           </motion.div>
 
           <div className="text-center max-w-3xl mx-auto">
@@ -152,6 +143,6 @@ export default function ServicesPage() {
           </div>
         </div>
       </motion.section>
-    </motion.div>
+    </div>
   )
 }
