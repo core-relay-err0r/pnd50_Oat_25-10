@@ -32,6 +32,8 @@ const AboutClientPage = () => {
     <div className="min-h-screen bg-slate-950">
       {/* Hero Section - KEPT THE SAME */}
       <section className="relative pb-24 bg-gradient-to-br from-blue-50 via-slate-50 to-teal-50 overflow-hidden md:pb-32 md:pt-28 pt-24 px-4 sm:px-6 lg:px-8">
+        <div className="absolute inset-0 bg-white/50 backdrop-blur-[2px] z-[1]"></div>
+
         <div className="container mx-auto px-4 sm:px-6 relative z-10 lg:px-0">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
