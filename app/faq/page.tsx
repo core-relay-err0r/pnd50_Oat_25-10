@@ -3,8 +3,9 @@
 import { useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
-import { ArrowLeft, Building2, Calculator, FileText, Users, ChevronRight, Phone, X, Search } from "lucide-react"
+import { Building2, Calculator, FileText, Users, ChevronRight, Phone, Search } from "lucide-react"
 import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
 import { motion } from "framer-motion"
 
 const faqCategories = [
@@ -265,8 +266,6 @@ export default function FAQPage() {
 
         {/* Content */}
         <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-24">
-          
-
           <div className="max-w-4xl">
             <motion.div
               className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-primary/10 backdrop-blur-sm border border-primary/20 text-primary text-xs sm:text-sm font-medium mb-4 sm:mb-6"
@@ -310,13 +309,15 @@ export default function FAQPage() {
                 className="pl-10 sm:pl-12 pr-10 sm:pr-12 py-4 sm:py-6 text-sm sm:text-base bg-white/10 backdrop-blur-sm border-white/20 text-white placeholder:text-slate-400 focus:bg-white/15 focus:border-primary/50 transition-all w-full"
               />
               {searchQuery && (
-                <button
+                <motion.button
                   onClick={() => setSearchQuery("")}
-                  className="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white transition-colors p-1"
-                  aria-label="Clear search"
+                  className="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2 touch-manipulation"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 1.9 }}
                 >
-                  <X className="w-4 h-4 sm:w-5 sm:h-5" />
-                </button>
+                  Clear Search
+                </motion.button>
               )}
             </motion.div>
           </div>
@@ -473,16 +474,15 @@ export default function FAQPage() {
               >
                 We couldn't find any FAQs matching "{searchQuery}". Try different keywords or browse all categories.
               </motion.p>
-              <motion.Button
+              <motion.button
                 onClick={() => setSearchQuery("")}
-                variant="outline"
-                className="touch-manipulation"
+                className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2 touch-manipulation"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 1.9 }}
               >
                 Clear Search
-              </motion.Button>
+              </motion.button>
             </motion.div>
           )}
 
@@ -555,30 +555,36 @@ export default function FAQPage() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 2.9 }}
                   >
-                    <motion.Button
-                      asChild
-                      size="lg"
-                      className="text-sm sm:text-base group w-full sm:w-auto touch-manipulation"
+                    <motion.div
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 3 }}
                     >
-                      <Link href="/contact" className="flex items-center justify-center gap-2">
-                        Contact Us
-                        <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                      </Link>
-                    </motion.Button>
-                    <motion.Button
-                      asChild
-                      size="lg"
-                      variant="outline"
-                      className="text-sm sm:text-base bg-background/50 backdrop-blur-sm w-full sm:w-auto touch-manipulation"
+                      <Button
+                        asChild
+                        size="lg"
+                        className="text-sm sm:text-base group w-full sm:w-auto touch-manipulation"
+                      >
+                        <Link href="/contact" className="flex items-center justify-center gap-2">
+                          Contact Us
+                          <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                        </Link>
+                      </Button>
+                    </motion.div>
+                    <motion.div
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 3.1 }}
                     >
-                      <Link href="/calculator">Get Free Consultation</Link>
-                    </motion.Button>
+                      <Button
+                        asChild
+                        size="lg"
+                        variant="outline"
+                        className="text-sm sm:text-base bg-background/50 backdrop-blur-sm w-full sm:w-auto touch-manipulation"
+                      >
+                        <Link href="/calculator">Get Free Consultation</Link>
+                      </Button>
+                    </motion.div>
                   </motion.div>
                 </motion.div>
               </motion.div>
