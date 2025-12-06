@@ -46,37 +46,22 @@ export default function PND50Landing() {
 
   return (
     <main className="min-h-screen">
-      <section className="relative w-full min-h-screen flex flex-col bg-gradient-to-b from-[#0a1628] via-[#0f1d32] to-[#0a1628]">
+      <section className="relative w-full min-h-screen flex flex-col bg-gradient-to-b from-[#0c1929] via-[#111f33] to-[#0c1929]">
         <AnimatedGridBackground className="min-h-screen flex-1">
-          <div
-            className="absolute top-20 left-10 w-96 h-96 bg-blue-900/5 rounded-full blur-3xl pointer-events-none"
-            style={{
-              transform: `translate(${mousePosition.x}px, ${mousePosition.y}px)`,
-              transition: "transform 0.5s ease-out",
-            }}
-          />
-          <div
-            className="absolute bottom-20 right-10 w-96 h-96 bg-slate-700/5 rounded-full blur-3xl pointer-events-none"
-            style={{
-              transform: `translate(${-mousePosition.x}px, ${-mousePosition.y}px)`,
-              transition: "transform 0.5s ease-out",
-            }}
-          />
-
           <div className="flex-1 w-full flex flex-col lg:scale-[0.85] lg:origin-top lg:mt-24">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex-1 flex items-center py-12 sm:py-16 lg:py-20 pt-[100px] lg:pt-12 pb-32 lg:pb-20">
               <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center w-full">
                 {/* Left side - Hero content */}
                 <div className="text-center lg:text-left space-y-6 md:space-y-8">
                   <motion.div
-                    className={`hidden lg:inline-flex items-center gap-2.5 rounded-full bg-slate-800/40 backdrop-blur-md px-6 py-3 text-sm font-medium text-slate-300 mb-2 border border-slate-700/30 hover:bg-slate-800/50 hover:border-slate-600/40 transition-all duration-300`}
+                    className={`hidden lg:inline-flex items-center gap-2.5 rounded-full bg-slate-800/30 backdrop-blur-sm px-6 py-3 text-sm font-medium text-slate-300 mb-2 border border-slate-600/20 hover:bg-slate-800/40 transition-all duration-300`}
                     initial={{ opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.2, duration: 0.4 }}
                   >
                     <span className="relative flex h-2 w-2">
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400/60 opacity-75"></span>
-                      <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-400"></span>
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400/60 opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400"></span>
                     </span>
                     <span className="leading-tight">Thailand's Leading Tech-Driven Corporate Services Firm</span>
                   </motion.div>
@@ -87,7 +72,7 @@ export default function PND50Landing() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.3, duration: 0.5 }}
                   >
-                    <span className="bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-400 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient-shift inline-block pb-2 leading-[1.15]">
+                    <span className="bg-gradient-to-r from-white via-slate-200 to-slate-300 bg-clip-text text-transparent inline-block pb-2 leading-[1.15]">
                       AI Boutique
                     </span>
                     <br />
@@ -127,8 +112,8 @@ export default function PND50Landing() {
                     transition={{ delay: 0.4, duration: 0.5 }}
                   >
                     You Talk to an Expert, Not a Robot. We connect you with a dedicated human advisor who speaks your
-                    native language. Our AI makes them <span className="text-blue-400 font-medium">5x faster</span> and{" "}
-                    <span className="text-cyan-400 font-medium">totally error-free</span>.
+                    native language. Our AI makes them <span className="text-emerald-400 font-medium">5x faster</span>{" "}
+                    and <span className="text-teal-400 font-medium">totally error-free</span>.
                   </motion.p>
 
                   <motion.div
