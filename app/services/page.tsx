@@ -1,5 +1,5 @@
 "use client"
-import { ArrowRight, Building2, FileCheck, Users, Shield } from "lucide-react"
+import { ArrowRight } from "lucide-react"
 import Link from "next/link"
 import ServiceSlider from "@/components/service-slider"
 import { motion } from "framer-motion"
@@ -81,13 +81,6 @@ export default function ServicesPage() {
     { value: "99%", label: "Client Satisfaction" },
   ]
 
-  const highlights = [
-    { icon: Building2, text: "Company Registration" },
-    { icon: FileCheck, text: "Tax & Compliance" },
-    { icon: Users, text: "HR & Payroll" },
-    { icon: Shield, text: "Legal Advisory" },
-  ]
-
   return (
     <main className="min-h-screen">
       <section className="relative w-full min-h-screen flex flex-col bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
@@ -110,103 +103,73 @@ export default function ServicesPage() {
           <div className="flex-1 w-full flex flex-col lg:scale-[0.85] lg:origin-top">
             <section className="relative py-8 md:py-16 pt-[100px] lg:pt-[140px]">
               <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-                <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-                  {/* Left Column - Content */}
-                  <div className="text-center lg:text-left">
-                    <motion.div
-                      className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium mb-6 border border-primary/20"
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.2 }}
-                    >
-                      <span className="w-2 h-2 bg-primary rounded-full animate-pulse"></span>
-                      Trusted by 500+ Businesses
-                    </motion.div>
-
-                    <motion.h1
-                      className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-[1.1] tracking-tight"
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.3 }}
-                    >
-                      Professional Services{" "}
-                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-cyan-400">
-                        Tailored for You
-                      </span>
-                    </motion.h1>
-
-                    <motion.p
-                      className="text-slate-300 leading-relaxed text-lg md:text-xl mb-8 max-w-xl mx-auto lg:mx-0"
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.4 }}
-                    >
-                      From company setup to ongoing compliance, we provide end-to-end business solutions for
-                      foreign-owned companies in Thailand.
-                    </motion.p>
-
-                    {/* CTA Buttons */}
-                    <motion.div
-                      className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-10"
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.5 }}
-                    >
-                      <Link
-                        href="/calculator"
-                        className="inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground px-8 py-4 rounded-xl font-semibold hover:bg-primary/90 transition-all hover:scale-105 shadow-lg shadow-primary/25"
-                      >
-                        Schedule Consultation
-                        <ArrowRight className="w-5 h-5" />
-                      </Link>
-                      <Link
-                        href="/contact"
-                        className="inline-flex items-center justify-center gap-2 bg-white/5 border border-white/10 text-white px-8 py-4 rounded-xl font-semibold hover:bg-white/10 hover:border-primary/30 transition-all backdrop-blur-sm"
-                      >
-                        Contact Us
-                      </Link>
-                    </motion.div>
-
-                    {/* Stats */}
-                    <motion.div
-                      className="flex flex-wrap justify-center lg:justify-start gap-8"
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.6 }}
-                    >
-                      {stats.map((stat, index) => (
-                        <div key={index} className="text-center lg:text-left">
-                          <div className="text-3xl md:text-4xl font-bold text-white">{stat.value}</div>
-                          <div className="text-sm text-slate-400">{stat.label}</div>
-                        </div>
-                      ))}
-                    </motion.div>
-                  </div>
-
-                  {/* Right Column - Feature Cards */}
+                <div className="max-w-3xl mx-auto text-center">
                   <motion.div
-                    className="grid grid-cols-2 gap-4"
-                    initial={{ opacity: 0, x: 30 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.5, duration: 0.6 }}
+                    className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium mb-6 border border-primary/20"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.2 }}
                   >
-                    {highlights.map((item, index) => (
-                      <motion.div
-                        key={index}
-                        className="group relative bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 hover:bg-white/10 hover:border-primary/30 transition-all duration-300"
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.6 + index * 0.1 }}
-                        whileHover={{ y: -5 }}
-                      >
-                        <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
-                          <item.icon className="w-6 h-6 text-primary" />
-                        </div>
-                        <h3 className="text-white font-semibold text-lg">{item.text}</h3>
-                        <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                          <ArrowRight className="w-4 h-4 text-primary" />
-                        </div>
-                      </motion.div>
+                    <span className="w-2 h-2 bg-primary rounded-full animate-pulse"></span>
+                    Trusted by 500+ Businesses
+                  </motion.div>
+
+                  <motion.h1
+                    className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-[1.1] tracking-tight"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.3 }}
+                  >
+                    Professional Services{" "}
+                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-cyan-400">
+                      Tailored for You
+                    </span>
+                  </motion.h1>
+
+                  <motion.p
+                    className="text-slate-300 leading-relaxed text-lg md:text-xl mb-8 max-w-xl mx-auto"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.4 }}
+                  >
+                    From company setup to ongoing compliance, we provide end-to-end business solutions for foreign-owned
+                    companies in Thailand.
+                  </motion.p>
+
+                  {/* CTA Buttons */}
+                  <motion.div
+                    className="flex flex-col sm:flex-row gap-4 justify-center mb-10"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.5 }}
+                  >
+                    <Link
+                      href="/calculator"
+                      className="inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground px-8 py-4 rounded-xl font-semibold hover:bg-primary/90 transition-all hover:scale-105 shadow-lg shadow-primary/25"
+                    >
+                      Schedule Consultation
+                      <ArrowRight className="w-5 h-5" />
+                    </Link>
+                    <Link
+                      href="/contact"
+                      className="inline-flex items-center justify-center gap-2 bg-white/5 border border-white/10 text-white px-8 py-4 rounded-xl font-semibold hover:bg-white/10 hover:border-primary/30 transition-all backdrop-blur-sm"
+                    >
+                      Contact Us
+                    </Link>
+                  </motion.div>
+
+                  {/* Stats */}
+                  <motion.div
+                    className="flex flex-wrap justify-center gap-8"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.6 }}
+                  >
+                    {stats.map((stat, index) => (
+                      <div key={index} className="text-center">
+                        <div className="text-3xl md:text-4xl font-bold text-white">{stat.value}</div>
+                        <div className="text-sm text-slate-400">{stat.label}</div>
+                      </div>
                     ))}
                   </motion.div>
                 </div>
