@@ -7,6 +7,7 @@ import { Building2, Calculator, FileText, Users, ChevronRight, Phone, Search } f
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { motion } from "framer-motion"
+import { AccordionTrigger } from "@/components/ui/accordion"
 
 const faqCategories = [
   {
@@ -416,19 +417,20 @@ export default function FAQPage() {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 1.2 }}
                       >
-                        <motion.AccordionTrigger
-                          className="text-left hover:no-underline py-4 sm:py-6 touch-manipulation"
+                        <motion.div
                           initial={{ opacity: 0, y: 20 }}
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ delay: 1.3 }}
                         >
-                          <div className="flex items-start gap-2 sm:gap-3 pr-2 sm:pr-4">
-                            <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 text-primary mt-0.5 sm:mt-1 flex-shrink-0 group-data-[state=open]:rotate-90 transition-transform" />
-                            <span className="font-semibold text-foreground text-sm sm:text-base md:text-lg leading-relaxed text-balance">
-                              {q.question}
-                            </span>
-                          </div>
-                        </motion.AccordionTrigger>
+                          <AccordionTrigger className="text-left hover:no-underline py-4 sm:py-6 touch-manipulation">
+                            <div className="flex items-start gap-2 sm:gap-3 pr-2 sm:pr-4">
+                              <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 text-primary mt-0.5 sm:mt-1 flex-shrink-0 group-data-[state=open]:rotate-90 transition-transform" />
+                              <span className="font-semibold text-foreground text-sm sm:text-base md:text-lg leading-relaxed text-balance">
+                                {q.question}
+                              </span>
+                            </div>
+                          </AccordionTrigger>
+                        </motion.div>
                         <motion.AccordionContent
                           className="text-muted-foreground text-sm sm:text-base leading-relaxed space-y-3 sm:space-y-4 pb-4 sm:pb-6 pl-6 sm:pl-8"
                           initial={{ opacity: 0, y: 20 }}
