@@ -46,17 +46,17 @@ export default function PND50Landing() {
 
   return (
     <main className="min-h-screen">
-      <section className="relative w-full min-h-screen flex flex-col bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
+      <section className="relative w-full min-h-screen flex flex-col bg-gradient-to-b from-[#0a1628] via-[#0f1d32] to-[#0a1628]">
         <AnimatedGridBackground className="min-h-screen flex-1">
           <div
-            className="absolute top-20 left-10 w-96 h-96 bg-primary/10 rounded-full blur-3xl pointer-events-none"
+            className="absolute top-20 left-10 w-96 h-96 bg-blue-900/5 rounded-full blur-3xl pointer-events-none"
             style={{
               transform: `translate(${mousePosition.x}px, ${mousePosition.y}px)`,
               transition: "transform 0.5s ease-out",
             }}
           />
           <div
-            className="absolute bottom-20 right-10 w-96 h-96 bg-accent/10 rounded-full blur-3xl pointer-events-none"
+            className="absolute bottom-20 right-10 w-96 h-96 bg-slate-700/5 rounded-full blur-3xl pointer-events-none"
             style={{
               transform: `translate(${-mousePosition.x}px, ${-mousePosition.y}px)`,
               transition: "transform 0.5s ease-out",
@@ -69,14 +69,14 @@ export default function PND50Landing() {
                 {/* Left side - Hero content */}
                 <div className="text-center lg:text-left space-y-6 md:space-y-8">
                   <motion.div
-                    className={`hidden lg:inline-flex items-center gap-2.5 rounded-full bg-slate-800/60 backdrop-blur-md px-6 py-3 text-sm font-medium text-slate-200 mb-2 border border-slate-700/50 hover:bg-slate-800/80 hover:border-slate-600/50 transition-all duration-300`}
+                    className={`hidden lg:inline-flex items-center gap-2.5 rounded-full bg-slate-800/40 backdrop-blur-md px-6 py-3 text-sm font-medium text-slate-300 mb-2 border border-slate-700/30 hover:bg-slate-800/50 hover:border-slate-600/40 transition-all duration-300`}
                     initial={{ opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.2, duration: 0.4 }}
                   >
                     <span className="relative flex h-2 w-2">
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75"></span>
-                      <span className="relative inline-flex rounded-full h-2 w-2 bg-accent"></span>
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400/60 opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-400"></span>
                     </span>
                     <span className="leading-tight">Thailand's Leading Tech-Driven Corporate Services Firm</span>
                   </motion.div>
@@ -87,7 +87,7 @@ export default function PND50Landing() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.3, duration: 0.5 }}
                   >
-                    <span className="bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient-shift inline-block pb-2 leading-[1.15]">
+                    <span className="bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-400 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient-shift inline-block pb-2 leading-[1.15]">
                       AI Boutique
                     </span>
                     <br />
@@ -95,7 +95,7 @@ export default function PND50Landing() {
                       {words.map((word, index) => (
                         <motion.span
                           key={index}
-                          className="absolute left-1/2 lg:left-0 -translate-x-1/2 lg:translate-x-0 text-white font-bold whitespace-nowrap"
+                          className="absolute left-1/2 lg:left-0 -translate-x-1/2 lg:translate-x-0 text-slate-100 font-bold whitespace-nowrap"
                           initial={{ opacity: 0, y: 100 }}
                           transition={{ type: "spring", stiffness: 50 }}
                           animate={
@@ -127,8 +127,8 @@ export default function PND50Landing() {
                     transition={{ delay: 0.4, duration: 0.5 }}
                   >
                     You Talk to an Expert, Not a Robot. We connect you with a dedicated human advisor who speaks your
-                    native language. Our AI makes them <span className="text-primary font-medium">5x faster</span> and{" "}
-                    <span className="text-accent font-medium">totally error-free</span>.
+                    native language. Our AI makes them <span className="text-blue-400 font-medium">5x faster</span> and{" "}
+                    <span className="text-cyan-400 font-medium">totally error-free</span>.
                   </motion.p>
 
                   <motion.div
