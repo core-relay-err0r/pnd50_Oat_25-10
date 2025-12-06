@@ -3,16 +3,17 @@
 import { useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
-import { ArrowLeft, BookOpen, Flame, MessageCircle, FileText, Phone, Search, ChevronRight } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
+import { Building2, Calculator, FileText, Users, ChevronRight, Phone, X, Search } from "lucide-react"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
+import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
+import { motion } from "framer-motion"
 
 const faqCategories = [
   {
     id: "accounting",
     title: "Accounting Questions",
-    icon: BookOpen,
+    icon: FileText,
     color: "blue",
     questions: [
       {
@@ -81,7 +82,7 @@ const faqCategories = [
   {
     id: "tax",
     title: "Tax Questions",
-    icon: Flame,
+    icon: Building2,
     color: "orange",
     questions: [
       {
@@ -146,7 +147,7 @@ const faqCategories = [
   {
     id: "general",
     title: "General Questions",
-    icon: MessageCircle,
+    icon: Users,
     color: "purple",
     questions: [
       {
@@ -181,7 +182,7 @@ const faqCategories = [
   {
     id: "corporate",
     title: "Corporate & Compliance Questions",
-    icon: FileText,
+    icon: Calculator,
     color: "green",
     questions: [
       {
@@ -249,7 +250,7 @@ export default function FAQPage() {
   return (
     <div className="min-h-screen bg-background">
       {/* Hero Section */}
-      <div className="relative bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 border-b border-border overflow-hidden">
+      <div className="relative bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 border-b border-border overflow-hidden pt-[80px] min-h-[60vh]">
         {/* Background Image */}
         <div className="absolute inset-0 z-0">
           <Image
@@ -265,45 +266,81 @@ export default function FAQPage() {
         </div>
 
         {/* Content */}
-        <div className="relative z-10 container mx-auto px-4 sm:px-6 py-12 sm:py-16 md:py-24">
-          {/* Back button */}
-          <Link
-            href="/"
-            className="inline-flex items-center gap-2 text-slate-400 hover:text-primary transition-colors group mb-6 sm:mb-8 touch-manipulation"
+        <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-24">
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.2, duration: 0.4 }}
           >
-            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-            <span className="text-sm font-medium">Back to Home</span>
-          </Link>
+            <Link
+              href="/"
+              className="inline-flex items-center gap-2 text-slate-400 hover:text-primary transition-colors group mb-6 sm:mb-8 touch-manipulation"
+            ></Link>
+          </motion.div>
 
           <div className="max-w-4xl">
-            <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-primary/10 backdrop-blur-sm border border-primary/20 text-primary text-xs sm:text-sm font-medium mb-4 sm:mb-6">
+            <motion.div
+              className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-primary/10 backdrop-blur-sm border border-primary/20 text-primary text-xs sm:text-sm font-medium mb-4 sm:mb-6"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+            >
               <FileText className="w-3 h-3 sm:w-4 sm:h-4" />
               Real Questions from Clients
-            </div>
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 sm:mb-6 tracking-tight leading-tight">
+            </motion.div>
+            <motion.h1
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 sm:mb-6 tracking-tight leading-tight"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 }}
+            >
               Frequently Asked Questions
-            </h1>
-            <p className="text-base sm:text-lg md:text-xl text-slate-300 leading-relaxed mb-6 sm:mb-8">
+            </motion.h1>
+            <motion.p
+              className="text-base sm:text-lg md:text-xl text-slate-300 leading-relaxed mb-6 sm:mb-8"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5 }}
+            >
               Clear answers about accounting, tax, and business setup in Thailand — explained in simple English, based
               on real client questions.
-            </p>
+            </motion.p>
 
-            <div className="relative max-w-2xl">
+            <motion.div
+              className="relative max-w-2xl"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6 }}
+            >
               <Search className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 text-slate-400 pointer-events-none" />
               <Input
                 type="text"
                 placeholder="Search FAQs..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10 sm:pl-12 pr-4 py-4 sm:py-6 text-sm sm:text-base bg-white/10 backdrop-blur-sm border-white/20 text-white placeholder:text-slate-400 focus:bg-white/15 focus:border-primary/50 transition-all w-full"
+                className="pl-10 sm:pl-12 pr-10 sm:pr-12 py-4 sm:py-6 text-sm sm:text-base bg-white/10 backdrop-blur-sm border-white/20 text-white placeholder:text-slate-400 focus:bg-white/15 focus:border-primary/50 transition-all w-full"
               />
-            </div>
+              {searchQuery && (
+                <button
+                  onClick={() => setSearchQuery("")}
+                  className="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white transition-colors p-1"
+                  aria-label="Clear search"
+                >
+                  <X className="w-4 h-4 sm:w-5 sm:h-5" />
+                </button>
+              )}
+            </motion.div>
           </div>
         </div>
       </div>
 
-      <div className="border-b border-border bg-muted/30">
-        <div className="container mx-auto px-4 sm:px-6 py-4 sm:py-6">
+      <motion.div
+        className="border-b border-border bg-muted/30"
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.7, duration: 0.5 }}
+      >
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
           <div className="flex gap-2 sm:gap-3 overflow-x-auto pb-2 scrollbar-hide snap-x snap-mandatory md:flex-wrap md:justify-center md:overflow-visible">
             {faqCategories.map((category) => {
               const Icon = category.icon
@@ -325,10 +362,10 @@ export default function FAQPage() {
             })}
           </div>
         </div>
-      </div>
+      </motion.div>
 
       {/* FAQ Content */}
-      <div className="container mx-auto px-4 sm:px-6 py-12 sm:py-16 md:py-20">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20">
         <div className="max-w-5xl mx-auto space-y-12 sm:space-y-16">
           {filteredCategories.length > 0 ? (
             filteredCategories.map((category) => {
@@ -344,11 +381,6 @@ export default function FAQPage() {
                 <section key={category.id} id={category.id} className="scroll-mt-20 sm:scroll-mt-24">
                   <div className="flex items-start sm:items-center justify-between mb-6 sm:mb-8 gap-4">
                     <div className="flex items-start sm:items-center gap-3 sm:gap-4">
-                      <div
-                        className={`w-12 h-12 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl flex items-center justify-center border flex-shrink-0 ${colorClasses[category.color as keyof typeof colorClasses]}`}
-                      >
-                        <Icon className="w-6 h-6 sm:w-7 sm:h-7" />
-                      </div>
                       <div>
                         <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground leading-tight">
                           {category.title}
