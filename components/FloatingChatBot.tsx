@@ -250,8 +250,24 @@ export function FloatingChatBot() {
       if (savedVoicePref === "true") {
         setVoiceEnabled(true)
       }
+
+      const savedIsOpen = localStorage.getItem("chatbot-open")
+      if (savedIsOpen === "true") {
+        setIsOpen(true)
+      }
+
+      const savedHidden = localStorage.getItem("chatbot-hidden")
+      if (savedHidden === "true") {
+        setIsHidden(true)
+      }
     }
   }, [])
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      localStorage.setItem("chatbot-open", String(isOpen))
+    }
+  }, [isOpen])
 
   useEffect(() => {
     if (voiceMode && continuousListening && !isSpeaking && !isListening && status !== "in_progress") {
