@@ -60,6 +60,12 @@ export function FloatingChatBot() {
   const startListening = useCallback(() => {
     if (!recognitionRef.current || isListening) return
 
+    try {
+      recognitionRef.current.abort()
+    } catch (e) {
+      // Ignore abort errors
+    }
+
     recognitionRef.current.onresult = (event) => {
       const transcript = event.results[0][0].transcript
       setInputValue((prev) => prev + (prev ? " " : "") + transcript)
@@ -73,7 +79,10 @@ export function FloatingChatBot() {
       }
     }
 
-    recognitionRef.current.onerror = () => {
+    recognitionRef.current.onerror = (event) => {
+      if (event.error !== "aborted" && event.error !== "no-speech") {
+        console.error("Speech recognition error:", event.error)
+      }
       setIsListening(false)
     }
 
@@ -81,20 +90,26 @@ export function FloatingChatBot() {
       setIsListening(false)
       if (voiceMode && continuousListening && !isSpeaking) {
         setTimeout(() => {
-          if (voiceMode && continuousListening) {
+          if (voiceMode && continuousListening && !isListening) {
             startListening()
           }
         }, 1000)
       }
     }
 
-    try {
-      recognitionRef.current.start()
-      setIsListening(true)
-    } catch (error) {
-      console.error("Speech recognition error:", error)
-      setIsListening(false)
-    }
+    setTimeout(() => {
+      try {
+        if (recognitionRef.current && !isListening) {
+          recognitionRef.current.start()
+          setIsListening(true)
+        }
+      } catch (error) {
+        if (error instanceof Error && !error.message.includes("already started")) {
+          console.error("Speech recognition error:", error)
+        }
+        setIsListening(false)
+      }
+    }, 100)
   }, [isListening, voiceMode, continuousListening, isSpeaking])
 
   const stopListening = useCallback(() => {
