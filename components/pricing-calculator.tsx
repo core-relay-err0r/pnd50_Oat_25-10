@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Checkbox } from "@/components/ui/checkbox"
 import { useRouter } from "next/navigation"
-import { LampContainer } from "@/components/ui/lamp"
+import { AnimatedGridBackground } from "@/components/ui/animated-grid-background"
 
 // Service Data Structure
 const servicesData = {
@@ -213,7 +213,7 @@ export function PricingCalculator() {
   }
 
   return (
-    <LampContainer className="min-h-screen !items-start !justify-start">
+    <AnimatedGridBackground className="min-h-screen">
       {/* Floating parallax blobs */}
       <div
         className="absolute top-20 left-10 w-96 h-96 bg-primary/20 rounded-full blur-3xl pointer-events-none"
@@ -235,7 +235,7 @@ export function PricingCalculator() {
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -20 }}
         transition={{ duration: 0.5, ease: "easeOut" }}
-        className="relative z-[60] min-h-screen w-full"
+        className="relative z-10 min-h-screen"
       >
         {/* Header */}
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 pt-6">
@@ -624,6 +624,6 @@ export function PricingCalculator() {
           </AnimatePresence>
         </div>
       </motion.div>
-    </LampContainer>
+    </AnimatedGridBackground>
   )
 }

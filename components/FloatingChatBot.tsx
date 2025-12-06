@@ -1,14 +1,13 @@
 "use client"
 
 import type React from "react"
-import type { SpeechRecognition } from "web-speech-api"
 
-import { useState, useEffect, useRef } from "react"
-import { X, MessageCircle, Send, Sparkles, EyeOff, Volume2, VolumeX, Mic, MicOff } from "lucide-react"
+import { useState, useEffectEvent, useEffect } from "react"
+import { X, MessageCircle, Send, Sparkles, EyeOff } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { useChat } from "@ai-sdk/react"
 import { DefaultChatTransport } from "ai"
-import { usePathname } from "next/navigation"
+import { usePathname } from 'next/navigation'
 import { useIsMobile } from "@/components/ui/use-mobile"
 
 const WELCOME_MESSAGE = {
@@ -30,127 +29,16 @@ export function FloatingChatBot() {
   const isOnCalculator = pathname === "/calculator"
   const isMobile = useIsMobile()
 
-  const [isSpeaking, setIsSpeaking] = useState(false)
-  const [voiceEnabled, setVoiceEnabled] = useState(true)
-  const [isListening, setIsListening] = useState(false)
-  const speechSynthesisRef = useRef<SpeechSynthesisUtterance | null>(null)
-  const recognitionRef = useRef<SpeechRecognition | null>(null)
-  const lastSpokenMessageRef = useRef<string>("")
-
   useEffect(() => {
     const hidden = localStorage.getItem("chatbot-hidden")
     if (hidden === "true") {
       setIsHidden(true)
     }
-    const voicePref = localStorage.getItem("chatbot-voice-enabled")
-    if (voicePref !== null) {
-      setVoiceEnabled(voicePref === "true")
-    }
   }, [])
-
-  const speakMessage = (text: string) => {
-    if (!voiceEnabled || typeof window === "undefined" || !window.speechSynthesis) return
-
-    window.speechSynthesis.cancel()
-
-    const cleanText = text
-      .replace(/[\u{1F300}-\u{1F9FF}]/gu, "")
-      .replace(/[*_~`]/g, "")
-      .trim()
-
-    if (!cleanText) return
-
-    const utterance = new SpeechSynthesisUtterance(cleanText)
-    utterance.rate = 1.0
-    utterance.pitch = 1.1
-    utterance.volume = 0.9
-
-    const voices = window.speechSynthesis.getVoices()
-    const femaleVoice =
-      voices.find(
-        (voice) =>
-          voice.name.includes("Female") ||
-          voice.name.includes("Samantha") ||
-          voice.name.includes("Victoria") ||
-          voice.name.includes("Karen") ||
-          voice.name.includes("Google UK English Female"),
-      ) || voices.find((voice) => voice.lang.startsWith("en"))
-
-    if (femaleVoice) {
-      utterance.voice = femaleVoice
-    }
-
-    utterance.onstart = () => setIsSpeaking(true)
-    utterance.onend = () => setIsSpeaking(false)
-    utterance.onerror = () => setIsSpeaking(false)
-
-    speechSynthesisRef.current = utterance
-    window.speechSynthesis.speak(utterance)
-  }
-
-  const stopSpeaking = () => {
-    if (typeof window !== "undefined" && window.speechSynthesis) {
-      window.speechSynthesis.cancel()
-      setIsSpeaking(false)
-    }
-  }
-
-  const toggleVoice = () => {
-    const newValue = !voiceEnabled
-    setVoiceEnabled(newValue)
-    localStorage.setItem("chatbot-voice-enabled", String(newValue))
-    if (!newValue) {
-      stopSpeaking()
-    }
-  }
-
-  const startListening = () => {
-    if (typeof window === "undefined") return
-
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
-    if (!SpeechRecognition) {
-      alert("Speech recognition is not supported in your browser. Please use Chrome or Edge.")
-      return
-    }
-
-    const recognition = new SpeechRecognition()
-    recognition.lang = "en-US"
-    recognition.continuous = false
-    recognition.interimResults = false
-
-    recognition.onstart = () => {
-      setIsListening(true)
-    }
-
-    recognition.onresult = (event) => {
-      const transcript = event.results[0][0].transcript
-      setInputValue(transcript)
-      setIsListening(false)
-    }
-
-    recognition.onerror = () => {
-      setIsListening(false)
-    }
-
-    recognition.onend = () => {
-      setIsListening(false)
-    }
-
-    recognitionRef.current = recognition
-    recognition.start()
-  }
-
-  const stopListening = () => {
-    if (recognitionRef.current) {
-      recognitionRef.current.stop()
-      setIsListening(false)
-    }
-  }
 
   const handleHide = () => {
     setIsHidden(true)
     setIsOpen(false)
-    stopSpeaking()
     localStorage.setItem("chatbot-hidden", "true")
   }
 
@@ -172,28 +60,18 @@ export function FloatingChatBot() {
     }),
   })
 
-  useEffect(() => {
-    if (aiMessages.length > 0) {
-      const lastMessage = aiMessages[aiMessages.length - 1]
-      if (lastMessage.role === "assistant" && lastMessage.parts) {
-        const textPart = lastMessage.parts.find((p) => p.type === "text")
-        if (textPart && textPart.type === "text" && textPart.text !== lastSpokenMessageRef.current) {
-          lastSpokenMessageRef.current = textPart.text
-          setTimeout(() => speakMessage(textPart.text), 300)
-        }
-      }
-    }
-  }, [aiMessages, voiceEnabled])
-
   const messages = [WELCOME_MESSAGE, ...aiMessages]
 
   const [inputValue, setInputValue] = useState("")
 
+  const performSend = useEffectEvent((message: string) => {
+    sendMessage({ text: message })
+    setInputValue("")
+  })
+
   const handleSend = () => {
     if (!inputValue.trim() || status === "in_progress") return
-    stopSpeaking()
-    sendMessage({ text: inputValue })
-    setInputValue("")
+    performSend(inputValue)
   }
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
@@ -234,27 +112,17 @@ export function FloatingChatBot() {
               <div>
                 <h3 className="text-primary-foreground font-semibold">Panida - PND50 Assistant</h3>
                 <p className="text-primary-foreground/80 text-xs">
-                  {status === "in_progress" ? "Typing..." : isSpeaking ? "Speaking..." : "Online"}
+                  {status === "in_progress" ? "Typing..." : "Online"}
                 </p>
               </div>
             </div>
-            <div className="flex items-center gap-2">
-              <button
-                onClick={toggleVoice}
-                className={`text-primary-foreground hover:bg-primary-foreground/20 rounded-lg p-1.5 transition-colors ${!voiceEnabled ? "opacity-50" : ""}`}
-                aria-label={voiceEnabled ? "Disable voice" : "Enable voice"}
-                title={voiceEnabled ? "Voice on - click to mute" : "Voice off - click to unmute"}
-              >
-                {voiceEnabled ? <Volume2 className="w-5 h-5" /> : <VolumeX className="w-5 h-5" />}
-              </button>
-              <button
-                onClick={() => setIsOpen(false)}
-                className="text-primary-foreground hover:bg-primary-foreground/20 rounded-lg p-1.5 transition-colors"
-                aria-label="Close chat"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
+            <button
+              onClick={() => setIsOpen(false)}
+              className="text-primary-foreground hover:bg-primary-foreground/20 rounded-lg p-1.5 transition-colors"
+              aria-label="Close chat"
+            >
+              <X className="w-5 h-5" />
+            </button>
           </div>
 
           {/* Messages */}
@@ -278,31 +146,11 @@ export function FloatingChatBot() {
                     }
                     return null
                   })}
-                  <div className="flex items-center justify-between mt-1">
-                    <p
-                      className={`text-xs ${message.role === "user" ? "text-primary-foreground/70" : "text-muted-foreground"}`}
-                    >
-                      {message.createdAt?.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
-                    </p>
-                    {message.role === "assistant" && voiceEnabled && (
-                      <button
-                        onClick={() => {
-                          const textPart = message.parts.find((p) => p.type === "text")
-                          if (textPart && textPart.type === "text") {
-                            if (isSpeaking) {
-                              stopSpeaking()
-                            } else {
-                              speakMessage(textPart.text)
-                            }
-                          }
-                        }}
-                        className="text-muted-foreground hover:text-primary transition-colors p-1"
-                        title={isSpeaking ? "Stop speaking" : "Read aloud"}
-                      >
-                        {isSpeaking ? <VolumeX className="w-3 h-3" /> : <Volume2 className="w-3 h-3" />}
-                      </button>
-                    )}
-                  </div>
+                  <p
+                    className={`text-xs mt-1 ${message.role === "user" ? "text-primary-foreground/70" : "text-muted-foreground"}`}
+                  >
+                    {message.createdAt?.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+                  </p>
                 </div>
               </div>
             ))}
@@ -331,21 +179,12 @@ export function FloatingChatBot() {
           {/* Input */}
           <div className="p-4 bg-background border-t border-border">
             <div className="flex gap-2">
-              <Button
-                onClick={isListening ? stopListening : startListening}
-                disabled={status === "in_progress"}
-                variant={isListening ? "destructive" : "outline"}
-                className={`rounded-xl px-3 ${isListening ? "animate-pulse" : ""}`}
-                title={isListening ? "Stop listening" : "Voice input"}
-              >
-                {isListening ? <MicOff className="w-4 h-4" /> : <Mic className="w-4 h-4" />}
-              </Button>
               <input
                 type="text"
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyPress={handleKeyPress}
-                placeholder={isListening ? "Listening..." : "Type your message..."}
+                placeholder="Type your message..."
                 disabled={status === "in_progress"}
                 className="flex-1 px-4 py-2.5 border border-input rounded-xl focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent text-sm disabled:opacity-50 disabled:cursor-not-allowed bg-background text-foreground"
               />
@@ -357,9 +196,7 @@ export function FloatingChatBot() {
                 <Send className="w-4 h-4" />
               </Button>
             </div>
-            <p className="text-xs text-muted-foreground mt-2 text-center">
-              {isListening ? "Speak now..." : "Press Enter to send or use microphone"}
-            </p>
+            <p className="text-xs text-muted-foreground mt-2 text-center">Press Enter to send</p>
           </div>
         </div>
       </div>
@@ -399,7 +236,7 @@ export function FloatingChatBot() {
             {/* Two-line text layout */}
             <div className="flex flex-col items-start relative z-10">
               <span className="text-sm md:text-base font-bold text-foreground leading-tight transition-colors duration-300 group-hover/button:text-primary">
-                PND50 Assistant
+                PND50 Assistant    
               </span>
               <span className="text-xs md:text-sm text-muted-foreground leading-tight transition-colors duration-300 group-hover/button:text-foreground">
                 Chat with Panida
@@ -412,10 +249,7 @@ export function FloatingChatBot() {
       {/* Close button when chat is open */}
       {isOpen && (
         <button
-          onClick={() => {
-            setIsOpen(false)
-            stopSpeaking()
-          }}
+          onClick={() => setIsOpen(false)}
           className="fixed bottom-4 md:bottom-6 right-4 md:right-6 z-50 w-14 h-14 bg-primary hover:bg-primary/90 text-primary-foreground rounded-full shadow-2xl hover:shadow-[0_20px_60px_-15px_rgba(var(--primary),0.6)] flex items-center justify-center transition-all duration-500 hover:scale-110 hover:rotate-90 backdrop-blur-sm"
           aria-label="Close chat"
         >
