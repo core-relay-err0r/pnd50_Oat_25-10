@@ -96,10 +96,7 @@ export default function ServicesPage() {
 
           <div className="flex-1 w-full flex flex-col lg:scale-[0.85] lg:origin-top">
             <section className="relative py-8 md:py-12 pt-[100px] lg:pt-[120px]">
-              <div className="absolute inset-0 bg-gradient-to-b from-primary/10 via-transparent to-transparent blur-3xl pointer-events-none" />
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-primary/5 rounded-full blur-[100px] pointer-events-none" />
-
-              <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl relative z-10">
+              <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
                 <motion.div
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
