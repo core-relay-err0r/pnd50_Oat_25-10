@@ -83,17 +83,17 @@ export default function ServicesPage() {
 
   return (
     <main className="min-h-screen">
-      <section className="relative w-full min-h-screen flex flex-col bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900">
+      <section className="relative w-full min-h-screen flex flex-col bg-gradient-to-b from-slate-800 via-slate-700 to-slate-800">
         <AnimatedGridBackground className="min-h-screen flex-1">
           <div
-            className="absolute top-20 left-10 w-96 h-96 bg-primary/30 rounded-full blur-3xl pointer-events-none"
+            className="absolute top-20 left-10 w-96 h-96 bg-primary/40 rounded-full blur-3xl pointer-events-none"
             style={{
               transform: `translate(${mousePosition.x}px, ${mousePosition.y}px)`,
               transition: "transform 0.5s ease-out",
             }}
           />
           <div
-            className="absolute bottom-20 right-10 w-96 h-96 bg-chart-2/30 rounded-full blur-3xl pointer-events-none"
+            className="absolute bottom-20 right-10 w-96 h-96 bg-chart-2/40 rounded-full blur-3xl pointer-events-none"
             style={{
               transform: `translate(${-mousePosition.x}px, ${-mousePosition.y}px)`,
               transition: "transform 0.5s ease-out",
