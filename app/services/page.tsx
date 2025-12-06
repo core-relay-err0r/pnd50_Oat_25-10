@@ -76,7 +76,7 @@ export default function ServicesPage() {
   }, [])
 
   const stats = [
-    { value: "500+", label: "Clients Served" },
+    { value: "200+", label: "Clients Served" },
     { value: "15+", label: "Years Experience" },
     { value: "99%", label: "Client Satisfaction" },
   ]
@@ -111,7 +111,7 @@ export default function ServicesPage() {
                     transition={{ delay: 0.2 }}
                   >
                     <span className="w-2 h-2 bg-primary rounded-full animate-pulse"></span>
-                    Trusted by 500+ Businesses
+                    Trusted by 200+ Businesses
                   </motion.div>
 
                   <motion.h1
@@ -142,10 +142,7 @@ export default function ServicesPage() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.5 }}
-                  >
-                    
-                    
-                  </motion.div>
+                  ></motion.div>
 
                   {/* Stats */}
                   <motion.div
