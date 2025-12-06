@@ -4,21 +4,7 @@ import type React from "react"
 import type { SpeechRecognition } from "web-speech-api" // Declare SpeechRecognition here
 
 import { useState, useEffect, useRef, useCallback } from "react"
-import {
-  X,
-  MessageCircle,
-  Send,
-  Sparkles,
-  EyeOff,
-  Volume2,
-  VolumeX,
-  Mic,
-  MicOff,
-  Square,
-  Phone,
-  PhoneOff,
-} from "lucide-react"
-import { Button } from "@/components/ui/button"
+import { X, MessageCircle, Send, EyeOff, Volume2, VolumeX, Mic, MicOff, Square, Phone, PhoneOff } from "lucide-react"
 import { useChat } from "@ai-sdk/react"
 import { DefaultChatTransport } from "ai"
 import { usePathname } from "next/navigation"
@@ -340,254 +326,133 @@ export function FloatingChatBot() {
     )
   }
 
-  if (voiceMode && isOpen) {
-    return (
-      <>
-        {/* Voice Mode Floating Panel */}
-        <div className="fixed bottom-6 right-6 z-50">
-          <div className="relative flex flex-col items-center bg-slate-900/95 backdrop-blur-md rounded-3xl p-4 shadow-2xl border border-white/10">
-            {/* Close / Exit Voice Mode Button */}
-            <button
-              onClick={() => {
-                toggleVoiceMode()
-                setIsOpen(false)
-              }}
-              className="absolute -top-2 -right-2 z-10 w-8 h-8 bg-slate-700 hover:bg-red-500 text-white rounded-full shadow-lg flex items-center justify-center transition-all duration-300 hover:scale-110 border border-white/10"
-              aria-label="Exit voice mode"
-            >
-              <X className="w-4 h-4" />
-            </button>
-
-            {/* SiriOrb Container */}
-            <div className="relative">
-              <SiriOrb
-                size={isMobile ? "120px" : "140px"}
-                animationDuration={isListening ? 8 : isSpeaking ? 12 : 20}
-                isActive={isListening || isSpeaking}
-                className="drop-shadow-xl"
-              />
-
-              {/* Center Content Overlay */}
-              <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
-                <div className="px-3 py-2">
-                  <p className="text-white font-medium text-sm">Panida</p>
-                  <p className="text-slate-400 text-xs">
-                    {isListening
-                      ? "Listening..."
-                      : isSpeaking
-                        ? "Speaking..."
-                        : status === "in_progress"
-                          ? "Thinking..."
-                          : "Tap to talk"}
-                  </p>
-                  {/* Audio Wave Animation */}
-                  {(isListening || isSpeaking) && (
-                    <div className="flex justify-center gap-0.5 mt-2">
-                      {[...Array(4)].map((_, i) => (
-                        <span
-                          key={i}
-                          className={`w-0.5 rounded-full ${isListening ? "bg-green-400" : "bg-blue-400"}`}
-                          style={{
-                            height: `${Math.random() * 10 + 6}px`,
-                            animation: `pulse 0.5s ease-in-out infinite ${i * 0.1}s`,
-                          }}
-                        />
-                      ))}
-                    </div>
-                  )}
-                </div>
-              </div>
-            </div>
-
-            <div className="flex gap-2 mt-3">
-              <button
-                onClick={isListening ? stopListening : startListening}
-                disabled={status === "in_progress" || isSpeaking}
-                className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 shadow-md ${
-                  isListening
-                    ? "bg-red-500 hover:bg-red-600 text-white scale-105 animate-pulse"
-                    : "bg-white/10 hover:bg-white/20 text-white border border-white/20"
-                } disabled:opacity-50 disabled:cursor-not-allowed`}
-                aria-label={isListening ? "Stop listening" : "Start listening"}
-              >
-                {isListening ? <MicOff className="w-4 h-4" /> : <Mic className="w-4 h-4" />}
-              </button>
-
-              {isSpeaking && (
-                <button
-                  onClick={stopSpeaking}
-                  className="w-10 h-10 rounded-full bg-orange-500 hover:bg-orange-600 text-white flex items-center justify-center transition-all duration-300 shadow-md"
-                  aria-label="Stop speaking"
-                >
-                  <Square className="w-4 h-4" />
-                </button>
-              )}
-
-              <button
-                onClick={() => {
-                  setVoiceMode(false)
-                  setVoiceEnabled(false)
-                  setContinuousListening(false)
-                  if (isListening) stopListening()
-                  if (isSpeaking) stopSpeaking()
-                }}
-                className="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 text-white border border-white/20 flex items-center justify-center transition-all duration-300 shadow-md"
-                aria-label="Switch to text mode"
-                title="Switch to text mode"
-              >
-                <MessageCircle className="w-4 h-4" />
-              </button>
-            </div>
-
-            {messages.filter((m) => m.role === "assistant").length > 0 && (
-              <div className="mt-3 max-w-[180px]">
-                <p className="text-slate-400 text-xs line-clamp-2 text-center">
-                  {messages
-                    .filter((m) => m.role === "assistant")
-                    .pop()
-                    ?.parts.filter((p) => p.type === "text")
-                    .map((p) => p.text)
-                    .join(" ")}
-                </p>
-              </div>
-            )}
-          </div>
-        </div>
-
-        <style jsx>{`
-          @keyframes pulse {
-            0%, 100% { transform: scaleY(0.5); }
-            50% { transform: scaleY(1); }
-          }
-        `}</style>
-      </>
-    )
-  }
-
   return (
     <>
       {/* Chat Window */}
       <div
-        className={`fixed bottom-20 md:bottom-24 right-4 md:right-6 z-50 w-full max-w-[calc(100vw-2rem)] md:w-[380px] md:max-w-[calc(100vw-3rem)] transition-all duration-500 ease-out ${
+        className={`fixed bottom-6 right-6 z-50 transition-all duration-500 ease-out ${
           isOpen ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-8 scale-95 pointer-events-none"
         }`}
       >
-        <div className="bg-background rounded-2xl shadow-2xl overflow-hidden border border-border backdrop-blur-xl">
+        <div className="relative flex flex-col bg-slate-900/95 backdrop-blur-md rounded-3xl shadow-2xl border border-white/10 w-[340px] md:w-[380px] max-w-[calc(100vw-3rem)]">
+          {/* Close Button */}
+          <button
+            onClick={() => {
+              setIsOpen(false)
+              stopSpeaking()
+              if (voiceMode) {
+                stopListening()
+              }
+            }}
+            className="absolute -top-2 -right-2 z-10 w-8 h-8 bg-slate-700 hover:bg-red-500 text-white rounded-full shadow-lg flex items-center justify-center transition-all duration-300 hover:scale-110 border border-white/10"
+            aria-label="Close chat"
+          >
+            <X className="w-4 h-4" />
+          </button>
+
           {/* Header */}
-          <div className="bg-primary p-4 flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-primary-foreground/20 backdrop-blur-sm flex items-center justify-center">
-                <MessageCircle className="w-5 h-5 text-primary-foreground" />
-              </div>
-              <div>
-                <h3 className="text-primary-foreground font-semibold">Panida - PND50 Assistant</h3>
-                <p className="text-primary-foreground/80 text-xs">
-                  {status === "in_progress"
-                    ? "Typing..."
-                    : isSpeaking
-                      ? "Speaking..."
-                      : isListening
-                        ? "Listening..."
-                        : "Online"}
-                </p>
-              </div>
+          <div className="p-4 flex items-center gap-3 border-b border-white/10">
+            <div className="relative">
+              <SiriOrb
+                size="48px"
+                animationDuration={status === "in_progress" ? 8 : 20}
+                isActive={status === "in_progress" || isSpeaking}
+                className="drop-shadow-lg"
+              />
+            </div>
+            <div className="flex-1">
+              <p className="text-white font-medium text-sm">Panida</p>
+              <p className="text-slate-400 text-xs">
+                {status === "in_progress"
+                  ? "Thinking..."
+                  : isSpeaking
+                    ? "Speaking..."
+                    : isListening
+                      ? "Listening..."
+                      : "PND50 Assistant"}
+              </p>
             </div>
             <div className="flex items-center gap-1">
               {speechSupported && recognitionSupported && (
                 <button
                   onClick={toggleVoiceMode}
-                  className={`flex items-center gap-1.5 text-xs font-medium rounded-full px-2.5 py-1.5 transition-all ${
+                  className={`w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 ${
                     voiceMode
-                      ? "bg-green-500 text-white shadow-lg shadow-green-500/30 animate-pulse"
-                      : "bg-primary-foreground/20 text-primary-foreground hover:bg-primary-foreground/30"
+                      ? "bg-green-500 text-white shadow-lg shadow-green-500/30"
+                      : "bg-white/10 hover:bg-white/20 text-white border border-white/20"
                   }`}
                   aria-label={voiceMode ? "Disable voice mode" : "Enable voice mode"}
-                  title={voiceMode ? "Voice mode ON - Click to disable" : "Enable voice mode for hands-free chat"}
+                  title={voiceMode ? "Voice mode ON" : "Enable voice mode"}
                 >
-                  {voiceMode ? (
-                    <>
-                      <Phone className="w-3.5 h-3.5" />
-                      <span className="hidden sm:inline">Voice ON</span>
-                    </>
-                  ) : (
-                    <>
-                      <PhoneOff className="w-3.5 h-3.5" />
-                      <span className="hidden sm:inline">Voice</span>
-                    </>
-                  )}
+                  {voiceMode ? <Phone className="w-4 h-4" /> : <PhoneOff className="w-4 h-4" />}
                 </button>
               )}
               {speechSupported && !voiceMode && (
                 <button
                   onClick={toggleVoice}
-                  className={`text-primary-foreground hover:bg-primary-foreground/20 rounded-lg p-1.5 transition-colors ${voiceEnabled ? "bg-primary-foreground/20" : ""}`}
+                  className={`w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 ${
+                    voiceEnabled
+                      ? "bg-blue-500 text-white"
+                      : "bg-white/10 hover:bg-white/20 text-white border border-white/20"
+                  }`}
                   aria-label={voiceEnabled ? "Disable voice" : "Enable voice"}
                   title={voiceEnabled ? "Disable voice" : "Enable voice"}
                 >
-                  {voiceEnabled ? <Volume2 className="w-5 h-5" /> : <VolumeX className="w-5 h-5" />}
+                  {voiceEnabled ? <Volume2 className="w-4 h-4" /> : <VolumeX className="w-4 h-4" />}
                 </button>
               )}
               {isSpeaking && (
                 <button
                   onClick={stopSpeaking}
-                  className="text-primary-foreground hover:bg-primary-foreground/20 rounded-lg p-1.5 transition-colors animate-pulse"
+                  className="w-8 h-8 rounded-full bg-orange-500 hover:bg-orange-600 text-white flex items-center justify-center transition-all duration-300"
                   aria-label="Stop speaking"
                   title="Stop speaking"
                 >
                   <Square className="w-4 h-4" />
                 </button>
               )}
-              <button
-                onClick={() => {
-                  setIsOpen(false)
-                  stopSpeaking()
-                  if (voiceMode) {
-                    stopListening()
-                  }
-                }}
-                className="text-primary-foreground hover:bg-primary-foreground/20 rounded-lg p-1.5 transition-colors"
-                aria-label="Close chat"
-              >
-                <X className="w-5 h-5" />
-              </button>
             </div>
           </div>
 
+          {/* Voice Mode Indicator */}
           {voiceMode && (
-            <div className="bg-gradient-to-r from-green-500/10 via-green-500/20 to-green-500/10 px-4 py-2 flex items-center justify-center gap-2 border-b border-green-500/20">
+            <div className="px-4 py-2 flex items-center justify-center gap-2 border-b border-white/10 bg-green-500/10">
               <div
                 className={`w-2 h-2 rounded-full ${isListening ? "bg-red-500 animate-pulse" : isSpeaking ? "bg-green-500 animate-pulse" : "bg-green-500"}`}
               />
-              <span className="text-xs font-medium text-green-700 dark:text-green-400">
+              <span className="text-xs font-medium text-green-400">
                 {isListening
-                  ? "Listening to you..."
+                  ? "Listening..."
                   : isSpeaking
-                    ? "Panida is speaking..."
+                    ? "Speaking..."
                     : status === "in_progress"
                       ? "Thinking..."
-                      : "Voice mode active - speak anytime"}
+                      : "Voice mode active"}
               </span>
               {isListening && (
                 <div className="flex gap-0.5">
-                  <span className="w-1 h-3 bg-red-500 rounded-full animate-[pulse_0.5s_ease-in-out_infinite]" />
-                  <span className="w-1 h-4 bg-red-500 rounded-full animate-[pulse_0.5s_ease-in-out_infinite_0.1s]" />
-                  <span className="w-1 h-2 bg-red-500 rounded-full animate-[pulse_0.5s_ease-in-out_infinite_0.2s]" />
-                  <span className="w-1 h-5 bg-red-500 rounded-full animate-[pulse_0.5s_ease-in-out_infinite_0.3s]" />
-                  <span className="w-1 h-3 bg-red-500 rounded-full animate-[pulse_0.5s_ease-in-out_infinite_0.4s]" />
+                  {[...Array(4)].map((_, i) => (
+                    <span
+                      key={i}
+                      className="w-0.5 bg-red-400 rounded-full"
+                      style={{
+                        height: `${Math.random() * 10 + 6}px`,
+                        animation: `pulse 0.5s ease-in-out infinite ${i * 0.1}s`,
+                      }}
+                    />
+                  ))}
                 </div>
               )}
             </div>
           )}
 
           {/* Messages */}
-          <div className={`${voiceMode ? "h-[360px]" : "h-[400px]"} overflow-y-auto p-4 space-y-4 bg-muted/30`}>
+          <div className="h-[320px] overflow-y-auto p-4 space-y-3 scrollbar-thin scrollbar-thumb-slate-700 scrollbar-track-transparent">
             {messages.map((message) => (
               <div key={message.id} className={`flex ${message.role === "user" ? "justify-end" : "justify-start"}`}>
                 <div
-                  className={`max-w-[80%] rounded-2xl px-4 py-2.5 ${
-                    message.role === "user"
-                      ? "bg-primary text-primary-foreground"
-                      : "bg-background text-foreground border border-border"
+                  className={`max-w-[85%] rounded-2xl px-3 py-2 ${
+                    message.role === "user" ? "bg-blue-500 text-white" : "bg-white/10 text-white border border-white/10"
                   }`}
                 >
                   {message.parts.map((part, index) => {
@@ -600,10 +465,8 @@ export function FloatingChatBot() {
                     }
                     return null
                   })}
-                  <div className="flex items-center justify-between mt-1">
-                    <p
-                      className={`text-xs ${message.role === "user" ? "text-primary-foreground/70" : "text-muted-foreground"}`}
-                    >
+                  <div className="flex items-center justify-between mt-1 gap-2">
+                    <p className={`text-xs ${message.role === "user" ? "text-white/70" : "text-slate-400"}`}>
                       {message.createdAt?.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
                     </p>
                     {message.role === "assistant" && speechSupported && message.id !== "welcome-static" && (
@@ -615,11 +478,11 @@ export function FloatingChatBot() {
                             .join(" ")
                           speakText(text)
                         }}
-                        className="text-muted-foreground hover:text-primary transition-colors p-1"
+                        className="text-slate-400 hover:text-white transition-colors p-0.5"
                         aria-label="Speak this message"
                         title="Speak this message"
                       >
-                        <Volume2 className="w-3.5 h-3.5" />
+                        <Volume2 className="w-3 h-3" />
                       </button>
                     )}
                   </div>
@@ -628,18 +491,18 @@ export function FloatingChatBot() {
             ))}
             {status === "in_progress" && (
               <div className="flex justify-start">
-                <div className="bg-background text-foreground border border-border rounded-2xl px-4 py-2.5">
+                <div className="bg-white/10 text-white border border-white/10 rounded-2xl px-3 py-2">
                   <div className="flex gap-1">
                     <span
-                      className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce"
+                      className="w-2 h-2 bg-slate-400 rounded-full animate-bounce"
                       style={{ animationDelay: "0ms" }}
                     ></span>
                     <span
-                      className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce"
+                      className="w-2 h-2 bg-slate-400 rounded-full animate-bounce"
                       style={{ animationDelay: "150ms" }}
                     ></span>
                     <span
-                      className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce"
+                      className="w-2 h-2 bg-slate-400 rounded-full animate-bounce"
                       style={{ animationDelay: "300ms" }}
                     ></span>
                   </div>
@@ -650,55 +513,42 @@ export function FloatingChatBot() {
           </div>
 
           {/* Input */}
-          <div className="p-4 bg-background border-t border-border">
+          <div className="p-3 border-t border-white/10">
             <div className="flex gap-2">
               <input
                 type="text"
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyPress={handleKeyPress}
-                placeholder={
-                  isListening
-                    ? "Listening..."
-                    : voiceMode
-                      ? "Voice mode active - speak or type..."
-                      : "Type your message..."
-                }
+                placeholder={isListening ? "Listening..." : voiceMode ? "Speak or type..." : "Type a message..."}
                 disabled={status === "in_progress"}
-                className={`flex-1 px-4 py-2.5 border border-input rounded-xl focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent text-sm disabled:opacity-50 disabled:cursor-not-allowed bg-background text-foreground ${isListening ? "border-red-500 ring-2 ring-red-500/50" : voiceMode ? "border-green-500/50" : ""}`}
+                className={`flex-1 px-3 py-2 bg-white/10 border border-white/20 rounded-xl text-white placeholder-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed ${isListening ? "border-red-500 ring-2 ring-red-500/30" : voiceMode ? "border-green-500/50" : ""}`}
               />
               {recognitionSupported && (
-                <Button
+                <button
                   onClick={isListening ? stopListening : startListening}
                   disabled={status === "in_progress"}
-                  className={`rounded-xl px-3 transition-all ${
+                  className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300 ${
                     isListening
                       ? "bg-red-500 hover:bg-red-600 text-white animate-pulse"
                       : voiceMode
                         ? "bg-green-500 hover:bg-green-600 text-white"
-                        : "bg-muted hover:bg-muted/80 text-muted-foreground"
-                  }`}
+                        : "bg-white/10 hover:bg-white/20 text-white border border-white/20"
+                  } disabled:opacity-50 disabled:cursor-not-allowed`}
                   aria-label={isListening ? "Stop listening" : "Start voice input"}
                   title={isListening ? "Stop listening" : "Start voice input"}
                 >
                   {isListening ? <MicOff className="w-4 h-4" /> : <Mic className="w-4 h-4" />}
-                </Button>
+                </button>
               )}
-              <Button
+              <button
                 onClick={handleSend}
                 disabled={status === "in_progress" || !inputValue.trim()}
-                className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl px-4 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-10 h-10 bg-blue-500 hover:bg-blue-600 text-white rounded-xl flex items-center justify-center transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-blue-500"
               >
                 <Send className="w-4 h-4" />
-              </Button>
+              </button>
             </div>
-            <p className="text-xs text-muted-foreground mt-2 text-center">
-              {voiceMode
-                ? "Voice mode: Speak naturally and Panida will respond"
-                : recognitionSupported
-                  ? "Press Enter to send • Click mic to speak"
-                  : "Press Enter to send"}
-            </p>
           </div>
         </div>
       </div>
@@ -709,7 +559,7 @@ export function FloatingChatBot() {
           {isMobile ? (
             <button
               onClick={handleHide}
-              className="absolute -top-2 -right-2 z-10 w-8 h-8 bg-muted/90 hover:bg-destructive/10 active:bg-destructive/20 text-muted-foreground hover:text-destructive rounded-full shadow-lg border border-border/50 hover:border-destructive/30 flex items-center justify-center transition-all duration-300 active:scale-95 backdrop-blur-sm"
+              className="absolute -top-2 -right-2 z-10 w-8 h-8 bg-slate-700 hover:bg-red-500 text-white rounded-full shadow-lg border border-white/10 flex items-center justify-center transition-all duration-300 active:scale-95"
               aria-label="Hide AI assistant"
             >
               <EyeOff className="w-4 h-4" />
@@ -717,7 +567,7 @@ export function FloatingChatBot() {
           ) : (
             <button
               onClick={handleHide}
-              className="bg-muted/80 hover:bg-muted text-muted-foreground rounded-full shadow-lg hover:shadow-xl p-2 transition-all duration-500 hover:scale-110 opacity-0 group-hover:opacity-100 backdrop-blur-sm border border-border/50 hover:border-destructive/30 hover:text-destructive"
+              className="bg-slate-800/80 hover:bg-slate-700 text-slate-400 hover:text-red-400 rounded-full shadow-lg hover:shadow-xl p-2 transition-all duration-500 hover:scale-110 opacity-0 group-hover:opacity-100 backdrop-blur-sm border border-white/10"
               aria-label="Hide AI assistant"
               title="Hide AI assistant"
             >
@@ -728,43 +578,29 @@ export function FloatingChatBot() {
           {/* Main chat button */}
           <button
             onClick={() => setIsOpen(true)}
-            className="relative bg-background hover:bg-white text-foreground rounded-full shadow-2xl hover:shadow-[0_20px_60px_-15px_rgba(0,0,0,0.3)] flex gap-3 md:gap-4 px-5 py-4 md:px-7 md:py-5 transition-all duration-500 hover:scale-105 border-4 border-dotted border-primary hover:border-solid hover:border-primary/80 items-center overflow-hidden group/button"
+            className="relative bg-slate-900/95 hover:bg-slate-800 backdrop-blur-md text-white rounded-full shadow-2xl hover:shadow-[0_20px_60px_-15px_rgba(0,0,0,0.5)] flex gap-3 md:gap-4 px-5 py-3 md:px-6 md:py-4 transition-all duration-500 hover:scale-105 border border-white/10 hover:border-white/20 items-center overflow-hidden group/button"
             aria-label="Open chat with Panida"
           >
-            {/* Sparkle icon with primary color */}
+            {/* SiriOrb mini */}
             <div className="flex items-center justify-center relative z-10">
-              <Sparkles className="w-7 h-7 md:w-8 md:h-8 text-primary transition-all duration-500 group-hover/button:rotate-12 group-hover/button:scale-110 group-hover/button:drop-shadow-[0_0_8px_rgba(var(--primary),0.5)]" />
+              <SiriOrb size="36px" animationDuration={20} isActive={false} className="drop-shadow-lg" />
             </div>
 
             {/* Two-line text layout */}
             <div className="flex flex-col items-start relative z-10">
-              <span className="text-sm md:text-base font-bold text-foreground leading-tight transition-colors duration-300 group-hover/button:text-primary">
-                PND50 Assistant
-              </span>
-              <span className="text-xs md:text-sm text-muted-foreground leading-tight transition-colors duration-300 group-hover/button:text-foreground">
-                Chat with Panida
-              </span>
+              <span className="text-sm md:text-base font-medium text-white leading-tight">Panida</span>
+              <span className="text-xs text-slate-400 leading-tight">PND50 Assistant</span>
             </div>
           </button>
         </div>
       )}
 
-      {/* Close button when chat is open */}
-      {isOpen && (
-        <button
-          onClick={() => {
-            setIsOpen(false)
-            stopSpeaking()
-            if (voiceMode) {
-              stopListening()
-            }
-          }}
-          className="fixed bottom-4 md:bottom-6 right-4 md:right-6 z-50 w-14 h-14 bg-primary hover:bg-primary/90 text-primary-foreground rounded-full shadow-2xl hover:shadow-[0_20px_60px_-15px_rgba(var(--primary),0.6)] flex items-center justify-center transition-all duration-500 hover:scale-110 hover:rotate-90 backdrop-blur-sm"
-          aria-label="Close chat"
-        >
-          <X className="w-6 h-6 transition-transform duration-300" />
-        </button>
-      )}
+      <style jsx>{`
+        @keyframes pulse {
+          0%, 100% { transform: scaleY(0.5); }
+          50% { transform: scaleY(1); }
+        }
+      `}</style>
     </>
   )
 }
