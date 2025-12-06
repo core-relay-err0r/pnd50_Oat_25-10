@@ -77,7 +77,7 @@ export default function ServicesPage() {
 
   const stats = [
     { value: "200+", label: "Clients Served" },
-    { value: "15+", label: "Years Experience" },
+    { value: "10+", label: "Years Experience" },
     { value: "99%", label: "Client Satisfaction" },
   ]
 
