@@ -265,19 +265,7 @@ export default function FAQPage() {
 
         {/* Content */}
         <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-24">
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.2, duration: 0.4 }}
-          >
-            <Link
-              href="/"
-              className="inline-flex items-center gap-2 text-slate-400 hover:text-primary transition-colors group mb-6 sm:mb-8 touch-manipulation"
-            >
-              <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-              <span className="text-sm font-medium">Back to Home</span>
-            </Link>
-          </motion.div>
+          
 
           <div className="max-w-4xl">
             <motion.div
