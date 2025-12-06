@@ -54,13 +54,7 @@ const packages = [
 
 export default function ServicesPage() {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20 }}
-      transition={{ duration: 0.5, ease: "easeOut" }}
-      className="min-h-screen bg-background"
-    >
+    <div className="min-h-screen bg-background">
       {/* Hero Section */}
       <section className="relative bg-gradient-to-b from-primary/5 to-background py-8 md:py-12 pt-[100px] lg:pt-[100px]">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
@@ -152,6 +146,6 @@ export default function ServicesPage() {
           </div>
         </div>
       </motion.section>
-    </motion.div>
+    </div>
   )
 }

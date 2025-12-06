@@ -29,13 +29,7 @@ const AboutClientPage = () => {
   }, [])
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20 }}
-      transition={{ duration: 0.5, ease: "easeOut" }}
-      className="min-h-screen bg-background"
-    >
+    <div className="min-h-screen bg-background">
       {/* Hero Section */}
       <section className="relative pb-24 bg-gradient-to-br from-blue-50 via-slate-50 to-teal-50 overflow-hidden md:pb-32 md:pt-28 pt-24 px-4 sm:px-6 lg:px-8">
         <div className="container mx-auto px-4 sm:px-6 relative z-10 lg:px-0">
@@ -313,7 +307,7 @@ const AboutClientPage = () => {
           </div>
         </div>
       </section>
-    </motion.div>
+    </div>
   )
 }
 

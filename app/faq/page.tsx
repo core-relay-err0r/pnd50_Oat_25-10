@@ -4,9 +4,7 @@ import { useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { ArrowLeft, Building2, Calculator, FileText, Users, ChevronRight, Phone, X, Search } from "lucide-react"
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
 import { motion } from "framer-motion"
 
 const faqCategories = [
@@ -248,13 +246,7 @@ export default function FAQPage() {
     .filter((category) => category.questions.length > 0)
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20 }}
-      transition={{ duration: 0.5, ease: "easeOut" }}
-      className="min-h-screen bg-background"
-    >
+    <div className="min-h-screen bg-background">
       {/* Hero Section */}
       <div className="relative bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 border-b border-border overflow-hidden pt-[80px] min-h-[60vh]">
         {/* Background Image */}
@@ -387,103 +379,225 @@ export default function FAQPage() {
               }
 
               return (
-                <section key={category.id} id={category.id} className="scroll-mt-20 sm:scroll-mt-24">
+                <motion.section
+                  key={category.id}
+                  id={category.id}
+                  className="scroll-mt-20 sm:scroll-mt-24"
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.8, duration: 0.5 }}
+                >
                   <div className="flex items-start sm:items-center justify-between mb-6 sm:mb-8 gap-4">
                     <div className="flex items-start sm:items-center gap-3 sm:gap-4">
                       <div>
-                        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground leading-tight">
+                        <motion.h2
+                          className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground leading-tight"
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: 0.9 }}
+                        >
                           {category.title}
-                        </h2>
-                        <p className="text-xs sm:text-sm text-muted-foreground mt-1">
+                        </motion.h2>
+                        <motion.p
+                          className="text-xs sm:text-sm text-muted-foreground mt-1"
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: 1 }}
+                        >
                           {category.questions.length} {category.questions.length === 1 ? "question" : "questions"}
-                        </p>
+                        </motion.p>
                       </div>
                     </div>
                   </div>
 
-                  <Accordion type="single" collapsible className="space-y-3 sm:space-y-4">
+                  <motion.Accordion
+                    type="single"
+                    collapsible
+                    className="space-y-3 sm:space-y-4"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 1.1 }}
+                  >
                     {category.questions.map((q) => (
-                      <AccordionItem
+                      <motion.AccordionItem
                         key={q.id}
                         value={q.id}
                         className="group bg-card border border-border rounded-xl sm:rounded-2xl px-4 sm:px-6 md:px-8 data-[state=open]:shadow-xl data-[state=open]:border-primary/30 transition-all duration-300 hover:shadow-lg hover:border-border/80"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 1.2 }}
                       >
-                        <AccordionTrigger className="text-left hover:no-underline py-4 sm:py-6 touch-manipulation">
+                        <motion.AccordionTrigger
+                          className="text-left hover:no-underline py-4 sm:py-6 touch-manipulation"
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: 1.3 }}
+                        >
                           <div className="flex items-start gap-2 sm:gap-3 pr-2 sm:pr-4">
                             <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 text-primary mt-0.5 sm:mt-1 flex-shrink-0 group-data-[state=open]:rotate-90 transition-transform" />
                             <span className="font-semibold text-foreground text-sm sm:text-base md:text-lg leading-relaxed text-balance">
                               {q.question}
                             </span>
                           </div>
-                        </AccordionTrigger>
-                        <AccordionContent className="text-muted-foreground text-sm sm:text-base leading-relaxed space-y-3 sm:space-y-4 pb-4 sm:pb-6 pl-6 sm:pl-8">
+                        </motion.AccordionTrigger>
+                        <motion.AccordionContent
+                          className="text-muted-foreground text-sm sm:text-base leading-relaxed space-y-3 sm:space-y-4 pb-4 sm:pb-6 pl-6 sm:pl-8"
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: 1.4 }}
+                        >
                           {q.answer}
-                        </AccordionContent>
-                      </AccordionItem>
+                        </motion.AccordionContent>
+                      </motion.AccordionItem>
                     ))}
-                  </Accordion>
-                </section>
+                  </motion.Accordion>
+                </motion.section>
               )
             })
           ) : (
-            <div className="text-center py-12 sm:py-16 px-4">
-              <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-muted flex items-center justify-center mx-auto mb-4 sm:mb-6">
+            <motion.div
+              className="text-center py-12 sm:py-16 px-4"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.5 }}
+            >
+              <motion.div
+                className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-muted flex items-center justify-center mx-auto mb-4 sm:mb-6"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 1.6 }}
+              >
                 <Search className="w-8 h-8 sm:w-10 sm:h-10 text-muted-foreground" />
-              </div>
-              <h3 className="text-xl sm:text-2xl font-bold text-foreground mb-2 sm:mb-3">No results found</h3>
-              <p className="text-sm sm:text-base text-muted-foreground mb-4 sm:mb-6 max-w-md mx-auto">
+              </motion.div>
+              <motion.h3
+                className="text-xl sm:text-2xl font-bold text-foreground mb-2 sm:mb-3"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 1.7 }}
+              >
+                No results found
+              </motion.h3>
+              <motion.p
+                className="text-sm sm:text-base text-muted-foreground mb-4 sm:mb-6 max-w-md mx-auto"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 1.8 }}
+              >
                 We couldn't find any FAQs matching "{searchQuery}". Try different keywords or browse all categories.
-              </p>
-              <Button onClick={() => setSearchQuery("")} variant="outline" className="touch-manipulation">
+              </motion.p>
+              <motion.Button
+                onClick={() => setSearchQuery("")}
+                variant="outline"
+                className="touch-manipulation"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 1.9 }}
+              >
                 Clear Search
-              </Button>
-            </div>
+              </motion.Button>
+            </motion.div>
           )}
 
-          <section className="mt-12 sm:mt-16 md:mt-20">
-            <div className="relative overflow-hidden bg-gradient-to-br from-primary/10 via-primary/5 to-background border-2 border-primary/20 rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-12">
+          <motion.section
+            className="mt-12 sm:mt-16 md:mt-20"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 2 }}
+          >
+            <motion.div
+              className="relative overflow-hidden bg-gradient-to-br from-primary/10 via-primary/5 to-background border-2 border-primary/20 rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-12"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 2.1 }}
+            >
               {/* Decorative elements */}
-              <div className="absolute top-0 right-0 w-48 h-48 sm:w-64 sm:h-64 bg-primary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-              <div className="absolute bottom-0 left-0 w-48 h-48 sm:w-64 sm:h-64 bg-primary/5 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
+              <motion.div
+                className="absolute top-0 right-0 w-48 h-48 sm:w-64 sm:h-64 bg-primary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 2.2 }}
+              />
+              <motion.div
+                className="absolute bottom-0 left-0 w-48 h-48 sm:w-64 sm:h-64 bg-primary/5 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 2.3 }}
+              />
 
-              <div className="relative z-10 flex flex-col md:flex-row items-start gap-4 sm:gap-6">
-                <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl bg-primary/10 flex items-center justify-center flex-shrink-0 border border-primary/20">
+              <motion.div
+                className="relative z-10 flex flex-col md:flex-row items-start gap-4 sm:gap-6"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 2.4 }}
+              >
+                <motion.div
+                  className="w-12 h-12 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl bg-primary/10 flex items-center justify-center flex-shrink-0 border border-primary/20"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 2.5 }}
+                >
                   <Phone className="w-6 h-6 sm:w-8 sm:h-8 text-primary" />
-                </div>
-                <div className="flex-1">
-                  <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-3 sm:mb-4 leading-tight">
+                </motion.div>
+                <motion.div
+                  className="flex-1"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 2.6 }}
+                >
+                  <motion.h2
+                    className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-3 sm:mb-4 leading-tight"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 2.7 }}
+                  >
                     Still Have Questions?
-                  </h2>
-                  <p className="text-base sm:text-lg text-muted-foreground leading-relaxed mb-6 sm:mb-8 max-w-2xl">
+                  </motion.h2>
+                  <motion.p
+                    className="text-base sm:text-lg text-muted-foreground leading-relaxed mb-6 sm:mb-8 max-w-2xl"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 2.8 }}
+                  >
                     Can't find what you're looking for? Our team is ready to guide you step by step — in simple English,
                     with full transparency. Get personalized answers to your specific situation.
-                  </p>
-                  <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-                    <Button
+                  </motion.p>
+                  <motion.div
+                    className="flex flex-col sm:flex-row gap-3 sm:gap-4"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 2.9 }}
+                  >
+                    <motion.Button
                       asChild
                       size="lg"
                       className="text-sm sm:text-base group w-full sm:w-auto touch-manipulation"
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 3 }}
                     >
                       <Link href="/contact" className="flex items-center justify-center gap-2">
                         Contact Us
                         <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                       </Link>
-                    </Button>
-                    <Button
+                    </motion.Button>
+                    <motion.Button
                       asChild
                       size="lg"
                       variant="outline"
                       className="text-sm sm:text-base bg-background/50 backdrop-blur-sm w-full sm:w-auto touch-manipulation"
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 3.1 }}
                     >
                       <Link href="/calculator">Get Free Consultation</Link>
-                    </Button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
+                    </motion.Button>
+                  </motion.div>
+                </motion.div>
+              </motion.div>
+            </motion.div>
+          </motion.section>
         </div>
       </div>
-    </motion.div>
+    </div>
   )
 }
