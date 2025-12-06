@@ -1,6 +1,19 @@
+"use client"
+
+import { motion } from "framer-motion"
+
+const pageVariants = {
+  initial: { opacity: 0, y: 20 },
+  animate: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] },
+  },
+}
+
 const TermsOfServicePage = () => {
   return (
-    <div className="container mx-auto py-8">
+    <motion.div initial="initial" animate="animate" variants={pageVariants} className="container mx-auto py-8">
       <h1 className="text-2xl font-bold mb-4">Terms of Service</h1>
       <p className="mb-4">
         Welcome to our website. These terms of service outline the rules and regulations for the use of our website.
@@ -80,7 +93,7 @@ const TermsOfServicePage = () => {
         and you submit to the non-exclusive jurisdiction of the state and federal courts located in [Your Jurisdiction]
         for the resolution of any disputes.
       </p>
-    </div>
+    </motion.div>
   )
 }
 

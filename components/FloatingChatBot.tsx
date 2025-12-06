@@ -1,14 +1,29 @@
 "use client"
 
 import type React from "react"
+import type { SpeechRecognition } from "web-speech-api" // Declare SpeechRecognition here
 
-import { useState, useEffectEvent, useEffect } from "react"
-import { X, MessageCircle, Send, Sparkles, EyeOff } from "lucide-react"
+import { useState, useEffect, useRef, useCallback } from "react"
+import {
+  X,
+  MessageCircle,
+  Send,
+  Sparkles,
+  EyeOff,
+  Volume2,
+  VolumeX,
+  Mic,
+  MicOff,
+  Square,
+  Phone,
+  PhoneOff,
+} from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useChat } from "@ai-sdk/react"
 import { DefaultChatTransport } from "ai"
 import { usePathname } from "next/navigation"
 import { useIsMobile } from "@/components/ui/use-mobile"
+import { SiriOrb } from "@/components/ui/siri-orb"
 
 const WELCOME_MESSAGE = {
   id: "welcome-static",
@@ -16,7 +31,7 @@ const WELCOME_MESSAGE = {
   parts: [
     {
       type: "text" as const,
-      text: "👋 Hi there! I'm Panida, your digital assistant from PND50.\n\nI can help you find the right accounting or tax service for your company — and get your quotation in just a few minutes.\n\nShall we get started? 📋 ✨",
+      text: "Hi there! I'm Panida, your digital assistant from PND50.\n\nI can help you find the right accounting or tax service for your company - and get your quotation in just a few minutes.\n\nShall we get started?",
     },
   ],
   createdAt: new Date(),
@@ -29,23 +44,166 @@ export function FloatingChatBot() {
   const isOnCalculator = pathname === "/calculator"
   const isMobile = useIsMobile()
 
-  useEffect(() => {
-    const hidden = localStorage.getItem("chatbot-hidden")
-    if (hidden === "true") {
-      setIsHidden(true)
+  const [voiceMode, setVoiceMode] = useState(false)
+  const [voiceEnabled, setVoiceEnabled] = useState(false)
+  const [isListening, setIsListening] = useState(false)
+  const [isSpeaking, setIsSpeaking] = useState(false)
+  const [speechSupported, setSpeechSupported] = useState(false)
+  const [recognitionSupported, setRecognitionSupported] = useState(false)
+  const [continuousListening, setContinuousListening] = useState(false)
+
+  const recognitionRef = useRef<SpeechRecognition | null>(null)
+  const synthRef = useRef<SpeechSynthesis | null>(null)
+  const lastSpokenMessageRef = useRef<string | null>(null)
+  const messagesEndRef = useRef<HTMLDivElement>(null)
+
+  const startListening = useCallback(() => {
+    if (!recognitionRef.current || isListening) return
+
+    try {
+      recognitionRef.current.abort()
+    } catch (e) {
+      // Ignore abort errors
+    }
+
+    recognitionRef.current.onresult = (event) => {
+      const transcript = event.results[0][0].transcript
+      setInputValue((prev) => prev + (prev ? " " : "") + transcript)
+      setIsListening(false)
+
+      if (voiceMode && transcript.trim()) {
+        setTimeout(() => {
+          sendMessage({ text: transcript.trim() })
+          setInputValue("")
+        }, 500)
+      }
+    }
+
+    recognitionRef.current.onerror = (event) => {
+      if (event.error !== "aborted" && event.error !== "no-speech") {
+        console.error("Speech recognition error:", event.error)
+      }
+      setIsListening(false)
+    }
+
+    recognitionRef.current.onend = () => {
+      setIsListening(false)
+      if (voiceMode && continuousListening && !isSpeaking) {
+        setTimeout(() => {
+          if (voiceMode && continuousListening && !isListening) {
+            startListening()
+          }
+        }, 1000)
+      }
+    }
+
+    setTimeout(() => {
+      try {
+        if (recognitionRef.current && !isListening) {
+          recognitionRef.current.start()
+          setIsListening(true)
+        }
+      } catch (error) {
+        if (error instanceof Error && !error.message.includes("already started")) {
+          console.error("Speech recognition error:", error)
+        }
+        setIsListening(false)
+      }
+    }, 100)
+  }, [isListening, voiceMode, continuousListening, isSpeaking])
+
+  const stopListening = useCallback(() => {
+    if (recognitionRef.current && isListening) {
+      recognitionRef.current.stop()
+      setIsListening(false)
+    }
+  }, [isListening])
+
+  const speakText = useCallback(
+    (text: string) => {
+      if (!speechSupported || !synthRef.current || !voiceEnabled) return
+
+      // Cancel any ongoing speech
+      synthRef.current.cancel()
+
+      // Clean text for speech (remove emojis and special characters)
+      const cleanText = text
+        .replace(/[\u{1F600}-\u{1F64F}]/gu, "")
+        .replace(/[\u{1F300}-\u{1F5FF}]/gu, "")
+        .replace(/[\u{1F680}-\u{1F6FF}]/gu, "")
+        .replace(/[\u{2600}-\u{26FF}]/gu, "")
+        .replace(/[\u{2700}-\u{27BF}]/gu, "")
+        .replace(/[*#_~`]/g, "")
+        .trim()
+
+      if (!cleanText) return
+
+      const utterance = new SpeechSynthesisUtterance(cleanText)
+      utterance.rate = 1.0
+      utterance.pitch = 1.1
+      utterance.volume = 1.0
+
+      // Try to use a female voice
+      const voices = synthRef.current.getVoices()
+      const femaleVoice =
+        voices.find(
+          (voice) =>
+            voice.name.includes("Female") ||
+            voice.name.includes("Samantha") ||
+            voice.name.includes("Victoria") ||
+            voice.name.includes("Karen") ||
+            voice.name.includes("Moira") ||
+            (voice.lang.startsWith("en") && voice.name.toLowerCase().includes("female")),
+        ) || voices.find((voice) => voice.lang.startsWith("en"))
+
+      if (femaleVoice) {
+        utterance.voice = femaleVoice
+      }
+
+      utterance.onstart = () => setIsSpeaking(true)
+      utterance.onend = () => setIsSpeaking(false)
+      utterance.onerror = () => setIsSpeaking(false)
+
+      synthRef.current.speak(utterance)
+    },
+    [speechSupported, voiceEnabled],
+  )
+
+  const stopSpeaking = useCallback(() => {
+    if (synthRef.current) {
+      synthRef.current.cancel()
+      setIsSpeaking(false)
     }
   }, [])
 
-  const handleHide = () => {
-    setIsHidden(true)
-    setIsOpen(false)
-    localStorage.setItem("chatbot-hidden", "true")
-  }
+  const toggleVoiceMode = useCallback(() => {
+    const newValue = !voiceMode
+    setVoiceMode(newValue)
+    setVoiceEnabled(newValue)
+    localStorage.setItem("chatbot-voice-mode", String(newValue))
+    localStorage.setItem("chatbot-voice-enabled", String(newValue))
 
-  const handleShow = () => {
-    setIsHidden(false)
-    localStorage.removeItem("chatbot-hidden")
-  }
+    if (!newValue) {
+      // Turning off voice mode
+      if (isSpeaking) stopSpeaking()
+      if (isListening) stopListening()
+      setContinuousListening(false)
+    } else {
+      setIsOpen(true)
+      // Turning on voice mode - start listening automatically
+      setContinuousListening(true)
+    }
+  }, [voiceMode, isSpeaking, isListening])
+
+  const toggleVoice = useCallback(() => {
+    const newValue = !voiceEnabled
+    setVoiceEnabled(newValue)
+    localStorage.setItem("chatbot-voice-enabled", String(newValue))
+
+    if (!newValue && isSpeaking) {
+      stopSpeaking()
+    }
+  }, [voiceEnabled, isSpeaking, stopSpeaking])
 
   const {
     messages: aiMessages,
@@ -64,14 +222,69 @@ export function FloatingChatBot() {
 
   const [inputValue, setInputValue] = useState("")
 
-  const performSend = useEffectEvent((message: string) => {
-    sendMessage({ text: message })
-    setInputValue("")
-  })
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      // Check TTS support
+      if ("speechSynthesis" in window) {
+        setSpeechSupported(true)
+        synthRef.current = window.speechSynthesis
+      }
+
+      // Check STT support
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
+      if (SpeechRecognition) {
+        setRecognitionSupported(true)
+        recognitionRef.current = new SpeechRecognition()
+        recognitionRef.current.continuous = false
+        recognitionRef.current.interimResults = false
+        recognitionRef.current.lang = "en-US"
+      }
+
+      const savedVoiceMode = localStorage.getItem("chatbot-voice-mode")
+      if (savedVoiceMode === "true") {
+        setVoiceMode(true)
+        setVoiceEnabled(true)
+      }
+
+      const savedVoicePref = localStorage.getItem("chatbot-voice-enabled")
+      if (savedVoicePref === "true") {
+        setVoiceEnabled(true)
+      }
+    }
+  }, [])
+
+  useEffect(() => {
+    if (voiceMode && continuousListening && !isSpeaking && !isListening && status !== "in_progress") {
+      const timer = setTimeout(() => {
+        if (voiceMode && continuousListening && !isSpeaking && !isListening) {
+          startListening()
+        }
+      }, 800)
+      return () => clearTimeout(timer)
+    }
+  }, [voiceMode, continuousListening, isSpeaking, isListening, status])
+
+  useEffect(() => {
+    if (!voiceEnabled || aiMessages.length === 0) return
+
+    const lastMessage = aiMessages[aiMessages.length - 1]
+    if (lastMessage.role === "assistant" && status !== "in_progress") {
+      const messageText = lastMessage.parts
+        .filter((part) => part.type === "text")
+        .map((part) => part.text)
+        .join(" ")
+
+      if (messageText && messageText !== lastSpokenMessageRef.current) {
+        lastSpokenMessageRef.current = messageText
+        speakText(messageText)
+      }
+    }
+  }, [aiMessages, status, voiceEnabled, speakText])
 
   const handleSend = () => {
     if (!inputValue.trim() || status === "in_progress") return
-    performSend(inputValue)
+    sendMessage({ text: inputValue })
+    setInputValue("")
   }
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
@@ -79,6 +292,23 @@ export function FloatingChatBot() {
       e.preventDefault()
       handleSend()
     }
+  }
+
+  const handleHide = () => {
+    setIsHidden(true)
+    setIsOpen(false)
+    stopSpeaking()
+    if (voiceMode) {
+      setVoiceMode(false)
+      setContinuousListening(false)
+      stopListening()
+    }
+    localStorage.setItem("chatbot-hidden", "true")
+  }
+
+  const handleShow = () => {
+    setIsHidden(false)
+    localStorage.removeItem("chatbot-hidden")
   }
 
   if (isHidden) {
@@ -89,8 +319,132 @@ export function FloatingChatBot() {
         aria-label="Show AI assistant"
       >
         <MessageCircle className="w-4 h-4 transition-transform duration-300 group-hover:rotate-12" />
-        <span>Show AI Chat</span>
+        <span>Chat with Panida </span>
       </button>
+    )
+  }
+
+  if (voiceMode && isOpen) {
+    return (
+      <>
+        {/* Voice Mode Floating Panel */}
+        <div className="fixed bottom-6 right-6 z-50">
+          <div className="relative flex flex-col items-center bg-slate-900/95 backdrop-blur-md rounded-3xl p-4 shadow-2xl border border-white/10">
+            {/* Close / Exit Voice Mode Button */}
+            <button
+              onClick={() => {
+                toggleVoiceMode()
+                setIsOpen(false)
+              }}
+              className="absolute -top-2 -right-2 z-10 w-8 h-8 bg-slate-700 hover:bg-red-500 text-white rounded-full shadow-lg flex items-center justify-center transition-all duration-300 hover:scale-110 border border-white/10"
+              aria-label="Exit voice mode"
+            >
+              <X className="w-4 h-4" />
+            </button>
+
+            {/* SiriOrb Container */}
+            <div className="relative">
+              <SiriOrb
+                size={isMobile ? "120px" : "140px"}
+                animationDuration={isListening ? 8 : isSpeaking ? 12 : 20}
+                isActive={isListening || isSpeaking}
+                className="drop-shadow-xl"
+              />
+
+              {/* Center Content Overlay */}
+              <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
+                <div className="px-3 py-2">
+                  <p className="text-white font-medium text-sm">Panida</p>
+                  <p className="text-slate-400 text-xs">
+                    {isListening
+                      ? "Listening..."
+                      : isSpeaking
+                        ? "Speaking..."
+                        : status === "in_progress"
+                          ? "Thinking..."
+                          : "Tap to talk"}
+                  </p>
+                  {/* Audio Wave Animation */}
+                  {(isListening || isSpeaking) && (
+                    <div className="flex justify-center gap-0.5 mt-2">
+                      {[...Array(4)].map((_, i) => (
+                        <span
+                          key={i}
+                          className={`w-0.5 rounded-full ${isListening ? "bg-green-400" : "bg-blue-400"}`}
+                          style={{
+                            height: `${Math.random() * 10 + 6}px`,
+                            animation: `pulse 0.5s ease-in-out infinite ${i * 0.1}s`,
+                          }}
+                        />
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            <div className="flex gap-2 mt-3">
+              <button
+                onClick={isListening ? stopListening : startListening}
+                disabled={status === "in_progress" || isSpeaking}
+                className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 shadow-md ${
+                  isListening
+                    ? "bg-red-500 hover:bg-red-600 text-white scale-105 animate-pulse"
+                    : "bg-white/10 hover:bg-white/20 text-white border border-white/20"
+                } disabled:opacity-50 disabled:cursor-not-allowed`}
+                aria-label={isListening ? "Stop listening" : "Start listening"}
+              >
+                {isListening ? <MicOff className="w-4 h-4" /> : <Mic className="w-4 h-4" />}
+              </button>
+
+              {isSpeaking && (
+                <button
+                  onClick={stopSpeaking}
+                  className="w-10 h-10 rounded-full bg-orange-500 hover:bg-orange-600 text-white flex items-center justify-center transition-all duration-300 shadow-md"
+                  aria-label="Stop speaking"
+                >
+                  <Square className="w-4 h-4" />
+                </button>
+              )}
+
+              <button
+                onClick={() => {
+                  setVoiceMode(false)
+                  setVoiceEnabled(false)
+                  setContinuousListening(false)
+                  if (isListening) stopListening()
+                  if (isSpeaking) stopSpeaking()
+                }}
+                className="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 text-white border border-white/20 flex items-center justify-center transition-all duration-300 shadow-md"
+                aria-label="Switch to text mode"
+                title="Switch to text mode"
+              >
+                <MessageCircle className="w-4 h-4" />
+              </button>
+            </div>
+
+            {messages.filter((m) => m.role === "assistant").length > 0 && (
+              <div className="mt-3 max-w-[180px]">
+                <p className="text-slate-400 text-xs line-clamp-2 text-center">
+                  {messages
+                    .filter((m) => m.role === "assistant")
+                    .pop()
+                    ?.parts.filter((p) => p.type === "text")
+                    .map((p) => p.text)
+                    .join(" ")}
+                </p>
+              </div>
+            )}
+          </div>
+        </div>
+
+        <style jsx>{`
+          @keyframes pulse {
+            0%, 100% { transform: scaleY(0.5); }
+            50% { transform: scaleY(1); }
+          }
+        `}</style>
+      </>
     )
   }
 
@@ -112,21 +466,105 @@ export function FloatingChatBot() {
               <div>
                 <h3 className="text-primary-foreground font-semibold">Panida - PND50 Assistant</h3>
                 <p className="text-primary-foreground/80 text-xs">
-                  {status === "in_progress" ? "Typing..." : "Online"}
+                  {status === "in_progress"
+                    ? "Typing..."
+                    : isSpeaking
+                      ? "Speaking..."
+                      : isListening
+                        ? "Listening..."
+                        : "Online"}
                 </p>
               </div>
             </div>
-            <button
-              onClick={() => setIsOpen(false)}
-              className="text-primary-foreground hover:bg-primary-foreground/20 rounded-lg p-1.5 transition-colors"
-              aria-label="Close chat"
-            >
-              <X className="w-5 h-5" />
-            </button>
+            <div className="flex items-center gap-1">
+              {speechSupported && recognitionSupported && (
+                <button
+                  onClick={toggleVoiceMode}
+                  className={`flex items-center gap-1.5 text-xs font-medium rounded-full px-2.5 py-1.5 transition-all ${
+                    voiceMode
+                      ? "bg-green-500 text-white shadow-lg shadow-green-500/30 animate-pulse"
+                      : "bg-primary-foreground/20 text-primary-foreground hover:bg-primary-foreground/30"
+                  }`}
+                  aria-label={voiceMode ? "Disable voice mode" : "Enable voice mode"}
+                  title={voiceMode ? "Voice mode ON - Click to disable" : "Enable voice mode for hands-free chat"}
+                >
+                  {voiceMode ? (
+                    <>
+                      <Phone className="w-3.5 h-3.5" />
+                      <span className="hidden sm:inline">Voice ON</span>
+                    </>
+                  ) : (
+                    <>
+                      <PhoneOff className="w-3.5 h-3.5" />
+                      <span className="hidden sm:inline">Voice</span>
+                    </>
+                  )}
+                </button>
+              )}
+              {speechSupported && !voiceMode && (
+                <button
+                  onClick={toggleVoice}
+                  className={`text-primary-foreground hover:bg-primary-foreground/20 rounded-lg p-1.5 transition-colors ${voiceEnabled ? "bg-primary-foreground/20" : ""}`}
+                  aria-label={voiceEnabled ? "Disable voice" : "Enable voice"}
+                  title={voiceEnabled ? "Disable voice" : "Enable voice"}
+                >
+                  {voiceEnabled ? <Volume2 className="w-5 h-5" /> : <VolumeX className="w-5 h-5" />}
+                </button>
+              )}
+              {isSpeaking && (
+                <button
+                  onClick={stopSpeaking}
+                  className="text-primary-foreground hover:bg-primary-foreground/20 rounded-lg p-1.5 transition-colors animate-pulse"
+                  aria-label="Stop speaking"
+                  title="Stop speaking"
+                >
+                  <Square className="w-4 h-4" />
+                </button>
+              )}
+              <button
+                onClick={() => {
+                  setIsOpen(false)
+                  stopSpeaking()
+                  if (voiceMode) {
+                    stopListening()
+                  }
+                }}
+                className="text-primary-foreground hover:bg-primary-foreground/20 rounded-lg p-1.5 transition-colors"
+                aria-label="Close chat"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
           </div>
 
+          {voiceMode && (
+            <div className="bg-gradient-to-r from-green-500/10 via-green-500/20 to-green-500/10 px-4 py-2 flex items-center justify-center gap-2 border-b border-green-500/20">
+              <div
+                className={`w-2 h-2 rounded-full ${isListening ? "bg-red-500 animate-pulse" : isSpeaking ? "bg-green-500 animate-pulse" : "bg-green-500"}`}
+              />
+              <span className="text-xs font-medium text-green-700 dark:text-green-400">
+                {isListening
+                  ? "Listening to you..."
+                  : isSpeaking
+                    ? "Panida is speaking..."
+                    : status === "in_progress"
+                      ? "Thinking..."
+                      : "Voice mode active - speak anytime"}
+              </span>
+              {isListening && (
+                <div className="flex gap-0.5">
+                  <span className="w-1 h-3 bg-red-500 rounded-full animate-[pulse_0.5s_ease-in-out_infinite]" />
+                  <span className="w-1 h-4 bg-red-500 rounded-full animate-[pulse_0.5s_ease-in-out_infinite_0.1s]" />
+                  <span className="w-1 h-2 bg-red-500 rounded-full animate-[pulse_0.5s_ease-in-out_infinite_0.2s]" />
+                  <span className="w-1 h-5 bg-red-500 rounded-full animate-[pulse_0.5s_ease-in-out_infinite_0.3s]" />
+                  <span className="w-1 h-3 bg-red-500 rounded-full animate-[pulse_0.5s_ease-in-out_infinite_0.4s]" />
+                </div>
+              )}
+            </div>
+          )}
+
           {/* Messages */}
-          <div className="h-[400px] overflow-y-auto p-4 space-y-4 bg-muted/30">
+          <div className={`${voiceMode ? "h-[360px]" : "h-[400px]"} overflow-y-auto p-4 space-y-4 bg-muted/30`}>
             {messages.map((message) => (
               <div key={message.id} className={`flex ${message.role === "user" ? "justify-end" : "justify-start"}`}>
                 <div
@@ -146,11 +584,29 @@ export function FloatingChatBot() {
                     }
                     return null
                   })}
-                  <p
-                    className={`text-xs mt-1 ${message.role === "user" ? "text-primary-foreground/70" : "text-muted-foreground"}`}
-                  >
-                    {message.createdAt?.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
-                  </p>
+                  <div className="flex items-center justify-between mt-1">
+                    <p
+                      className={`text-xs ${message.role === "user" ? "text-primary-foreground/70" : "text-muted-foreground"}`}
+                    >
+                      {message.createdAt?.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+                    </p>
+                    {message.role === "assistant" && speechSupported && message.id !== "welcome-static" && (
+                      <button
+                        onClick={() => {
+                          const text = message.parts
+                            .filter((p) => p.type === "text")
+                            .map((p) => p.text)
+                            .join(" ")
+                          speakText(text)
+                        }}
+                        className="text-muted-foreground hover:text-primary transition-colors p-1"
+                        aria-label="Speak this message"
+                        title="Speak this message"
+                      >
+                        <Volume2 className="w-3.5 h-3.5" />
+                      </button>
+                    )}
+                  </div>
                 </div>
               </div>
             ))}
@@ -174,6 +630,7 @@ export function FloatingChatBot() {
                 </div>
               </div>
             )}
+            <div ref={messagesEndRef} />
           </div>
 
           {/* Input */}
@@ -184,10 +641,33 @@ export function FloatingChatBot() {
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyPress={handleKeyPress}
-                placeholder="Type your message..."
+                placeholder={
+                  isListening
+                    ? "Listening..."
+                    : voiceMode
+                      ? "Voice mode active - speak or type..."
+                      : "Type your message..."
+                }
                 disabled={status === "in_progress"}
-                className="flex-1 px-4 py-2.5 border border-input rounded-xl focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent text-sm disabled:opacity-50 disabled:cursor-not-allowed bg-background text-foreground"
+                className={`flex-1 px-4 py-2.5 border border-input rounded-xl focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent text-sm disabled:opacity-50 disabled:cursor-not-allowed bg-background text-foreground ${isListening ? "border-red-500 ring-2 ring-red-500/50" : voiceMode ? "border-green-500/50" : ""}`}
               />
+              {recognitionSupported && (
+                <Button
+                  onClick={isListening ? stopListening : startListening}
+                  disabled={status === "in_progress"}
+                  className={`rounded-xl px-3 transition-all ${
+                    isListening
+                      ? "bg-red-500 hover:bg-red-600 text-white animate-pulse"
+                      : voiceMode
+                        ? "bg-green-500 hover:bg-green-600 text-white"
+                        : "bg-muted hover:bg-muted/80 text-muted-foreground"
+                  }`}
+                  aria-label={isListening ? "Stop listening" : "Start voice input"}
+                  title={isListening ? "Stop listening" : "Start voice input"}
+                >
+                  {isListening ? <MicOff className="w-4 h-4" /> : <Mic className="w-4 h-4" />}
+                </Button>
+              )}
               <Button
                 onClick={handleSend}
                 disabled={status === "in_progress" || !inputValue.trim()}
@@ -196,11 +676,18 @@ export function FloatingChatBot() {
                 <Send className="w-4 h-4" />
               </Button>
             </div>
-            <p className="text-xs text-muted-foreground mt-2 text-center">Press Enter to send</p>
+            <p className="text-xs text-muted-foreground mt-2 text-center">
+              {voiceMode
+                ? "Voice mode: Speak naturally and Panida will respond"
+                : recognitionSupported
+                  ? "Press Enter to send • Click mic to speak"
+                  : "Press Enter to send"}
+            </p>
           </div>
         </div>
       </div>
 
+      {/* Closed state buttons */}
       {!isOpen && (
         <div className="fixed bottom-4 md:bottom-6 right-4 md:right-6 z-50 flex items-start gap-2 group">
           {isMobile ? (
@@ -225,7 +712,7 @@ export function FloatingChatBot() {
           {/* Main chat button */}
           <button
             onClick={() => setIsOpen(true)}
-            className="relative bg-background hover:bg-accent/10 text-foreground rounded-full shadow-2xl hover:shadow-[0_20px_60px_-15px_rgba(0,0,0,0.3)] flex gap-3 md:gap-4 px-5 py-4 md:px-7 md:py-5 transition-all duration-500 hover:scale-105 border-4 border-dotted border-primary hover:border-solid hover:border-primary/80 items-center overflow-hidden group/button"
+            className="relative bg-background hover:bg-white text-foreground rounded-full shadow-2xl hover:shadow-[0_20px_60px_-15px_rgba(0,0,0,0.3)] flex gap-3 md:gap-4 px-5 py-4 md:px-7 md:py-5 transition-all duration-500 hover:scale-105 border-4 border-dotted border-primary hover:border-solid hover:border-primary/80 items-center overflow-hidden group/button"
             aria-label="Open chat with Panida"
           >
             {/* Sparkle icon with primary color */}
@@ -236,7 +723,7 @@ export function FloatingChatBot() {
             {/* Two-line text layout */}
             <div className="flex flex-col items-start relative z-10">
               <span className="text-sm md:text-base font-bold text-foreground leading-tight transition-colors duration-300 group-hover/button:text-primary">
-                AI assistant
+                PND50 Assistant
               </span>
               <span className="text-xs md:text-sm text-muted-foreground leading-tight transition-colors duration-300 group-hover/button:text-foreground">
                 Chat with Panida
@@ -249,7 +736,13 @@ export function FloatingChatBot() {
       {/* Close button when chat is open */}
       {isOpen && (
         <button
-          onClick={() => setIsOpen(false)}
+          onClick={() => {
+            setIsOpen(false)
+            stopSpeaking()
+            if (voiceMode) {
+              stopListening()
+            }
+          }}
           className="fixed bottom-4 md:bottom-6 right-4 md:right-6 z-50 w-14 h-14 bg-primary hover:bg-primary/90 text-primary-foreground rounded-full shadow-2xl hover:shadow-[0_20px_60px_-15px_rgba(var(--primary),0.6)] flex items-center justify-center transition-all duration-500 hover:scale-110 hover:rotate-90 backdrop-blur-sm"
           aria-label="Close chat"
         >
