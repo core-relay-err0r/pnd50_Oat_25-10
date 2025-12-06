@@ -97,13 +97,7 @@ export default function ContactPage() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.2, duration: 0.4 }}
           >
-            <Link
-              href="/"
-              className="inline-flex items-center gap-2 text-slate-400 hover:text-primary transition-colors group mb-6 sm:mb-8 touch-manipulation"
-            >
-              <ArrowLeft className="w-4 h-4" />
-              Back to Home
-            </Link>
+            
           </motion.div>
 
           <div className="text-center max-w-3xl mx-auto">
