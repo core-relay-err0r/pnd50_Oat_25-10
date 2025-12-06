@@ -29,7 +29,13 @@ const AboutClientPage = () => {
   }, [])
 
   return (
-    <div className="min-h-screen bg-background">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -20 }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
+      className="min-h-screen bg-background"
+    >
       {/* Hero Section */}
       <section className="relative pb-24 bg-gradient-to-br from-blue-50 via-slate-50 to-teal-50 overflow-hidden md:pb-32 md:pt-28 pt-24 px-4 sm:px-6 lg:px-8">
         <div className="container mx-auto px-4 sm:px-6 relative z-10 lg:px-0">
@@ -42,8 +48,8 @@ const AboutClientPage = () => {
               href="/"
               className="inline-flex items-center gap-2 text-slate-400 hover:text-primary transition-colors group mb-6 sm:mb-8 touch-manipulation"
             >
-              
-              
+              <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+              <span className="text-sm font-medium">Back to Home</span>
             </Link>
           </motion.div>
 
@@ -307,7 +313,7 @@ const AboutClientPage = () => {
           </div>
         </div>
       </section>
-    </div>
+    </motion.div>
   )
 }
 
