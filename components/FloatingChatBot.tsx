@@ -627,7 +627,7 @@ export function FloatingChatBot() {
 
             {/* Text */}
             <div className="flex flex-col items-start">
-              <span className="text-sm font-semibold text-foreground leading-tight">Ask AI</span>
+              <span className="text-sm font-semibold text-foreground leading-tight">PND50 Assistant </span>
               <span className="text-xs text-muted-foreground leading-tight">Chat with Panida</span>
             </div>
           </motion.button>
