@@ -8,25 +8,25 @@ export function LandingFooter({ variant = "dark" }: { variant?: "dark" | "light"
       <div
         className={`absolute inset-0 pointer-events-none ${
           isLight
-            ? "bg-gradient-to-t from-sky-100 via-sky-50/80 via-30% to-transparent"
+            ? "bg-gradient-to-t from-white/90 via-sky-50/40 to-transparent"
             : "bg-gradient-to-t from-slate-950 via-slate-900/90 via-30% to-transparent"
         }`}
-        style={{ height: "250px", bottom: 0, top: "auto" }}
+        style={{ height: "300px", bottom: 0, top: "auto" }}
       />
 
       <div
         className={`absolute inset-0 pointer-events-none ${
           isLight
-            ? "bg-gradient-to-t from-blue-100/50 via-transparent to-transparent"
+            ? "bg-gradient-to-t from-white/70 via-white/20 to-transparent"
             : "bg-gradient-to-t from-slate-900/50 via-transparent to-transparent"
         }`}
-        style={{ height: "350px", bottom: 0, top: "auto" }}
+        style={{ height: "400px", bottom: 0, top: "auto" }}
       />
 
       <div
-        className={`absolute bottom-0 left-0 right-0 h-24 pointer-events-none ${
+        className={`absolute bottom-0 left-0 right-0 h-20 pointer-events-none ${
           isLight
-            ? "bg-gradient-to-r from-sky-100/80 via-blue-100/60 to-teal-100/80"
+            ? "bg-gradient-to-t from-white/80 to-transparent"
             : "bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900"
         }`}
       />
