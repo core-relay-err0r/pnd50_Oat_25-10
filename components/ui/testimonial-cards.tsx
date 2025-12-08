@@ -16,26 +16,11 @@ export function TestimonialCard({ handleShuffle, testimonial, position, id, auth
   const dragRef = React.useRef(0)
   const dragStartTime = React.useRef(0)
   const isFront = position === "front"
-  const [isDesktop, setIsDesktop] = React.useState(false)
-
-  React.useEffect(() => {
-    const checkScreenSize = () => {
-      setIsDesktop(window.innerWidth >= 1024)
-    }
-
-    checkScreenSize()
-    window.addEventListener("resize", checkScreenSize)
-
-    return () => window.removeEventListener("resize", checkScreenSize)
-  }, [])
-
-  const blurFilter = isDesktop && position !== "front" ? "blur(0.8px)" : "none"
 
   return (
     <motion.div
       style={{
         zIndex: position === "front" ? "2" : position === "middle" ? "1" : "0",
-        filter: blurFilter,
       }}
       animate={{
         rotate: position === "front" ? "-6deg" : position === "middle" ? "0deg" : "6deg",
