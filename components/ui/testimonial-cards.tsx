@@ -72,12 +72,12 @@ export function TestimonialCard({ handleShuffle, testimonial, position, id, auth
       }}
       className={`absolute left-0 top-0 origin-bottom ${isFront ? "cursor-grab active:cursor-grabbing" : ""}`}
     >
-      <div className="relative h-[400px] w-[300px] overflow-hidden rounded-3xl shadow-2xl shadow-slate-400/30">
+      <div className="relative h-[320px] w-[240px] overflow-hidden rounded-3xl shadow-2xl shadow-slate-400/30">
         <Image
           src={image || `https://i.pravatar.cc/500?img=${id}`}
           alt={`Avatar of ${author}`}
-          width={300}
-          height={400}
+          width={240}
+          height={320}
           draggable={false}
           className="h-full w-full object-cover object-center pointer-events-none"
         />
