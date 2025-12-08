@@ -51,7 +51,7 @@ export function ShuffleTestimonials() {
 
   return (
     <div className="relative">
-      <div className="relative -ml-[100px] h-[450px] w-[350px] md:-ml-[175px]">
+      <div className="relative h-[450px] w-[350px] md:w-[525px]">
         {testimonials.map((testimonial, index) => (
           <TestimonialCard
             key={testimonial.id}
@@ -62,7 +62,7 @@ export function ShuffleTestimonials() {
         ))}
       </div>
 
-      <div className="flex lg:hidden justify-center gap-4 mt-4 -ml-[100px] md:-ml-[175px] w-[350px]">
+      <div className="flex lg:hidden justify-center gap-4 mt-4 w-full">
         <button
           onClick={handleShuffleRight}
           className="flex items-center justify-center w-12 h-12 rounded-full bg-white border border-sky-200 shadow-md hover:bg-sky-50 active:scale-95 transition-all"
