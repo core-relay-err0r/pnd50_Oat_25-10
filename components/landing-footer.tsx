@@ -8,8 +8,8 @@ export function LandingFooter({ variant = "dark" }: { variant?: "dark" | "light"
       <div
         className={`absolute inset-0 pointer-events-none ${
           isLight
-            ? "bg-gradient-to-t from-white/90 via-sky-50/40 to-transparent"
-            : "bg-gradient-to-t from-slate-950 via-slate-900/90 via-30% to-transparent"
+            ? "bg-gradient-to-b from-transparent via-transparent via-40% to-sky-100/90"
+            : "bg-gradient-to-b from-transparent via-transparent via-40% to-slate-950/90"
         }`}
         style={{ height: "300px", bottom: 0, top: "auto" }}
       />
@@ -17,8 +17,8 @@ export function LandingFooter({ variant = "dark" }: { variant?: "dark" | "light"
       <div
         className={`absolute inset-0 pointer-events-none ${
           isLight
-            ? "bg-gradient-to-t from-white/70 via-white/20 to-transparent"
-            : "bg-gradient-to-t from-slate-900/50 via-transparent to-transparent"
+            ? "bg-gradient-to-b from-transparent via-sky-50/20 via-60% to-sky-100/70"
+            : "bg-gradient-to-b from-transparent via-slate-900/20 via-60% to-slate-900/70"
         }`}
         style={{ height: "400px", bottom: 0, top: "auto" }}
       />
@@ -26,7 +26,7 @@ export function LandingFooter({ variant = "dark" }: { variant?: "dark" | "light"
       <div
         className={`absolute bottom-0 left-0 right-0 h-20 pointer-events-none ${
           isLight
-            ? "bg-gradient-to-t from-white/80 to-transparent"
+            ? "bg-gradient-to-r from-sky-100/90 via-blue-100/70 to-teal-100/90"
             : "bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900"
         }`}
       />
