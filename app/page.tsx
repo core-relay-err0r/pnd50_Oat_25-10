@@ -134,7 +134,7 @@ export default function PND50Landing() {
                 {/* Left side - Hero content */}
                 <div className="text-center lg:text-left space-y-6 md:space-y-8">
                   <motion.div
-                    className={`hidden lg:inline-flex items-center gap-2.5 rounded-full bg-gradient-to-r from-slate-100 via-blue-50 to-sky-100 backdrop-blur-md px-6 py-3 text-sm font-semibold text-slate-700 mb-2 border border-slate-200/60 hover:from-slate-200 hover:via-blue-100 hover:to-sky-200 hover:scale-105 hover:border-slate-300 shadow-lg shadow-slate-200/50 transition-all duration-300`}
+                    className={`hidden lg:inline-flex items-center gap-2.5 rounded-full bg-gradient-to-r from-slate-100 via-blue-50 to-sky-100 backdrop-blur-md px-6 py-3 text-sm font-semibold text-slate-700 mb-2 border border-slate-200/60 shadow-lg shadow-slate-200/50`}
                     initial={{ opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.2, duration: 0.4 }}
