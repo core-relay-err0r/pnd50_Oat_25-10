@@ -69,7 +69,7 @@ export function TestimonialCard({ handleShuffle, testimonial, position, id, auth
           className="relative pointer-events-none h-32 w-32 rounded-full border-4 border-white object-cover shadow-md"
         />
       </div>
-      <span className="text-center text-lg leading-relaxed text-slate-500 font-light">"{testimonial}"</span>
+      <span className="text-center text-lg leading-relaxed font-light text-slate-600">"{testimonial}"</span>
       <span className="text-center text-sm font-semibold bg-gradient-to-r from-slate-600 to-slate-500 bg-clip-text text-slate-600">
         {author}
       </span>
