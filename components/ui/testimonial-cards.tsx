@@ -59,18 +59,26 @@ export function TestimonialCard({ handleShuffle, testimonial, position, id, auth
         dragRef.current = 0
       }}
       transition={{ duration: 0.35 }}
-      className={`absolute left-0 top-0 grid h-[450px] w-[350px] select-none place-content-center space-y-6 rounded-3xl border border-slate-300/60 p-8 bg-gradient-to-b from-slate-100 via-slate-200/80 to-slate-300/70 shadow-xl shadow-slate-400/30 backdrop-blur-sm ${isFront ? "cursor-grab active:cursor-grabbing" : ""}`}
+      className={`absolute left-0 top-0 grid h-[450px] w-[350px] select-none place-content-center space-y-6 rounded-3xl border border-zinc-600/50 p-8 bg-gradient-to-br from-zinc-800 via-zinc-900 to-black shadow-2xl shadow-black/60 backdrop-blur-sm ${isFront ? "cursor-grab active:cursor-grabbing" : ""}`}
     >
+      {/* Metallic shine overlay */}
+      <div className="absolute inset-0 rounded-3xl bg-gradient-to-tr from-white/10 via-transparent to-white/5 pointer-events-none" />
+      <div className="absolute inset-0 rounded-3xl bg-gradient-to-b from-zinc-700/20 via-transparent to-transparent pointer-events-none" />
+
       <div className="relative mx-auto">
-        <div className="absolute -inset-1 rounded-full bg-gradient-to-br from-slate-400 via-slate-500 to-slate-600 opacity-50 blur-sm" />
+        {/* Metallic silver glow around avatar */}
+        <div className="absolute -inset-1 rounded-full bg-gradient-to-br from-zinc-400 via-zinc-600 to-zinc-800 opacity-70 blur-sm" />
         <img
           src={image || `https://i.pravatar.cc/128?img=${id}`}
           alt={`Avatar of ${author}`}
-          className="relative pointer-events-none h-32 w-32 rounded-full border-4 border-slate-200 object-cover shadow-md"
+          // Dark metallic border
+          className="relative pointer-events-none h-32 w-32 rounded-full border-4 border-zinc-700 object-cover shadow-lg shadow-black/50"
         />
       </div>
-      <span className="text-center text-lg leading-relaxed font-light text-slate-800">"{testimonial}"</span>
-      <span className="text-center text-sm font-semibold bg-gradient-to-r from-slate-700 to-slate-900 bg-clip-text text-transparent">
+      {/* Light text for dark card */}
+      <span className="text-center text-lg leading-relaxed font-light text-zinc-200">"{testimonial}"</span>
+      {/* Metallic silver gradient for author name */}
+      <span className="text-center text-sm font-semibold bg-gradient-to-r from-zinc-300 via-zinc-400 to-zinc-300 bg-clip-text text-transparent">
         {author}
       </span>
     </motion.div>
