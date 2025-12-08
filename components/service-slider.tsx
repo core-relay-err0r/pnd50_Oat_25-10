@@ -166,9 +166,9 @@ const ServiceSlider: React.FC = () => {
           disabled={!canGoPrev}
           className={`p-2 rounded-full ${
             canGoPrev
-              ? "bg-background border border-border shadow-sm hover:bg-accent text-foreground"
-              : "bg-muted text-muted-foreground cursor-not-allowed"
-          } transition-all duration-300`}
+              ? "bg-white/80 border border-blue-200/50 shadow-lg shadow-blue-100/30 hover:bg-white hover:border-blue-300 text-slate-700 hover:text-blue-600"
+              : "bg-slate-100/50 text-slate-400 cursor-not-allowed"
+          } transition-all duration-300 backdrop-blur-sm`}
           aria-label="Previous service"
         >
           <ChevronLeft size={20} className="w-4 h-4 sm:w-5 sm:h-5" />
@@ -180,9 +180,9 @@ const ServiceSlider: React.FC = () => {
           disabled={!canGoNext}
           className={`p-2 rounded-full ${
             canGoNext
-              ? "bg-background border border-border shadow-sm hover:bg-accent text-foreground"
-              : "bg-muted text-muted-foreground cursor-not-allowed"
-          } transition-all duration-300`}
+              ? "bg-white/80 border border-blue-200/50 shadow-lg shadow-blue-100/30 hover:bg-white hover:border-blue-300 text-slate-700 hover:text-blue-600"
+              : "bg-slate-100/50 text-slate-400 cursor-not-allowed"
+          } transition-all duration-300 backdrop-blur-sm`}
           aria-label="Next service"
         >
           <ChevronRight size={20} className="w-4 h-4 sm:w-5 sm:h-5" />
@@ -218,27 +218,23 @@ const ServiceSlider: React.FC = () => {
                 whileTap={{ scale: 0.98, cursor: "grabbing" }}
                 style={{ cursor: "grab" }}
               >
-                <div className="group border border-border rounded-2xl p-6 md:p-8 h-full hover:shadow-2xl hover:border-primary/50 transition-all duration-300 flex flex-col bg-teal-50">
-                  {/* Icon */}
-                  <div className="w-12 h-12 md:w-14 md:h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-primary group-hover:scale-110 transition-all duration-300 flex-shrink-0">
-                    <Icon className="w-6 h-6 md:w-7 md:h-7 text-primary group-hover:text-primary-foreground transition-colors" />
+                <div className="group border border-blue-100/60 rounded-2xl p-6 md:p-8 h-full hover:shadow-2xl hover:shadow-blue-200/40 hover:border-blue-300/70 transition-all duration-300 flex flex-col bg-gradient-to-br from-white via-sky-50/50 to-blue-50/30 backdrop-blur-sm">
+                  <div className="w-12 h-12 md:w-14 md:h-14 bg-gradient-to-br from-blue-100 to-indigo-100 rounded-xl flex items-center justify-center mb-6 group-hover:from-blue-500 group-hover:to-indigo-500 group-hover:scale-110 transition-all duration-300 flex-shrink-0 shadow-md shadow-blue-100/50">
+                    <Icon className="w-6 h-6 md:w-7 md:h-7 text-blue-600 group-hover:text-white transition-colors" />
                   </div>
 
-                  {/* Title */}
-                  <h3 className="text-xl md:text-2xl font-bold text-foreground mb-4 group-hover:text-primary transition-colors">
+                  <h3 className="text-xl md:text-2xl font-bold text-slate-800 mb-4 group-hover:text-blue-600 transition-colors">
                     {service.title}
                   </h3>
 
-                  {/* Description */}
-                  <p className="text-muted-foreground leading-relaxed mb-6 text-sm md:text-base flex-grow">
+                  <p className="text-slate-600 leading-relaxed mb-6 text-sm md:text-base flex-grow">
                     {service.description}
                   </p>
 
-                  {/* Features */}
                   <ul className="space-y-2 mt-auto">
                     {service.features.map((feature, featureIndex) => (
-                      <li key={featureIndex} className="flex items-center gap-2 text-sm text-muted-foreground">
-                        <div className="w-1.5 h-1.5 bg-primary rounded-full flex-shrink-0"></div>
+                      <li key={featureIndex} className="flex items-center gap-2 text-sm text-slate-600">
+                        <div className="w-1.5 h-1.5 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full flex-shrink-0"></div>
                         {feature}
                       </li>
                     ))}
@@ -261,7 +257,7 @@ const ServiceSlider: React.FC = () => {
             aria-label={`Go to service ${index + 1}`}
           >
             <motion.div
-              className={`w-2 h-2 rounded-full ${index === currentIndex ? "bg-primary" : "bg-muted-foreground/30"}`}
+              className={`w-2 h-2 rounded-full ${index === currentIndex ? "bg-gradient-to-r from-blue-500 to-indigo-500" : "bg-slate-300/60"}`}
               animate={{
                 scale: index === currentIndex ? [1, 1.2, 1] : 1,
               }}

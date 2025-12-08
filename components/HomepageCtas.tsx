@@ -8,16 +8,15 @@ export function HomepageCtas() {
     <div className="flex flex-col sm:flex-row gap-4 items-center justify-start">
       <Link href="/calculator" className="w-full sm:w-auto">
         <Button
-          className="w-full sm:w-auto bg-blue-500 hover:bg-blue-600 text-white px-8 text-lg font-bold rounded-lg shadow-lg shadow-blue-500/20 transition-all duration-300 transform hover:scale-102 flex items-center justify-center"
+          className="w-full sm:w-auto bg-gradient-to-r from-blue-500 via-indigo-500 to-blue-600 hover:from-blue-600 hover:via-indigo-600 hover:to-blue-700 text-white px-8 text-lg font-bold rounded-xl shadow-lg shadow-blue-400/30 transition-all duration-300 transform hover:scale-105 hover:shadow-xl hover:shadow-blue-500/40 flex items-center justify-center border-0"
           style={{ minHeight: "60px", height: "60px" }}
         >
           Schedule Consultation
-          
         </Button>
       </Link>
       <Link href="/contact" className="w-full sm:w-auto">
         <div
-          className="w-full sm:w-auto flex items-center justify-center gap-2 px-8 text-lg font-bold rounded-lg cursor-pointer transition-all duration-300 user-select-none border-2 border-white/30 bg-white/5 backdrop-blur-sm hover:bg-white/10 hover:border-white/50 hover:scale-102 text-white border-t-[px] border-l-[21px]r-l-[21px] border-b-2 border-r-2"
+          className="w-full sm:w-auto flex items-center justify-center gap-2 px-8 text-lg font-bold rounded-xl cursor-pointer transition-all duration-300 user-select-none border-2 border-slate-300/50 bg-white/60 backdrop-blur-md hover:bg-white/80 hover:border-blue-400/60 hover:scale-105 text-slate-700 hover:text-blue-600 shadow-lg shadow-slate-200/50 hover:shadow-xl hover:shadow-blue-200/50"
           style={{ minHeight: "60px", height: "60px" }}
         >
           <span>Contact Us</span>
