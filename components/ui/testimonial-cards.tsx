@@ -14,6 +14,7 @@ interface TestimonialCardProps {
 
 export function TestimonialCard({ handleShuffle, testimonial, position, id, author, image }: TestimonialCardProps) {
   const dragRef = React.useRef(0)
+  const dragStartTime = React.useRef(0)
   const isFront = position === "front"
   const [isDesktop, setIsDesktop] = React.useState(false)
 
@@ -28,7 +29,7 @@ export function TestimonialCard({ handleShuffle, testimonial, position, id, auth
     return () => window.removeEventListener("resize", checkScreenSize)
   }, [])
 
-  const blurFilter = isDesktop && position !== "front" ? "blur(0.8px)" : undefined
+  const blurFilter = isDesktop && position !== "front" ? "blur(0.8px)" : "none"
 
   return (
     <motion.div
@@ -51,12 +52,18 @@ export function TestimonialCard({ handleShuffle, testimonial, position, id, auth
       }}
       onDragStart={(e) => {
         dragRef.current = e.clientX
+        dragStartTime.current = Date.now()
       }}
       onDragEnd={(e) => {
-        if (dragRef.current - e.clientX > 150) {
+        const dragDistance = dragRef.current - e.clientX
+        const dragDuration = Date.now() - dragStartTime.current
+        const velocity = dragDistance / dragDuration
+
+        if (dragDistance > 50 || velocity > 0.3) {
           handleShuffle()
         }
         dragRef.current = 0
+        dragStartTime.current = 0
       }}
       transition={{ duration: 0.35 }}
       className={`absolute left-0 top-0 grid h-[450px] w-[350px] select-none place-content-center space-y-6 rounded-3xl border border-sky-200/60 p-8 bg-gradient-to-b from-white via-sky-50/80 to-blue-50/70 shadow-xl shadow-sky-200/30 backdrop-blur-sm ${isFront ? "cursor-grab active:cursor-grabbing" : ""}`}
