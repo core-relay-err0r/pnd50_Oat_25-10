@@ -102,7 +102,8 @@ export default function PND50Landing() {
                       {words.map((word, index) => (
                         <motion.span
                           key={index}
-                          className="absolute left-1/2 lg:left-0 -translate-x-1/2 lg:translate-x-0 font-bold whitespace-nowrap text-slate-300 text-slate-300 text-slate-400 text-chart-3 text-sidebar text-sidebar-foreground text-sidebar-accent text-chart-3 text-chart-2 text-foreground text-chart-3 text-chart-3 text-sidebar-foreground text-destructive-foreground text-popover-foreground text-background text-neutral-500 text-neutral-500 text-neutral-500 text-neutral-600 text-neutral-950 text-gray-700 text-gray-300 text-slate-400 text-slate-300 text-slate-400 text-slate-50 text-zinc-600 text-gray-500 text-background text-card-foreground text-sidebar-primary-foreground text-sidebar-accent text-sidebar-foreground text-destructive text-accent-foreground text-secondary-foreground text-primary text-primary-foreground border-none border-solid border-dashed border-solid border-none text-white text-whiteitespace-nowrap text-black text-white             initial={{ opacity: 0, y: 100 }}
+                          className="absolute left-1/2 lg:left-0 -translate-x-1/2 lg:translate-x-0 font-bold whitespace-nowrap bg-gradient-to-r from-slate-800 via-blue-700 to-blue-600 bg-clip-text text-transparent"
+                          initial={{ opacity: 0, y: 100 }}
                           transition={{ type: "spring", stiffness: 50 }}
                           animate={
                             wordIndex === index
