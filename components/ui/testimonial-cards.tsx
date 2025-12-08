@@ -59,17 +59,22 @@ export function TestimonialCard({ handleShuffle, testimonial, position, id, auth
         dragRef.current = 0
       }}
       transition={{ duration: 0.35 }}
-      className={`absolute left-0 top-0 grid h-[450px] w-[350px] select-none place-content-center space-y-6 rounded-2xl border-2 border-blue-200/50 bg-white/90 backdrop-blur-md p-6 shadow-xl shadow-blue-100/50 ${
+      className={`absolute left-0 top-0 grid h-[450px] w-[350px] select-none place-content-center space-y-6 rounded-3xl border border-white/60 bg-gradient-to-br from-white via-slate-50 to-blue-50 p-8 shadow-2xl shadow-slate-200/60 ring-1 ring-slate-100 ${
         isFront ? "cursor-grab active:cursor-grabbing" : ""
       }`}
     >
-      <img
-        src={image || `https://i.pravatar.cc/128?img=${id}`}
-        alt={`Avatar of ${author}`}
-        className="pointer-events-none mx-auto h-32 w-32 rounded-full border-2 border-blue-200 bg-gradient-to-br from-sky-50 to-indigo-50 object-cover shadow-lg shadow-blue-100/50"
-      />
-      <span className="text-center text-lg italic text-slate-600">"{testimonial}"</span>
-      <span className="text-center text-sm font-medium text-blue-600">{author}</span>
+      <div className="relative mx-auto">
+        <div className="absolute -inset-1 rounded-full bg-gradient-to-br from-blue-400 via-indigo-400 to-slate-400 opacity-70 blur-sm" />
+        <img
+          src={image || `https://i.pravatar.cc/128?img=${id}`}
+          alt={`Avatar of ${author}`}
+          className="relative pointer-events-none h-32 w-32 rounded-full border-4 border-white object-cover shadow-lg"
+        />
+      </div>
+      <span className="text-center text-lg leading-relaxed text-slate-600 font-light">"{testimonial}"</span>
+      <span className="text-center text-sm font-semibold bg-gradient-to-r from-slate-700 via-blue-600 to-indigo-600 bg-clip-text text-transparent">
+        {author}
+      </span>
     </motion.div>
   )
 }
