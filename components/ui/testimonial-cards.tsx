@@ -70,7 +70,7 @@ export function TestimonialCard({ handleShuffle, testimonial, position, id, auth
         />
       </div>
       <span className="text-center text-lg leading-relaxed text-slate-500 font-light">"{testimonial}"</span>
-      <span className="text-center text-sm font-semibold bg-gradient-to-r from-slate-600 to-slate-500 bg-clip-text text-transparent">
+      <span className="text-center text-sm font-semibold bg-gradient-to-r from-slate-600 to-slate-500 bg-clip-text text-slate-600">
         {author}
       </span>
     </motion.div>
