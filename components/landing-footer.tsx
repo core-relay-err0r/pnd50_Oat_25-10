@@ -11,7 +11,7 @@ export function LandingFooter({ variant = "dark" }: { variant?: "dark" | "light"
             ? "bg-gradient-to-t from-sky-100/90 via-sky-50/40 to-transparent"
             : "bg-gradient-to-t from-slate-950/90 via-slate-900/40 to-transparent"
         }`}
-        style={{ height: "300px", bottom: 0, top: "auto" }}
+        style={{ height: "150px", bottom: 0, top: "auto" }}
       />
 
       <div
@@ -20,11 +20,11 @@ export function LandingFooter({ variant = "dark" }: { variant?: "dark" | "light"
             ? "bg-gradient-to-t from-sky-100/70 via-sky-50/20 to-transparent"
             : "bg-gradient-to-t from-slate-900/70 via-slate-900/20 to-transparent"
         }`}
-        style={{ height: "400px", bottom: 0, top: "auto" }}
+        style={{ height: "200px", bottom: 0, top: "auto" }}
       />
 
       <div
-        className={`absolute bottom-0 left-0 right-0 h-24 pointer-events-none ${
+        className={`absolute bottom-0 left-0 right-0 h-16 pointer-events-none ${
           isLight
             ? "bg-gradient-to-t from-sky-100 via-sky-50/60 to-transparent"
             : "bg-gradient-to-t from-slate-900 via-slate-800/60 to-transparent"
