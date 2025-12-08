@@ -2,10 +2,25 @@
 
 import Link from "next/link"
 import { Mail, Phone, MapPin, Shield, Eye, Lock, Users, FileText, Clock, Globe } from "lucide-react"
+import { motion } from "framer-motion"
+
+const pageVariants = {
+  initial: { opacity: 0, y: 20 },
+  animate: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] },
+  },
+}
 
 const PrivacyPolicyPage = () => {
   return (
-    <main className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+    <motion.main
+      initial="initial"
+      animate="animate"
+      variants={pageVariants}
+      className="min-h-screen bg-gradient-to-b from-gray-50 to-white"
+    >
       <div className="bg-blue-600 text-white py-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-3 mb-4">
@@ -427,7 +442,7 @@ const PrivacyPolicyPage = () => {
           </div>
         </section>
       </div>
-    </main>
+    </motion.main>
   )
 }
 

@@ -15,11 +15,27 @@ interface TestimonialCardProps {
 export function TestimonialCard({ handleShuffle, testimonial, position, id, author, image }: TestimonialCardProps) {
   const dragRef = React.useRef(0)
   const isFront = position === "front"
+  const [isDesktop, setIsDesktop] = React.useState(false)
+
+  React.useEffect(() => {
+    const checkScreenSize = () => {
+      setIsDesktop(window.innerWidth >= 1024)
+    }
+    
+    checkScreenSize()
+    window.addEventListener('resize', checkScreenSize)
+    
+    return () => window.removeEventListener('resize', checkScreenSize)
+  }, [])
+
+  const blurFilter = isDesktop && position !== "front" ? "blur(0.8px)" : undefined
+  // </CHANGE>
 
   return (
     <motion.div
       style={{
         zIndex: position === "front" ? "2" : position === "middle" ? "1" : "0",
+        filter: blurFilter,
       }}
       animate={{
         rotate: position === "front" ? "-6deg" : position === "middle" ? "0deg" : "6deg",
@@ -44,7 +60,7 @@ export function TestimonialCard({ handleShuffle, testimonial, position, id, auth
         dragRef.current = 0
       }}
       transition={{ duration: 0.35 }}
-      className={`absolute left-0 top-0 grid h-[450px] w-[350px] select-none place-content-center space-y-6 rounded-2xl border-2 border-slate-700 bg-slate-800/70 p-6 shadow-xl backdrop-blur-lg ${
+      className={`absolute left-0 top-0 grid h-[450px] w-[350px] select-none place-content-center space-y-6 rounded-2xl border-2 border-slate-700 bg-slate-800 p-6 shadow-xl border-none ${
         isFront ? "cursor-grab active:cursor-grabbing" : ""
       }`}
     >
