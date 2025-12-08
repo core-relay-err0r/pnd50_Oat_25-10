@@ -17,9 +17,9 @@ export function AnimatedGridBackground({
 
   const isDark = variant === "dark"
   const bgClass = isDark ? "bg-slate-900" : "bg-transparent"
-  const particleColor = isDark ? "59, 130, 246" : "59, 130, 246" // blue-500
-  const gridColor = isDark ? "rgba(59, 130, 246, 0.1)" : "rgba(59, 130, 246, 0.08)"
-  const connectionColor = isDark ? "59, 130, 246" : "99, 102, 241" // indigo-500 for light
+  const particleColor = isDark ? "59, 130, 246" : "71, 85, 105" // slate-600 for light
+  const gridColor = isDark ? "rgba(59, 130, 246, 0.1)" : "rgba(100, 116, 139, 0.06)" // slate-500 with low opacity
+  const connectionColor = isDark ? "59, 130, 246" : "71, 85, 105" // slate-600 for light
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -51,7 +51,7 @@ export function AnimatedGridBackground({
         this.size = Math.random() * 2 + 0.5
         this.speedX = Math.random() * 0.5 - 0.25
         this.speedY = Math.random() * 0.5 - 0.25
-        this.opacity = isDark ? Math.random() * 0.5 + 0.2 : Math.random() * 0.6 + 0.3
+        this.opacity = isDark ? Math.random() * 0.5 + 0.2 : Math.random() * 0.35 + 0.15
       }
 
       update() {
@@ -73,9 +73,9 @@ export function AnimatedGridBackground({
       }
     }
 
-    // Create particles
+    // Create particles - Reduced count for cleaner look
     const particles: Particle[] = []
-    const particleCount = isDark ? 100 : 120
+    const particleCount = isDark ? 100 : 80
     for (let i = 0; i < particleCount; i++) {
       particles.push(new Particle())
     }
@@ -110,7 +110,7 @@ export function AnimatedGridBackground({
         particle.draw()
       })
 
-      // Draw connections between nearby particles
+      // Draw connections between nearby particles - Reduced connection opacity
       particles.forEach((particleA, indexA) => {
         particles.slice(indexA + 1).forEach((particleB) => {
           const dx = particleA.x - particleB.x
@@ -118,7 +118,7 @@ export function AnimatedGridBackground({
           const distance = Math.sqrt(dx * dx + dy * dy)
 
           if (distance < 150) {
-            const opacity = isDark ? 0.2 * (1 - distance / 150) : 0.15 * (1 - distance / 150)
+            const opacity = isDark ? 0.2 * (1 - distance / 150) : 0.1 * (1 - distance / 150)
             ctx.strokeStyle = `rgba(${connectionColor}, ${opacity})`
             ctx.lineWidth = 0.5
             ctx.beginPath()
@@ -148,7 +148,7 @@ export function AnimatedGridBackground({
         className,
       )}
     >
-      <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" style={{ opacity: isDark ? 0.6 : 0.7 }} />
+      <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" style={{ opacity: isDark ? 0.6 : 0.5 }} />
 
       <div className="relative z-10 w-full flex flex-col flex-1">{children}</div>
     </div>

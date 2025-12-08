@@ -46,24 +46,24 @@ export default function PND50Landing() {
 
   return (
     <main className="min-h-screen">
-      <section className="relative w-full min-h-screen flex flex-col bg-gradient-to-br from-sky-50 via-blue-50 to-indigo-100">
+      <section className="relative w-full min-h-screen flex flex-col bg-gradient-to-br from-slate-50 via-white to-blue-50/80">
         <AnimatedGridBackground className="min-h-screen flex-1" variant="light">
           <div
-            className="absolute top-20 left-10 w-96 h-96 bg-gradient-to-br from-blue-400/30 to-cyan-300/30 rounded-full blur-3xl pointer-events-none"
+            className="absolute top-20 left-10 w-96 h-96 bg-gradient-to-br from-blue-200/25 to-slate-300/20 rounded-full blur-3xl pointer-events-none"
             style={{
               transform: `translate(${mousePosition.x}px, ${mousePosition.y}px)`,
               transition: "transform 0.5s ease-out",
             }}
           />
           <div
-            className="absolute bottom-20 right-10 w-96 h-96 bg-gradient-to-br from-emerald-400/30 to-teal-300/30 rounded-full blur-3xl pointer-events-none"
+            className="absolute bottom-20 right-10 w-96 h-96 bg-gradient-to-br from-slate-200/25 to-blue-300/20 rounded-full blur-3xl pointer-events-none"
             style={{
               transform: `translate(${-mousePosition.x}px, ${-mousePosition.y}px)`,
               transition: "transform 0.5s ease-out",
             }}
           />
           <div
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-br from-amber-200/20 via-orange-200/20 to-rose-200/20 rounded-full blur-3xl pointer-events-none"
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-br from-blue-100/30 via-slate-100/20 to-sky-100/25 rounded-full blur-3xl pointer-events-none"
             style={{
               transform: `translate(calc(-50% + ${mousePosition.x * 0.5}px), calc(-50% + ${mousePosition.y * 0.5}px))`,
               transition: "transform 0.5s ease-out",
