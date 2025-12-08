@@ -1,57 +1,40 @@
 "use client"
 
 import { TestimonialCard } from "@/components/ui/testimonial-cards"
-import { useState } from "react"
-import { motion } from "framer-motion"
-import { Quote } from "lucide-react"
+import { useState, useEffect, useCallback } from "react"
+import { motion, AnimatePresence } from "framer-motion"
+import { ArrowLeft, ArrowRight } from "lucide-react"
 
 const testimonials = [
   {
     id: 1,
     testimonial:
       "PND50 transformed accounting process completely. Our AI-powered system made compliance effortless and saved clients countless hours every month.",
-    author: "Sarah M. - Expat specialist @ PND50",
+    author: "Sarah M.",
+    designation: "Expat specialist @ PND50",
     image: "/images/image.png",
   },
   {
     id: 2,
     testimonial:
       "We're an accounting firm that understands tech companies. The real-time dashboard and expert support are game-changers for our business.",
-    author: "Chanika M. - Senior accountant @ PND50",
+    author: "Chanika M.",
+    designation: "Senior accountant @ PND50",
     image: "/images/image.png",
   },
   {
     id: 3,
     testimonial:
       "As an expat entrepreneur, I can understand the difficulty of navigating Thai regulations. PND50's team will make sure everything clear and handle it all seamlessly.",
-    author: "Eugene Prudchenko - Director @ Burakorn Partners",
+    author: "Eugene Prudchenko",
+    designation: "Director @ Burakorn Partners",
     image: "/images/image.png",
   },
 ]
 
-const containerVariants = {
-  hidden: {},
-  visible: {
-    transition: {
-      staggerChildren: 0.2,
-    },
-  },
-}
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.5,
-      ease: "easeOut",
-    },
-  },
-}
-
 export function ShuffleTestimonials() {
   const [positions, setPositions] = useState<Array<"front" | "middle" | "back">>(["front", "middle", "back"])
+  const [active, setActive] = useState(0)
 
   const handleShuffle = () => {
     const newPositions = [...positions]
@@ -62,55 +45,115 @@ export function ShuffleTestimonials() {
     setPositions(newPositions as Array<"front" | "middle" | "back">)
   }
 
+  const handleNext = useCallback(() => {
+    setActive((prev) => (prev + 1) % testimonials.length)
+  }, [])
+
+  const handlePrev = () => {
+    setActive((prev) => (prev - 1 + testimonials.length) % testimonials.length)
+  }
+
+  useEffect(() => {
+    const interval = setInterval(handleNext, 5000)
+    return () => clearInterval(interval)
+  }, [handleNext])
+
+  const isActive = (index: number) => index === active
+
+  const randomRotate = () => `${Math.floor(Math.random() * 16) - 8}deg`
+
   return (
     <>
+      {/* Desktop view - keep existing stacked cards */}
       <div className="relative -ml-[100px] h-[450px] w-[350px] md:-ml-[175px] hidden lg:block">
         {testimonials.map((testimonial, index) => (
           <TestimonialCard
             key={testimonial.id}
-            {...testimonial}
+            id={testimonial.id}
+            testimonial={testimonial.testimonial}
+            author={`${testimonial.author} - ${testimonial.designation}`}
+            image={testimonial.image}
             handleShuffle={handleShuffle}
             position={positions[index]}
           />
         ))}
       </div>
 
-      <motion.div
-        className="lg:hidden grid grid-cols-1 gap-6 w-full px-4"
-        variants={containerVariants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
-      >
-        {testimonials.map((testimonial) => (
-          <motion.div
-            key={testimonial.id}
-            className="relative overflow-hidden rounded-2xl bg-white shadow-lg shadow-sky-200/30 border border-sky-100"
-            variants={itemVariants}
-          >
-            <div className="relative h-64">
-              <img
-                src={testimonial.image || "/placeholder.svg"}
-                alt={testimonial.author}
-                className="h-full w-full object-cover"
-              />
-              {/* Gradient overlay for text readability */}
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/50 to-transparent" />
+      <div className="lg:hidden w-full px-4 py-8">
+        <div className="relative grid grid-cols-1 gap-y-8">
+          {/* Image Section */}
+          <div className="flex items-center justify-center">
+            <div className="relative h-72 w-full max-w-xs">
+              <AnimatePresence>
+                {testimonials.map((testimonial, index) => (
+                  <motion.div
+                    key={testimonial.id}
+                    initial={{ opacity: 0, scale: 0.9, y: 50, rotate: randomRotate() }}
+                    animate={{
+                      opacity: isActive(index) ? 1 : 0.5,
+                      scale: isActive(index) ? 1 : 0.9,
+                      y: isActive(index) ? 0 : 20,
+                      zIndex: isActive(index) ? testimonials.length : testimonials.length - Math.abs(index - active),
+                      rotate: isActive(index) ? "0deg" : randomRotate(),
+                    }}
+                    exit={{ opacity: 0, scale: 0.9, y: -50 }}
+                    transition={{ duration: 0.5, ease: "easeInOut" }}
+                    className="absolute inset-0 origin-bottom"
+                    style={{ perspective: "1000px" }}
+                  >
+                    <img
+                      src={testimonial.image || "/placeholder.svg"}
+                      alt={testimonial.author}
+                      width={500}
+                      height={500}
+                      draggable={false}
+                      className="h-full w-full rounded-3xl object-cover shadow-2xl"
+                    />
+                  </motion.div>
+                ))}
+              </AnimatePresence>
             </div>
+          </div>
 
-            {/* Content within the card */}
-            <div className="absolute bottom-0 left-0 right-0 p-5 text-left text-white">
-              <Quote className="mb-3 h-6 w-6 text-sky-300/60" aria-hidden="true" />
-              <blockquote className="text-sm font-medium leading-relaxed line-clamp-3">
-                {testimonial.testimonial}
-              </blockquote>
-              <figcaption className="mt-3">
-                <p className="text-xs font-semibold text-sky-200">{testimonial.author}</p>
-              </figcaption>
+          {/* Text and Controls Section */}
+          <div className="flex flex-col justify-center py-4 px-2">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={active}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.3, ease: "easeInOut" }}
+                className="flex flex-col"
+              >
+                <h3 className="text-xl font-bold text-slate-800">{testimonials[active].author}</h3>
+                <p className="text-sm text-slate-500">{testimonials[active].designation}</p>
+                <motion.p className="mt-4 text-base text-slate-600 leading-relaxed">
+                  "{testimonials[active].testimonial}"
+                </motion.p>
+              </motion.div>
+            </AnimatePresence>
+
+            {/* Navigation buttons */}
+            <div className="flex gap-4 pt-8">
+              <button
+                onClick={handlePrev}
+                aria-label="Previous testimonial"
+                className="group flex h-10 w-10 items-center justify-center rounded-full bg-slate-100 transition-colors hover:bg-sky-100 focus:outline-none focus:ring-2 focus:ring-sky-400 focus:ring-offset-2"
+              >
+                <ArrowLeft className="h-5 w-5 text-slate-600 transition-transform duration-300 group-hover:-translate-x-1" />
+              </button>
+              <button
+                onClick={handleNext}
+                aria-label="Next testimonial"
+                className="group flex h-10 w-10 items-center justify-center rounded-full bg-slate-100 transition-colors hover:bg-sky-100 focus:outline-none focus:ring-2 focus:ring-sky-400 focus:ring-offset-2"
+              >
+                <ArrowRight className="h-5 w-5 text-slate-600 transition-transform duration-300 group-hover:translate-x-1" />
+              </button>
             </div>
-          </motion.div>
-        ))}
-      </motion.div>
+          </div>
+        </div>
+      </div>
     </>
   )
 }
