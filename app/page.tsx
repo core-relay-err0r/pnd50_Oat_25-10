@@ -76,14 +76,14 @@ export default function PND50Landing() {
                 {/* Left side - Hero content */}
                 <div className="text-center lg:text-left space-y-6 md:space-y-8">
                   <motion.div
-                    className={`hidden lg:inline-flex items-center gap-2.5 rounded-full bg-gradient-to-r from-violet-100 via-fuchsia-50 to-pink-100 backdrop-blur-md px-6 py-3 text-sm font-semibold text-violet-700 mb-2 border border-violet-200/60 hover:from-violet-200 hover:via-fuchsia-100 hover:to-pink-200 hover:scale-105 hover:border-violet-300 shadow-lg shadow-violet-200/50 transition-all duration-300`}
+                    className={`hidden lg:inline-flex items-center gap-2.5 rounded-full bg-gradient-to-r from-slate-100 via-blue-50 to-sky-100 backdrop-blur-md px-6 py-3 text-sm font-semibold text-slate-700 mb-2 border border-slate-200/60 hover:from-slate-200 hover:via-blue-100 hover:to-sky-200 hover:scale-105 hover:border-slate-300 shadow-lg shadow-slate-200/50 transition-all duration-300`}
                     initial={{ opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.2, duration: 0.4 }}
                   >
                     <span className="relative flex h-2.5 w-2.5">
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-fuchsia-400 opacity-75"></span>
-                      <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-fuchsia-500"></span>
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
                     </span>
                     <span className="leading-tight">Thailand's Leading Tech-Driven Corporate Services Firm.</span>
                   </motion.div>
@@ -94,7 +94,7 @@ export default function PND50Landing() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.3, duration: 0.5 }}
                   >
-                    <span className="bg-gradient-to-r from-violet-600 via-fuchsia-500 to-pink-500 bg-clip-text text-transparent animate-gradient-shift inline-block pb-2 leading-[1.15]">
+                    <span className="bg-gradient-to-r from-slate-800 via-blue-700 to-blue-600 bg-clip-text text-transparent animate-gradient-shift inline-block pb-2 leading-[1.15]">
                       AI Boutique
                     </span>
                     <br />
@@ -102,7 +102,7 @@ export default function PND50Landing() {
                       {words.map((word, index) => (
                         <motion.span
                           key={index}
-                          className="absolute left-1/2 lg:left-0 -translate-x-1/2 lg:translate-x-0 text-indigo-900 font-bold whitespace-nowrap"
+                          className="absolute left-1/2 lg:left-0 -translate-x-1/2 lg:translate-x-0 text-slate-800 font-bold whitespace-nowrap"
                           initial={{ opacity: 0, y: 100 }}
                           transition={{ type: "spring", stiffness: 50 }}
                           animate={
@@ -128,14 +128,14 @@ export default function PND50Landing() {
                   </div>
 
                   <motion.p
-                    className="text-base md:text-lg lg:text-xl max-w-2xl mx-auto lg:mx-0 leading-relaxed text-slate-700"
+                    className="text-base md:text-lg lg:text-xl max-w-2xl mx-auto lg:mx-0 leading-relaxed text-slate-600"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.4, duration: 0.5 }}
                   >
                     You Talk to an Expert, Not a Robot. We connect you with a dedicated human advisor who speaks your
-                    native language. Our AI makes them <span className="text-fuchsia-600 font-semibold">5x faster</span>{" "}
-                    and <span className="text-teal-500 font-semibold">totally error-free</span>.
+                    native language. Our AI makes them <span className="text-blue-600 font-semibold">5x faster</span>{" "}
+                    and <span className="text-emerald-600 font-semibold">totally error-free</span>.
                   </motion.p>
 
                   <motion.div
