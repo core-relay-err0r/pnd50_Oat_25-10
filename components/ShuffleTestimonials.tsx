@@ -1,7 +1,7 @@
 "use client"
 
 import { TestimonialCard } from "@/components/ui/testimonial-cards"
-import { useState, useEffect, useCallback } from "react"
+import { useState, useEffect, useCallback, useMemo } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { ArrowLeft, ArrowRight } from "lucide-react"
 
@@ -12,7 +12,7 @@ const testimonials = [
       "PND50 transformed accounting process completely. Our AI-powered system made compliance effortless and saved clients countless hours every month.",
     author: "Sarah M.",
     designation: "Expat specialist @ PND50",
-    image: "/images/image.png",
+    image: "/professional-woman-accountant-portrait.jpg",
   },
   {
     id: 2,
@@ -20,7 +20,7 @@ const testimonials = [
       "We're an accounting firm that understands tech companies. The real-time dashboard and expert support are game-changers for our business.",
     author: "Chanika M.",
     designation: "Senior accountant @ PND50",
-    image: "/images/image.png",
+    image: "/professional-asian-woman-accountant-portrait.jpg",
   },
   {
     id: 3,
@@ -28,13 +28,15 @@ const testimonials = [
       "As an expat entrepreneur, I can understand the difficulty of navigating Thai regulations. PND50's team will make sure everything clear and handle it all seamlessly.",
     author: "Eugene Prudchenko",
     designation: "Director @ Burakorn Partners",
-    image: "/images/image.png",
+    image: "/professional-businessman-portrait-suit.jpg",
   },
 ]
 
 export function ShuffleTestimonials() {
   const [positions, setPositions] = useState<Array<"front" | "middle" | "back">>(["front", "middle", "back"])
   const [active, setActive] = useState(0)
+
+  const rotations = useMemo(() => testimonials.map(() => `${Math.floor(Math.random() * 16) - 8}deg`), [])
 
   const handleShuffle = () => {
     const newPositions = [...positions]
@@ -60,8 +62,6 @@ export function ShuffleTestimonials() {
 
   const isActive = (index: number) => index === active
 
-  const randomRotate = () => `${Math.floor(Math.random() * 16) - 8}deg`
-
   return (
     <>
       {/* Desktop view - keep existing stacked cards */}
@@ -79,22 +79,23 @@ export function ShuffleTestimonials() {
         ))}
       </div>
 
+      {/* Mobile view */}
       <div className="lg:hidden w-full px-4 py-8">
         <div className="relative grid grid-cols-1 gap-y-8">
           {/* Image Section */}
           <div className="flex items-center justify-center">
             <div className="relative h-72 w-full max-w-xs">
-              <AnimatePresence>
+              <AnimatePresence mode="popLayout">
                 {testimonials.map((testimonial, index) => (
                   <motion.div
                     key={testimonial.id}
-                    initial={{ opacity: 0, scale: 0.9, y: 50, rotate: randomRotate() }}
+                    initial={{ opacity: 0, scale: 0.9, y: 50, rotate: rotations[index] }}
                     animate={{
                       opacity: isActive(index) ? 1 : 0.5,
                       scale: isActive(index) ? 1 : 0.9,
                       y: isActive(index) ? 0 : 20,
                       zIndex: isActive(index) ? testimonials.length : testimonials.length - Math.abs(index - active),
-                      rotate: isActive(index) ? "0deg" : randomRotate(),
+                      rotate: isActive(index) ? "0deg" : rotations[index],
                     }}
                     exit={{ opacity: 0, scale: 0.9, y: -50 }}
                     transition={{ duration: 0.5, ease: "easeInOut" }}
