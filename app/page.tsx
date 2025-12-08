@@ -46,27 +46,85 @@ export default function PND50Landing() {
 
   return (
     <main className="min-h-screen">
-      <section className="relative w-full min-h-screen flex flex-col bg-gradient-to-br from-slate-50 via-white to-blue-50/80">
+      <section className="relative w-full min-h-screen flex flex-col bg-gradient-to-br from-slate-50 via-white to-sky-50/80">
         <AnimatedGridBackground className="min-h-screen flex-1" variant="light">
+          {/* Floating shapes - decorative elements */}
+          <motion.div
+            className="absolute top-[15%] left-[8%] w-20 h-20 border-2 border-sky-300/40 rounded-2xl"
+            animate={{
+              rotate: [0, 90, 180, 270, 360],
+              y: [0, -15, 0, 15, 0],
+            }}
+            transition={{ duration: 20, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
+            style={{
+              transform: `translate(${mousePosition.x * 0.3}px, ${mousePosition.y * 0.3}px)`,
+            }}
+          />
+          <motion.div
+            className="absolute top-[25%] right-[12%] w-16 h-16 border-2 border-teal-300/30 rounded-full"
+            animate={{
+              scale: [1, 1.2, 1],
+              opacity: [0.3, 0.6, 0.3],
+            }}
+            transition={{ duration: 4, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
+          />
+          <motion.div
+            className="absolute bottom-[30%] left-[15%] w-12 h-12 bg-gradient-to-br from-sky-200/30 to-teal-200/30 rounded-lg"
+            animate={{
+              rotate: [45, 135, 225, 315, 405],
+            }}
+            transition={{ duration: 15, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
+          />
+          <motion.div
+            className="absolute top-[40%] right-[20%] w-8 h-8 bg-gradient-to-br from-blue-300/40 to-sky-300/40 rounded-full"
+            animate={{
+              y: [0, -20, 0],
+              x: [0, 10, 0],
+            }}
+            transition={{ duration: 5, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
+          />
+          <motion.div
+            className="absolute bottom-[20%] right-[8%] w-24 h-24 border border-blue-200/30 rounded-full"
+            animate={{
+              scale: [1, 1.1, 1],
+            }}
+            transition={{ duration: 6, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
+          />
+          <motion.div
+            className="absolute top-[60%] left-[5%] w-6 h-6 bg-teal-400/30 rounded-full"
+            animate={{
+              y: [0, -30, 0],
+              opacity: [0.3, 0.7, 0.3],
+            }}
+            transition={{ duration: 3, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
+          />
+
           <div
-            className="absolute top-20 left-10 w-96 h-96 bg-gradient-to-br from-blue-200/25 to-slate-300/20 rounded-full blur-3xl pointer-events-none"
+            className="absolute top-20 left-10 w-[500px] h-[500px] bg-gradient-to-br from-sky-200/40 via-blue-200/30 to-teal-200/20 rounded-full blur-3xl pointer-events-none"
             style={{
               transform: `translate(${mousePosition.x}px, ${mousePosition.y}px)`,
               transition: "transform 0.5s ease-out",
             }}
           />
           <div
-            className="absolute bottom-20 right-10 w-96 h-96 bg-gradient-to-br from-slate-200/25 to-blue-300/20 rounded-full blur-3xl pointer-events-none"
+            className="absolute bottom-20 right-10 w-[450px] h-[450px] bg-gradient-to-br from-teal-200/35 via-sky-200/25 to-blue-200/20 rounded-full blur-3xl pointer-events-none"
             style={{
               transform: `translate(${-mousePosition.x}px, ${-mousePosition.y}px)`,
               transition: "transform 0.5s ease-out",
             }}
           />
           <div
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-br from-blue-100/30 via-slate-100/20 to-sky-100/25 rounded-full blur-3xl pointer-events-none"
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-gradient-to-br from-blue-100/35 via-sky-100/25 to-teal-100/30 rounded-full blur-3xl pointer-events-none"
             style={{
               transform: `translate(calc(-50% + ${mousePosition.x * 0.5}px), calc(-50% + ${mousePosition.y * 0.5}px))`,
               transition: "transform 0.5s ease-out",
+            }}
+          />
+          <div
+            className="absolute top-[10%] right-[30%] w-[300px] h-[300px] bg-gradient-to-br from-emerald-100/25 to-teal-100/20 rounded-full blur-3xl pointer-events-none"
+            style={{
+              transform: `translate(${mousePosition.x * 0.7}px, ${mousePosition.y * 0.7}px)`,
+              transition: "transform 0.6s ease-out",
             }}
           />
 
