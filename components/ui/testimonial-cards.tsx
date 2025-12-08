@@ -2,7 +2,6 @@
 
 import * as React from "react"
 import { motion } from "framer-motion"
-import Image from "next/image"
 
 interface TestimonialCardProps {
   handleShuffle: () => void
@@ -29,24 +28,17 @@ export function TestimonialCard({ handleShuffle, testimonial, position, id, auth
     return () => window.removeEventListener("resize", checkScreenSize)
   }, [])
 
-  const randomRotateY = React.useMemo(() => Math.floor(Math.random() * 21) - 10, [])
+  const blurFilter = isDesktop && position !== "front" ? "blur(0.8px)" : undefined
 
   return (
     <motion.div
       style={{
-        zIndex: position === "front" ? 999 : position === "middle" ? 2 : 1,
-      }}
-      initial={{
-        opacity: 0,
-        scale: 0.9,
-        rotate: randomRotateY,
+        zIndex: position === "front" ? "2" : position === "middle" ? "1" : "0",
+        filter: blurFilter,
       }}
       animate={{
-        opacity: position === "front" ? 1 : 0.7,
-        scale: position === "front" ? 1 : 0.95,
-        rotate: position === "front" ? 0 : randomRotateY,
-        x: position === "front" ? "0%" : position === "middle" ? "15%" : "30%",
-        y: position === "front" ? [0, -20, 0] : 0,
+        rotate: position === "front" ? "-6deg" : position === "middle" ? "0deg" : "6deg",
+        x: position === "front" ? "0%" : position === "middle" ? "33%" : "66%",
       }}
       drag={true}
       dragElastic={0.35}
@@ -66,26 +58,21 @@ export function TestimonialCard({ handleShuffle, testimonial, position, id, auth
         }
         dragRef.current = 0
       }}
-      transition={{
-        duration: 0.4,
-        ease: "easeInOut",
-      }}
-      className={`absolute left-0 top-0 origin-bottom ${isFront ? "cursor-grab active:cursor-grabbing" : ""}`}
+      transition={{ duration: 0.35 }}
+      className={`absolute left-0 top-0 grid h-[450px] w-[350px] select-none place-content-center space-y-6 rounded-3xl border border-sky-200/60 p-8 bg-gradient-to-b from-white via-sky-50/80 to-blue-50/70 shadow-xl shadow-sky-200/30 backdrop-blur-sm ${isFront ? "cursor-grab active:cursor-grabbing" : ""}`}
     >
-      <div className="relative h-[320px] w-[240px] overflow-hidden rounded-3xl shadow-2xl shadow-slate-400/30">
-        <Image
-          src={image || `https://i.pravatar.cc/500?img=${id}`}
+      <div className="relative mx-auto">
+        <div className="absolute -inset-1 rounded-full bg-gradient-to-br from-sky-300 via-blue-200 to-teal-300 opacity-50 blur-sm" />
+        <img
+          src={image || `https://i.pravatar.cc/128?img=${id}`}
           alt={`Avatar of ${author}`}
-          width={240}
-          height={320}
-          draggable={false}
-          className="h-full w-full object-cover object-center pointer-events-none"
+          className="relative pointer-events-none h-32 w-32 rounded-full border-4 border-sky-100 object-cover shadow-md"
         />
-        <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/40 to-transparent" />
-        <div className="absolute inset-x-0 bottom-0 p-4">
-          <p className="text-white font-semibold text-lg drop-shadow-lg">{author}</p>
-        </div>
       </div>
+      <span className="text-center text-lg leading-relaxed font-light text-slate-700">"{testimonial}"</span>
+      <span className="text-center text-sm font-semibold bg-gradient-to-r from-sky-600 to-blue-600 bg-clip-text text-transparent">
+        {author}
+      </span>
     </motion.div>
   )
 }
