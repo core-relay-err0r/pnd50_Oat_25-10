@@ -59,11 +59,7 @@ export function TestimonialCard({ handleShuffle, testimonial, position, id, auth
         dragRef.current = 0
       }}
       transition={{ duration: 0.35 }}
-      className={`absolute left-0 top-0 grid h-[450px] w-[350px] select-none place-content-center space-y-6 rounded-3xl border border-slate-100/80 p-8 
-        bg-gradient-to-b from-slate-50/90 via-white to-slate-50/70 
-        shadow-xl shadow-slate-200/40 
-        backdrop-blur-sm
-        ${isFront ? "cursor-grab active:cursor-grabbing" : ""}`}
+      className={`absolute left-0 top-0 grid h-[450px] w-[350px] select-none place-content-center space-y-6 rounded-3xl border border-slate-100/80 p-8 bg-gradient-to-b from-slate-50/90 via-white to-slate-50/70 shadow-xl shadow-slate-200/40 backdrop-blur-sm border-none ${isFront ? "cursor-grab active:cursor-grabbing" : ""}`}
     >
       <div className="relative mx-auto">
         <div className="absolute -inset-1 rounded-full bg-gradient-to-br from-slate-300 via-slate-200 to-slate-300 opacity-60 blur-sm" />
