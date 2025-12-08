@@ -2,7 +2,8 @@
 
 import { TestimonialCard } from "@/components/ui/testimonial-cards"
 import { useState } from "react"
-import { ChevronLeft, ChevronRight } from "lucide-react"
+import { motion } from "framer-motion"
+import { Quote } from "lucide-react"
 
 const testimonials = [
   {
@@ -28,10 +29,31 @@ const testimonials = [
   },
 ]
 
+const containerVariants = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.2,
+    },
+  },
+}
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.5,
+      ease: "easeOut",
+    },
+  },
+}
+
 export function ShuffleTestimonials() {
   const [positions, setPositions] = useState<Array<"front" | "middle" | "back">>(["front", "middle", "back"])
 
-  const handleShuffleLeft = () => {
+  const handleShuffle = () => {
     const newPositions = [...positions]
     const last = newPositions.pop()
     if (last) {
@@ -40,44 +62,55 @@ export function ShuffleTestimonials() {
     setPositions(newPositions as Array<"front" | "middle" | "back">)
   }
 
-  const handleShuffleRight = () => {
-    const newPositions = [...positions]
-    const first = newPositions.shift()
-    if (first) {
-      newPositions.push(first)
-    }
-    setPositions(newPositions as Array<"front" | "middle" | "back">)
-  }
-
   return (
-    <div className="relative">
-      <div className="relative h-[450px] w-[350px] md:w-[525px]">
+    <>
+      <div className="relative -ml-[100px] h-[450px] w-[350px] md:-ml-[175px] hidden lg:block">
         {testimonials.map((testimonial, index) => (
           <TestimonialCard
             key={testimonial.id}
             {...testimonial}
-            handleShuffle={handleShuffleLeft}
+            handleShuffle={handleShuffle}
             position={positions[index]}
           />
         ))}
       </div>
 
-      <div className="flex lg:hidden justify-center gap-4 mt-4 w-full">
-        <button
-          onClick={handleShuffleRight}
-          className="flex items-center justify-center w-12 h-12 rounded-full bg-white border border-sky-200 shadow-md hover:bg-sky-50 active:scale-95 transition-all"
-          aria-label="Previous testimonial"
-        >
-          <ChevronLeft className="w-6 h-6 text-sky-600" />
-        </button>
-        <button
-          onClick={handleShuffleLeft}
-          className="flex items-center justify-center w-12 h-12 rounded-full bg-white border border-sky-200 shadow-md hover:bg-sky-50 active:scale-95 transition-all"
-          aria-label="Next testimonial"
-        >
-          <ChevronRight className="w-6 h-6 text-sky-600" />
-        </button>
-      </div>
-    </div>
+      <motion.div
+        className="lg:hidden grid grid-cols-1 gap-6 w-full px-4"
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
+      >
+        {testimonials.map((testimonial) => (
+          <motion.div
+            key={testimonial.id}
+            className="relative overflow-hidden rounded-2xl bg-white shadow-lg shadow-sky-200/30 border border-sky-100"
+            variants={itemVariants}
+          >
+            <div className="relative h-64">
+              <img
+                src={testimonial.image || "/placeholder.svg"}
+                alt={testimonial.author}
+                className="h-full w-full object-cover"
+              />
+              {/* Gradient overlay for text readability */}
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/50 to-transparent" />
+            </div>
+
+            {/* Content within the card */}
+            <div className="absolute bottom-0 left-0 right-0 p-5 text-left text-white">
+              <Quote className="mb-3 h-6 w-6 text-sky-300/60" aria-hidden="true" />
+              <blockquote className="text-sm font-medium leading-relaxed line-clamp-3">
+                {testimonial.testimonial}
+              </blockquote>
+              <figcaption className="mt-3">
+                <p className="text-xs font-semibold text-sky-200">{testimonial.author}</p>
+              </figcaption>
+            </div>
+          </motion.div>
+        ))}
+      </motion.div>
+    </>
   )
 }
