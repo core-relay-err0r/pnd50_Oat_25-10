@@ -8,7 +8,7 @@ export function HomepageCtas() {
     <div className="flex flex-col sm:flex-row gap-4 items-center justify-start">
       <Link href="/calculator" className="w-full sm:w-auto">
         <Button
-          className="w-full sm:w-auto bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-700 hover:from-blue-700 hover:via-indigo-700 hover:to-violet-800 text-white px-8 text-lg font-bold rounded-xl shadow-lg shadow-indigo-600/30 transition-all duration-300 transform hover:scale-105 hover:shadow-xl hover:shadow-indigo-700/40 flex items-center justify-center border-0"
+          className="w-full sm:w-auto bg-gradient-to-r from-blue-500 via-indigo-500 to-violet-500 hover:from-blue-600 hover:via-indigo-600 hover:to-violet-600 text-white px-8 text-lg font-bold rounded-xl shadow-lg shadow-indigo-400/30 transition-all duration-300 transform hover:scale-105 hover:shadow-xl hover:shadow-indigo-500/40 flex items-center justify-center border-0"
           style={{ minHeight: "60px", height: "60px" }}
         >
           Schedule Consultation
