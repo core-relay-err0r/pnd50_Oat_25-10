@@ -133,18 +133,7 @@ export default function PND50Landing() {
               <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center w-full">
                 {/* Left side - Hero content */}
                 <div className="text-center lg:text-left space-y-6 md:space-y-8">
-                  <motion.div
-                    className={`hidden lg:inline-flex items-center gap-2.5 rounded-full bg-gradient-to-r from-slate-100/70 via-blue-50/60 to-sky-100/70 backdrop-blur-xl px-6 py-3 text-sm font-semibold text-slate-700 mb-2 border border-slate-200/40 shadow-lg shadow-slate-200/50`}
-                    initial={{ opacity: 0, y: -20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.2, duration: 0.4 }}
-                  >
-                    <span className="relative flex h-2.5 w-2.5">
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                      <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
-                    </span>
-                    <span className="leading-tight">Thailand's Leading Tech-Driven Corporate Services Firm.</span>
-                  </motion.div>
+                  
 
                   <motion.h1
                     className="text-6xl sm:text-7xl md:text-8xl lg:text-7xl xl:text-8xl font-bold mb-4 leading-tight tracking-tight"
