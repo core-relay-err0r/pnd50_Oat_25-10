@@ -37,8 +37,8 @@ export default function CalculatorSuccessPage() {
   }, [])
 
   return (
-    <section className="relative w-full min-h-screen flex flex-col bg-gradient-to-br from-slate-50 via-white to-sky-50/80">
-      <AnimatedGridBackground className="min-h-screen flex-1" variant="light">
+    <div className="relative w-full min-h-screen flex flex-col bg-gradient-to-br from-slate-50 via-white to-sky-50/80">
+      <AnimatedGridBackground className="flex-1" variant="light">
         <div
           className="absolute top-20 left-10 w-[500px] h-[500px] bg-gradient-to-br from-sky-200/40 via-blue-200/30 to-teal-200/20 rounded-full blur-3xl pointer-events-none"
           style={{
@@ -90,7 +90,7 @@ export default function CalculatorSuccessPage() {
             </Link>
           </div>
 
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12 pb-16">
             {/* Title Section */}
             <div className="text-center mb-12">
               <motion.div
@@ -206,9 +206,9 @@ export default function CalculatorSuccessPage() {
             </motion.div>
           </div>
         </motion.div>
-
-        <LandingFooter variant="light" absolute={false} />
       </AnimatedGridBackground>
-    </section>
+
+      <LandingFooter variant="light" absolute={false} />
+    </div>
   )
 }
