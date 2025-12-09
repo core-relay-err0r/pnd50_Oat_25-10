@@ -1,5 +1,7 @@
 import Link from "next/link"
 
+const CURRENT_YEAR = 2025
+
 export function LandingFooter({
   variant = "dark",
   absolute = true,
@@ -52,7 +54,7 @@ export function LandingFooter({
             </Link>
           </p>
           <p className={`text-[10px] mt-2 ${isLight ? "text-slate-500" : "text-slate-600"}`}>
-            © {new Date().getFullYear()} PND50. All rights reserved.
+            © {CURRENT_YEAR} PND50. All rights reserved.
           </p>
         </div>
       </div>
