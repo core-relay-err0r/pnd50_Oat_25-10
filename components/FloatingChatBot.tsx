@@ -267,11 +267,10 @@ export function FloatingChatBot() {
     return (
       <button
         onClick={handleShow}
-        className="fixed bottom-4 md:bottom-6 right-4 md:right-6 z-50 bg-background hover:bg-muted text-muted-foreground rounded-full shadow-lg hover:shadow-2xl px-4 py-2 text-sm transition-all duration-500 hover:scale-105 flex items-center gap-2 backdrop-blur-sm border border-border/50 hover:border-primary/30"
+        className="fixed bottom-4 md:bottom-6 right-4 md:right-6 z-50 rounded-full shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-110"
         aria-label="Show AI assistant"
       >
-        <ColorOrb dimension="20px" tones={{ base: "oklch(22.64% 0 0)" }} spinDuration={15} />
-        <span>Chat with Panida</span>
+        <ColorOrb dimension="48px" tones={{ base: "oklch(22.64% 0 0)" }} spinDuration={15} />
       </button>
     )
   }
