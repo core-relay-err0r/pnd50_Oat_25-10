@@ -8,7 +8,6 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { motion } from "framer-motion"
-import { LandingFooter } from "@/components/landing-footer"
 
 const faqCategories = [
   {
@@ -515,9 +514,6 @@ export default function FAQPage() {
           </section>
         </div>
       </div>
-
-      {/* Footer */}
-      <LandingFooter variant="light" absolute={false} />
     </div>
   )
 }
