@@ -83,7 +83,7 @@ export default function ServicesPage() {
 
   return (
     <main className="min-h-screen">
-      <section className="relative w-full flex bg-gradient-to-br from-slate-50 via-white to-sky-50/80">
+      <section className="relative w-full bg-gradient-to-br from-slate-50 via-white to-sky-50/80">
         <AnimatedGridBackground className="" variant="light">
           <motion.div
             className="absolute top-[15%] left-[8%] w-20 h-20 border-2 border-sky-300/40 rounded-2xl"
