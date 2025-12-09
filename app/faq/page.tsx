@@ -517,7 +517,7 @@ export default function FAQPage() {
       </div>
 
       {/* Footer */}
-      <LandingFooter variant="light" />
+      <LandingFooter variant="light" absolute={false} />
     </div>
   )
 }

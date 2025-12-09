@@ -572,7 +572,7 @@ export function PricingCalculator() {
 
           <div className="pb-16 lg:pb-24" />
 
-          <LandingFooter variant="light" />
+          <LandingFooter variant="light" absolute={false} />
 
           {/* Contact Form Modal */}
           <AnimatePresence>

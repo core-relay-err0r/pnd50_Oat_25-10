@@ -362,7 +362,7 @@ const AboutClientPage = () => {
       </section>
 
       {/* Landing Footer */}
-      <LandingFooter variant="light" />
+      <LandingFooter variant="light" absolute={false} />
     </div>
   )
 }
