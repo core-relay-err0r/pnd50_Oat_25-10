@@ -1,6 +1,5 @@
-// app/calculator/page.tsx
-import { AccountingCalculator } from "@/components/accounting-calculator"
+import { PricingCalculator } from "@/components/pricing-calculator"
 
 export default function CalculatorPage() {
-  return <AccountingCalculator />
+  return <PricingCalculator />
 }

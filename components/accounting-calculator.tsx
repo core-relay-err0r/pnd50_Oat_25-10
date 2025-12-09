@@ -440,7 +440,7 @@ export function AccountingCalculator() {
 
   return (
     <div className="min-h-screen bg-muted/30">
-      <div className="container mx-auto px-4 pt-6">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 pt-6">
         <Link
           href="/"
           className="inline-flex items-center gap-2 text-slate-400 hover:text-primary transition-colors group mb-6 sm:mb-8 touch-manipulation"
@@ -450,7 +450,7 @@ export function AccountingCalculator() {
         </Link>
       </div>
 
-      <div className="container mx-auto px-4 py-12 max-w-4xl">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 max-w-4xl">
         <div className="text-center mb-12">
           <div className="flex justify-center mb-6">
             <div className="flex items-center gap-3 p-3 bg-background rounded-lg shadow-sm border border-border">
