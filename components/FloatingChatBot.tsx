@@ -382,29 +382,37 @@ export function FloatingChatBot() {
               </div>
 
               {/* Messages */}
-              <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-muted/20">
+              <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gradient-to-b from-muted/30 to-muted/10">
                 {messages.map((message) => (
                   <div key={message.id} className={`flex ${message.role === "user" ? "justify-end" : "justify-start"}`}>
                     <div
-                      className={`max-w-[85%] rounded-2xl px-3.5 py-2.5 ${
+                      className={`max-w-[80%] ${
                         message.role === "user"
-                          ? "bg-foreground text-background"
-                          : "bg-background text-foreground border border-border/50"
+                          ? "bg-primary text-primary-foreground rounded-2xl rounded-br-md shadow-sm"
+                          : "bg-background text-foreground rounded-2xl rounded-bl-md shadow-sm border border-border/40"
                       }`}
                     >
-                      {message.parts.map((part, index) => {
-                        if (part.type === "text") {
-                          return (
-                            <p key={index} className="text-sm leading-relaxed whitespace-pre-wrap">
-                              {part.text}
-                            </p>
-                          )
-                        }
-                        return null
-                      })}
-                      <div className="flex items-center justify-between mt-1.5 gap-2">
+                      <div className="px-4 py-3">
+                        {message.parts.map((part, index) => {
+                          if (part.type === "text") {
+                            return (
+                              <p key={index} className="text-[13px] leading-[1.6] whitespace-pre-wrap">
+                                {part.text}
+                              </p>
+                            )
+                          }
+                          return null
+                        })}
+                      </div>
+                      <div
+                        className={`flex items-center justify-between px-4 py-1.5 gap-2 border-t ${
+                          message.role === "user" ? "border-primary-foreground/10" : "border-border/30"
+                        }`}
+                      >
                         <p
-                          className={`text-[10px] ${message.role === "user" ? "text-background/60" : "text-muted-foreground"}`}
+                          className={`text-[10px] font-medium ${
+                            message.role === "user" ? "text-primary-foreground/70" : "text-muted-foreground"
+                          }`}
                         >
                           {message.createdAt?.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
                         </p>
@@ -417,10 +425,10 @@ export function FloatingChatBot() {
                                 .join(" ")
                               speakText(text)
                             }}
-                            className="text-muted-foreground hover:text-foreground transition-colors p-0.5"
+                            className="text-muted-foreground hover:text-foreground transition-colors p-0.5 rounded hover:bg-muted"
                             aria-label="Speak this message"
                           >
-                            <Volume2 className="w-3 h-3" />
+                            <Volume2 className="w-3.5 h-3.5" />
                           </button>
                         )}
                       </div>
@@ -429,19 +437,19 @@ export function FloatingChatBot() {
                 ))}
                 {status === "in_progress" && (
                   <div className="flex justify-start">
-                    <div className="bg-background text-foreground border border-border/50 rounded-2xl px-4 py-3">
-                      <div className="flex gap-1.5">
+                    <div className="bg-background text-foreground border border-border/40 rounded-2xl rounded-bl-md px-5 py-4 shadow-sm">
+                      <div className="flex gap-1.5 items-center">
                         <span
-                          className="w-2 h-2 bg-muted-foreground/60 rounded-full animate-bounce"
-                          style={{ animationDelay: "0ms" }}
+                          className="w-2 h-2 bg-primary/60 rounded-full animate-bounce"
+                          style={{ animationDelay: "0ms", animationDuration: "0.8s" }}
                         />
                         <span
-                          className="w-2 h-2 bg-muted-foreground/60 rounded-full animate-bounce"
-                          style={{ animationDelay: "150ms" }}
+                          className="w-2 h-2 bg-primary/60 rounded-full animate-bounce"
+                          style={{ animationDelay: "150ms", animationDuration: "0.8s" }}
                         />
                         <span
-                          className="w-2 h-2 bg-muted-foreground/60 rounded-full animate-bounce"
-                          style={{ animationDelay: "300ms" }}
+                          className="w-2 h-2 bg-primary/60 rounded-full animate-bounce"
+                          style={{ animationDelay: "300ms", animationDuration: "0.8s" }}
                         />
                       </div>
                     </div>
@@ -451,7 +459,7 @@ export function FloatingChatBot() {
               </div>
 
               {/* Input */}
-              <div className="p-3 border-t border-border/50 bg-background">
+              <div className="p-4 border-t border-border/40 bg-background/80 backdrop-blur-sm">
                 <div className="flex gap-2 items-end">
                   <div className="flex-1 relative">
                     <textarea
@@ -462,8 +470,8 @@ export function FloatingChatBot() {
                       placeholder={isListening ? "Listening..." : "Ask me anything..."}
                       disabled={status === "in_progress"}
                       rows={1}
-                      className={`w-full resize-none rounded-xl border border-input bg-background px-3.5 py-2.5 text-sm outline-none focus:ring-2 focus:ring-ring focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed ${isListening ? "border-primary ring-2 ring-primary/30" : ""}`}
-                      style={{ minHeight: "42px", maxHeight: "120px" }}
+                      className={`w-full resize-none rounded-xl border border-border/60 bg-muted/30 px-4 py-3 text-sm outline-none transition-all duration-200 focus:ring-2 focus:ring-primary/30 focus:border-primary/50 focus:bg-background disabled:opacity-50 disabled:cursor-not-allowed placeholder:text-muted-foreground/60 ${isListening ? "border-primary ring-2 ring-primary/20 bg-primary/5" : ""}`}
+                      style={{ minHeight: "46px", maxHeight: "120px" }}
                     />
                   </div>
                   {recognitionSupported && (
@@ -471,8 +479,8 @@ export function FloatingChatBot() {
                       onClick={isListening ? stopListening : startListening}
                       disabled={status === "in_progress"}
                       size="icon"
-                      variant={isListening ? "destructive" : "outline"}
-                      className={`rounded-xl h-[42px] w-[42px] shrink-0 ${isListening ? "animate-pulse" : ""}`}
+                      variant={isListening ? "destructive" : "ghost"}
+                      className={`rounded-xl h-[46px] w-[46px] shrink-0 border border-border/40 ${isListening ? "animate-pulse border-destructive" : "hover:bg-muted hover:border-border"}`}
                       aria-label={isListening ? "Stop listening" : "Start voice input"}
                     >
                       {isListening ? <MicOff className="w-4 h-4" /> : <Mic className="w-4 h-4" />}
@@ -482,20 +490,20 @@ export function FloatingChatBot() {
                     onClick={handleSend}
                     disabled={status === "in_progress" || !inputValue.trim()}
                     size="icon"
-                    className="rounded-xl h-[42px] w-[42px] shrink-0"
+                    className="rounded-xl h-[46px] w-[46px] shrink-0 bg-primary hover:bg-primary/90 shadow-sm"
                   >
                     <Send className="w-4 h-4" />
                   </Button>
                 </div>
-                <div className="flex items-center justify-between mt-2 px-1">
-                  <p className="text-[10px] text-muted-foreground">
+                <div className="flex items-center justify-between mt-2.5 px-1">
+                  <p className="text-[11px] text-muted-foreground/70">
                     {recognitionSupported ? "Enter to send · Click mic to speak" : "Enter to send"}
                   </p>
-                  <div className="flex gap-1">
-                    <kbd className="text-[10px] text-muted-foreground border border-border rounded px-1.5 py-0.5 font-mono">
+                  <div className="flex items-center gap-1.5">
+                    <kbd className="text-[10px] text-muted-foreground/70 bg-muted/50 border border-border/40 rounded px-1.5 py-0.5 font-mono">
                       Esc
                     </kbd>
-                    <span className="text-[10px] text-muted-foreground">to close</span>
+                    <span className="text-[11px] text-muted-foreground/70">to close</span>
                   </div>
                 </div>
               </div>
