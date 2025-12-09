@@ -83,8 +83,8 @@ export default function ServicesPage() {
 
   return (
     <main className="min-h-screen">
-      <section className="relative w-full bg-gradient-to-br from-slate-50 via-white to-sky-50/80">
-        <AnimatedGridBackground className="" variant="light">
+      <section className="relative w-full min-h-screen flex flex-col bg-gradient-to-br from-slate-50 via-white to-sky-50/80">
+        <AnimatedGridBackground className="min-h-screen flex-1" variant="light">
           <motion.div
             className="absolute top-[15%] left-[8%] w-20 h-20 border-2 border-sky-300/40 rounded-2xl"
             animate={{
@@ -164,7 +164,7 @@ export default function ServicesPage() {
             }}
           />
 
-          <div className="w-full flex flex-col lg:scale-[0.85] lg:origin-top">
+          <div className="flex-1 w-full flex flex-col lg:scale-[0.85] lg:origin-top">
             <section className="relative py-8 md:py-16 pt-[100px] lg:pt-[140px]">
               <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
                 <div className="max-w-3xl mx-auto text-center">

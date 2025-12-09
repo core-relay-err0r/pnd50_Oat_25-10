@@ -150,8 +150,7 @@ export function AnimatedGridBackground({
     >
       <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" style={{ opacity: isDark ? 0.6 : 0.5 }} />
 
-      {/* Removed flex-1 to prevent stretching */}
-      <div className="relative z-10 w-full flex flex-col">{children}</div>
+      <div className="relative z-10 w-full flex flex-col flex-1">{children}</div>
     </div>
   )
 }
