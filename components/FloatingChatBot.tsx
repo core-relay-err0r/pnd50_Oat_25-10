@@ -27,16 +27,6 @@ const WELCOME_MESSAGE = {
 
 const SPEED_FACTOR = 1
 
-function KeyHint({ children, className }: { children: string; className?: string }) {
-  return (
-    <kbd
-      className={`text-foreground flex h-6 items-center justify-center rounded-sm border border-border/60 bg-muted/30 px-[6px] font-sans text-xs ${className || ""}`}
-    >
-      {children}
-    </kbd>
-  )
-}
-
 export function FloatingChatBot() {
   const wrapperRef = useRef<HTMLDivElement>(null)
   const textareaRef = useRef<HTMLTextAreaElement | null>(null)
@@ -392,37 +382,29 @@ export function FloatingChatBot() {
               </div>
 
               {/* Messages */}
-              <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gradient-to-b from-muted/30 to-muted/10">
+              <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-muted/20">
                 {messages.map((message) => (
                   <div key={message.id} className={`flex ${message.role === "user" ? "justify-end" : "justify-start"}`}>
                     <div
-                      className={`max-w-[80%] ${
+                      className={`max-w-[85%] rounded-2xl px-3.5 py-2.5 ${
                         message.role === "user"
-                          ? "bg-primary text-primary-foreground rounded-2xl rounded-br-md shadow-sm"
-                          : "bg-background text-foreground rounded-2xl rounded-bl-md shadow-sm border border-border/40"
+                          ? "bg-foreground text-background"
+                          : "bg-background text-foreground border border-border/50"
                       }`}
                     >
-                      <div className="px-4 py-3">
-                        {message.parts.map((part, index) => {
-                          if (part.type === "text") {
-                            return (
-                              <p key={index} className="text-[13px] leading-[1.6] whitespace-pre-wrap">
-                                {part.text}
-                              </p>
-                            )
-                          }
-                          return null
-                        })}
-                      </div>
-                      <div
-                        className={`flex items-center justify-between px-4 py-1.5 gap-2 border-t ${
-                          message.role === "user" ? "border-primary-foreground/10" : "border-border/30"
-                        }`}
-                      >
+                      {message.parts.map((part, index) => {
+                        if (part.type === "text") {
+                          return (
+                            <p key={index} className="text-sm leading-relaxed whitespace-pre-wrap">
+                              {part.text}
+                            </p>
+                          )
+                        }
+                        return null
+                      })}
+                      <div className="flex items-center justify-between mt-1.5 gap-2">
                         <p
-                          className={`text-[10px] font-medium ${
-                            message.role === "user" ? "text-primary-foreground/70" : "text-muted-foreground"
-                          }`}
+                          className={`text-[10px] ${message.role === "user" ? "text-background/60" : "text-muted-foreground"}`}
                         >
                           {message.createdAt?.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
                         </p>
@@ -435,10 +417,10 @@ export function FloatingChatBot() {
                                 .join(" ")
                               speakText(text)
                             }}
-                            className="text-muted-foreground hover:text-foreground transition-colors p-0.5 rounded hover:bg-muted"
+                            className="text-muted-foreground hover:text-foreground transition-colors p-0.5"
                             aria-label="Speak this message"
                           >
-                            <Volume2 className="w-3.5 h-3.5" />
+                            <Volume2 className="w-3 h-3" />
                           </button>
                         )}
                       </div>
@@ -447,19 +429,19 @@ export function FloatingChatBot() {
                 ))}
                 {status === "in_progress" && (
                   <div className="flex justify-start">
-                    <div className="bg-background text-foreground border border-border/40 rounded-2xl rounded-bl-md px-5 py-4 shadow-sm">
-                      <div className="flex gap-1.5 items-center">
+                    <div className="bg-background text-foreground border border-border/50 rounded-2xl px-4 py-3">
+                      <div className="flex gap-1.5">
                         <span
-                          className="w-2 h-2 bg-primary/60 rounded-full animate-bounce"
-                          style={{ animationDelay: "0ms", animationDuration: "0.8s" }}
+                          className="w-2 h-2 bg-muted-foreground/60 rounded-full animate-bounce"
+                          style={{ animationDelay: "0ms" }}
                         />
                         <span
-                          className="w-2 h-2 bg-primary/60 rounded-full animate-bounce"
-                          style={{ animationDelay: "150ms", animationDuration: "0.8s" }}
+                          className="w-2 h-2 bg-muted-foreground/60 rounded-full animate-bounce"
+                          style={{ animationDelay: "150ms" }}
                         />
                         <span
-                          className="w-2 h-2 bg-primary/60 rounded-full animate-bounce"
-                          style={{ animationDelay: "300ms", animationDuration: "0.8s" }}
+                          className="w-2 h-2 bg-muted-foreground/60 rounded-full animate-bounce"
+                          style={{ animationDelay: "300ms" }}
                         />
                       </div>
                     </div>
@@ -468,62 +450,53 @@ export function FloatingChatBot() {
                 <div ref={messagesEndRef} />
               </div>
 
-              <div className="border-t border-border/40 bg-background">
-                {/* Input header with label and keyboard hints */}
-                <div className="flex items-center justify-between px-4 pt-3 pb-1">
-                  <div className="flex items-center gap-2">
-                    <ColorOrb dimension="20px" tones={{ base: "oklch(22.64% 0 0)" }} spinDuration={20} />
-                    <p className="text-foreground text-sm font-medium select-none">AI Input</p>
+              {/* Input */}
+              <div className="p-3 border-t border-border/50 bg-background">
+                <div className="flex gap-2 items-end">
+                  <div className="flex-1 relative">
+                    <textarea
+                      ref={textareaRef}
+                      value={inputValue}
+                      onChange={(e) => setInputValue(e.target.value)}
+                      onKeyDown={handleKeyDown}
+                      placeholder={isListening ? "Listening..." : "Ask me anything..."}
+                      disabled={status === "in_progress"}
+                      rows={1}
+                      className={`w-full resize-none rounded-xl border border-input bg-background px-3.5 py-2.5 text-sm outline-none focus:ring-2 focus:ring-ring focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed ${isListening ? "border-primary ring-2 ring-primary/30" : ""}`}
+                      style={{ minHeight: "42px", maxHeight: "120px" }}
+                    />
                   </div>
-                  <div className="flex items-center gap-1.5">
-                    <KeyHint>⌘</KeyHint>
-                    <KeyHint className="w-fit px-2">Enter</KeyHint>
-                  </div>
-                </div>
-
-                {/* Textarea */}
-                <div className="px-4 py-2">
-                  <textarea
-                    ref={textareaRef}
-                    value={inputValue}
-                    onChange={(e) => setInputValue(e.target.value)}
-                    onKeyDown={handleKeyDown}
-                    placeholder={isListening ? "Listening..." : "Ask me anything..."}
-                    disabled={status === "in_progress"}
-                    rows={2}
-                    className={`w-full resize-none rounded-xl border-0 bg-transparent px-0 py-2 text-sm outline-none transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed placeholder:text-muted-foreground/50 ${isListening ? "text-primary" : ""}`}
-                    style={{ minHeight: "56px", maxHeight: "100px" }}
-                    spellCheck={false}
-                  />
-                </div>
-
-                {/* Bottom action bar */}
-                <div className="flex items-center justify-between px-4 pb-3 pt-1 border-t border-border/30">
-                  <div className="flex items-center gap-2">
-                    {recognitionSupported && (
-                      <Button
-                        onClick={isListening ? stopListening : startListening}
-                        disabled={status === "in_progress"}
-                        size="sm"
-                        variant={isListening ? "destructive" : "ghost"}
-                        className={`rounded-lg h-8 px-3 ${isListening ? "animate-pulse" : ""}`}
-                        aria-label={isListening ? "Stop listening" : "Start voice input"}
-                      >
-                        {isListening ? <MicOff className="w-4 h-4 mr-1.5" /> : <Mic className="w-4 h-4 mr-1.5" />}
-                        <span className="text-xs">{isListening ? "Stop" : "Voice"}</span>
-                      </Button>
-                    )}
-                  </div>
+                  {recognitionSupported && (
+                    <Button
+                      onClick={isListening ? stopListening : startListening}
+                      disabled={status === "in_progress"}
+                      size="icon"
+                      variant={isListening ? "destructive" : "outline"}
+                      className={`rounded-xl h-[42px] w-[42px] shrink-0 ${isListening ? "animate-pulse" : ""}`}
+                      aria-label={isListening ? "Stop listening" : "Start voice input"}
+                    >
+                      {isListening ? <MicOff className="w-4 h-4" /> : <Mic className="w-4 h-4" />}
+                    </Button>
+                  )}
                   <Button
                     onClick={handleSend}
                     disabled={status === "in_progress" || !inputValue.trim()}
-                    size="sm"
-                    variant="ghost"
-                    className="rounded-lg h-8 px-4 font-medium hover:bg-muted"
+                    size="icon"
+                    className="rounded-xl h-[42px] w-[42px] shrink-0"
                   >
-                    <span>Ask </span>
-                    <Send className="w-3.5 h-3.5 ml-2" />
+                    <Send className="w-4 h-4" />
                   </Button>
+                </div>
+                <div className="flex items-center justify-between mt-2 px-1">
+                  <p className="text-[10px] text-muted-foreground">
+                    {recognitionSupported ? "Enter to send · Click mic to speak" : "Enter to send"}
+                  </p>
+                  <div className="flex gap-1">
+                    <kbd className="text-[10px] text-muted-foreground border border-border rounded px-1.5 py-0.5 font-mono">
+                      Esc
+                    </kbd>
+                    <span className="text-[10px] text-muted-foreground">to close</span>
+                  </div>
                 </div>
               </div>
             </motion.div>

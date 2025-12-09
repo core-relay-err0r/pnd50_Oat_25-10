@@ -5,7 +5,6 @@ import ServiceSlider from "@/components/service-slider"
 import { motion } from "framer-motion"
 import dynamic from "next/dynamic"
 import { useState, useEffect } from "react"
-import { LandingFooter } from "@/components/landing-footer"
 
 const AnimatedGridBackground = dynamic(
   () => import("@/components/ui/animated-grid-background").then((mod) => mod.AnimatedGridBackground),
@@ -276,8 +275,6 @@ export default function ServicesPage() {
               </div>
             </motion.section>
           </div>
-
-          <LandingFooter variant="light" absolute={false} />
         </AnimatedGridBackground>
       </section>
     </main>
