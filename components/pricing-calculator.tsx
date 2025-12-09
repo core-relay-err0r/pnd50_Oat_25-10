@@ -2,7 +2,20 @@
 
 import { useState, useEffect, useMemo } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Building2, Calculator, FileText, Briefcase, ChevronDown, Check, Send, X, Sparkles } from "lucide-react"
+import {
+  Building2,
+  Calculator,
+  FileText,
+  Briefcase,
+  ChevronDown,
+  Check,
+  Send,
+  X,
+  Sparkles,
+  Zap,
+  Shield,
+  Clock,
+} from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -214,10 +227,10 @@ export function PricingCalculator() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-sky-50/80">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-sky-50/80 overflow-hidden">
       <AnimatedGridBackground className="min-h-screen" variant="light">
         <motion.div
-          className="absolute top-[15%] left-[8%] w-20 h-20 border-2 border-sky-300/40 rounded-2xl"
+          className="absolute top-[15%] left-[8%] w-24 h-24 border-2 border-sky-300/40 rounded-2xl"
           animate={{
             rotate: [0, 90, 180, 270, 360],
             y: [0, -15, 0, 15, 0],
@@ -228,7 +241,7 @@ export function PricingCalculator() {
           }}
         />
         <motion.div
-          className="absolute top-[25%] right-[12%] w-16 h-16 border-2 border-teal-300/30 rounded-full"
+          className="absolute top-[25%] right-[12%] w-20 h-20 border-2 border-teal-300/30 rounded-full"
           animate={{
             scale: [1, 1.2, 1],
             opacity: [0.3, 0.6, 0.3],
@@ -236,35 +249,60 @@ export function PricingCalculator() {
           transition={{ duration: 4, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
         />
         <motion.div
-          className="absolute bottom-[30%] left-[15%] w-12 h-12 bg-gradient-to-br from-sky-200/30 to-teal-200/30 rounded-lg"
+          className="absolute bottom-[30%] left-[15%] w-16 h-16 bg-gradient-to-br from-sky-200/30 to-teal-200/30 rounded-lg"
           animate={{
             rotate: [45, 135, 225, 315, 405],
           }}
           transition={{ duration: 15, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
         />
         <motion.div
-          className="absolute top-[40%] right-[20%] w-8 h-8 bg-gradient-to-br from-blue-300/40 to-sky-300/40 rounded-full"
+          className="absolute top-[40%] right-[20%] w-12 h-12 bg-gradient-to-br from-blue-300/40 to-sky-300/40 rounded-full"
           animate={{
             y: [0, -20, 0],
             x: [0, 10, 0],
           }}
           transition={{ duration: 5, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
         />
+        <motion.div
+          className="absolute top-[60%] left-[5%] w-14 h-14 border-2 border-emerald-300/30 rounded-full"
+          animate={{
+            scale: [1, 1.3, 1],
+            rotate: [0, 180, 360],
+          }}
+          transition={{ duration: 8, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
+        />
+        <motion.div
+          className="absolute top-[10%] right-[30%] w-10 h-10 bg-gradient-to-br from-purple-300/30 to-pink-300/30 rounded-lg"
+          animate={{
+            y: [0, 15, 0],
+            rotate: [0, 45, 0],
+          }}
+          transition={{ duration: 6, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
+        />
+        <motion.div
+          className="absolute bottom-[20%] right-[8%] w-18 h-18 border-2 border-cyan-300/40 rounded-xl"
+          animate={{
+            rotate: [0, -90, -180, -270, -360],
+            scale: [1, 1.1, 1],
+          }}
+          transition={{ duration: 12, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
+        />
 
         <div
-          className="absolute top-20 left-10 w-[500px] h-[500px] bg-gradient-to-br from-sky-200/40 via-blue-200/30 to-teal-200/20 rounded-full blur-3xl pointer-events-none"
+          className="absolute top-20 left-10 w-[600px] h-[600px] bg-gradient-to-br from-sky-200/50 via-blue-200/40 to-teal-200/30 rounded-full blur-3xl pointer-events-none"
           style={{
             transform: `translate(${mousePosition.x}px, ${mousePosition.y}px)`,
             transition: "transform 0.5s ease-out",
           }}
         />
         <div
-          className="absolute bottom-20 right-10 w-[450px] h-[450px] bg-gradient-to-br from-teal-200/35 via-sky-200/25 to-blue-200/20 rounded-full blur-3xl pointer-events-none"
+          className="absolute bottom-20 right-10 w-[550px] h-[550px] bg-gradient-to-br from-teal-200/45 via-sky-200/35 to-blue-200/25 rounded-full blur-3xl pointer-events-none"
           style={{
             transform: `translate(${-mousePosition.x}px, ${-mousePosition.y}px)`,
             transition: "transform 0.5s ease-out",
           }}
         />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-gradient-to-br from-purple-200/20 via-pink-200/15 to-sky-200/20 rounded-full blur-3xl pointer-events-none" />
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -284,19 +322,25 @@ export function PricingCalculator() {
           </div>
 
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12 flex-1">
-            {/* Title Section */}
             <div className="text-center mb-12">
               <motion.div
-                className="inline-flex items-center gap-2 px-4 py-2 bg-sky-100/80 rounded-full mb-6"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
+                className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-sky-100/90 to-teal-100/90 rounded-full mb-6 border border-sky-200/50 shadow-lg shadow-sky-100/30"
+                initial={{ opacity: 0, y: 20, scale: 0.9 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
                 transition={{ delay: 0.3 }}
               >
-                <Sparkles className="w-4 h-4 text-sky-600" />
-                <span className="text-sm font-medium text-sky-700">Instant Quote Calculator</span>
+                <motion.div
+                  animate={{ rotate: [0, 15, -15, 0] }}
+                  transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY }}
+                >
+                  <Sparkles className="w-5 h-5 text-sky-600" />
+                </motion.div>
+                <span className="text-sm font-semibold bg-gradient-to-r from-sky-700 to-teal-600 bg-clip-text text-transparent">
+                  Instant Quote Calculator
+                </span>
               </motion.div>
               <motion.h1
-                className="text-3xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-slate-700 via-sky-600 to-sky-500 bg-clip-text text-transparent mb-4"
+                className="text-4xl md:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-slate-800 via-sky-600 to-teal-500 bg-clip-text text-transparent mb-6"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4 }}
@@ -304,13 +348,33 @@ export function PricingCalculator() {
                 Build Your Custom Quote
               </motion.h1>
               <motion.p
-                className="text-lg text-slate-600 max-w-2xl mx-auto"
+                className="text-lg md:text-xl text-slate-600 max-w-2xl mx-auto mb-8"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5 }}
               >
                 Select the services you need and get an instant price estimate. No hidden fees.
               </motion.p>
+
+              <motion.div
+                className="flex flex-wrap justify-center gap-4 mb-8"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.6 }}
+              >
+                <div className="flex items-center gap-2 px-4 py-2 bg-white/80 rounded-full shadow-md border border-slate-100">
+                  <Zap className="w-4 h-4 text-amber-500" />
+                  <span className="text-sm font-medium text-slate-700">Instant Pricing</span>
+                </div>
+                <div className="flex items-center gap-2 px-4 py-2 bg-white/80 rounded-full shadow-md border border-slate-100">
+                  <Shield className="w-4 h-4 text-emerald-500" />
+                  <span className="text-sm font-medium text-slate-700">No Hidden Fees</span>
+                </div>
+                <div className="flex items-center gap-2 px-4 py-2 bg-white/80 rounded-full shadow-md border border-slate-100">
+                  <Clock className="w-4 h-4 text-blue-500" />
+                  <span className="text-sm font-medium text-slate-700">24hr Response</span>
+                </div>
+              </motion.div>
             </div>
 
             {/* Main Content Grid */}
@@ -318,7 +382,7 @@ export function PricingCalculator() {
               className="grid lg:grid-cols-3 gap-8 max-w-7xl mx-auto"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6, duration: 0.5 }}
+              transition={{ delay: 0.7, duration: 0.5 }}
             >
               {/* Left Column - Service Selection */}
               <div className="lg:col-span-2 space-y-4">
@@ -333,36 +397,49 @@ export function PricingCalculator() {
                       key={categoryKey}
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: index * 0.1 }}
+                      transition={{ delay: 0.8 + index * 0.1 }}
                       className="overflow-hidden"
                     >
                       <button
                         onClick={() => toggleCategory(categoryKey)}
                         className={`w-full flex items-center justify-between p-5 rounded-2xl transition-all duration-300 ${
                           isExpanded
-                            ? "bg-white/90 shadow-lg shadow-sky-100/50"
-                            : "bg-white/70 hover:bg-white/90 shadow-md shadow-slate-100/50"
+                            ? "bg-white/95 shadow-xl shadow-sky-100/60 border border-sky-100"
+                            : "bg-white/80 hover:bg-white/95 shadow-lg shadow-slate-100/50 hover:shadow-xl hover:shadow-sky-100/40 border border-slate-100/50 hover:border-sky-100"
                         }`}
                       >
                         <div className="flex items-center gap-4">
-                          <div
-                            className={`w-12 h-12 rounded-xl bg-gradient-to-br ${category.color} flex items-center justify-center`}
-                          >
-                            <Icon className="w-6 h-6 text-white" />
+                          <div className="relative">
+                            <div
+                              className={`absolute inset-0 bg-gradient-to-br ${category.color} rounded-xl blur-md opacity-40`}
+                            />
+                            <div
+                              className={`relative w-14 h-14 rounded-xl bg-gradient-to-br ${category.color} flex items-center justify-center shadow-lg`}
+                            >
+                              <Icon className="w-7 h-7 text-white" />
+                            </div>
                           </div>
                           <div className="text-left">
-                            <h3 className="text-lg font-semibold text-slate-800">{category.title}</h3>
+                            <h3 className="text-lg font-bold text-slate-800">{category.title}</h3>
                             <p className="text-sm text-slate-500">{category.services.length} services available</p>
                           </div>
                         </div>
                         <div className="flex items-center gap-3">
                           {selectedCount > 0 && (
-                            <span className="px-3 py-1 bg-sky-100 text-sky-700 text-sm font-medium rounded-full">
+                            <motion.span
+                              initial={{ scale: 0 }}
+                              animate={{ scale: 1 }}
+                              className="px-3 py-1.5 bg-gradient-to-r from-sky-100 to-teal-100 text-sky-700 text-sm font-semibold rounded-full border border-sky-200/50"
+                            >
                               {selectedCount} selected
-                            </span>
+                            </motion.span>
                           )}
-                          <motion.div animate={{ rotate: isExpanded ? 180 : 0 }} transition={{ duration: 0.2 }}>
-                            <ChevronDown className="w-5 h-5 text-slate-400" />
+                          <motion.div
+                            animate={{ rotate: isExpanded ? 180 : 0 }}
+                            transition={{ duration: 0.3 }}
+                            className={`w-8 h-8 rounded-full flex items-center justify-center ${isExpanded ? "bg-sky-100" : "bg-slate-100"}`}
+                          >
+                            <ChevronDown className={`w-5 h-5 ${isExpanded ? "text-sky-600" : "text-slate-400"}`} />
                           </motion.div>
                         </div>
                       </button>
@@ -376,16 +453,19 @@ export function PricingCalculator() {
                             transition={{ duration: 0.3 }}
                             className="overflow-hidden"
                           >
-                            <div className="p-4 space-y-2 bg-slate-50/80 rounded-b-2xl -mt-2">
-                              {category.services.map((service) => {
+                            <div className="p-4 space-y-3 bg-gradient-to-b from-slate-50/90 to-white/80 rounded-b-2xl -mt-2 border-x border-b border-slate-100/50">
+                              {category.services.map((service, serviceIndex) => {
                                 const isSelected = selectedServices.some((s) => s.id === service.id)
                                 return (
                                   <motion.div
                                     key={service.id}
                                     initial={{ opacity: 0, x: -20 }}
                                     animate={{ opacity: 1, x: 0 }}
+                                    transition={{ delay: 0.8 + serviceIndex * 0.05 }}
                                     className={`flex flex-col p-4 rounded-xl cursor-pointer transition-all duration-200 ${
-                                      isSelected ? "bg-sky-50 border border-sky-200" : "bg-white/80 hover:bg-white"
+                                      isSelected
+                                        ? "bg-gradient-to-r from-sky-50 to-teal-50 border-2 border-sky-300 shadow-md shadow-sky-100/50"
+                                        : "bg-white/90 hover:bg-white border border-slate-100 hover:border-sky-200 hover:shadow-md"
                                     }`}
                                   >
                                     <div
@@ -469,100 +549,113 @@ export function PricingCalculator() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -20 }}
                     transition={{ duration: 0.5, ease: "easeOut" }}
-                    className="bg-white/90 backdrop-blur-xl rounded-2xl overflow-hidden shadow-xl shadow-sky-100/50 border border-slate-100"
+                    className="relative"
                   >
-                    {/* Panel Header */}
-                    <div className="p-6 border-b border-slate-100">
-                      <div className="flex items-center gap-3 mb-2">
-                        <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-sky-500 to-cyan-500 flex items-center justify-center">
-                          <FileText className="w-5 h-5 text-white" />
-                        </div>
-                        <div>
-                          <h3 className="font-semibold text-slate-800">Your Quote</h3>
-                          <p className="text-xs text-slate-500">{selectedServices.length} services selected</p>
+                    {/* Gradient border effect */}
+                    <div className="absolute -inset-0.5 bg-gradient-to-r from-sky-400 via-teal-400 to-cyan-400 rounded-2xl blur opacity-30" />
+                    <div className="relative bg-white/95 backdrop-blur-xl rounded-2xl overflow-hidden shadow-2xl shadow-sky-100/50 border border-white/50">
+                      {/* Panel Header */}
+                      <div className="p-6 bg-gradient-to-r from-sky-50/80 to-teal-50/80 border-b border-slate-100">
+                        <div className="flex items-center gap-3 mb-2">
+                          <div className="relative">
+                            <div className="absolute inset-0 bg-gradient-to-br from-sky-500 to-cyan-500 rounded-xl blur-md opacity-50" />
+                            <div className="relative w-12 h-12 rounded-xl bg-gradient-to-br from-sky-500 to-cyan-500 flex items-center justify-center shadow-lg">
+                              <FileText className="w-6 h-6 text-white" />
+                            </div>
+                          </div>
+                          <div>
+                            <h3 className="font-bold text-slate-800 text-lg">Your Quote</h3>
+                            <p className="text-sm text-slate-500">{selectedServices.length} services selected</p>
+                          </div>
                         </div>
                       </div>
-                    </div>
 
-                    {/* Selected Services List */}
-                    <div className="p-4 max-h-[300px] overflow-y-auto space-y-2">
-                      {selectedServices.length === 0 ? (
-                        <div className="text-center py-8 text-slate-400">
-                          <Calculator className="w-12 h-12 mx-auto mb-3 opacity-50" />
-                          <p className="text-sm">Select services to build your quote</p>
-                        </div>
-                      ) : (
-                        selectedServices.map((service) => (
-                          <div
-                            key={service.id}
-                            className="flex items-center justify-between p-3 bg-slate-50 rounded-lg"
-                          >
-                            <div className="flex-1 pr-2">
-                              <p className="text-sm font-medium text-slate-800 truncate">{service.name}</p>
-                              <p className="text-xs text-slate-500">{service.type}</p>
+                      {/* Selected Services List */}
+                      <div className="p-4 max-h-[300px] overflow-y-auto space-y-2">
+                        {selectedServices.length === 0 ? (
+                          <div className="text-center py-8 text-slate-400">
+                            <Calculator className="w-12 h-12 mx-auto mb-3 opacity-50" />
+                            <p className="text-sm">Select services to build your quote</p>
+                          </div>
+                        ) : (
+                          selectedServices.map((service) => (
+                            <div
+                              key={service.id}
+                              className="flex items-center justify-between p-3 bg-slate-50 rounded-lg"
+                            >
+                              <div className="flex-1 pr-2">
+                                <p className="text-sm font-medium text-slate-800 truncate">{service.name}</p>
+                                <p className="text-xs text-slate-500">{service.type}</p>
+                              </div>
+                              <div className="flex items-center gap-2">
+                                <span className="text-sm font-semibold text-sky-600">
+                                  ฿{formatPrice(service.price * (service.quantity || 1))}
+                                </span>
+                                <button
+                                  onClick={() =>
+                                    setSelectedServices(selectedServices.filter((s) => s.id !== service.id))
+                                  }
+                                  className="p-1 hover:bg-slate-200 rounded transition-colors"
+                                >
+                                  <X className="w-4 h-4 text-slate-400" />
+                                </button>
+                              </div>
                             </div>
-                            <div className="flex items-center gap-2">
-                              <span className="text-sm font-semibold text-sky-600">
-                                ฿{formatPrice(service.price * (service.quantity || 1))}
+                          ))
+                        )}
+                      </div>
+
+                      {/* Price Summary */}
+                      {selectedServices.length > 0 && (
+                        <div className="p-4 space-y-3 border-t border-slate-100">
+                          {preliminaryTotal.oneTime > 0 && (
+                            <div className="flex justify-between text-sm">
+                              <span className="text-slate-500">One-time Fees</span>
+                              <span className="text-slate-800 font-medium">
+                                ฿{formatPrice(preliminaryTotal.oneTime)}
                               </span>
-                              <button
-                                onClick={() => setSelectedServices(selectedServices.filter((s) => s.id !== service.id))}
-                                className="p-1 hover:bg-slate-200 rounded transition-colors"
-                              >
-                                <X className="w-4 h-4 text-slate-400" />
-                              </button>
                             </div>
+                          )}
+                          {preliminaryTotal.monthly > 0 && (
+                            <div className="flex justify-between text-sm">
+                              <span className="text-slate-500">Monthly Fees</span>
+                              <span className="text-slate-800 font-medium">
+                                ฿{formatPrice(preliminaryTotal.monthly)}/mo
+                              </span>
+                            </div>
+                          )}
+                          {preliminaryTotal.annual > 0 && (
+                            <div className="flex justify-between text-sm">
+                              <span className="text-slate-500">Annual Fees</span>
+                              <span className="text-slate-800 font-medium">
+                                ฿{formatPrice(preliminaryTotal.annual)}/yr
+                              </span>
+                            </div>
+                          )}
+                          <div className="pt-3 border-t border-slate-100">
+                            <div className="flex justify-between">
+                              <span className="text-slate-800 font-semibold">Year 1 Total</span>
+                              <span className="text-xl font-bold text-sky-600">
+                                ฿{formatPrice(preliminaryTotal.yearTotal)}
+                              </span>
+                            </div>
+                            <p className="text-xs text-slate-500 mt-1">*Estimated based on selections</p>
                           </div>
-                        ))
-                      )}
-                    </div>
-
-                    {/* Price Summary */}
-                    {selectedServices.length > 0 && (
-                      <div className="p-4 space-y-3 border-t border-slate-100">
-                        {preliminaryTotal.oneTime > 0 && (
-                          <div className="flex justify-between text-sm">
-                            <span className="text-slate-500">One-time Fees</span>
-                            <span className="text-slate-800 font-medium">฿{formatPrice(preliminaryTotal.oneTime)}</span>
-                          </div>
-                        )}
-                        {preliminaryTotal.monthly > 0 && (
-                          <div className="flex justify-between text-sm">
-                            <span className="text-slate-500">Monthly Fees</span>
-                            <span className="text-slate-800 font-medium">
-                              ฿{formatPrice(preliminaryTotal.monthly)}/mo
-                            </span>
-                          </div>
-                        )}
-                        {preliminaryTotal.annual > 0 && (
-                          <div className="flex justify-between text-sm">
-                            <span className="text-slate-500">Annual Fees</span>
-                            <span className="text-slate-800 font-medium">
-                              ฿{formatPrice(preliminaryTotal.annual)}/yr
-                            </span>
-                          </div>
-                        )}
-                        <div className="pt-3 border-t border-slate-100">
-                          <div className="flex justify-between">
-                            <span className="text-slate-800 font-semibold">Year 1 Total</span>
-                            <span className="text-xl font-bold text-sky-600">
-                              ฿{formatPrice(preliminaryTotal.yearTotal)}
-                            </span>
-                          </div>
-                          <p className="text-xs text-slate-500 mt-1">*Estimated based on selections</p>
                         </div>
-                      </div>
-                    )}
+                      )}
 
-                    {/* Action Button */}
-                    <div className="p-4">
-                      <Button
-                        onClick={handleCalculate}
-                        disabled={selectedServices.length === 0}
-                        className="w-full h-12 bg-gradient-to-r from-sky-500 to-cyan-500 hover:from-sky-600 hover:to-cyan-600 text-white font-semibold rounded-xl disabled:opacity-50 disabled:cursor-not-allowed"
-                      >
-                        Calculate Final Price
-                      </Button>
+                      <div className="p-4">
+                        <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                          <Button
+                            onClick={handleCalculate}
+                            disabled={selectedServices.length === 0}
+                            className="w-full h-14 bg-gradient-to-r from-sky-500 via-blue-500 to-teal-500 hover:from-sky-600 hover:via-blue-600 hover:to-teal-600 text-white font-bold rounded-xl disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-sky-200/50 text-lg"
+                          >
+                            <Sparkles className="w-5 h-5 mr-2" />
+                            Calculate Final Price
+                          </Button>
+                        </motion.div>
+                      </div>
                     </div>
                   </motion.div>
                 </div>
