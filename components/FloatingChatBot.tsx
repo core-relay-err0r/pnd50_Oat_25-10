@@ -521,7 +521,7 @@ export function FloatingChatBot() {
                     variant="ghost"
                     className="rounded-lg h-8 px-4 font-medium hover:bg-muted"
                   >
-                    <span>Ask AI</span>
+                    <span>Ask A</span>
                     <Send className="w-3.5 h-3.5 ml-2" />
                   </Button>
                 </div>
