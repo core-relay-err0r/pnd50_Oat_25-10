@@ -2,7 +2,18 @@
 
 import { useState, useEffect, useMemo } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Building2, Calculator, FileText, Briefcase, ChevronDown, Check, Send, X, Sparkles } from "lucide-react"
+import {
+  Building2,
+  Calculator,
+  FileText,
+  Briefcase,
+  ChevronDown,
+  Check,
+  Send,
+  X,
+  Sparkles,
+  MessageCircle,
+} from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -311,6 +322,29 @@ export function PricingCalculator() {
               >
                 Select the services you need and get an instant price estimate. No hidden fees.
               </motion.p>
+
+              <motion.div
+                className="mt-6 inline-flex items-center gap-3 px-5 py-3 bg-gradient-to-r from-primary/10 via-primary/5 to-sky-100/50 border border-primary/20 rounded-2xl"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.6 }}
+              >
+                <div className="flex items-center justify-center w-10 h-10 rounded-full bg-primary/10">
+                  <MessageCircle className="w-5 h-5 text-primary" />
+                </div>
+                <div className="text-left">
+                  <p className="text-sm font-medium text-slate-800">Not sure where to start?</p>
+                  <p className="text-xs text-slate-600">
+                    Ask <span className="font-semibold text-primary">Panida</span> to guide you through the process
+                  </p>
+                </div>
+                <div className="hidden sm:flex items-center gap-1.5 ml-2">
+                  <span className="relative flex h-2.5 w-2.5">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary/60 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-primary"></span>
+                  </span>
+                </div>
+              </motion.div>
             </div>
 
             {/* Main Content Grid */}

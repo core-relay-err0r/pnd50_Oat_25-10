@@ -36,6 +36,8 @@ export function FloatingChatBot() {
   const pathname = usePathname()
   const isMobile = useIsMobile()
 
+  const isCalculatorPage = pathname === "/calculator"
+
   const [showTooltip, setShowTooltip] = useState(false)
 
   const [voiceEnabled, setVoiceEnabled] = useState(false)
@@ -266,7 +268,9 @@ export function FloatingChatBot() {
     }, 300)
   }, [])
 
-  const tooltipMessages = ["Hi, I'm Panida", "Got questions?", "I can speak Russian!", "I'm here to help"]
+  const tooltipMessages = isCalculatorPage
+    ? ["Need help choosing?", "I can guide you!", "Let me help you build your quote", "Ask me anything!"]
+    : ["Hi, I'm Panida", "Got questions?", "I can speak Russian!", "I'm here to help"]
   const randomMessage = tooltipMessages[Math.floor(Date.now() / 8000) % tooltipMessages.length]
 
   return (
@@ -301,10 +305,17 @@ export function FloatingChatBot() {
               onClick={triggerOpen}
               onMouseEnter={() => setShowTooltip(true)}
               onMouseLeave={() => !isOpen && setShowTooltip(false)}
-              className="rounded-full shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-110"
+              className={`rounded-full shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-110 relative ${
+                isCalculatorPage ? "animate-pulse" : ""
+              }`}
               aria-label="Open AI assistant"
             >
-              <ColorOrb dimension="48px" tones={{ base: "oklch(22.64% 0 0)" }} spinDuration={15} />
+              {isCalculatorPage && <div className="absolute inset-0 rounded-full bg-primary/30 animate-ping" />}
+              <div
+                className={`relative ${isCalculatorPage ? "ring-2 ring-primary ring-offset-2 ring-offset-background rounded-full" : ""}`}
+              >
+                <ColorOrb dimension="48px" tones={{ base: "oklch(22.64% 0 0)" }} spinDuration={15} />
+              </div>
             </button>
           </motion.div>
         )}
