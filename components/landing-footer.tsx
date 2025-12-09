@@ -4,7 +4,7 @@ export function LandingFooter({ variant = "dark" }: { variant?: "dark" | "light"
   const isLight = variant === "light"
 
   return (
-    <footer className={`absolute bottom-0 left-0 right-0 z-20 ${isLight ? "" : ""}`}>
+    <footer className={`relative w-full z-20 ${isLight ? "" : ""}`}>
       <div
         className={`absolute inset-0 pointer-events-none ${
           isLight
