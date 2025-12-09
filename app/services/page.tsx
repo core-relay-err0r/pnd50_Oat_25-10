@@ -4,6 +4,8 @@ import { motion } from "framer-motion"
 import dynamic from "next/dynamic"
 import { useState, useEffect } from "react"
 import { LandingFooter } from "@/components/landing-footer"
+import Link from "next/link"
+import { ArrowRight, Mail } from "lucide-react"
 
 const AnimatedGridBackground = dynamic(
   () => import("@/components/ui/animated-grid-background").then((mod) => mod.AnimatedGridBackground),
@@ -80,9 +82,9 @@ export default function ServicesPage() {
   ]
 
   return (
-    <main className="min-h-screen">
-      <section className="relative w-full bg-gradient-to-br from-slate-50 via-white to-sky-50/80">
-        <AnimatedGridBackground className="" variant="light">
+    <main className="flex flex-col min-h-screen">
+      <section className="flex-1 relative w-full bg-gradient-to-br from-slate-50 via-white to-sky-50/80">
+        <AnimatedGridBackground className="min-h-full" variant="light">
           <motion.div
             className="absolute top-[15%] left-[8%] w-20 h-20 border-2 border-sky-300/40 rounded-2xl"
             animate={{
@@ -244,7 +246,7 @@ export default function ServicesPage() {
             </motion.section>
 
             <motion.section
-              className="py-8 md:py-12 pb-4 md:pb-6"
+              className="py-8 md:py-12 pb-16 md:pb-24"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.8, duration: 0.5 }}
@@ -253,15 +255,31 @@ export default function ServicesPage() {
                 <h2 className="text-3xl md:text-5xl font-bold bg-gradient-to-r from-slate-700 via-sky-600 to-sky-500 bg-clip-text text-transparent mb-6">
                   Ready to Get Started?
                 </h2>
-                <p className="text-slate-600 mb-6 leading-relaxed text-lg">
+                <p className="text-slate-600 mb-8 leading-relaxed text-lg">
                   Schedule a free consultation to discuss how we can support your business in Thailand
                 </p>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                  <Link
+                    href="/calculator"
+                    className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-blue-500 via-blue-600 to-indigo-600 text-white px-8 py-4 rounded-xl font-semibold hover:from-blue-600 hover:via-blue-700 hover:to-indigo-700 transition-all hover:scale-105 shadow-lg shadow-blue-500/25"
+                  >
+                    Schedule Consultation
+                    <ArrowRight className="w-5 h-5" />
+                  </Link>
+                  <Link
+                    href="/contact"
+                    className="inline-flex items-center justify-center gap-2 bg-white/80 backdrop-blur-sm text-slate-700 px-8 py-4 rounded-xl font-semibold border border-slate-200 hover:border-sky-400 hover:bg-white transition-all hover:scale-105"
+                  >
+                    <Mail className="w-5 h-5" />
+                    Contact Us
+                  </Link>
+                </div>
               </div>
             </motion.section>
           </div>
         </AnimatedGridBackground>
       </section>
-      <LandingFooter />
+      <LandingFooter variant="light" absolute={false} />
     </main>
   )
 }
