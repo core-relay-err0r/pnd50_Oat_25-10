@@ -338,10 +338,10 @@ export function PricingCalculator() {
                     >
                       <button
                         onClick={() => toggleCategory(categoryKey)}
-                        className={`w-full flex items-center justify-between p-5 rounded-2xl transition-all duration-300 ${
+                        className={`w-full flex items-center justify-between p-5 rounded-2xl transition-all duration-300 border ${
                           isExpanded
-                            ? "bg-white/90 shadow-lg shadow-sky-100/50"
-                            : "bg-white/70 hover:bg-white/90 shadow-md shadow-slate-100/50"
+                            ? "bg-white shadow-lg shadow-sky-200/60 border-sky-200"
+                            : "bg-white hover:bg-white shadow-md shadow-slate-200/80 hover:shadow-lg hover:shadow-sky-100/60 border-slate-200/80 hover:border-sky-200"
                         }`}
                       >
                         <div className="flex items-center gap-4">
