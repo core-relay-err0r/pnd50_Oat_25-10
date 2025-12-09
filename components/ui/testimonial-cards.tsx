@@ -35,7 +35,7 @@ export function TestimonialCard({ handleShuffle, testimonial, position, id, auth
         filter: blurFilter,
       }}
       animate={{
-        rotate: position === "front" ? "-6deg" : position === "middle" ? "0deg" : "6deg",
+        rotate: position === "front" ? "0deg" : position === "middle" ? "6deg" : "12deg",
         x: position === "front" ? "0%" : position === "middle" ? "33%" : "66%",
       }}
       drag={true}
