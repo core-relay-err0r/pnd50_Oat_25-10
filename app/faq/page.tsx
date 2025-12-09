@@ -276,7 +276,7 @@ export default function FAQPage() {
           />
           {/* Gradient Overlays */}
           <div className="absolute inset-0 bg-gradient-to-br from-white/80 via-sky-50/70 to-white/80" />
-          <div className="absolute inset-0 bg-gradient-to-t from-white/90 via-transparent to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-white/90 via-transparent to-transparent border-none" />
         </div>
 
         {/* Floating shapes */}
@@ -380,7 +380,7 @@ export default function FAQPage() {
 
       {/* Category Nav */}
       <motion.div
-        className="border-b border-slate-200 bg-white/50 backdrop-blur-sm"
+        className="border-b border-slate-200 bg-white/50 backdrop-blur-sm border-none"
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.7, duration: 0.5 }}
