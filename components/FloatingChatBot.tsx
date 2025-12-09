@@ -332,24 +332,43 @@ export function FloatingChatBot() {
             >
               {isCalculatorPage && (
                 <>
-                  {/* Outer slow ping */}
+                  {/* Outer slow ping - cyan/teal */}
                   <div
-                    className="absolute -inset-4 md:-inset-6 rounded-full bg-amber-400/30 animate-ping"
-                    style={{ animationDuration: "2s" }}
+                    className="absolute -inset-4 md:-inset-6 rounded-full animate-ping opacity-40"
+                    style={{
+                      animationDuration: "2s",
+                      background: "conic-gradient(from 0deg, #06b6d4, #8b5cf6, #ec4899, #f59e0b, #06b6d4)",
+                    }}
                   />
-                  {/* Middle pulse ring */}
-                  <div className="absolute -inset-3 md:-inset-5 rounded-full bg-amber-400/40 animate-pulse" />
-                  {/* Inner glow */}
+                  {/* Middle pulse ring - purple/pink gradient */}
                   <div
-                    className="absolute -inset-2 md:-inset-4 rounded-full bg-amber-500/50 animate-pulse"
-                    style={{ animationDuration: "1.5s" }}
+                    className="absolute -inset-3 md:-inset-5 rounded-full animate-pulse opacity-50"
+                    style={{
+                      background:
+                        "conic-gradient(from 90deg, #a855f7, #ec4899, #f97316, #eab308, #22c55e, #06b6d4, #a855f7)",
+                    }}
+                  />
+                  {/* Inner glow - vibrant rotating gradient */}
+                  <div
+                    className="absolute -inset-2 md:-inset-4 rounded-full animate-spin opacity-60"
+                    style={{
+                      animationDuration: "4s",
+                      background: "conic-gradient(from 180deg, #f472b6, #c084fc, #60a5fa, #34d399, #fbbf24, #f472b6)",
+                    }}
+                  />
+                  {/* Soft blur overlay for glow effect */}
+                  <div
+                    className="absolute -inset-2 md:-inset-4 rounded-full animate-pulse blur-md opacity-40"
+                    style={{
+                      background: "radial-gradient(circle, #c084fc 0%, #f472b6 50%, #60a5fa 100%)",
+                    }}
                   />
                 </>
               )}
               <div
                 className={`relative ${
                   isCalculatorPage
-                    ? "ring-4 ring-amber-400 ring-offset-2 ring-offset-background rounded-full shadow-[0_0_25px_rgba(251,191,36,0.6)]"
+                    ? "ring-4 ring-purple-400/80 ring-offset-2 ring-offset-background rounded-full shadow-[0_0_30px_rgba(168,85,247,0.5),0_0_60px_rgba(236,72,153,0.3)]"
                     : ""
                 }`}
               >
