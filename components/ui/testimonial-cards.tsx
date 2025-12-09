@@ -17,6 +17,7 @@ export function TestimonialCard({ handleShuffle, testimonial, position, id, auth
   const dragStartTime = React.useRef(0)
   const isFront = position === "front"
 
+  // Front card is always sharp, background cards always have blur
   const blurFilter = position !== "front" ? "blur(0.8px)" : undefined
 
   return (
@@ -54,10 +55,10 @@ export function TestimonialCard({ handleShuffle, testimonial, position, id, auth
         dragStartTime.current = 0
       }}
       transition={{ duration: 0.35 }}
-      className={`absolute left-0 top-0 grid h-[450px] w-[350px] select-none place-content-center space-y-6 rounded-3xl border border-sky-200/60 p-8 bg-gradient-to-b from-white via-sky-50/80 to-blue-50/70 shadow-xl shadow-sky-200/30 ${isFront ? "cursor-grab active:cursor-grabbing" : ""}`}
+      className={`absolute left-0 top-0 grid h-[450px] w-[350px] select-none place-content-center space-y-6 rounded-3xl border border-sky-200/60 p-8 bg-gradient-to-b from-white via-sky-50/80 to-blue-50/70 shadow-xl shadow-sky-200/30 backdrop-blur-sm ${isFront ? "cursor-grab active:cursor-grabbing" : ""}`}
     >
       <div className="relative mx-auto">
-        <div className="absolute -inset-1 rounded-full bg-gradient-to-br from-sky-300 via-blue-200 to-teal-300 opacity-50" />
+        <div className="absolute -inset-1 rounded-full bg-gradient-to-br from-sky-300 via-blue-200 to-teal-300 opacity-50 blur-sm" />
         <img
           src={image || `https://i.pravatar.cc/128?img=${id}`}
           alt={`Avatar of ${author}`}
