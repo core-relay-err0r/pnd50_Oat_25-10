@@ -338,12 +338,9 @@ export function FloatingChatBot() {
                     style={{ animationDuration: "2s" }}
                   />
                   {/* Middle pulse ring */}
-                  <div className="absolute -inset-3 md:-inset-5 rounded-full border-2 border-amber-400/50 animate-pulse" />
+                  
                   {/* Inner glow */}
-                  <div
-                    className="absolute -inset-2 md:-inset-4 rounded-full border-2 border-amber-500/70 animate-pulse"
-                    style={{ animationDuration: "1.5s" }}
-                  />
+                  
                 </>
               )}
               <div
