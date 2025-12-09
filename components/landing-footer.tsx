@@ -34,7 +34,7 @@ export function LandingFooter({
         }`}
       />
 
-      <div className="container mx-auto relative z-10 pt-32 pb-6 px-4">
+      <div className="container mx-auto relative z-10 pt-8 pb-6 px-4">
         <div className="text-center">
           <p className={`text-xs md:text-sm font-medium ${isLight ? "text-slate-600" : "text-slate-400"}`}>
             Powered by{" "}
