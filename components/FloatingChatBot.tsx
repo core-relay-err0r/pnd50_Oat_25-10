@@ -307,17 +307,16 @@ export function FloatingChatBot() {
             >
               <div className="flex items-center justify-center gap-3 px-4">
                 <ColorOrb dimension="28px" tones={{ base: "oklch(22.64% 0 0)" }} spinDuration={15} />
-                <Button
+                <button
                   type="button"
-                  className="flex h-fit flex-1 justify-start rounded-full px-3 py-1.5 text-sm font-medium"
-                  variant="ghost"
+                  className="flex h-fit flex-1 justify-start rounded-full bg-primary/90 hover:bg-primary px-4 py-1.5 text-sm font-medium text-primary-foreground transition-colors"
                   onClick={triggerOpen}
                 >
                   <span className="truncate">Ask Panida</span>
-                </Button>
+                </button>
                 <button
                   onClick={handleHide}
-                  className="text-muted-foreground hover:text-foreground p-1.5 rounded-full hover:bg-muted transition-colors"
+                  className="text-muted-foreground hover:text-foreground p-1.5 rounded-full hover:bg-muted/50 transition-colors"
                   aria-label="Hide assistant"
                 >
                   <EyeOff className="w-4 h-4" />
