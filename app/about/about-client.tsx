@@ -6,7 +6,6 @@ import { ArrowRight, Mail, MessageSquare, Target, CheckCircle2, Heart } from "lu
 import { useEffect, useRef, useState } from "react"
 import { Testimonial } from "@/components/ui/testimonial-card"
 import { motion } from "framer-motion"
-import { LandingFooter } from "@/components/landing-footer"
 
 const AboutClientPage = () => {
   const observerRef = useRef<IntersectionObserver | null>(null)
@@ -360,9 +359,6 @@ const AboutClientPage = () => {
           </div>
         </div>
       </section>
-
-      {/* Landing Footer */}
-      <LandingFooter variant="light" absolute={false} />
     </div>
   )
 }
