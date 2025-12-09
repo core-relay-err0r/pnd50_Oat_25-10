@@ -56,11 +56,11 @@
     "geist": "latest",
     "input-otp": "latest",
     "lucide-react": "^0.454.0",
-    "next": "^16.0.7",
+    "next": "latest",
     "next-themes": "latest",
-    "react": "^19.2.0",
+    "react": "latest",
     "react-day-picker": "latest",
-    "react-dom": "^19.2.0",
+    "react-dom": "latest",
     "react-hook-form": "latest",
     "react-resizable-panels": "latest",
     "recharts": "latest",
@@ -71,16 +71,16 @@
     "tw-animate-css": "latest",
     "vaul": "latest",
     "vue-router": "latest",
-    "zod": "^4.0.0"
+    "zod": "latest"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4.1.9",
+    "@tailwindcss/postcss": "latest",
     "@types/node": "^22",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
     "postcss": "^8.5",
     "prettier": "latest",
-    "tailwindcss": "^4.1.9",
+    "tailwindcss": "latest",
     "typescript": "^5"
   }
 }
