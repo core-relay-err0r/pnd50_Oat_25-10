@@ -27,6 +27,16 @@ const WELCOME_MESSAGE = {
 
 const SPEED_FACTOR = 1
 
+function KeyHint({ children, className }: { children: string; className?: string }) {
+  return (
+    <kbd
+      className={`text-foreground flex h-6 items-center justify-center rounded-sm border border-border/60 bg-muted/30 px-[6px] font-sans text-xs ${className || ""}`}
+    >
+      {children}
+    </kbd>
+  )
+}
+
 export function FloatingChatBot() {
   const wrapperRef = useRef<HTMLDivElement>(null)
   const textareaRef = useRef<HTMLTextAreaElement | null>(null)
@@ -458,53 +468,62 @@ export function FloatingChatBot() {
                 <div ref={messagesEndRef} />
               </div>
 
-              {/* Input */}
-              <div className="p-4 border-t border-border/40 bg-background/80 backdrop-blur-sm">
-                <div className="flex gap-2 items-end">
-                  <div className="flex-1 relative">
-                    <textarea
-                      ref={textareaRef}
-                      value={inputValue}
-                      onChange={(e) => setInputValue(e.target.value)}
-                      onKeyDown={handleKeyDown}
-                      placeholder={isListening ? "Listening..." : "Ask me anything..."}
-                      disabled={status === "in_progress"}
-                      rows={1}
-                      className={`w-full resize-none rounded-xl border border-border/60 bg-muted/30 px-4 py-3 text-sm outline-none transition-all duration-200 focus:ring-2 focus:ring-primary/30 focus:border-primary/50 focus:bg-background disabled:opacity-50 disabled:cursor-not-allowed placeholder:text-muted-foreground/60 ${isListening ? "border-primary ring-2 ring-primary/20 bg-primary/5" : ""}`}
-                      style={{ minHeight: "46px", maxHeight: "120px" }}
-                    />
+              <div className="border-t border-border/40 bg-background">
+                {/* Input header with label and keyboard hints */}
+                <div className="flex items-center justify-between px-4 pt-3 pb-1">
+                  <div className="flex items-center gap-2">
+                    <ColorOrb dimension="20px" tones={{ base: "oklch(22.64% 0 0)" }} spinDuration={20} />
+                    <p className="text-foreground text-sm font-medium select-none">AI Input</p>
                   </div>
-                  {recognitionSupported && (
-                    <Button
-                      onClick={isListening ? stopListening : startListening}
-                      disabled={status === "in_progress"}
-                      size="icon"
-                      variant={isListening ? "destructive" : "ghost"}
-                      className={`rounded-xl h-[46px] w-[46px] shrink-0 border border-border/40 ${isListening ? "animate-pulse border-destructive" : "hover:bg-muted hover:border-border"}`}
-                      aria-label={isListening ? "Stop listening" : "Start voice input"}
-                    >
-                      {isListening ? <MicOff className="w-4 h-4" /> : <Mic className="w-4 h-4" />}
-                    </Button>
-                  )}
+                  <div className="flex items-center gap-1.5">
+                    <KeyHint>⌘</KeyHint>
+                    <KeyHint className="w-fit px-2">Enter</KeyHint>
+                  </div>
+                </div>
+
+                {/* Textarea */}
+                <div className="px-4 py-2">
+                  <textarea
+                    ref={textareaRef}
+                    value={inputValue}
+                    onChange={(e) => setInputValue(e.target.value)}
+                    onKeyDown={handleKeyDown}
+                    placeholder={isListening ? "Listening..." : "Ask me anything..."}
+                    disabled={status === "in_progress"}
+                    rows={2}
+                    className={`w-full resize-none rounded-xl border-0 bg-transparent px-0 py-2 text-sm outline-none transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed placeholder:text-muted-foreground/50 ${isListening ? "text-primary" : ""}`}
+                    style={{ minHeight: "56px", maxHeight: "100px" }}
+                    spellCheck={false}
+                  />
+                </div>
+
+                {/* Bottom action bar */}
+                <div className="flex items-center justify-between px-4 pb-3 pt-1 border-t border-border/30">
+                  <div className="flex items-center gap-2">
+                    {recognitionSupported && (
+                      <Button
+                        onClick={isListening ? stopListening : startListening}
+                        disabled={status === "in_progress"}
+                        size="sm"
+                        variant={isListening ? "destructive" : "ghost"}
+                        className={`rounded-lg h-8 px-3 ${isListening ? "animate-pulse" : ""}`}
+                        aria-label={isListening ? "Stop listening" : "Start voice input"}
+                      >
+                        {isListening ? <MicOff className="w-4 h-4 mr-1.5" /> : <Mic className="w-4 h-4 mr-1.5" />}
+                        <span className="text-xs">{isListening ? "Stop" : "Voice"}</span>
+                      </Button>
+                    )}
+                  </div>
                   <Button
                     onClick={handleSend}
                     disabled={status === "in_progress" || !inputValue.trim()}
-                    size="icon"
-                    className="rounded-xl h-[46px] w-[46px] shrink-0 bg-primary hover:bg-primary/90 shadow-sm"
+                    size="sm"
+                    variant="ghost"
+                    className="rounded-lg h-8 px-4 font-medium hover:bg-muted"
                   >
-                    <Send className="w-4 h-4" />
+                    <span>Ask AI</span>
+                    <Send className="w-3.5 h-3.5 ml-2" />
                   </Button>
-                </div>
-                <div className="flex items-center justify-between mt-2.5 px-1">
-                  <p className="text-[11px] text-muted-foreground/70">
-                    {recognitionSupported ? "Enter to send · Click mic to speak" : "Enter to send"}
-                  </p>
-                  <div className="flex items-center gap-1.5">
-                    <kbd className="text-[10px] text-muted-foreground/70 bg-muted/50 border border-border/40 rounded px-1.5 py-0.5 font-mono">
-                      Esc
-                    </kbd>
-                    <span className="text-[11px] text-muted-foreground/70">to close</span>
-                  </div>
                 </div>
               </div>
             </motion.div>
