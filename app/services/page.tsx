@@ -261,14 +261,14 @@ export default function ServicesPage() {
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <Link
                     href="/calculator"
-                    className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-sky-500 to-sky-600 text-white px-8 py-4 rounded-lg font-semibold hover:from-sky-600 hover:to-sky-700 transition-all hover:scale-105 shadow-lg"
+                    className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-blue-500 via-blue-600 to-indigo-600 text-white px-8 py-4 rounded-xl font-bold hover:from-blue-600 hover:via-blue-700 hover:to-indigo-700 transition-all hover:scale-105 shadow-lg shadow-blue-500/30 hover:shadow-xl hover:shadow-blue-600/40"
                   >
                     Schedule Consultation
                     <ArrowRight className="w-5 h-5" />
                   </Link>
                   <Link
                     href="/contact"
-                    className="inline-flex items-center justify-center gap-2 bg-white/80 border-2 border-sky-200 text-slate-700 px-8 py-4 rounded-lg font-semibold hover:border-sky-400 hover:bg-white transition-all"
+                    className="inline-flex items-center justify-center gap-2 bg-white/60 backdrop-blur-md border-2 border-slate-300/50 text-slate-700 px-8 py-4 rounded-xl font-bold hover:border-sky-400/60 hover:bg-white/80 hover:text-sky-600 transition-all hover:scale-105 shadow-lg shadow-slate-200/50 hover:shadow-xl hover:shadow-sky-200/50"
                   >
                     Contact Us
                   </Link>
