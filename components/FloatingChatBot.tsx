@@ -320,14 +320,14 @@ export function FloatingChatBot() {
                 <>
                   {/* Outer slow ping */}
                   <div
-                    className="absolute -inset-3 rounded-full bg-primary/20 animate-ping"
+                    className="absolute -inset-4 rounded-full bg-amber-400/30 animate-ping"
                     style={{ animationDuration: "2s" }}
                   />
                   {/* Middle pulse ring */}
-                  <div className="absolute -inset-2 rounded-full bg-primary/30 animate-pulse" />
+                  <div className="absolute -inset-3 rounded-full bg-amber-400/40 animate-pulse" />
                   {/* Inner glow */}
                   <div
-                    className="absolute -inset-1 rounded-full bg-primary/40 animate-pulse"
+                    className="absolute -inset-2 rounded-full bg-amber-500/50 animate-pulse"
                     style={{ animationDuration: "1.5s" }}
                   />
                 </>
@@ -335,7 +335,7 @@ export function FloatingChatBot() {
               <div
                 className={`relative ${
                   isCalculatorPage
-                    ? "ring-4 ring-primary ring-offset-2 ring-offset-background rounded-full shadow-[0_0_20px_rgba(59,130,246,0.5)]"
+                    ? "ring-4 ring-amber-400 ring-offset-2 ring-offset-background rounded-full shadow-[0_0_25px_rgba(251,191,36,0.6)]"
                     : ""
                 }`}
               >
