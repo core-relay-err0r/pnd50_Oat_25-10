@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { Building2, Calculator, FileText, Users, ChevronRight, Phone, X, Search } from "lucide-react"
@@ -8,6 +8,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { motion } from "framer-motion"
+import { LandingFooter } from "@/components/landing-footer"
 
 const faqCategories = [
   {
@@ -28,7 +29,7 @@ const faqCategories = [
               using the Thai Baht (THB) as the presentation currency. Even if all your transactions are in foreign
               currencies, your official financial reports must be presented in THB.
             </p>
-            <div className="bg-muted/50 border-l-4 border-primary rounded-r p-4 mt-4">
+            <div className="bg-sky-50 border-l-4 border-primary rounded-r p-4 mt-4">
               <p className="text-sm">
                 <strong>Reference:</strong> Section 11, Accounting Act B.E. 2543 (2000); Thai Accounting Standard (TAS)
                 No.21 "The Effects of Changes in Foreign Exchange Rates"
@@ -48,7 +49,7 @@ const faqCategories = [
               from the transaction date to the payment date. This difference creates a foreign exchange gain or loss,
               which reflects the true value of your foreign-currency transactions.
             </p>
-            <div className="bg-muted/50 border-l-4 border-primary rounded-r p-4 mt-4">
+            <div className="bg-sky-50 border-l-4 border-primary rounded-r p-4 mt-4">
               <p className="text-sm">
                 <strong>Reference:</strong> Thai Accounting Standard (TAS) No.21 "The Effects of Changes in Foreign
                 Exchange Rates"
@@ -68,7 +69,7 @@ const faqCategories = [
               rate. The Thai Revenue Department publishes official exchange rates each year, which must be used for
               consistency and tax compliance.
             </p>
-            <div className="bg-muted/50 border-l-4 border-primary rounded-r p-4 mt-4">
+            <div className="bg-sky-50 border-l-4 border-primary rounded-r p-4 mt-4">
               <p className="text-sm">
                 <strong>Reference:</strong> Thai Accounting Standard (TAS) No.21; Revenue Department Announcement on
                 Exchange Rates for Tax Purposes
@@ -94,7 +95,7 @@ const faqCategories = [
               <strong className="text-foreground">A:</strong> Foreign exchange gains or losses are part of real business
               results and must be treated as taxable income or deductible expenses.
             </p>
-            <div className="bg-muted/50 border-l-4 border-primary rounded-r p-4 mt-4">
+            <div className="bg-sky-50 border-l-4 border-primary rounded-r p-4 mt-4">
               <p className="text-sm">
                 <strong>Reference:</strong> Section 65 Ter (4), Revenue Code of Thailand; Departmental Instruction
                 Paw.0506/19642 (2001)
@@ -114,7 +115,7 @@ const faqCategories = [
               outside Thailand, your business is not subject to Thai VAT.
             </p>
             <p className="mt-2">You don't need to register for VAT unless you wish to do so voluntarily.</p>
-            <div className="bg-muted/50 border-l-4 border-primary rounded-r p-4 mt-4">
+            <div className="bg-sky-50 border-l-4 border-primary rounded-r p-4 mt-4">
               <p className="text-sm">
                 <strong>Reference:</strong> Section 77/1 and Section 82/3, Revenue Code of Thailand
               </p>
@@ -134,7 +135,7 @@ const faqCategories = [
             <p className="text-orange-600 font-medium mt-2">
               Missing the deadline may lead to surcharges and penalties.
             </p>
-            <div className="bg-muted/50 border-l-4 border-primary rounded-r p-4 mt-4">
+            <div className="bg-sky-50 border-l-4 border-primary rounded-r p-4 mt-4">
               <p className="text-sm">
                 <strong>Reference:</strong> Section 83 and Section 90, Revenue Code of Thailand
               </p>
@@ -169,7 +170,7 @@ const faqCategories = [
               In short: Monthly accounting gives peace of mind — we keep your business accurate, compliant, and
               stress-free.
             </p>
-            <div className="bg-muted/50 border-l-4 border-primary rounded-r p-4 mt-4">
+            <div className="bg-sky-50 border-l-4 border-primary rounded-r p-4 mt-4">
               <p className="text-sm">
                 <strong>Reference:</strong> Accounting Act B.E.2543; Thai Revenue Code filing requirements
               </p>
@@ -235,6 +236,19 @@ const faqCategories = [
 
 export default function FAQPage() {
   const [searchQuery, setSearchQuery] = useState("")
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePosition({
+        x: (e.clientX / window.innerWidth - 0.5) * 20,
+        y: (e.clientY / window.innerHeight - 0.5) * 20,
+      })
+    }
+
+    window.addEventListener("mousemove", handleMouseMove)
+    return () => window.removeEventListener("mousemove", handleMouseMove)
+  }, [])
 
   const filteredCategories = faqCategories
     .map((category) => ({
@@ -248,9 +262,9 @@ export default function FAQPage() {
     .filter((category) => category.questions.length > 0)
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-sky-50/80">
       {/* Hero Section */}
-      <div className="relative bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 border-b border-border overflow-hidden pt-[80px] min-h-[60vh]">
+      <div className="relative border-b border-slate-200 overflow-hidden pt-[80px] min-h-[60vh]">
         {/* Background Image */}
         <div className="absolute inset-0 z-0">
           <Image
@@ -261,9 +275,39 @@ export default function FAQPage() {
             priority
           />
           {/* Gradient Overlays */}
-          <div className="absolute inset-0 bg-gradient-to-br from-slate-950/70 via-slate-900/60 to-slate-950/70" />
-          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-br from-white/80 via-sky-50/70 to-white/80" />
+          <div className="absolute inset-0 bg-gradient-to-t from-white/90 via-transparent to-transparent" />
         </div>
+
+        {/* Floating shapes */}
+        <motion.div
+          className="absolute top-[15%] left-[8%] w-20 h-20 border-2 border-sky-300/40 rounded-2xl z-[1]"
+          animate={{
+            rotate: [0, 90, 180, 270, 360],
+            y: [0, -15, 0, 15, 0],
+          }}
+          transition={{ duration: 20, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
+          style={{
+            transform: `translate(${mousePosition.x * 0.3}px, ${mousePosition.y * 0.3}px)`,
+          }}
+        />
+        <motion.div
+          className="absolute top-[25%] right-[12%] w-16 h-16 border-2 border-teal-300/30 rounded-full z-[1]"
+          animate={{
+            scale: [1, 1.2, 1],
+            opacity: [0.3, 0.6, 0.3],
+          }}
+          transition={{ duration: 4, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
+        />
+
+        {/* Gradient orbs */}
+        <div
+          className="absolute top-20 left-10 w-[400px] h-[400px] bg-gradient-to-br from-sky-200/30 via-blue-200/20 to-teal-200/10 rounded-full blur-3xl pointer-events-none z-[1]"
+          style={{
+            transform: `translate(${mousePosition.x}px, ${mousePosition.y}px)`,
+            transition: "transform 0.5s ease-out",
+          }}
+        />
 
         {/* Content */}
         <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-24">
@@ -274,7 +318,7 @@ export default function FAQPage() {
           >
             <Link
               href="/"
-              className="inline-flex items-center gap-2 text-slate-400 hover:text-primary transition-colors group mb-6 sm:mb-8 touch-manipulation"
+              className="inline-flex items-center gap-2 text-slate-500 hover:text-primary transition-colors group mb-6 sm:mb-8 touch-manipulation"
             ></Link>
           </motion.div>
 
@@ -289,7 +333,7 @@ export default function FAQPage() {
               Real Questions from Clients
             </motion.div>
             <motion.h1
-              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 sm:mb-6 tracking-tight leading-tight"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-slate-900 mb-4 sm:mb-6 tracking-tight leading-tight"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
@@ -297,7 +341,7 @@ export default function FAQPage() {
               Frequently Asked Questions
             </motion.h1>
             <motion.p
-              className="text-base sm:text-lg md:text-xl text-slate-300 leading-relaxed mb-6 sm:mb-8"
+              className="text-base sm:text-lg md:text-xl text-slate-600 leading-relaxed mb-6 sm:mb-8"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5 }}
@@ -318,12 +362,12 @@ export default function FAQPage() {
                 placeholder="Search FAQs..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10 sm:pl-12 pr-10 sm:pr-12 py-4 sm:py-6 text-sm sm:text-base bg-white/10 backdrop-blur-sm border-white/20 text-white placeholder:text-slate-400 focus:bg-white/15 focus:border-primary/50 transition-all w-full"
+                className="pl-10 sm:pl-12 pr-10 sm:pr-12 py-4 sm:py-6 text-sm sm:text-base bg-white/80 backdrop-blur-sm border-slate-200 text-slate-900 placeholder:text-slate-400 focus:bg-white focus:border-primary/50 transition-all w-full shadow-lg"
               />
               {searchQuery && (
                 <button
                   onClick={() => setSearchQuery("")}
-                  className="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white transition-colors p-1"
+                  className="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors p-1"
                   aria-label="Clear search"
                 >
                   <X className="w-4 h-4 sm:w-5 sm:h-5" />
@@ -334,8 +378,9 @@ export default function FAQPage() {
         </div>
       </div>
 
+      {/* Category Nav */}
       <motion.div
-        className="border-b border-border bg-muted/30"
+        className="border-b border-slate-200 bg-white/50 backdrop-blur-sm"
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.7, duration: 0.5 }}
@@ -348,13 +393,13 @@ export default function FAQPage() {
                 <a
                   key={category.id}
                   href={`#${category.id}`}
-                  className="group flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full bg-card border border-border hover:border-primary/50 hover:bg-primary/5 transition-all flex-shrink-0 snap-start touch-manipulation"
+                  className="group flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full bg-white border border-slate-200 hover:border-primary/50 hover:bg-primary/5 transition-all flex-shrink-0 snap-start touch-manipulation shadow-sm"
                 >
-                  <Icon className="w-3 h-3 sm:w-4 sm:h-4 text-muted-foreground group-hover:text-primary transition-colors" />
-                  <span className="text-xs sm:text-sm font-medium text-foreground whitespace-nowrap">
+                  <Icon className="w-3 h-3 sm:w-4 sm:h-4 text-slate-500 group-hover:text-primary transition-colors" />
+                  <span className="text-xs sm:text-sm font-medium text-slate-700 whitespace-nowrap">
                     {category.title}
                   </span>
-                  <span className="text-xs px-1.5 sm:px-2 py-0.5 rounded-full bg-muted text-muted-foreground">
+                  <span className="text-xs px-1.5 sm:px-2 py-0.5 rounded-full bg-slate-100 text-slate-500">
                     {category.questions.length}
                   </span>
                 </a>
@@ -370,22 +415,16 @@ export default function FAQPage() {
           {filteredCategories.length > 0 ? (
             filteredCategories.map((category) => {
               const Icon = category.icon
-              const colorClasses = {
-                blue: "bg-blue-500/10 text-blue-600 border-blue-500/20",
-                orange: "bg-orange-500/10 text-orange-600 border-orange-500/20",
-                purple: "bg-purple-500/10 text-purple-600 border-purple-500/20",
-                green: "bg-green-500/10 text-green-600 border-green-500/20",
-              }
 
               return (
                 <section key={category.id} id={category.id} className="scroll-mt-20 sm:scroll-mt-24">
                   <div className="flex items-start sm:items-center justify-between mb-6 sm:mb-8 gap-4">
                     <div className="flex items-start sm:items-center gap-3 sm:gap-4">
                       <div>
-                        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground leading-tight">
+                        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-slate-900 leading-tight">
                           {category.title}
                         </h2>
-                        <p className="text-xs sm:text-sm text-muted-foreground mt-1">
+                        <p className="text-xs sm:text-sm text-slate-500 mt-1">
                           {category.questions.length} {category.questions.length === 1 ? "question" : "questions"}
                         </p>
                       </div>
@@ -397,17 +436,17 @@ export default function FAQPage() {
                       <AccordionItem
                         key={q.id}
                         value={q.id}
-                        className="group bg-card border border-border rounded-xl sm:rounded-2xl px-4 sm:px-6 md:px-8 data-[state=open]:shadow-xl data-[state=open]:border-primary/30 transition-all duration-300 hover:shadow-lg hover:border-border/80"
+                        className="group bg-white border border-slate-200 rounded-xl sm:rounded-2xl px-4 sm:px-6 md:px-8 data-[state=open]:shadow-xl data-[state=open]:border-primary/30 transition-all duration-300 hover:shadow-lg hover:border-slate-300"
                       >
                         <AccordionTrigger className="text-left hover:no-underline py-4 sm:py-6 touch-manipulation">
                           <div className="flex items-start gap-2 sm:gap-3 pr-2 sm:pr-4">
                             <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 text-primary mt-0.5 sm:mt-1 flex-shrink-0 group-data-[state=open]:rotate-90 transition-transform" />
-                            <span className="font-semibold text-foreground text-sm sm:text-base md:text-lg leading-relaxed text-balance">
+                            <span className="font-semibold text-slate-900 text-sm sm:text-base md:text-lg leading-relaxed text-balance">
                               {q.question}
                             </span>
                           </div>
                         </AccordionTrigger>
-                        <AccordionContent className="text-muted-foreground text-sm sm:text-base leading-relaxed space-y-3 sm:space-y-4 pb-4 sm:pb-6 pl-6 sm:pl-8">
+                        <AccordionContent className="text-slate-600 text-sm sm:text-base leading-relaxed space-y-3 sm:space-y-4 pb-4 sm:pb-6 pl-6 sm:pl-8">
                           {q.answer}
                         </AccordionContent>
                       </AccordionItem>
@@ -418,11 +457,11 @@ export default function FAQPage() {
             })
           ) : (
             <div className="text-center py-12 sm:py-16 px-4">
-              <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-muted flex items-center justify-center mx-auto mb-4 sm:mb-6">
-                <Search className="w-8 h-8 sm:w-10 sm:h-10 text-muted-foreground" />
+              <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-slate-100 flex items-center justify-center mx-auto mb-4 sm:mb-6">
+                <Search className="w-8 h-8 sm:w-10 sm:h-10 text-slate-400" />
               </div>
-              <h3 className="text-xl sm:text-2xl font-bold text-foreground mb-2 sm:mb-3">No results found</h3>
-              <p className="text-sm sm:text-base text-muted-foreground mb-4 sm:mb-6 max-w-md mx-auto">
+              <h3 className="text-xl sm:text-2xl font-bold text-slate-900 mb-2 sm:mb-3">No results found</h3>
+              <p className="text-sm sm:text-base text-slate-600 mb-4 sm:mb-6 max-w-md mx-auto">
                 We couldn't find any FAQs matching "{searchQuery}". Try different keywords or browse all categories.
               </p>
               <Button onClick={() => setSearchQuery("")} variant="outline" className="touch-manipulation">
@@ -431,21 +470,22 @@ export default function FAQPage() {
             </div>
           )}
 
+          {/* CTA Section */}
           <section className="mt-12 sm:mt-16 md:mt-20">
-            <div className="relative overflow-hidden bg-gradient-to-br from-primary/10 via-primary/5 to-background border-2 border-primary/20 rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-12">
+            <div className="relative overflow-hidden bg-gradient-to-br from-sky-50 via-white to-teal-50 border-2 border-sky-200 rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-12">
               {/* Decorative elements */}
-              <div className="absolute top-0 right-0 w-48 h-48 sm:w-64 sm:h-64 bg-primary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-              <div className="absolute bottom-0 left-0 w-48 h-48 sm:w-64 sm:h-64 bg-primary/5 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
+              <div className="absolute top-0 right-0 w-48 h-48 sm:w-64 sm:h-64 bg-sky-100/50 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+              <div className="absolute bottom-0 left-0 w-48 h-48 sm:w-64 sm:h-64 bg-teal-100/50 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
 
               <div className="relative z-10 flex flex-col md:flex-row items-start gap-4 sm:gap-6">
                 <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl bg-primary/10 flex items-center justify-center flex-shrink-0 border border-primary/20">
                   <Phone className="w-6 h-6 sm:w-8 sm:h-8 text-primary" />
                 </div>
                 <div className="flex-1">
-                  <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-3 sm:mb-4 leading-tight">
+                  <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-slate-900 mb-3 sm:mb-4 leading-tight">
                     Still Have Questions?
                   </h2>
-                  <p className="text-base sm:text-lg text-muted-foreground leading-relaxed mb-6 sm:mb-8 max-w-2xl">
+                  <p className="text-base sm:text-lg text-slate-600 leading-relaxed mb-6 sm:mb-8 max-w-2xl">
                     Can't find what you're looking for? Our team is ready to guide you step by step — in simple English,
                     with full transparency. Get personalized answers to your specific situation.
                   </p>
@@ -464,7 +504,7 @@ export default function FAQPage() {
                       asChild
                       size="lg"
                       variant="outline"
-                      className="text-sm sm:text-base bg-background/50 backdrop-blur-sm w-full sm:w-auto touch-manipulation"
+                      className="text-sm sm:text-base bg-white/80 backdrop-blur-sm w-full sm:w-auto touch-manipulation border-slate-200"
                     >
                       <Link href="/calculator">Get Free Consultation</Link>
                     </Button>
@@ -475,6 +515,9 @@ export default function FAQPage() {
           </section>
         </div>
       </div>
+
+      {/* Footer */}
+      <LandingFooter variant="light" />
     </div>
   )
 }

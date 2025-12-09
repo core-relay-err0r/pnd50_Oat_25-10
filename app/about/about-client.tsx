@@ -3,12 +3,14 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { ArrowRight, Mail, MessageSquare, Target, CheckCircle2, Heart } from "lucide-react"
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 import { Testimonial } from "@/components/ui/testimonial-card"
 import { motion } from "framer-motion"
+import { LandingFooter } from "@/components/landing-footer"
 
 const AboutClientPage = () => {
   const observerRef = useRef<IntersectionObserver | null>(null)
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
 
   useEffect(() => {
     observerRef.current = new IntersectionObserver(
@@ -28,10 +30,72 @@ const AboutClientPage = () => {
     return () => observerRef.current?.disconnect()
   }, [])
 
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePosition({
+        x: (e.clientX / window.innerWidth - 0.5) * 20,
+        y: (e.clientY / window.innerHeight - 0.5) * 20,
+      })
+    }
+
+    window.addEventListener("mousemove", handleMouseMove)
+    return () => window.removeEventListener("mousemove", handleMouseMove)
+  }, [])
+
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-sky-50/80">
       {/* Hero Section */}
-      <section className="relative pb-24 bg-gradient-to-br from-blue-50 via-slate-50 to-teal-50 overflow-hidden md:pb-32 md:pt-28 pt-24 px-4 sm:px-6 lg:px-8">
+      <section className="relative pb-24 overflow-hidden md:pb-32 md:pt-28 pt-24 px-4 sm:px-6 lg:px-8">
+        <motion.div
+          className="absolute top-[15%] left-[8%] w-20 h-20 border-2 border-sky-300/40 rounded-2xl"
+          animate={{
+            rotate: [0, 90, 180, 270, 360],
+            y: [0, -15, 0, 15, 0],
+          }}
+          transition={{ duration: 20, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
+          style={{
+            transform: `translate(${mousePosition.x * 0.3}px, ${mousePosition.y * 0.3}px)`,
+          }}
+        />
+        <motion.div
+          className="absolute top-[25%] right-[12%] w-16 h-16 border-2 border-teal-300/30 rounded-full"
+          animate={{
+            scale: [1, 1.2, 1],
+            opacity: [0.3, 0.6, 0.3],
+          }}
+          transition={{ duration: 4, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
+        />
+        <motion.div
+          className="absolute bottom-[30%] left-[15%] w-12 h-12 bg-gradient-to-br from-sky-200/30 to-teal-200/30 rounded-lg"
+          animate={{
+            rotate: [45, 135, 225, 315, 405],
+          }}
+          transition={{ duration: 15, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
+        />
+        <motion.div
+          className="absolute top-[40%] right-[20%] w-8 h-8 bg-gradient-to-br from-blue-300/40 to-sky-300/40 rounded-full"
+          animate={{
+            y: [0, -20, 0],
+            x: [0, 10, 0],
+          }}
+          transition={{ duration: 5, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
+        />
+
+        <div
+          className="absolute top-20 left-10 w-[500px] h-[500px] bg-gradient-to-br from-sky-200/40 via-blue-200/30 to-teal-200/20 rounded-full blur-3xl pointer-events-none"
+          style={{
+            transform: `translate(${mousePosition.x}px, ${mousePosition.y}px)`,
+            transition: "transform 0.5s ease-out",
+          }}
+        />
+        <div
+          className="absolute bottom-20 right-10 w-[450px] h-[450px] bg-gradient-to-br from-teal-200/35 via-sky-200/25 to-blue-200/20 rounded-full blur-3xl pointer-events-none"
+          style={{
+            transform: `translate(${-mousePosition.x}px, ${-mousePosition.y}px)`,
+            transition: "transform 0.5s ease-out",
+          }}
+        />
+
         <div className="container mx-auto px-4 sm:px-6 relative z-10 lg:px-0">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
@@ -128,8 +192,8 @@ const AboutClientPage = () => {
       </section>
 
       {/* Our Mission Section */}
-      <section className="py-12 sm:py-24 md:py-32 bg-background relative overflow-hidden lg:scale-[0.85] lg:origin-center">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl"></div>
+      <section className="py-12 sm:py-24 md:py-32 bg-white/50 relative overflow-hidden lg:scale-[0.85] lg:origin-center">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-sky-100/50 rounded-full blur-3xl"></div>
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="max-w-7xl mx-auto">
             <div className="flex flex-col lg:grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
@@ -141,35 +205,35 @@ const AboutClientPage = () => {
                     alt="Professional team consultation meeting"
                     className="w-full h-full object-cover parallax-image"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-background/30 to-transparent"></div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-white/30 to-transparent"></div>
 
-                  <div className="absolute bottom-4 sm:bottom-6 left-4 sm:left-6 right-4 sm:right-6 bg-background/90 backdrop-blur-md rounded-2xl p-3 sm:p-4 border border-border max-w-full z-20">
+                  <div className="absolute bottom-4 sm:bottom-6 left-4 sm:left-6 right-4 sm:right-6 bg-white/90 backdrop-blur-md rounded-2xl p-3 sm:p-4 border border-slate-200 max-w-full z-20">
                     <div className="grid grid-cols-3 gap-2 sm:gap-3 text-center">
                       <div className="min-w-0">
                         <div className="text-xl sm:text-2xl md:text-3xl font-bold text-primary mb-1">10+</div>
-                        <div className="text-[10px] sm:text-xs text-muted-foreground break-words">Years Experience</div>
+                        <div className="text-[10px] sm:text-xs text-slate-500 break-words">Years Experience</div>
                       </div>
                       <div className="min-w-0">
                         <div className="text-xl sm:text-2xl md:text-3xl font-bold text-primary mb-1">50+</div>
-                        <div className="text-[10px] sm:text-xs text-muted-foreground break-words">Happy Clients</div>
+                        <div className="text-[10px] sm:text-xs text-slate-500 break-words">Happy Clients</div>
                       </div>
                       <div className="min-w-0">
                         <div className="text-xl sm:text-2xl md:text-3xl font-bold text-primary mb-1">100%</div>
-                        <div className="text-[10px] sm:text-xs text-muted-foreground break-words">Compliant</div>
+                        <div className="text-[10px] sm:text-xs text-slate-500 break-words">Compliant</div>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div className="absolute -top-6 -left-6 w-32 h-32 bg-chart-2/20 rounded-full blur-3xl animate-pulse pointer-events-none"></div>
+                <div className="absolute -top-6 -left-6 w-32 h-32 bg-teal-200/40 rounded-full blur-3xl animate-pulse pointer-events-none"></div>
               </div>
 
               {/* Text Content - Centered on mobile, left-aligned on desktop */}
               <div className="scroll-animate opacity-0 translate-y-[30px] sm:translate-x-[-50px] transition-all duration-1000 text-center lg:text-left flex flex-col justify-center min-w-0 w-full">
                 <p className="text-sm font-semibold text-primary mb-3 tracking-wide uppercase">Our Mission</p>
-                <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4 sm:mb-6 leading-tight break-words">
+                <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-900 mb-4 sm:mb-6 leading-tight break-words">
                   Making Accounting Simple and Stress-Free
                 </h2>
-                <p className="sm:text-lg text-muted-foreground mb-6 sm:mb-8 leading-relaxed break-words text-sm">
+                <p className="sm:text-lg text-slate-600 mb-6 sm:mb-8 leading-relaxed break-words text-sm">
                   We believe that numbers should never cause confusion. Our approach is to make accounting simple and
                   transparent for foreign-owned businesses in Thailand.
                 </p>
@@ -193,12 +257,12 @@ const AboutClientPage = () => {
                     },
                   ].map((item, index) => (
                     <div key={index} className="flex items-start gap-4 group mx-auto lg:mx-0 max-w-md lg:max-w-none">
-                      <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary group-hover:scale-110 transition-all duration-300">
-                        <item.icon className="w-6 h-6 text-primary group-hover:text-primary-foreground transition-colors" />
+                      <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-sky-100 flex items-center justify-center group-hover:bg-primary group-hover:scale-110 transition-all duration-300">
+                        <item.icon className="w-6 h-6 text-primary group-hover:text-white transition-colors" />
                       </div>
                       <div className="text-left min-w-0 flex-1">
-                        <h3 className="text-lg sm:text-xl font-bold text-foreground mb-2 break-words">{item.title}</h3>
-                        <p className="sm:text-base text-muted-foreground leading-relaxed break-words text-xs">
+                        <h3 className="text-lg sm:text-xl font-bold text-slate-900 mb-2 break-words">{item.title}</h3>
+                        <p className="sm:text-base text-slate-600 leading-relaxed break-words text-xs">
                           {item.description}
                         </p>
                       </div>
@@ -212,16 +276,16 @@ const AboutClientPage = () => {
       </section>
 
       {/* Our Success Stories Section */}
-      <section className="py-12 sm:py-24 md:py-32 bg-muted/30 relative overflow-hidden">
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-chart-2/5 rounded-full blur-3xl"></div>
+      <section className="py-12 sm:py-24 md:py-32 bg-gradient-to-br from-sky-50/50 to-white relative overflow-hidden">
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-teal-100/30 rounded-full blur-3xl"></div>
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-12 sm:mb-16">
               <p className="text-sm font-semibold text-primary mb-3 tracking-wide uppercase">Our Success Stories</p>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4 leading-tight">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-900 mb-4 leading-tight">
                 Trusted by Businesses Across Thailand
               </h2>
-              <p className="sm:text-lg text-muted-foreground max-w-3xl mx-auto text-sm">
+              <p className="sm:text-lg text-slate-600 max-w-3xl mx-auto text-sm">
                 We&#39;re proud to support international startups — especially from Russia and Vietnam. Helping them
                 manage accounting, tax, and compliance with confidence in Thailand.
               </p>
@@ -256,14 +320,6 @@ const AboutClientPage = () => {
           </div>
         </div>
       </section>
-
-      {/* How We Work Section */}
-      {/* Placeholder for How We Work Section */}
-
-      {/* Our Team Section */}
-      {/* Placeholder for Our Team Section */}
-
-      {/* Why Choose Us Section */}
 
       {/* Call to Action Section */}
       <section className="py-12 sm:py-24 md:py-32 bg-gradient-to-br from-primary via-primary/90 to-chart-2 relative overflow-hidden">
@@ -304,6 +360,9 @@ const AboutClientPage = () => {
           </div>
         </div>
       </section>
+
+      {/* Landing Footer */}
+      <LandingFooter variant="light" />
     </div>
   )
 }
