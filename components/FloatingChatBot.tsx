@@ -288,7 +288,7 @@ export function FloatingChatBot() {
   }, [])
 
   if (isHidden) {
-    const tooltipMessages = ["Need help?", "Got questions?", "Talk to me!", "I'm here to help"]
+    const tooltipMessages = ["Hi , I'm Panida", "Got questions?", "I can speak Russian!", "I'm here to help"]
     const randomMessage = tooltipMessages[Math.floor(Date.now() / 8000) % tooltipMessages.length]
 
     return (
