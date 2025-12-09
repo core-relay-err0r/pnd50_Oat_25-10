@@ -308,7 +308,7 @@ export function FloatingChatBot() {
             >
               <div className="flex items-center justify-center gap-3 px-4">
                 <ColorOrb dimension="28px" tones={{ base: "oklch(22.64% 0 0)" }} spinDuration={15} />
-                <span className="flex h-fit flex-1 justify-start rounded-full bg-white px-4 py-1.5 text-sm font-medium text-gray-700 border border-gray-200">
+                <span className="flex h-fit flex-1 justify-start rounded-full bg-white px-4 py-1.5 text-sm font-medium text-gray-700 border border-gray-200 border-none">
                   <span className="truncate">Ask Panida</span>
                 </span>
                 <button
