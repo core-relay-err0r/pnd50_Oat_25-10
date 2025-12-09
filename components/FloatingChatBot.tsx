@@ -10,7 +10,7 @@ import { useChat } from "@ai-sdk/react"
 import { DefaultChatTransport } from "ai"
 import { usePathname } from "next/navigation"
 import { useIsMobile } from "@/components/ui/use-mobile"
-import { AnimatePresence, motion } from "motion/react"
+import { AnimatePresence, motion } from "framer-motion"
 import { ColorOrb } from "@/components/ui/color-orb"
 
 const WELCOME_MESSAGE = {
@@ -36,6 +36,8 @@ export function FloatingChatBot() {
   const [isHidden, setIsHidden] = useState(false)
   const pathname = usePathname()
   const isMobile = useIsMobile()
+
+  const [showTooltip, setShowTooltip] = useState(false)
 
   const [voiceEnabled, setVoiceEnabled] = useState(false)
   const [isListening, setIsListening] = useState(false)
@@ -83,6 +85,28 @@ export function FloatingChatBot() {
       setIsHidden(true)
     }
   }, [])
+
+  useEffect(() => {
+    if (!isHidden) {
+      setShowTooltip(false)
+      return
+    }
+
+    // Show tooltip after 2 seconds initially
+    const initialTimeout = setTimeout(() => {
+      setShowTooltip(true)
+    }, 2000)
+
+    // Then toggle it every 8 seconds (show for 4s, hide for 4s)
+    const interval = setInterval(() => {
+      setShowTooltip((prev) => !prev)
+    }, 4000)
+
+    return () => {
+      clearTimeout(initialTimeout)
+      clearInterval(interval)
+    }
+  }, [isHidden])
 
   // Click outside to close
   useEffect(() => {
@@ -264,14 +288,38 @@ export function FloatingChatBot() {
   }, [])
 
   if (isHidden) {
+    const tooltipMessages = ["Need help?", "Got questions?", "Talk to me!", "I'm here to help"]
+    const randomMessage = tooltipMessages[Math.floor(Date.now() / 8000) % tooltipMessages.length]
+
     return (
-      <button
-        onClick={handleShow}
-        className="fixed bottom-4 md:bottom-6 right-4 md:right-6 z-50 rounded-full shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-110"
-        aria-label="Show AI assistant"
-      >
-        <ColorOrb dimension="48px" tones={{ base: "oklch(22.64% 0 0)" }} spinDuration={15} />
-      </button>
+      <div className="fixed bottom-4 md:bottom-6 right-4 md:right-6 z-50">
+        <AnimatePresence>
+          {showTooltip && (
+            <motion.div
+              initial={{ opacity: 0, y: 8, scale: 0.9 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 8, scale: 0.9 }}
+              transition={{ type: "spring", stiffness: 400, damping: 25 }}
+              className="absolute bottom-full right-0 mb-3 whitespace-nowrap"
+            >
+              <div className="relative bg-foreground text-background text-sm font-medium px-3 py-1.5 rounded-full shadow-lg">
+                {randomMessage}
+                {/* Arrow pointing down */}
+                <div className="absolute -bottom-1.5 right-5 w-3 h-3 bg-foreground rotate-45" />
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+        <button
+          onClick={handleShow}
+          onMouseEnter={() => setShowTooltip(true)}
+          onMouseLeave={() => isHidden && setShowTooltip(false)}
+          className="rounded-full shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-110"
+          aria-label="Show AI assistant"
+        >
+          <ColorOrb dimension="48px" tones={{ base: "oklch(22.64% 0 0)" }} spinDuration={15} />
+        </button>
+      </div>
     )
   }
 
