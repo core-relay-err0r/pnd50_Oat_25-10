@@ -347,11 +347,7 @@ export function FloatingChatBot() {
                 </>
               )}
               <div
-                className={`relative ${
-                  isCalculatorPage
-                    ? "ring-4 ring-amber-400 ring-offset-2 ring-offset-background rounded-full shadow-[0_0_25px_rgba(251,191,36,0.6)]"
-                    : ""
-                }`}
+                className={`relative ${isCalculatorPage ? "rounded-full shadow-[0_0_25px_rgba(251,191,36,0.6)]" : ""}`}
               >
                 <ColorOrb
                   dimension={isMobile ? "48px" : "64px"}
