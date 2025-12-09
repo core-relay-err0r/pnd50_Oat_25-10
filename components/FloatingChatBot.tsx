@@ -294,9 +294,17 @@ export function FloatingChatBot() {
                   transition={{ type: "spring", stiffness: 400, damping: 25 }}
                   className="absolute bottom-full right-0 mb-3 whitespace-nowrap"
                 >
-                  <div className="relative bg-foreground text-background text-sm font-medium px-3 py-1.5 rounded-full shadow-lg">
+                  <div
+                    className={`relative text-sm font-medium px-3 py-1.5 rounded-full shadow-lg ${
+                      isCalculatorPage ? "bg-primary text-primary-foreground" : "bg-foreground text-background"
+                    }`}
+                  >
                     {randomMessage}
-                    <div className="absolute -bottom-1.5 right-5 w-3 h-3 bg-foreground rotate-45" />
+                    <div
+                      className={`absolute -bottom-1.5 right-5 w-3 h-3 rotate-45 ${
+                        isCalculatorPage ? "bg-primary" : "bg-foreground"
+                      }`}
+                    />
                   </div>
                 </motion.div>
               )}
@@ -305,14 +313,31 @@ export function FloatingChatBot() {
               onClick={triggerOpen}
               onMouseEnter={() => setShowTooltip(true)}
               onMouseLeave={() => !isOpen && setShowTooltip(false)}
-              className={`rounded-full shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-110 relative ${
-                isCalculatorPage ? "animate-pulse" : ""
-              }`}
+              className="rounded-full shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-110 relative"
               aria-label="Open AI assistant"
             >
-              {isCalculatorPage && <div className="absolute inset-0 rounded-full bg-primary/30 animate-ping" />}
+              {isCalculatorPage && (
+                <>
+                  {/* Outer slow ping */}
+                  <div
+                    className="absolute -inset-3 rounded-full bg-primary/20 animate-ping"
+                    style={{ animationDuration: "2s" }}
+                  />
+                  {/* Middle pulse ring */}
+                  <div className="absolute -inset-2 rounded-full bg-primary/30 animate-pulse" />
+                  {/* Inner glow */}
+                  <div
+                    className="absolute -inset-1 rounded-full bg-primary/40 animate-pulse"
+                    style={{ animationDuration: "1.5s" }}
+                  />
+                </>
+              )}
               <div
-                className={`relative ${isCalculatorPage ? "ring-2 ring-primary ring-offset-2 ring-offset-background rounded-full" : ""}`}
+                className={`relative ${
+                  isCalculatorPage
+                    ? "ring-4 ring-primary ring-offset-2 ring-offset-background rounded-full shadow-[0_0_20px_rgba(59,130,246,0.5)]"
+                    : ""
+                }`}
               >
                 <ColorOrb dimension="48px" tones={{ base: "oklch(22.64% 0 0)" }} spinDuration={15} />
               </div>
