@@ -320,14 +320,14 @@ export function FloatingChatBot() {
                 <>
                   {/* Outer slow ping */}
                   <div
-                    className="absolute -inset-4 rounded-full bg-amber-400/30 animate-ping"
+                    className="absolute -inset-4 md:-inset-6 rounded-full bg-amber-400/30 animate-ping"
                     style={{ animationDuration: "2s" }}
                   />
                   {/* Middle pulse ring */}
-                  <div className="absolute -inset-3 rounded-full bg-amber-400/40 animate-pulse" />
+                  <div className="absolute -inset-3 md:-inset-5 rounded-full bg-amber-400/40 animate-pulse" />
                   {/* Inner glow */}
                   <div
-                    className="absolute -inset-2 rounded-full bg-amber-500/50 animate-pulse"
+                    className="absolute -inset-2 md:-inset-4 rounded-full bg-amber-500/50 animate-pulse"
                     style={{ animationDuration: "1.5s" }}
                   />
                 </>
@@ -339,7 +339,11 @@ export function FloatingChatBot() {
                     : ""
                 }`}
               >
-                <ColorOrb dimension="48px" tones={{ base: "oklch(22.64% 0 0)" }} spinDuration={15} />
+                <ColorOrb
+                  dimension={isMobile ? "48px" : "64px"}
+                  tones={{ base: "oklch(22.64% 0 0)" }}
+                  spinDuration={15}
+                />
               </div>
             </button>
           </motion.div>
