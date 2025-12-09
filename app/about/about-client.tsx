@@ -45,7 +45,7 @@ const AboutClientPage = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-sky-50/80">
       {/* Hero Section */}
-      <section className="relative pb-24 overflow-hidden md:pt-28 pt-24 px-4 sm:px-6 lg:px-8 md:pb-10">
+      <section className="relative pb-24 overflow-hidden md:pb-32 md:pt-28 pt-24 px-4 sm:px-6 lg:px-8">
         <motion.div
           className="absolute top-[15%] left-[8%] w-20 h-20 border-2 border-sky-300/40 rounded-2xl"
           animate={{
