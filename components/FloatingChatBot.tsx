@@ -371,7 +371,7 @@ export function FloatingChatBot() {
                   <div
                     className={`max-w-[85%] rounded-2xl px-3.5 py-2.5 ${
                       message.role === "user"
-                        ? "bg-foreground text-background"
+                        ? "bg-primary text-primary-foreground"
                         : "bg-background text-foreground border border-border/50"
                     }`}
                   >
@@ -387,7 +387,7 @@ export function FloatingChatBot() {
                     })}
                     <div className="flex items-center justify-between mt-1.5 gap-2">
                       <p
-                        className={`text-[10px] ${message.role === "user" ? "text-background/60" : "text-muted-foreground"}`}
+                        className={`text-[10px] ${message.role === "user" ? "text-primary-foreground/70" : "text-muted-foreground"}`}
                       >
                         {message.createdAt?.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
                       </p>
@@ -415,15 +415,15 @@ export function FloatingChatBot() {
                   <div className="bg-background text-foreground border border-border/50 rounded-2xl px-4 py-3">
                     <div className="flex gap-1.5">
                       <span
-                        className="w-2 h-2 bg-muted-foreground/60 rounded-full animate-bounce"
+                        className="w-2 h-2 bg-primary/60 rounded-full animate-bounce"
                         style={{ animationDelay: "0ms" }}
                       />
                       <span
-                        className="w-2 h-2 bg-muted-foreground/60 rounded-full animate-bounce"
+                        className="w-2 h-2 bg-primary/60 rounded-full animate-bounce"
                         style={{ animationDelay: "150ms" }}
                       />
                       <span
-                        className="w-2 h-2 bg-muted-foreground/60 rounded-full animate-bounce"
+                        className="w-2 h-2 bg-primary/60 rounded-full animate-bounce"
                         style={{ animationDelay: "300ms" }}
                       />
                     </div>
@@ -445,7 +445,7 @@ export function FloatingChatBot() {
                     placeholder={isListening ? "Listening..." : "Ask me anything..."}
                     disabled={status === "in_progress"}
                     rows={1}
-                    className={`w-full resize-none rounded-xl border border-input bg-background px-3.5 py-2.5 text-sm outline-none focus:ring-2 focus:ring-ring focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed ${isListening ? "border-primary ring-2 ring-primary/30" : ""}`}
+                    className={`w-full resize-none rounded-xl border border-input bg-background px-3.5 py-2.5 text-sm outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary disabled:opacity-50 disabled:cursor-not-allowed ${isListening ? "border-primary ring-2 ring-primary/30" : ""}`}
                     style={{ minHeight: "42px", maxHeight: "120px" }}
                   />
                 </div>
