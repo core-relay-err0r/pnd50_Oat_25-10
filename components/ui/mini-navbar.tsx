@@ -109,8 +109,10 @@ export function Navbar() {
       ></div>
       <Link href="/calculator">
         <button
-          className={`relative z-10 px-4 py-2 sm:px-3 text-xs sm:text-sm font-semibold text-white bg-gradient-to-br from-blue-500 to-blue-600 rounded-full hover:from-blue-600 hover:to-blue-700 transition-all duration-200 w-full sm:w-auto ${
-            isCalculatorActive ? "ring-2 ring-white ring-offset-2 ring-offset-transparent scale-105" : ""
+          className={`relative z-10 px-4 py-2 sm:px-3 text-xs sm:text-sm font-semibold text-white rounded-full transition-all duration-200 w-full sm:w-auto ${
+            isCalculatorActive
+              ? "bg-gradient-to-br from-blue-400 to-blue-500 shadow-[0_0_12px_rgba(59,130,246,0.6)]"
+              : "bg-gradient-to-br from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700"
           }`}
         >
           Schedule Consultation
