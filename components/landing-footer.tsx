@@ -1,10 +1,13 @@
 import Link from "next/link"
 
-export function LandingFooter({ variant = "dark" }: { variant?: "dark" | "light" }) {
+export function LandingFooter({
+  variant = "dark",
+  absolute = true,
+}: { variant?: "dark" | "light"; absolute?: boolean }) {
   const isLight = variant === "light"
 
   return (
-    <footer className={`relative w-full z-20 ${isLight ? "" : ""}`}>
+    <footer className={`${absolute ? "absolute bottom-0 left-0 right-0" : "relative w-full mt-auto"} z-20`}>
       <div
         className={`absolute inset-0 pointer-events-none ${
           isLight
