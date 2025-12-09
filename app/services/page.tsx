@@ -1,11 +1,11 @@
 "use client"
+import { ArrowRight } from "lucide-react"
+import Link from "next/link"
 import ServiceSlider from "@/components/service-slider"
 import { motion } from "framer-motion"
 import dynamic from "next/dynamic"
 import { useState, useEffect } from "react"
 import { LandingFooter } from "@/components/landing-footer"
-import Link from "next/link"
-import { ArrowRight, Mail } from "lucide-react"
 
 const AnimatedGridBackground = dynamic(
   () => import("@/components/ui/animated-grid-background").then((mod) => mod.AnimatedGridBackground),
@@ -82,9 +82,9 @@ export default function ServicesPage() {
   ]
 
   return (
-    <main className="flex flex-col min-h-screen">
-      <section className="flex-1 relative w-full bg-gradient-to-br from-slate-50 via-white to-sky-50/80">
-        <AnimatedGridBackground className="min-h-full" variant="light">
+    <main className="min-h-screen">
+      <section className="relative w-full min-h-screen flex flex-col bg-gradient-to-br from-slate-50 via-white to-sky-50/80">
+        <AnimatedGridBackground className="min-h-screen flex-1" variant="light">
           <motion.div
             className="absolute top-[15%] left-[8%] w-20 h-20 border-2 border-sky-300/40 rounded-2xl"
             animate={{
@@ -164,7 +164,7 @@ export default function ServicesPage() {
             }}
           />
 
-          <div className="w-full flex flex-col lg:scale-[0.85] lg:origin-top">
+          <div className="flex-1 w-full flex flex-col lg:scale-[0.85] lg:origin-top">
             <section className="relative py-8 md:py-16 pt-[100px] lg:pt-[140px]">
               <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
                 <div className="max-w-3xl mx-auto text-center">
@@ -246,7 +246,7 @@ export default function ServicesPage() {
             </motion.section>
 
             <motion.section
-              className="py-8 md:py-12 pb-16 md:pb-24"
+              className="py-8 md:py-12"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.8, duration: 0.5 }}
@@ -255,31 +255,31 @@ export default function ServicesPage() {
                 <h2 className="text-3xl md:text-5xl font-bold bg-gradient-to-r from-slate-700 via-sky-600 to-sky-500 bg-clip-text text-transparent mb-6">
                   Ready to Get Started?
                 </h2>
-                <p className="text-slate-600 mb-8 leading-relaxed text-lg">
+                <p className="text-slate-600 mb-6 leading-relaxed text-lg">
                   Schedule a free consultation to discuss how we can support your business in Thailand
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <Link
                     href="/calculator"
-                    className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-blue-500 via-blue-600 to-indigo-600 text-white px-8 py-4 rounded-xl font-semibold hover:from-blue-600 hover:via-blue-700 hover:to-indigo-700 transition-all hover:scale-105 shadow-lg shadow-blue-500/25"
+                    className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-blue-500 via-blue-600 to-indigo-600 text-white px-8 py-4 rounded-xl font-bold hover:from-blue-600 hover:via-blue-700 hover:to-indigo-700 transition-all hover:scale-105 shadow-lg shadow-blue-500/30 hover:shadow-xl hover:shadow-blue-600/40"
                   >
                     Schedule Consultation
                     <ArrowRight className="w-5 h-5" />
                   </Link>
                   <Link
                     href="/contact"
-                    className="inline-flex items-center justify-center gap-2 bg-white/80 backdrop-blur-sm text-slate-700 px-8 py-4 rounded-xl font-semibold border border-slate-200 hover:border-sky-400 hover:bg-white transition-all hover:scale-105"
+                    className="inline-flex items-center justify-center gap-2 bg-white/60 backdrop-blur-md border-2 border-slate-300/50 text-slate-700 px-8 py-4 rounded-xl font-bold hover:border-sky-400/60 hover:bg-white/80 hover:text-sky-600 transition-all hover:scale-105 shadow-lg shadow-slate-200/50 hover:shadow-xl hover:shadow-sky-200/50"
                   >
-                    <Mail className="w-5 h-5" />
                     Contact Us
                   </Link>
                 </div>
               </div>
             </motion.section>
           </div>
+
+          <LandingFooter variant="light" absolute={false} />
         </AnimatedGridBackground>
       </section>
-      <LandingFooter variant="light" absolute={false} />
     </main>
   )
 }

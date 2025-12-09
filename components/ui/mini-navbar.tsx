@@ -81,6 +81,7 @@ export function Navbar() {
   ]
 
   const isContactActive = pathname === "/contact"
+  const isCalculatorActive = pathname === "/calculator"
 
   const contactButtonElement = (
     <Link href="/contact" className="w-full sm:w-auto">
@@ -107,7 +108,11 @@ export function Navbar() {
                      group-hover:opacity-60 group-hover:blur-xl group-hover:-m-3"
       ></div>
       <Link href="/calculator">
-        <button className="relative z-10 px-4 py-2 sm:px-3 text-xs sm:text-sm font-semibold text-white bg-gradient-to-br from-blue-500 to-blue-600 rounded-full hover:from-blue-600 hover:to-blue-700 transition-all duration-200 w-full sm:w-auto">
+        <button
+          className={`relative z-10 px-4 py-2 sm:px-3 text-xs sm:text-sm font-semibold text-white bg-gradient-to-br from-blue-500 to-blue-600 rounded-full hover:from-blue-600 hover:to-blue-700 transition-all duration-200 w-full sm:w-auto ${
+            isCalculatorActive ? "ring-2 ring-white ring-offset-2 ring-offset-transparent scale-105" : ""
+          }`}
+        >
           Schedule Consultation
         </button>
       </Link>
@@ -150,7 +155,12 @@ export function Navbar() {
               viewBox="0 0 24 24"
               xmlns="http://www.w3.org/2000/svg"
             >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M6 18L18 6M6 6l12 12M6 12h12"
+              ></path>
             </svg>
           ) : (
             <svg
