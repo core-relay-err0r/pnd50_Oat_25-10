@@ -1,15 +1,17 @@
 "use client"
 
 import type React from "react"
-import type { SpeechRecognition } from "web-speech-api" // Declare SpeechRecognition here
+import type { SpeechRecognition } from "web-speech-api"
 
 import { useState, useEffect, useRef, useCallback } from "react"
-import { X, MessageCircle, Send, Sparkles, EyeOff, Volume2, VolumeX, Mic, MicOff, Square } from "lucide-react"
+import { X, Send, Volume2, VolumeX, Mic, MicOff, Square, EyeOff } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useChat } from "@ai-sdk/react"
 import { DefaultChatTransport } from "ai"
 import { usePathname } from "next/navigation"
 import { useIsMobile } from "@/components/ui/use-mobile"
+import { AnimatePresence, motion } from "motion/react"
+import { ColorOrb } from "@/components/ui/color-orb"
 
 const WELCOME_MESSAGE = {
   id: "welcome-static",
@@ -17,17 +19,22 @@ const WELCOME_MESSAGE = {
   parts: [
     {
       type: "text" as const,
-      text: "👋 Hi there! I'm Panida, your digital assistant from PND50.\n\nI can help you find the right accounting or tax service for your company — and get your quotation in just a few minutes.\n\nShall we get started? 📋 ✨",
+      text: "Hi there! I'm Panida, your digital assistant from PND50.\n\nI can help you find the right accounting or tax service for your company — and get your quotation in just a few minutes.\n\nShall we get started?",
     },
   ],
   createdAt: new Date(),
 }
 
+const SPEED_FACTOR = 1
+
 export function FloatingChatBot() {
+  const wrapperRef = useRef<HTMLDivElement>(null)
+  const textareaRef = useRef<HTMLTextAreaElement | null>(null)
+  const messagesEndRef = useRef<HTMLDivElement>(null)
+
   const [isOpen, setIsOpen] = useState(false)
   const [isHidden, setIsHidden] = useState(false)
   const pathname = usePathname()
-  const isOnCalculator = pathname === "/calculator"
   const isMobile = useIsMobile()
 
   const [voiceEnabled, setVoiceEnabled] = useState(false)
@@ -39,17 +46,21 @@ export function FloatingChatBot() {
   const recognitionRef = useRef<SpeechRecognition | null>(null)
   const synthRef = useRef<SpeechSynthesis | null>(null)
   const lastSpokenMessageRef = useRef<string | null>(null)
-  const messagesEndRef = useRef<HTMLDivElement>(null)
+
+  const [inputValue, setInputValue] = useState("")
+
+  // Panel dimensions
+  const PANEL_WIDTH = isMobile ? 340 : 400
+  const PANEL_HEIGHT = 520
+  const COLLAPSED_HEIGHT = 52
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      // Check TTS support
       if ("speechSynthesis" in window) {
         setSpeechSupported(true)
         synthRef.current = window.speechSynthesis
       }
 
-      // Check STT support
       const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
       if (SpeechRecognition) {
         setRecognitionSupported(true)
@@ -59,7 +70,6 @@ export function FloatingChatBot() {
         recognitionRef.current.lang = "en-US"
       }
 
-      // Load voice preference
       const savedVoicePref = localStorage.getItem("chatbot-voice-enabled")
       if (savedVoicePref === "true") {
         setVoiceEnabled(true)
@@ -73,6 +83,17 @@ export function FloatingChatBot() {
       setIsHidden(true)
     }
   }, [])
+
+  // Click outside to close
+  useEffect(() => {
+    function clickOutsideHandler(e: MouseEvent) {
+      if (wrapperRef.current && !wrapperRef.current.contains(e.target as Node) && isOpen) {
+        setIsOpen(false)
+      }
+    }
+    document.addEventListener("mousedown", clickOutsideHandler)
+    return () => document.removeEventListener("mousedown", clickOutsideHandler)
+  }, [isOpen])
 
   const {
     messages: aiMessages,
@@ -89,16 +110,11 @@ export function FloatingChatBot() {
 
   const messages = [WELCOME_MESSAGE, ...aiMessages]
 
-  const [inputValue, setInputValue] = useState("")
-
   const speakText = useCallback(
     (text: string) => {
       if (!speechSupported || !synthRef.current || !voiceEnabled) return
-
-      // Cancel any ongoing speech
       synthRef.current.cancel()
 
-      // Clean text for speech (remove emojis and special characters)
       const cleanText = text
         .replace(/[\u{1F600}-\u{1F64F}]/gu, "")
         .replace(/[\u{1F300}-\u{1F5FF}]/gu, "")
@@ -115,7 +131,6 @@ export function FloatingChatBot() {
       utterance.pitch = 1.1
       utterance.volume = 1.0
 
-      // Try to use a female voice
       const voices = synthRef.current.getVoices()
       const femaleVoice =
         voices.find(
@@ -218,7 +233,11 @@ export function FloatingChatBot() {
     setInputValue("")
   }
 
-  const handleKeyPress = (e: React.KeyboardEvent) => {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === "Escape") {
+      setIsOpen(false)
+      stopSpeaking()
+    }
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault()
       handleSend()
@@ -237,246 +256,253 @@ export function FloatingChatBot() {
     localStorage.removeItem("chatbot-hidden")
   }
 
+  const triggerOpen = useCallback(() => {
+    setIsOpen(true)
+    setTimeout(() => {
+      textareaRef.current?.focus()
+    }, 300)
+  }, [])
+
   if (isHidden) {
     return (
       <button
         onClick={handleShow}
-        className="fixed bottom-4 md:bottom-6 right-4 md:right-6 z-50 bg-gradient-to-r from-muted to-muted/80 hover:from-muted/90 hover:to-muted/70 text-muted-foreground rounded-full shadow-lg hover:shadow-2xl px-4 py-2 text-sm transition-all duration-500 hover:scale-110 flex items-center gap-2 backdrop-blur-sm border border-border/50 hover:border-primary/30"
+        className="fixed bottom-4 md:bottom-6 right-4 md:right-6 z-50 bg-background hover:bg-muted text-muted-foreground rounded-full shadow-lg hover:shadow-2xl px-4 py-2 text-sm transition-all duration-500 hover:scale-105 flex items-center gap-2 backdrop-blur-sm border border-border/50 hover:border-primary/30"
         aria-label="Show AI assistant"
       >
-        <MessageCircle className="w-4 h-4 transition-transform duration-300 group-hover:rotate-12" />
-        <span>Chat with Panida </span>
+        <ColorOrb dimension="20px" tones={{ base: "oklch(22.64% 0 0)" }} spinDuration={15} />
+        <span>Chat with Panida</span>
       </button>
     )
   }
 
   return (
-    <>
-      {/* Chat Window */}
-      <div
-        className={`fixed bottom-20 md:bottom-24 right-4 md:right-6 z-50 w-full max-w-[calc(100vw-2rem)] md:w-[380px] md:max-w-[calc(100vw-3rem)] transition-all duration-500 ease-out ${
-          isOpen ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-8 scale-95 pointer-events-none"
-        }`}
+    <div className="fixed bottom-4 md:bottom-6 right-4 md:right-6 z-50 flex items-end justify-end">
+      <motion.div
+        ref={wrapperRef}
+        className="bg-background relative flex flex-col overflow-hidden border border-border shadow-2xl"
+        initial={false}
+        animate={{
+          width: isOpen ? PANEL_WIDTH : "auto",
+          height: isOpen ? PANEL_HEIGHT : COLLAPSED_HEIGHT,
+          borderRadius: isOpen ? 20 : 26,
+        }}
+        transition={{
+          type: "spring",
+          stiffness: 550 / SPEED_FACTOR,
+          damping: 45,
+          mass: 0.7,
+          delay: isOpen ? 0 : 0.08,
+        }}
       >
-        <div className="bg-background rounded-2xl shadow-2xl overflow-hidden border border-border backdrop-blur-xl">
-          {/* Header */}
-          <div className="bg-primary p-4 flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-primary-foreground/20 backdrop-blur-sm flex items-center justify-center">
-                <MessageCircle className="w-5 h-5 text-primary-foreground" />
-              </div>
-              <div>
-                <h3 className="text-primary-foreground font-semibold">Panida - PND50 Assistant</h3>
-                <p className="text-primary-foreground/80 text-xs">
-                  {status === "in_progress" ? "Typing..." : isSpeaking ? "Speaking..." : "Online"}
-                </p>
-              </div>
-            </div>
-            <div className="flex items-center gap-1">
-              {speechSupported && (
-                <button
-                  onClick={toggleVoice}
-                  className={`text-primary-foreground hover:bg-primary-foreground/20 rounded-lg p-1.5 transition-colors ${voiceEnabled ? "bg-primary-foreground/20" : ""}`}
-                  aria-label={voiceEnabled ? "Disable voice" : "Enable voice"}
-                  title={voiceEnabled ? "Disable voice" : "Enable voice"}
-                >
-                  {voiceEnabled ? <Volume2 className="w-5 h-5" /> : <VolumeX className="w-5 h-5" />}
-                </button>
-              )}
-              {isSpeaking && (
-                <button
-                  onClick={stopSpeaking}
-                  className="text-primary-foreground hover:bg-primary-foreground/20 rounded-lg p-1.5 transition-colors animate-pulse"
-                  aria-label="Stop speaking"
-                  title="Stop speaking"
-                >
-                  <Square className="w-4 h-4" />
-                </button>
-              )}
-              <button
-                onClick={() => {
-                  setIsOpen(false)
-                  stopSpeaking()
-                }}
-                className="text-primary-foreground hover:bg-primary-foreground/20 rounded-lg p-1.5 transition-colors"
-                aria-label="Close chat"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-          </div>
-
-          {/* Messages */}
-          <div className="h-[400px] overflow-y-auto p-4 space-y-4 bg-muted/30">
-            {messages.map((message) => (
-              <div key={message.id} className={`flex ${message.role === "user" ? "justify-end" : "justify-start"}`}>
-                <div
-                  className={`max-w-[80%] rounded-2xl px-4 py-2.5 ${
-                    message.role === "user"
-                      ? "bg-primary text-primary-foreground"
-                      : "bg-background text-foreground border border-border"
-                  }`}
-                >
-                  {message.parts.map((part, index) => {
-                    if (part.type === "text") {
-                      return (
-                        <p key={index} className="text-sm leading-relaxed whitespace-pre-wrap">
-                          {part.text}
-                        </p>
-                      )
-                    }
-                    return null
-                  })}
-                  <div className="flex items-center justify-between mt-1">
-                    <p
-                      className={`text-xs ${message.role === "user" ? "text-primary-foreground/70" : "text-muted-foreground"}`}
-                    >
-                      {message.createdAt?.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
-                    </p>
-                    {message.role === "assistant" && speechSupported && message.id !== "welcome-static" && (
-                      <button
-                        onClick={() => {
-                          const text = message.parts
-                            .filter((p) => p.type === "text")
-                            .map((p) => p.text)
-                            .join(" ")
-                          speakText(text)
-                        }}
-                        className="text-muted-foreground hover:text-primary transition-colors p-1"
-                        aria-label="Speak this message"
-                        title="Speak this message"
-                      >
-                        <Volume2 className="w-3.5 h-3.5" />
-                      </button>
-                    )}
-                  </div>
-                </div>
-              </div>
-            ))}
-            {status === "in_progress" && (
-              <div className="flex justify-start">
-                <div className="bg-background text-foreground border border-border rounded-2xl px-4 py-2.5">
-                  <div className="flex gap-1">
-                    <span
-                      className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce"
-                      style={{ animationDelay: "0ms" }}
-                    ></span>
-                    <span
-                      className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce"
-                      style={{ animationDelay: "150ms" }}
-                    ></span>
-                    <span
-                      className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce"
-                      style={{ animationDelay: "300ms" }}
-                    ></span>
-                  </div>
-                </div>
-              </div>
-            )}
-            <div ref={messagesEndRef} />
-          </div>
-
-          {/* Input */}
-          <div className="p-4 bg-background border-t border-border">
-            <div className="flex gap-2">
-              <input
-                type="text"
-                value={inputValue}
-                onChange={(e) => setInputValue(e.target.value)}
-                onKeyPress={handleKeyPress}
-                placeholder={isListening ? "Listening..." : "Type your message..."}
-                disabled={status === "in_progress"}
-                className={`flex-1 px-4 py-2.5 border border-input rounded-xl focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent text-sm disabled:opacity-50 disabled:cursor-not-allowed bg-background text-foreground ${isListening ? "border-primary ring-2 ring-primary/50" : ""}`}
-              />
-              {recognitionSupported && (
+        {/* Collapsed Dock Bar */}
+        <AnimatePresence mode="wait">
+          {!isOpen && (
+            <motion.footer
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.15 }}
+              className="flex h-[52px] items-center justify-center whitespace-nowrap select-none"
+            >
+              <div className="flex items-center justify-center gap-3 px-4">
+                <ColorOrb dimension="28px" tones={{ base: "oklch(22.64% 0 0)" }} spinDuration={15} />
                 <Button
-                  onClick={isListening ? stopListening : startListening}
-                  disabled={status === "in_progress"}
-                  className={`rounded-xl px-3 transition-all ${
-                    isListening
-                      ? "bg-destructive hover:bg-destructive/90 text-destructive-foreground animate-pulse"
-                      : "bg-muted hover:bg-muted/80 text-muted-foreground"
-                  }`}
-                  aria-label={isListening ? "Stop listening" : "Start voice input"}
-                  title={isListening ? "Stop listening" : "Start voice input"}
+                  type="button"
+                  className="flex h-fit flex-1 justify-start rounded-full px-3 py-1.5 text-sm font-medium"
+                  variant="ghost"
+                  onClick={triggerOpen}
                 >
-                  {isListening ? <MicOff className="w-4 h-4" /> : <Mic className="w-4 h-4" />}
+                  <span className="truncate">Ask Panida</span>
                 </Button>
-              )}
-              <Button
-                onClick={handleSend}
-                disabled={status === "in_progress" || !inputValue.trim()}
-                className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl px-4 disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                <Send className="w-4 h-4" />
-              </Button>
-            </div>
-            <p className="text-xs text-muted-foreground mt-2 text-center">
-              {recognitionSupported ? "Press Enter to send • Click mic to speak" : "Press Enter to send"}
-            </p>
-          </div>
-        </div>
-      </div>
-
-      {/* Closed state buttons */}
-      {!isOpen && (
-        <div className="fixed bottom-4 md:bottom-6 right-4 md:right-6 z-50 flex items-start gap-2 group">
-          {isMobile ? (
-            <button
-              onClick={handleHide}
-              className="absolute -top-2 -right-2 z-10 w-8 h-8 bg-muted/90 hover:bg-destructive/10 active:bg-destructive/20 text-muted-foreground hover:text-destructive rounded-full shadow-lg border border-border/50 hover:border-destructive/30 flex items-center justify-center transition-all duration-300 active:scale-95 backdrop-blur-sm"
-              aria-label="Hide AI assistant"
-            >
-              <EyeOff className="w-4 h-4" />
-            </button>
-          ) : (
-            <button
-              onClick={handleHide}
-              className="bg-muted/80 hover:bg-muted text-muted-foreground rounded-full shadow-lg hover:shadow-xl p-2 transition-all duration-500 hover:scale-110 opacity-0 group-hover:opacity-100 backdrop-blur-sm border border-border/50 hover:border-destructive/30 hover:text-destructive"
-              aria-label="Hide AI assistant"
-              title="Hide AI assistant"
-            >
-              <EyeOff className="w-4 h-4 transition-transform duration-300 hover:scale-110" />
-            </button>
+                <button
+                  onClick={handleHide}
+                  className="text-muted-foreground hover:text-foreground p-1.5 rounded-full hover:bg-muted transition-colors"
+                  aria-label="Hide assistant"
+                >
+                  <EyeOff className="w-4 h-4" />
+                </button>
+              </div>
+            </motion.footer>
           )}
+        </AnimatePresence>
 
-          {/* Main chat button */}
-          <button
-            onClick={() => setIsOpen(true)}
-            className="relative bg-background hover:bg-white text-foreground rounded-full shadow-2xl hover:shadow-[0_20px_60px_-15px_rgba(0,0,0,0.3)] flex gap-3 md:gap-4 px-5 py-4 md:px-7 md:py-5 transition-all duration-500 hover:scale-105 border-4 border-dotted border-primary hover:border-solid hover:border-primary/80 items-center overflow-hidden group/button"
-            aria-label="Open chat with Panida"
-          >
-            {/* Sparkle icon with primary color */}
-            <div className="flex items-center justify-center relative z-10">
-              <Sparkles className="w-7 h-7 md:w-8 md:h-8 text-primary transition-all duration-500 group-hover/button:rotate-12 group-hover/button:scale-110 group-hover/button:drop-shadow-[0_0_8px_rgba(var(--primary),0.5)]" />
-            </div>
+        {/* Expanded Chat Panel */}
+        <AnimatePresence>
+          {isOpen && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ type: "spring", stiffness: 550 / SPEED_FACTOR, damping: 45, mass: 0.7 }}
+              className="flex h-full flex-col"
+              style={{ width: PANEL_WIDTH, height: PANEL_HEIGHT }}
+            >
+              {/* Header */}
+              <div className="flex items-center justify-between px-4 py-3 border-b border-border/50">
+                <div className="flex items-center gap-3">
+                  <ColorOrb dimension="32px" tones={{ base: "oklch(22.64% 0 0)" }} spinDuration={15} />
+                  <div>
+                    <p className="text-foreground font-semibold text-sm">Panida</p>
+                    <p className="text-muted-foreground text-xs">
+                      {status === "in_progress" ? "Typing..." : isSpeaking ? "Speaking..." : "PND50 Assistant"}
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-1">
+                  {speechSupported && (
+                    <button
+                      onClick={toggleVoice}
+                      className={`text-muted-foreground hover:text-foreground hover:bg-muted rounded-lg p-1.5 transition-colors ${voiceEnabled ? "bg-muted text-foreground" : ""}`}
+                      aria-label={voiceEnabled ? "Disable voice" : "Enable voice"}
+                    >
+                      {voiceEnabled ? <Volume2 className="w-4 h-4" /> : <VolumeX className="w-4 h-4" />}
+                    </button>
+                  )}
+                  {isSpeaking && (
+                    <button
+                      onClick={stopSpeaking}
+                      className="text-muted-foreground hover:text-foreground hover:bg-muted rounded-lg p-1.5 transition-colors animate-pulse"
+                      aria-label="Stop speaking"
+                    >
+                      <Square className="w-3.5 h-3.5" />
+                    </button>
+                  )}
+                  <button
+                    onClick={() => {
+                      setIsOpen(false)
+                      stopSpeaking()
+                    }}
+                    className="text-muted-foreground hover:text-foreground hover:bg-muted rounded-lg p-1.5 transition-colors"
+                    aria-label="Close chat"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
 
-            {/* Two-line text layout */}
-            <div className="flex flex-col items-start relative z-10">
-              <span className="text-sm md:text-base font-bold text-foreground leading-tight transition-colors duration-300 group-hover/button:text-primary">
-                PND50 Assistant
-              </span>
-              <span className="text-xs md:text-sm text-muted-foreground leading-tight transition-colors duration-300 group-hover/button:text-foreground">
-                Chat with Panida
-              </span>
-            </div>
-          </button>
-        </div>
-      )}
+              {/* Messages */}
+              <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-muted/20">
+                {messages.map((message) => (
+                  <div key={message.id} className={`flex ${message.role === "user" ? "justify-end" : "justify-start"}`}>
+                    <div
+                      className={`max-w-[85%] rounded-2xl px-3.5 py-2.5 ${
+                        message.role === "user"
+                          ? "bg-foreground text-background"
+                          : "bg-background text-foreground border border-border/50"
+                      }`}
+                    >
+                      {message.parts.map((part, index) => {
+                        if (part.type === "text") {
+                          return (
+                            <p key={index} className="text-sm leading-relaxed whitespace-pre-wrap">
+                              {part.text}
+                            </p>
+                          )
+                        }
+                        return null
+                      })}
+                      <div className="flex items-center justify-between mt-1.5 gap-2">
+                        <p
+                          className={`text-[10px] ${message.role === "user" ? "text-background/60" : "text-muted-foreground"}`}
+                        >
+                          {message.createdAt?.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+                        </p>
+                        {message.role === "assistant" && speechSupported && message.id !== "welcome-static" && (
+                          <button
+                            onClick={() => {
+                              const text = message.parts
+                                .filter((p) => p.type === "text")
+                                .map((p) => p.text)
+                                .join(" ")
+                              speakText(text)
+                            }}
+                            className="text-muted-foreground hover:text-foreground transition-colors p-0.5"
+                            aria-label="Speak this message"
+                          >
+                            <Volume2 className="w-3 h-3" />
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+                {status === "in_progress" && (
+                  <div className="flex justify-start">
+                    <div className="bg-background text-foreground border border-border/50 rounded-2xl px-4 py-3">
+                      <div className="flex gap-1.5">
+                        <span
+                          className="w-2 h-2 bg-muted-foreground/60 rounded-full animate-bounce"
+                          style={{ animationDelay: "0ms" }}
+                        />
+                        <span
+                          className="w-2 h-2 bg-muted-foreground/60 rounded-full animate-bounce"
+                          style={{ animationDelay: "150ms" }}
+                        />
+                        <span
+                          className="w-2 h-2 bg-muted-foreground/60 rounded-full animate-bounce"
+                          style={{ animationDelay: "300ms" }}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                )}
+                <div ref={messagesEndRef} />
+              </div>
 
-      {/* Close button when chat is open */}
-      {isOpen && (
-        <button
-          onClick={() => {
-            setIsOpen(false)
-            stopSpeaking()
-          }}
-          className="fixed bottom-4 md:bottom-6 right-4 md:right-6 z-50 w-14 h-14 bg-primary hover:bg-primary/90 text-primary-foreground rounded-full shadow-2xl hover:shadow-[0_20px_60px_-15px_rgba(var(--primary),0.6)] flex items-center justify-center transition-all duration-500 hover:scale-110 hover:rotate-90 backdrop-blur-sm"
-          aria-label="Close chat"
-        >
-          <X className="w-6 h-6 transition-transform duration-300" />
-        </button>
-      )}
-    </>
+              {/* Input */}
+              <div className="p-3 border-t border-border/50 bg-background">
+                <div className="flex gap-2 items-end">
+                  <div className="flex-1 relative">
+                    <textarea
+                      ref={textareaRef}
+                      value={inputValue}
+                      onChange={(e) => setInputValue(e.target.value)}
+                      onKeyDown={handleKeyDown}
+                      placeholder={isListening ? "Listening..." : "Ask me anything..."}
+                      disabled={status === "in_progress"}
+                      rows={1}
+                      className={`w-full resize-none rounded-xl border border-input bg-background px-3.5 py-2.5 text-sm outline-none focus:ring-2 focus:ring-ring focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed ${isListening ? "border-primary ring-2 ring-primary/30" : ""}`}
+                      style={{ minHeight: "42px", maxHeight: "120px" }}
+                    />
+                  </div>
+                  {recognitionSupported && (
+                    <Button
+                      onClick={isListening ? stopListening : startListening}
+                      disabled={status === "in_progress"}
+                      size="icon"
+                      variant={isListening ? "destructive" : "outline"}
+                      className={`rounded-xl h-[42px] w-[42px] shrink-0 ${isListening ? "animate-pulse" : ""}`}
+                      aria-label={isListening ? "Stop listening" : "Start voice input"}
+                    >
+                      {isListening ? <MicOff className="w-4 h-4" /> : <Mic className="w-4 h-4" />}
+                    </Button>
+                  )}
+                  <Button
+                    onClick={handleSend}
+                    disabled={status === "in_progress" || !inputValue.trim()}
+                    size="icon"
+                    className="rounded-xl h-[42px] w-[42px] shrink-0"
+                  >
+                    <Send className="w-4 h-4" />
+                  </Button>
+                </div>
+                <div className="flex items-center justify-between mt-2 px-1">
+                  <p className="text-[10px] text-muted-foreground">
+                    {recognitionSupported ? "Enter to send · Click mic to speak" : "Enter to send"}
+                  </p>
+                  <div className="flex gap-1">
+                    <kbd className="text-[10px] text-muted-foreground border border-border rounded px-1.5 py-0.5 font-mono">
+                      Esc
+                    </kbd>
+                    <span className="text-[10px] text-muted-foreground">to close</span>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </motion.div>
+    </div>
   )
 }
