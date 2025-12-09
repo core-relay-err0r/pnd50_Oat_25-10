@@ -25,6 +25,18 @@ const WELCOME_MESSAGE = {
   createdAt: new Date(),
 }
 
+const CALCULATOR_WELCOME_MESSAGE = {
+  id: "welcome-calculator",
+  role: "assistant" as const,
+  parts: [
+    {
+      type: "text" as const,
+      text: "Hi! I see you're building a quote — great choice! 🎯\n\nLet me help you pick the right services. Just a few quick questions:\n\n**Are you starting a new business, or do you already have a company registered in Thailand?**",
+    },
+  ],
+  createdAt: new Date(),
+}
+
 const SPEED_FACTOR = 1
 
 export function FloatingChatBot() {
@@ -38,6 +50,7 @@ export function FloatingChatBot() {
 
   const isCalculatorPage = pathname === "/calculator"
 
+  const [hasAutoSent, setHasAutoSent] = useState(false)
   const [showTooltip, setShowTooltip] = useState(false)
 
   const [voiceEnabled, setVoiceEnabled] = useState(false)
@@ -125,7 +138,8 @@ export function FloatingChatBot() {
     }),
   })
 
-  const messages = [WELCOME_MESSAGE, ...aiMessages]
+  const welcomeMessage = isCalculatorPage ? CALCULATOR_WELCOME_MESSAGE : WELCOME_MESSAGE
+  const messages = [welcomeMessage, ...aiMessages]
 
   const speakText = useCallback(
     (text: string) => {
