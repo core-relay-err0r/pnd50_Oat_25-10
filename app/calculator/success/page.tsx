@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { motion } from "framer-motion"
 import dynamic from "next/dynamic"
-import { LandingFooter } from "@/components/landing-footer"
 
 const AnimatedGridBackground = dynamic(
   () => import("@/components/ui/animated-grid-background").then((mod) => mod.AnimatedGridBackground),
@@ -37,8 +36,8 @@ export default function CalculatorSuccessPage() {
   }, [])
 
   return (
-    <div className="relative w-full min-h-screen flex flex-col bg-gradient-to-br from-slate-50 via-white to-sky-50/80">
-      <AnimatedGridBackground className="flex-1" variant="light">
+    <section className="relative w-full min-h-screen bg-gradient-to-br from-slate-50 via-white to-sky-50/80">
+      <AnimatedGridBackground className="min-h-screen" variant="light">
         <div
           className="absolute top-20 left-10 w-[500px] h-[500px] bg-gradient-to-br from-sky-200/40 via-blue-200/30 to-teal-200/20 rounded-full blur-3xl pointer-events-none"
           style={{
@@ -207,8 +206,6 @@ export default function CalculatorSuccessPage() {
           </div>
         </motion.div>
       </AnimatedGridBackground>
-
-      <LandingFooter variant="light" absolute={false} />
-    </div>
+    </section>
   )
 }
