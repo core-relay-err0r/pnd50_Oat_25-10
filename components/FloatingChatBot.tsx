@@ -648,26 +648,9 @@ export function FloatingChatBot() {
                       return null
                     })}
                     <div className="flex items-center justify-between mt-1.5 gap-2">
-                      <p
-                        className={`text-[10px] ${message.role === "user" ? "text-primary-foreground/70" : "text-muted-foreground"}`}
-                      >
+                      <span className="text-[10px] text-muted-foreground">
                         {message.createdAt?.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
-                      </p>
-                      {message.role === "assistant" && speechSupported && message.id !== "welcome-static" && (
-                        <button
-                          onClick={() => {
-                            const text = message.parts
-                              .filter((p) => p.type === "text")
-                              .map((p) => p.text)
-                              .join(" ")
-                            speakText(text)
-                          }}
-                          className="text-muted-foreground hover:text-foreground transition-colors p-0.5"
-                          aria-label="Speak this message"
-                        >
-                          <Mic className="w-3 h-3" />
-                        </button>
-                      )}
+                      </span>
                     </div>
                   </div>
                 </div>
