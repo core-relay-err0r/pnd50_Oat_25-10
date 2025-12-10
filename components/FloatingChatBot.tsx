@@ -4,7 +4,7 @@ import type React from "react"
 import type { SpeechRecognition } from "web-speech-api"
 
 import { useState, useEffect, useRef, useCallback } from "react"
-import { X, Send, Volume2, VolumeX, Mic, MicOff, Square } from "lucide-react"
+import { X, Send, Volume2, VolumeX, Mic, MicOff, Square, MessageSquare } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useChat } from "@ai-sdk/react"
 import { DefaultChatTransport } from "ai"
@@ -43,6 +43,7 @@ export function FloatingChatBot() {
   const wrapperRef = useRef<HTMLDivElement>(null)
   const textareaRef = useRef<HTMLTextAreaElement | null>(null)
   const messagesEndRef = useRef<HTMLDivElement>(null)
+  const audioRef = useRef<HTMLAudioElement | null>(null)
 
   const [isOpen, setIsOpen] = useState(false)
   const pathname = usePathname()
@@ -53,9 +54,11 @@ export function FloatingChatBot() {
   const [hasAutoSent, setHasAutoSent] = useState(false)
   const [showTooltip, setShowTooltip] = useState(false)
 
+  const [voiceMode, setVoiceMode] = useState(false)
   const [voiceEnabled, setVoiceEnabled] = useState(false)
   const [isListening, setIsListening] = useState(false)
   const [isSpeaking, setIsSpeaking] = useState(false)
+  const [isProcessing, setIsProcessing] = useState(false)
   const [speechSupported, setSpeechSupported] = useState(false)
   const [recognitionSupported, setRecognitionSupported] = useState(false)
 
@@ -87,6 +90,12 @@ export function FloatingChatBot() {
 
       const savedVoicePref = localStorage.getItem("chatbot-voice-enabled")
       if (savedVoicePref === "true") {
+        setVoiceEnabled(true)
+      }
+
+      const savedVoiceMode = localStorage.getItem("chatbot-voice-mode")
+      if (savedVoiceMode === "true") {
+        setVoiceMode(true)
         setVoiceEnabled(true)
       }
     }
@@ -141,9 +150,54 @@ export function FloatingChatBot() {
   const welcomeMessage = isCalculatorPage ? CALCULATOR_WELCOME_MESSAGE : WELCOME_MESSAGE
   const messages = [welcomeMessage, ...aiMessages]
 
-  const speakText = useCallback(
+  const speakWithElevenLabs = useCallback(async (text: string) => {
+    if (!text) return
+
+    try {
+      setIsSpeaking(true)
+
+      const response = await fetch("/api/text-to-speech", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text }),
+      })
+
+      if (!response.ok) {
+        throw new Error("Failed to generate speech")
+      }
+
+      const audioBlob = await response.blob()
+      const audioUrl = URL.createObjectURL(audioBlob)
+
+      if (audioRef.current) {
+        audioRef.current.pause()
+      }
+
+      const audio = new Audio(audioUrl)
+      audioRef.current = audio
+
+      audio.onended = () => {
+        setIsSpeaking(false)
+        URL.revokeObjectURL(audioUrl)
+      }
+
+      audio.onerror = () => {
+        setIsSpeaking(false)
+        URL.revokeObjectURL(audioUrl)
+      }
+
+      await audio.play()
+    } catch (error) {
+      console.error("ElevenLabs TTS error:", error)
+      setIsSpeaking(false)
+      // Fallback to browser TTS
+      speakTextFallback(text)
+    }
+  }, [])
+
+  const speakTextFallback = useCallback(
     (text: string) => {
-      if (!speechSupported || !synthRef.current || !voiceEnabled) return
+      if (!speechSupported || !synthRef.current) return
       synthRef.current.cancel()
 
       const cleanText = text
@@ -184,18 +238,29 @@ export function FloatingChatBot() {
 
       synthRef.current.speak(utterance)
     },
-    [speechSupported, voiceEnabled],
+    [speechSupported],
+  )
+
+  const speakText = useCallback(
+    (text: string) => {
+      speakWithElevenLabs(text)
+    },
+    [speakWithElevenLabs],
   )
 
   const stopSpeaking = useCallback(() => {
+    if (audioRef.current) {
+      audioRef.current.pause()
+      audioRef.current = null
+    }
     if (synthRef.current) {
       synthRef.current.cancel()
-      setIsSpeaking(false)
     }
+    setIsSpeaking(false)
   }, [])
 
   useEffect(() => {
-    if (!voiceEnabled || aiMessages.length === 0) return
+    if (!voiceMode || aiMessages.length === 0) return
 
     const lastMessage = aiMessages[aiMessages.length - 1]
     if (lastMessage.role === "assistant" && status !== "in_progress") {
@@ -206,10 +271,23 @@ export function FloatingChatBot() {
 
       if (messageText && messageText !== lastSpokenMessageRef.current) {
         lastSpokenMessageRef.current = messageText
+        setIsProcessing(false)
         speakText(messageText)
       }
     }
-  }, [aiMessages, status, voiceEnabled, speakText])
+  }, [aiMessages, status, voiceMode, speakText])
+
+  const toggleVoiceMode = useCallback(() => {
+    const newValue = !voiceMode
+    setVoiceMode(newValue)
+    setVoiceEnabled(newValue)
+    localStorage.setItem("chatbot-voice-mode", String(newValue))
+    localStorage.setItem("chatbot-voice-enabled", String(newValue))
+
+    if (!newValue && isSpeaking) {
+      stopSpeaking()
+    }
+  }, [voiceMode, isSpeaking, stopSpeaking])
 
   const toggleVoice = useCallback(() => {
     const newValue = !voiceEnabled
@@ -220,6 +298,35 @@ export function FloatingChatBot() {
       stopSpeaking()
     }
   }, [voiceEnabled, isSpeaking, stopSpeaking])
+
+  const startVoiceModeListening = useCallback(() => {
+    if (!recognitionRef.current || isListening || isSpeaking) return
+
+    recognitionRef.current.onresult = (event) => {
+      const transcript = event.results[0][0].transcript
+      if (transcript.trim()) {
+        setIsProcessing(true)
+        sendMessage({ text: transcript })
+      }
+      setIsListening(false)
+    }
+
+    recognitionRef.current.onerror = () => {
+      setIsListening(false)
+    }
+
+    recognitionRef.current.onend = () => {
+      setIsListening(false)
+    }
+
+    try {
+      recognitionRef.current.start()
+      setIsListening(true)
+    } catch (error) {
+      console.error("Speech recognition error:", error)
+      setIsListening(false)
+    }
+  }, [isListening, isSpeaking, sendMessage])
 
   const startListening = useCallback(() => {
     if (!recognitionRef.current || isListening) return
@@ -277,15 +384,24 @@ export function FloatingChatBot() {
 
   const triggerOpen = useCallback(() => {
     setIsOpen(true)
-    setTimeout(() => {
-      textareaRef.current?.focus()
-    }, 300)
-  }, [])
+    if (!voiceMode) {
+      setTimeout(() => {
+        textareaRef.current?.focus()
+      }, 300)
+    }
+  }, [voiceMode])
 
   const tooltipMessages = isCalculatorPage
     ? ["Welcome to Schedule page", "Want russian suggestion ?", "Let me help build your quote", "Trust me on this!"]
     : ["Hi, I'm Panida", "Got questions?", "I can speak Russian!", "I'm here to help"]
   const randomMessage = tooltipMessages[Math.floor(Date.now() / 8000) % tooltipMessages.length]
+
+  const getVoiceModeStatus = () => {
+    if (isListening) return "Listening..."
+    if (isProcessing || status === "in_progress") return "Thinking..."
+    if (isSpeaking) return "Speaking..."
+    return "Tap to talk"
+  }
 
   return (
     <div className="fixed bottom-4 md:bottom-6 right-4 md:right-6 z-50 flex items-end justify-end">
@@ -338,9 +454,8 @@ export function FloatingChatBot() {
                     style={{ animationDuration: "2s" }}
                   />
                   {/* Middle pulse ring */}
-                  
+
                   {/* Inner glow */}
-                  
                 </>
               )}
               <div
@@ -356,8 +471,114 @@ export function FloatingChatBot() {
           </motion.div>
         )}
 
+        {isOpen && voiceMode && (
+          <motion.div
+            key="voice-mode"
+            ref={wrapperRef}
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.8 }}
+            transition={{ type: "spring", stiffness: 400, damping: 25 }}
+            className="relative flex flex-col items-center"
+          >
+            {/* Status text above orb */}
+            <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="mb-4 text-center">
+              <p className="text-sm font-medium text-foreground bg-background/90 backdrop-blur-sm px-4 py-2 rounded-full shadow-lg border border-border/50">
+                {getVoiceModeStatus()}
+              </p>
+            </motion.div>
+
+            {/* Main orb button */}
+            <button
+              onClick={isListening ? stopListening : startVoiceModeListening}
+              disabled={isSpeaking || isProcessing || status === "in_progress"}
+              className={`relative rounded-full transition-all duration-300 ${
+                isListening ? "scale-110" : "hover:scale-105"
+              } ${isSpeaking || isProcessing ? "opacity-80" : ""}`}
+              aria-label={isListening ? "Stop listening" : "Start talking"}
+            >
+              {/* Animated rings when listening or speaking */}
+              {(isListening || isSpeaking) && (
+                <>
+                  <div
+                    className={`absolute -inset-4 rounded-full border-2 ${
+                      isListening ? "border-red-400/60" : "border-primary/60"
+                    } animate-ping`}
+                    style={{ animationDuration: "1.5s" }}
+                  />
+                  <div
+                    className={`absolute -inset-2 rounded-full border-2 ${
+                      isListening ? "border-red-400/40" : "border-primary/40"
+                    } animate-pulse`}
+                  />
+                </>
+              )}
+
+              {/* Processing indicator */}
+              {(isProcessing || status === "in_progress") && (
+                <div
+                  className="absolute -inset-3 rounded-full border-2 border-primary/50 animate-spin"
+                  style={{ borderTopColor: "transparent", animationDuration: "1s" }}
+                />
+              )}
+
+              <div
+                className={`relative rounded-full ${
+                  isListening
+                    ? "shadow-[0_0_30px_rgba(239,68,68,0.5)]"
+                    : isSpeaking
+                      ? "shadow-[0_0_30px_rgba(59,130,246,0.5)]"
+                      : "shadow-lg"
+                }`}
+              >
+                <ColorOrb
+                  dimension={isMobile ? "80px" : "100px"}
+                  tones={{ base: "oklch(22.64% 0 0)" }}
+                  spinDuration={isListening ? 5 : isSpeaking ? 8 : 15}
+                />
+              </div>
+            </button>
+
+            {/* Control buttons */}
+            <div className="mt-4 flex items-center gap-2">
+              {/* Switch to text mode */}
+              <button
+                onClick={toggleVoiceMode}
+                className="p-2 rounded-full bg-background/90 backdrop-blur-sm border border-border/50 text-muted-foreground hover:text-foreground hover:bg-background transition-colors shadow-lg"
+                aria-label="Switch to text mode"
+              >
+                <MessageSquare className="w-5 h-5" />
+              </button>
+
+              {/* Stop speaking */}
+              {isSpeaking && (
+                <button
+                  onClick={stopSpeaking}
+                  className="p-2 rounded-full bg-background/90 backdrop-blur-sm border border-border/50 text-muted-foreground hover:text-foreground hover:bg-background transition-colors shadow-lg animate-pulse"
+                  aria-label="Stop speaking"
+                >
+                  <Square className="w-5 h-5" />
+                </button>
+              )}
+
+              {/* Close */}
+              <button
+                onClick={() => {
+                  setIsOpen(false)
+                  stopSpeaking()
+                  stopListening()
+                }}
+                className="p-2 rounded-full bg-background/90 backdrop-blur-sm border border-border/50 text-muted-foreground hover:text-foreground hover:bg-background transition-colors shadow-lg"
+                aria-label="Close"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+          </motion.div>
+        )}
+
         {/* Expanded Chat Panel */}
-        {isOpen && (
+        {isOpen && !voiceMode && (
           <motion.div
             key="expanded"
             ref={wrapperRef}
@@ -380,6 +601,16 @@ export function FloatingChatBot() {
                 </div>
               </div>
               <div className="flex items-center gap-1">
+                {recognitionSupported && (
+                  <button
+                    onClick={toggleVoiceMode}
+                    className="text-muted-foreground hover:text-foreground hover:bg-muted rounded-lg p-1.5 transition-colors"
+                    aria-label="Switch to voice mode"
+                    title="Switch to voice mode"
+                  >
+                    <Mic className="w-4 h-4" />
+                  </button>
+                )}
                 {speechSupported && (
                   <button
                     onClick={toggleVoice}
