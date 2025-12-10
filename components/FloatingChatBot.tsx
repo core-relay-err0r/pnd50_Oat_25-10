@@ -749,7 +749,7 @@ export function FloatingChatBot() {
                     variant="outline"
                     className="rounded-xl h-[42px] w-[42px] shrink-0 bg-transparent"
                     aria-label="Switch to voice mode"
-                    title="Switch to voice mode"
+                    title="Voice mode"
                   >
                     <Mic className="w-4 h-4" />
                   </Button>
@@ -763,37 +763,9 @@ export function FloatingChatBot() {
                 >
                   <Send className="w-4 h-4" />
                 </Button>
-                {recognitionSupported && (
-                  <Button
-                    onClick={() => setShowLanguageMenu(!showLanguageMenu)}
-                    disabled={status === "in_progress"}
-                    size="icon"
-                    variant="outline"
-                    className="rounded-xl h-[42px] w-[42px] shrink-0 bg-transparent"
-                    aria-label="Select language"
-                    title="Select language"
-                  >
-                    <Globe className="w-4 h-4" />
-                  </Button>
-                )}
               </div>
-              {showLanguageMenu && (
-                <div className="absolute bottom-12 right-0 bg-background rounded-lg shadow-lg border border-border/50">
-                  {LANGUAGES.map((lang) => (
-                    <button
-                      key={lang.code}
-                      onClick={() => setSelectedLanguage(lang.code)}
-                      className={`w-full text-left px-4 py-2 text-sm hover:bg-muted transition-colors ${
-                        lang.code === selectedLanguage ? "bg-muted" : ""
-                      }`}
-                    >
-                      {lang.label} - {lang.name}
-                    </button>
-                  ))}
-                </div>
-              )}
               <p className="text-[10px] text-muted-foreground mt-2 text-center">
-                Enter to send · Click mic for voice mode · Click globe to change language
+                Enter to send · Click mic for voice mode
               </p>
             </div>
           </motion.div>
