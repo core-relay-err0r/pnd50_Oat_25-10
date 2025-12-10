@@ -494,36 +494,6 @@ export function FloatingChatBot() {
             transition={{ type: "spring", stiffness: 400, damping: 25 }}
             className="relative flex flex-col items-center"
           >
-            {/* Language selector above orb */}
-            <div className="relative mb-3">
-              <button
-                onClick={() => setShowLanguageMenu(!showLanguageMenu)}
-                className="flex items-center gap-1.5 px-3 py-1.5 bg-background/90 backdrop-blur-sm border border-border/50 rounded-full text-sm font-medium text-muted-foreground hover:text-foreground transition-colors shadow-sm"
-              >
-                <Globe className="w-3.5 h-3.5" />
-                {LANGUAGES.find((l) => l.code === selectedLanguage)?.label}
-              </button>
-              {showLanguageMenu && (
-                <div className="absolute top-full left-1/2 -translate-x-1/2 mt-1 bg-background border border-border rounded-lg shadow-lg overflow-hidden z-10">
-                  {LANGUAGES.map((lang) => (
-                    <button
-                      key={lang.code}
-                      onClick={() => {
-                        setSelectedLanguage(lang.code)
-                        setShowLanguageMenu(false)
-                      }}
-                      className={`w-full px-4 py-2 text-sm text-left hover:bg-muted transition-colors flex items-center gap-2 ${
-                        selectedLanguage === lang.code ? "bg-muted font-medium" : ""
-                      }`}
-                    >
-                      <span className="font-medium">{lang.label}</span>
-                      <span className="text-muted-foreground">{lang.name}</span>
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
-
             {/* Status text above orb */}
             <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="mb-4 text-center">
               <p className="text-sm font-medium text-foreground bg-background/90 backdrop-blur-sm px-4 py-2 rounded-full shadow-lg border border-border/50">
@@ -582,6 +552,7 @@ export function FloatingChatBot() {
               </div>
             </button>
 
+            {/* Bottom control pill */}
             <div className="mt-3 flex items-center gap-1 bg-background/90 backdrop-blur-sm border border-border/50 rounded-full px-1.5 py-1 shadow-md">
               {/* Switch to text mode */}
               <button
@@ -591,6 +562,39 @@ export function FloatingChatBot() {
               >
                 <MessageSquare className="w-4 h-4" />
               </button>
+
+              {/* Divider */}
+              <div className="w-px h-4 bg-border/50" />
+
+              {/* Language selector */}
+              <div className="relative">
+                <button
+                  onClick={() => setShowLanguageMenu(!showLanguageMenu)}
+                  className="flex items-center gap-1 px-2 py-1 rounded-full text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors"
+                >
+                  <Globe className="w-3.5 h-3.5" />
+                  {LANGUAGES.find((l) => l.code === selectedLanguage)?.label}
+                </button>
+                {showLanguageMenu && (
+                  <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 bg-background border border-border rounded-lg shadow-lg overflow-hidden z-10">
+                    {LANGUAGES.map((lang) => (
+                      <button
+                        key={lang.code}
+                        onClick={() => {
+                          setSelectedLanguage(lang.code)
+                          setShowLanguageMenu(false)
+                        }}
+                        className={`w-full px-4 py-2 text-sm text-left hover:bg-muted transition-colors flex items-center gap-2 ${
+                          selectedLanguage === lang.code ? "bg-muted font-medium" : ""
+                        }`}
+                      >
+                        <span className="font-medium">{lang.label}</span>
+                        <span className="text-muted-foreground">{lang.name}</span>
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
 
               {/* Divider */}
               <div className="w-px h-4 bg-border/50" />
