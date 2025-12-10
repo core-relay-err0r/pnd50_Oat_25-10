@@ -19,7 +19,7 @@ const WELCOME_MESSAGE = {
   parts: [
     {
       type: "text" as const,
-      text: "Welcome to PND50! I'm Panida.\n\nReady to get your accounting quote in just a few minutes?" 👩🏻‍💼 ,
+      text: "Welcome to PND50! I'm Panida.\n\nReady to get your accounting quote in just a few minutes? 👩🏻‍💼",
     },
   ],
   createdAt: new Date(),
