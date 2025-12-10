@@ -48,6 +48,10 @@ export function Navbar() {
     setIsOpen(!isOpen)
   }
 
+  const closeMobileMenu = () => {
+    setIsOpen(false)
+  }
+
   useEffect(() => {
     if (shapeTimeoutRef.current) {
       clearTimeout(shapeTimeoutRef.current)
@@ -83,8 +87,8 @@ export function Navbar() {
   const isContactActive = pathname === "/contact"
   const isCalculatorActive = pathname === "/calculator"
 
-  const contactButtonElement = (
-    <Link href="/contact" className="w-full sm:w-auto">
+  const contactButtonElement = (onClickHandler?: () => void) => (
+    <Link href="/contact" className="w-full sm:w-auto" onClick={onClickHandler}>
       <button
         className={`px-4 py-2 sm:px-3 text-xs sm:text-sm rounded-full transition-colors duration-200 w-full sm:w-auto ${
           isContactActive
@@ -97,7 +101,7 @@ export function Navbar() {
     </Link>
   )
 
-  const scheduleButtonElement = (
+  const scheduleButtonElement = (onClickHandler?: () => void) => (
     <div className="relative group w-full sm:w-auto">
       <div
         className="absolute inset-0 -m-2 rounded-full
@@ -107,7 +111,7 @@ export function Navbar() {
                      transition-all duration-300 ease-out
                      group-hover:opacity-60 group-hover:blur-xl group-hover:-m-3"
       ></div>
-      <Link href="/calculator">
+      <Link href="/calculator" onClick={onClickHandler}>
         <button
           className={`relative z-10 px-4 py-2 sm:px-3 text-xs sm:text-sm font-semibold text-white rounded-full transition-all duration-200 w-full sm:w-auto ${
             isCalculatorActive
@@ -140,8 +144,8 @@ export function Navbar() {
         </nav>
 
         <div className="hidden sm:flex items-center gap-2 sm:gap-3">
-          {contactButtonElement}
-          {scheduleButtonElement}
+          {contactButtonElement()}
+          {scheduleButtonElement()}
         </div>
 
         <button
@@ -195,8 +199,8 @@ export function Navbar() {
           ))}
         </nav>
         <div className="flex flex-col items-center space-y-4 mt-4 w-full">
-          {contactButtonElement}
-          {scheduleButtonElement}
+          {contactButtonElement(closeMobileMenu)}
+          {scheduleButtonElement(closeMobileMenu)}
         </div>
       </div>
     </header>
