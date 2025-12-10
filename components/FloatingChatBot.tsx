@@ -4,7 +4,7 @@ import type React from "react"
 import type { SpeechRecognition } from "web-speech-api"
 
 import { useState, useEffect, useRef, useCallback } from "react"
-import { X, Send, Mic, Square, MessageSquare } from "lucide-react"
+import { X, Send, Mic, Square, MessageSquare, Globe } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useChat } from "@ai-sdk/react"
 import { DefaultChatTransport } from "ai"
@@ -31,13 +31,21 @@ const CALCULATOR_WELCOME_MESSAGE = {
   parts: [
     {
       type: "text" as const,
-      text: "Hi! I see you're building a quote — great choice! 🎯\n\nAre you starting a new business, or do you already have a company registered in Thailand?",
+      text: "Hi! I see you're building a quote — great choice! 🎯\n\nAre you starting a new business, or do you already have a company in Thailand?",
     },
   ],
   createdAt: new Date(),
 }
 
 const SPEED_FACTOR = 1
+
+const LANGUAGES = [
+  { code: "en-US", label: "EN", name: "English" },
+  { code: "th-TH", label: "TH", name: "ไทย" },
+  { code: "ru-RU", label: "RU", name: "Русский" },
+] as const
+
+type LanguageCode = (typeof LANGUAGES)[number]["code"]
 
 export function FloatingChatBot() {
   const wrapperRef = useRef<HTMLDivElement>(null)
@@ -61,6 +69,8 @@ export function FloatingChatBot() {
   const [isProcessing, setIsProcessing] = useState(false)
   const [speechSupported, setSpeechSupported] = useState(false)
   const [recognitionSupported, setRecognitionSupported] = useState(false)
+  const [selectedLanguage, setSelectedLanguage] = useState<LanguageCode>("en-US")
+  const [showLanguageMenu, setShowLanguageMenu] = useState(false)
 
   const recognitionRef = useRef<SpeechRecognition | null>(null)
   const synthRef = useRef<SpeechSynthesis | null>(null)
@@ -85,7 +95,7 @@ export function FloatingChatBot() {
         recognitionRef.current = new SpeechRecognition()
         recognitionRef.current.continuous = false
         recognitionRef.current.interimResults = false
-        recognitionRef.current.lang = "en-US"
+        recognitionRef.current.lang = selectedLanguage
       }
 
       const savedVoicePref = localStorage.getItem("chatbot-voice-enabled")
@@ -99,7 +109,18 @@ export function FloatingChatBot() {
         setVoiceEnabled(true)
       }
     }
+    const savedLanguage = localStorage.getItem("chatbot-language") as LanguageCode | null
+    if (savedLanguage && LANGUAGES.some((l) => l.code === savedLanguage)) {
+      setSelectedLanguage(savedLanguage)
+    }
   }, [])
+
+  useEffect(() => {
+    if (recognitionRef.current) {
+      recognitionRef.current.lang = selectedLanguage
+    }
+    localStorage.setItem("chatbot-language", selectedLanguage)
+  }, [selectedLanguage])
 
   useEffect(() => {
     if (isOpen) {
@@ -107,12 +128,10 @@ export function FloatingChatBot() {
       return
     }
 
-    // Show tooltip after 2 seconds initially
     const initialTimeout = setTimeout(() => {
       setShowTooltip(true)
     }, 2000)
 
-    // Then toggle it every 8 seconds (show for 4s, hide for 4s)
     const interval = setInterval(() => {
       setShowTooltip((prev) => !prev)
     }, 4000)
@@ -123,7 +142,6 @@ export function FloatingChatBot() {
     }
   }, [isOpen])
 
-  // Click outside to close
   useEffect(() => {
     function clickOutsideHandler(e: MouseEvent) {
       if (wrapperRef.current && !wrapperRef.current.contains(e.target as Node) && isOpen) {
@@ -150,50 +168,53 @@ export function FloatingChatBot() {
   const welcomeMessage = isCalculatorPage ? CALCULATOR_WELCOME_MESSAGE : WELCOME_MESSAGE
   const messages = [welcomeMessage, ...aiMessages]
 
-  const speakWithElevenLabs = useCallback(async (text: string) => {
-    if (!text) return
+  const speakMessage = useCallback(
+    async (text: string) => {
+      if (!text) return
 
-    try {
-      setIsSpeaking(true)
+      const cleanText = text
+        .replace(/[\u{1F600}-\u{1F64F}]/gu, "")
+        .replace(/[\u{1F300}-\u{1F5FF}]/gu, "")
+        .replace(/[\u{1F680}-\u{1F6FF}]/gu, "")
+        .replace(/[\u{2600}-\u{26FF}]/gu, "")
+        .replace(/[\u{2700}-\u{27BF}]/gu, "")
+        .replace(/[*#_~`]/g, "")
+        .replace(/\*\*/g, "")
+        .trim()
 
-      const response = await fetch("/api/text-to-speech", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text }),
-      })
+      if (!cleanText) return
 
-      if (!response.ok) {
-        throw new Error("Failed to generate speech")
-      }
+      try {
+        const response = await fetch("/api/text-to-speech", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ text: cleanText, language: selectedLanguage }),
+        })
 
-      const audioBlob = await response.blob()
-      const audioUrl = URL.createObjectURL(audioBlob)
+        if (!response.ok) throw new Error("TTS failed")
 
-      if (audioRef.current) {
-        audioRef.current.pause()
-      }
+        const audioBlob = await response.blob()
+        const audioUrl = URL.createObjectURL(audioBlob)
+        const audio = new Audio(audioUrl)
 
-      const audio = new Audio(audioUrl)
-      audioRef.current = audio
+        audio.onplay = () => setIsSpeaking(true)
+        audio.onended = () => {
+          setIsSpeaking(false)
+          URL.revokeObjectURL(audioUrl)
+        }
+        audio.onerror = () => {
+          setIsSpeaking(false)
+          URL.revokeObjectURL(audioUrl)
+        }
 
-      audio.onended = () => {
+        await audio.play()
+      } catch (error) {
+        console.error("TTS error:", error)
         setIsSpeaking(false)
-        URL.revokeObjectURL(audioUrl)
       }
-
-      audio.onerror = () => {
-        setIsSpeaking(false)
-        URL.revokeObjectURL(audioUrl)
-      }
-
-      await audio.play()
-    } catch (error) {
-      console.error("ElevenLabs TTS error:", error)
-      setIsSpeaking(false)
-      // Fallback to browser TTS
-      speakTextFallback(text)
-    }
-  }, [])
+    },
+    [selectedLanguage],
+  )
 
   const speakTextFallback = useCallback(
     (text: string) => {
@@ -215,21 +236,13 @@ export function FloatingChatBot() {
       utterance.rate = 1.0
       utterance.pitch = 1.1
       utterance.volume = 1.0
+      utterance.lang = selectedLanguage
 
       const voices = synthRef.current.getVoices()
-      const femaleVoice =
-        voices.find(
-          (voice) =>
-            voice.name.includes("Female") ||
-            voice.name.includes("Samantha") ||
-            voice.name.includes("Victoria") ||
-            voice.name.includes("Karen") ||
-            voice.name.includes("Moira") ||
-            (voice.lang.startsWith("en") && voice.name.toLowerCase().includes("female")),
-        ) || voices.find((voice) => voice.lang.startsWith("en"))
+      const selectedVoice = voices.find((voice) => voice.lang === selectedLanguage)
 
-      if (femaleVoice) {
-        utterance.voice = femaleVoice
+      if (selectedVoice) {
+        utterance.voice = selectedVoice
       }
 
       utterance.onstart = () => setIsSpeaking(true)
@@ -238,14 +251,14 @@ export function FloatingChatBot() {
 
       synthRef.current.speak(utterance)
     },
-    [speechSupported],
+    [speechSupported, selectedLanguage],
   )
 
   const speakText = useCallback(
     (text: string) => {
-      speakWithElevenLabs(text)
+      speakMessage(text)
     },
-    [speakWithElevenLabs],
+    [speakMessage],
   )
 
   const stopSpeaking = useCallback(() => {
@@ -481,6 +494,36 @@ export function FloatingChatBot() {
             transition={{ type: "spring", stiffness: 400, damping: 25 }}
             className="relative flex flex-col items-center"
           >
+            {/* Language selector above orb */}
+            <div className="relative mb-3">
+              <button
+                onClick={() => setShowLanguageMenu(!showLanguageMenu)}
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-background/90 backdrop-blur-sm border border-border/50 rounded-full text-sm font-medium text-muted-foreground hover:text-foreground transition-colors shadow-sm"
+              >
+                <Globe className="w-3.5 h-3.5" />
+                {LANGUAGES.find((l) => l.code === selectedLanguage)?.label}
+              </button>
+              {showLanguageMenu && (
+                <div className="absolute top-full left-1/2 -translate-x-1/2 mt-1 bg-background border border-border rounded-lg shadow-lg overflow-hidden z-10">
+                  {LANGUAGES.map((lang) => (
+                    <button
+                      key={lang.code}
+                      onClick={() => {
+                        setSelectedLanguage(lang.code)
+                        setShowLanguageMenu(false)
+                      }}
+                      className={`w-full px-4 py-2 text-sm text-left hover:bg-muted transition-colors flex items-center gap-2 ${
+                        selectedLanguage === lang.code ? "bg-muted font-medium" : ""
+                      }`}
+                    >
+                      <span className="font-medium">{lang.label}</span>
+                      <span className="text-muted-foreground">{lang.name}</span>
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+
             {/* Status text above orb */}
             <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="mb-4 text-center">
               <p className="text-sm font-medium text-foreground bg-background/90 backdrop-blur-sm px-4 py-2 rounded-full shadow-lg border border-border/50">
@@ -595,7 +638,7 @@ export function FloatingChatBot() {
             style={{ width: PANEL_WIDTH, height: PANEL_HEIGHT }}
           >
             {/* Header */}
-            <div className="flex items-center justify-between px-4 py-3 border-b border-border/50 bg-gradient-to-r from-muted/30 to-transparent">
+            <div className="flex items-center justify-between px-4 py-3 border-b border-border/50 bg-gradient-to-r from-muted-30 to-transparent">
               <div className="flex items-center gap-3">
                 <ColorOrb dimension="32px" tones={{ base: "oklch(22.64% 0 0)" }} spinDuration={20} />
                 <div>
@@ -716,9 +759,37 @@ export function FloatingChatBot() {
                 >
                   <Send className="w-4 h-4" />
                 </Button>
+                {recognitionSupported && (
+                  <Button
+                    onClick={() => setShowLanguageMenu(!showLanguageMenu)}
+                    disabled={status === "in_progress"}
+                    size="icon"
+                    variant="outline"
+                    className="rounded-xl h-[42px] w-[42px] shrink-0 bg-transparent"
+                    aria-label="Select language"
+                    title="Select language"
+                  >
+                    <Globe className="w-4 h-4" />
+                  </Button>
+                )}
               </div>
+              {showLanguageMenu && (
+                <div className="absolute bottom-12 right-0 bg-background rounded-lg shadow-lg border border-border/50">
+                  {LANGUAGES.map((lang) => (
+                    <button
+                      key={lang.code}
+                      onClick={() => setSelectedLanguage(lang.code)}
+                      className={`w-full text-left px-4 py-2 text-sm hover:bg-muted transition-colors ${
+                        lang.code === selectedLanguage ? "bg-muted" : ""
+                      }`}
+                    >
+                      {lang.label} - {lang.name}
+                    </button>
+                  ))}
+                </div>
+              )}
               <p className="text-[10px] text-muted-foreground mt-2 text-center">
-                Enter to send · Click mic for voice mode
+                Enter to send · Click mic for voice mode · Click globe to change language
               </p>
             </div>
           </motion.div>

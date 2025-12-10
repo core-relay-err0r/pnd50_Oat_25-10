@@ -1,11 +1,25 @@
 import { type NextRequest, NextResponse } from "next/server"
 
-// ElevenLabs voice ID for a young female voice (Rachel - warm, friendly)
-const VOICE_ID = "21m00Tcm4TlvDq8ikWAM" // Rachel voice
+const VOICE_CONFIG = {
+  "en-US": {
+    voiceId: "21m00Tcm4TlvDq8ikWAM", // Rachel - English
+    modelId: "eleven_monolingual_v1",
+  },
+  "th-TH": {
+    voiceId: "21m00Tcm4TlvDq8ikWAM", // Use multilingual model for Thai
+    modelId: "eleven_multilingual_v2",
+  },
+  "ru-RU": {
+    voiceId: "21m00Tcm4TlvDq8ikWAM", // Use multilingual model for Russian
+    modelId: "eleven_multilingual_v2",
+  },
+} as const
+
+type SupportedLanguage = keyof typeof VOICE_CONFIG
 
 export async function POST(request: NextRequest) {
   try {
-    const { text } = await request.json()
+    const { text, language = "en-US" } = await request.json()
 
     if (!text) {
       return NextResponse.json({ error: "Text is required" }, { status: 400 })
@@ -31,7 +45,9 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "No speakable text" }, { status: 400 })
     }
 
-    const response = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${VOICE_ID}`, {
+    const config = VOICE_CONFIG[language as SupportedLanguage] || VOICE_CONFIG["en-US"]
+
+    const response = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${config.voiceId}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -39,7 +55,7 @@ export async function POST(request: NextRequest) {
       },
       body: JSON.stringify({
         text: cleanText,
-        model_id: "eleven_monolingual_v1",
+        model_id: config.modelId,
         voice_settings: {
           stability: 0.5,
           similarity_boost: 0.75,
