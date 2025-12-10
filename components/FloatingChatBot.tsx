@@ -283,7 +283,7 @@ export function FloatingChatBot() {
   }, [])
 
   const tooltipMessages = isCalculatorPage
-    ? ["Need help choosing?", "I can guide you!", "Let me help you build your quote", "Ask me anything!"]
+    ? ["Welcome to Schedule page", "Want russian suggestion ?", "Let me help build your quote", "Trust me on this!"]
     : ["Hi, I'm Panida", "Got questions?", "I can speak Russian!", "I'm here to help"]
   const randomMessage = tooltipMessages[Math.floor(Date.now() / 8000) % tooltipMessages.length]
 
