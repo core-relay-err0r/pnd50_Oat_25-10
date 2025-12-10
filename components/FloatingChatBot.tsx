@@ -4,7 +4,7 @@ import type React from "react"
 import type { SpeechRecognition } from "web-speech-api"
 
 import { useState, useEffect, useRef, useCallback } from "react"
-import { X, Send, Volume2, VolumeX, Mic, Square, MessageSquare } from "lucide-react"
+import { X, Send, Mic, Square, MessageSquare } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useChat } from "@ai-sdk/react"
 import { DefaultChatTransport } from "ai"
@@ -590,33 +590,22 @@ export function FloatingChatBot() {
             style={{ width: PANEL_WIDTH, height: PANEL_HEIGHT }}
           >
             {/* Header */}
-            <div className="flex items-center justify-between px-4 py-3 border-b border-border/50">
+            <div className="flex items-center justify-between px-4 py-3 border-b border-border/50 bg-gradient-to-r from-muted/30 to-transparent">
               <div className="flex items-center gap-3">
-                <ColorOrb dimension="32px" tones={{ base: "oklch(22.64% 0 0)" }} spinDuration={15} />
+                <ColorOrb dimension="32px" tones={{ base: "oklch(22.64% 0 0)" }} spinDuration={20} />
                 <div>
-                  <p className="text-foreground font-semibold text-sm">Panida</p>
-                  <p className="text-muted-foreground text-xs">
-                    {status === "in_progress" ? "Typing..." : isSpeaking ? "Speaking..." : "PND50 Assistant"}
-                  </p>
+                  <h3 className="font-semibold text-sm text-foreground">Panida</h3>
+                  <p className="text-xs text-muted-foreground">PND50 Assistant</p>
                 </div>
               </div>
               <div className="flex items-center gap-1">
-                {speechSupported && (
-                  <button
-                    onClick={toggleVoice}
-                    className={`text-muted-foreground hover:text-foreground hover:bg-muted rounded-lg p-1.5 transition-colors ${voiceEnabled ? "bg-muted text-foreground" : ""}`}
-                    aria-label={voiceEnabled ? "Disable voice" : "Enable voice"}
-                  >
-                    {voiceEnabled ? <Volume2 className="w-4 h-4" /> : <VolumeX className="w-4 h-4" />}
-                  </button>
-                )}
                 {isSpeaking && (
                   <button
                     onClick={stopSpeaking}
                     className="text-muted-foreground hover:text-foreground hover:bg-muted rounded-lg p-1.5 transition-colors animate-pulse"
                     aria-label="Stop speaking"
                   >
-                    <Square className="w-3.5 h-3.5" />
+                    <Square className="w-4 h-4" />
                   </button>
                 )}
                 <button
@@ -671,7 +660,7 @@ export function FloatingChatBot() {
                           className="text-muted-foreground hover:text-foreground transition-colors p-0.5"
                           aria-label="Speak this message"
                         >
-                          <Volume2 className="w-3 h-3" />
+                          <Mic className="w-3 h-3" />
                         </button>
                       )}
                     </div>
