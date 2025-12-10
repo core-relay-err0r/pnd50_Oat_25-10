@@ -19,7 +19,7 @@ const WELCOME_MESSAGE = {
   parts: [
     {
       type: "text" as const,
-      text: "Hi there! I'm Panida, your digital assistant from PND50.\n\nI can help you find the right accounting or tax service for your company — and get your quotation in just a few minutes.\n\nShall we get started?",
+      text: "Welcome to PND50! I'm Panida. \nReady to get your accounting quote in just a few minutes?",
     },
   ],
   createdAt: new Date(),
