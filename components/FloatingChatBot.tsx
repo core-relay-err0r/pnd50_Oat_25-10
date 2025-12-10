@@ -539,30 +539,30 @@ export function FloatingChatBot() {
               </div>
             </button>
 
-            <div className="mt-4 flex items-center gap-2 bg-background/90 backdrop-blur-sm border border-border/50 rounded-full px-2 py-1.5 shadow-lg">
+            <div className="mt-3 flex items-center gap-1 bg-background/90 backdrop-blur-sm border border-border/50 rounded-full px-1.5 py-1 shadow-md">
               {/* Switch to text mode */}
               <button
                 onClick={toggleVoiceMode}
-                className="p-2 rounded-full text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors"
+                className="p-1.5 rounded-full text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors"
                 aria-label="Switch to text mode"
               >
-                <MessageSquare className="w-5 h-5" />
+                <MessageSquare className="w-4 h-4" />
               </button>
 
               {/* Divider */}
-              <div className="w-px h-5 bg-border/50" />
+              <div className="w-px h-4 bg-border/50" />
 
               {/* Stop speaking */}
               {isSpeaking && (
                 <>
                   <button
                     onClick={stopSpeaking}
-                    className="p-2 rounded-full text-red-500 hover:text-red-600 hover:bg-red-50 transition-colors animate-pulse"
+                    className="p-1.5 rounded-full text-red-500 hover:text-red-600 hover:bg-red-50 transition-colors animate-pulse"
                     aria-label="Stop speaking"
                   >
-                    <Square className="w-5 h-5" />
+                    <Square className="w-4 h-4" />
                   </button>
-                  <div className="w-px h-5 bg-border/50" />
+                  <div className="w-px h-4 bg-border/50" />
                 </>
               )}
 
@@ -573,10 +573,10 @@ export function FloatingChatBot() {
                   stopSpeaking()
                   stopListening()
                 }}
-                className="p-2 rounded-full text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors"
+                className="p-1.5 rounded-full text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors"
                 aria-label="Close"
               >
-                <X className="w-5 h-5" />
+                <X className="w-4 h-4" />
               </button>
             </div>
           </motion.div>
