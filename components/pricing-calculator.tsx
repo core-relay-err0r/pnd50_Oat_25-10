@@ -372,31 +372,33 @@ export function PricingCalculator() {
                     >
                       <button
                         onClick={() => toggleCategory(categoryKey)}
-                        className={`w-full flex items-center justify-between p-5 rounded-2xl transition-all duration-300 border ${
+                        className={`w-full flex items-center justify-between p-6 rounded-2xl transition-all duration-300 border ${
                           isExpanded
                             ? "bg-white shadow-lg shadow-sky-200/60 border-sky-200"
                             : "bg-white hover:bg-white shadow-md shadow-slate-200/80 hover:shadow-lg hover:shadow-sky-100/60 border-slate-200/80 hover:border-sky-200"
                         }`}
                       >
-                        <div className="flex items-center gap-4">
+                        <div className="flex items-center gap-5">
                           <div
-                            className={`w-12 h-12 rounded-xl bg-gradient-to-br ${category.color} flex items-center justify-center`}
+                            className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${category.color} flex items-center justify-center shadow-md`}
                           >
-                            <Icon className="w-6 h-6 text-white" />
+                            <Icon className="w-7 h-7 text-white" />
                           </div>
                           <div className="text-left">
-                            <h3 className="text-lg font-semibold text-slate-800">{category.title}</h3>
-                            <p className="text-sm text-slate-500">{category.services.length} services available</p>
+                            <h3 className="text-xl font-semibold text-slate-800">{category.title}</h3>
+                            <p className="text-base text-slate-500 mt-0.5">
+                              {category.services.length} services available
+                            </p>
                           </div>
                         </div>
-                        <div className="flex items-center gap-3">
+                        <div className="flex items-center gap-4">
                           {selectedCount > 0 && (
-                            <span className="px-3 py-1 bg-sky-100 text-sky-700 text-sm font-medium rounded-full">
+                            <span className="px-4 py-1.5 bg-sky-100 text-sky-700 text-sm font-medium rounded-full">
                               {selectedCount} selected
                             </span>
                           )}
                           <motion.div animate={{ rotate: isExpanded ? 180 : 0 }} transition={{ duration: 0.2 }}>
-                            <ChevronDown className="w-5 h-5 text-slate-400" />
+                            <ChevronDown className="w-6 h-6 text-slate-400" />
                           </motion.div>
                         </div>
                       </button>
