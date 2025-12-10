@@ -31,7 +31,7 @@ const CALCULATOR_WELCOME_MESSAGE = {
   parts: [
     {
       type: "text" as const,
-      text: "Hi! I see you're building a quote — great choice! 🎯\n\nLet me help you pick the right services. Just a few quick questions:\n\n**Are you starting a new business, or do you already have a company registered in Thailand?**",
+      text: "Hi! I see you're building a quote — great choice! 🎯\n\nAre you starting a new business, or do you already have a company registered in Thailand?",
     },
   ],
   createdAt: new Date(),
