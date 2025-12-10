@@ -4,7 +4,7 @@ import type React from "react"
 import type { SpeechRecognition } from "web-speech-api"
 
 import { useState, useEffect, useRef, useCallback } from "react"
-import { X, Send, Volume2, VolumeX, Mic, MicOff, Square, MessageSquareText } from "lucide-react"
+import { X, Send, Volume2, VolumeX, Mic, Square, MessageSquare } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useChat } from "@ai-sdk/react"
 import { DefaultChatTransport } from "ai"
@@ -12,7 +12,6 @@ import { usePathname } from "next/navigation"
 import { useIsMobile } from "@/components/ui/use-mobile"
 import { AnimatePresence, motion } from "framer-motion"
 import { ColorOrb } from "@/components/ui/color-orb"
-import { Toggle, GooeyFilter } from "@/components/ui/liquid-toggle"
 
 const WELCOME_MESSAGE = {
   id: "welcome-static",
@@ -406,8 +405,6 @@ export function FloatingChatBot() {
 
   return (
     <div className="fixed bottom-4 md:bottom-6 right-4 md:right-6 z-50 flex items-end justify-end">
-      <GooeyFilter />
-
       <AnimatePresence mode="wait">
         {!isOpen && (
           <motion.div
@@ -418,12 +415,6 @@ export function FloatingChatBot() {
             transition={{ type: "spring", stiffness: 400, damping: 25 }}
             className="relative"
           >
-            <div className="absolute -top-12 left-1/2 -translate-x-1/2 flex items-center gap-2 bg-background/90 backdrop-blur-sm px-2 py-1 rounded-full shadow-lg border border-border/50">
-              <MessageSquareText className="w-4 h-4 text-muted-foreground" />
-              <Toggle checked={voiceMode} onCheckedChange={toggleVoiceMode} variant="default" />
-              <Mic className="w-4 h-4 text-muted-foreground" />
-            </div>
-
             <AnimatePresence>
               {showTooltip && (
                 <motion.div
@@ -490,12 +481,14 @@ export function FloatingChatBot() {
             transition={{ type: "spring", stiffness: 400, damping: 25 }}
             className="relative flex flex-col items-center"
           >
+            {/* Status text above orb */}
             <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="mb-4 text-center">
               <p className="text-sm font-medium text-foreground bg-background/90 backdrop-blur-sm px-4 py-2 rounded-full shadow-lg border border-border/50">
                 {getVoiceModeStatus()}
               </p>
             </motion.div>
 
+            {/* Main orb button */}
             <button
               onClick={isListening ? stopListening : startVoiceModeListening}
               disabled={isSpeaking || isProcessing || status === "in_progress"}
@@ -504,6 +497,7 @@ export function FloatingChatBot() {
               } ${isSpeaking || isProcessing ? "opacity-80" : ""}`}
               aria-label={isListening ? "Stop listening" : "Start talking"}
             >
+              {/* Animated rings when listening or speaking */}
               {(isListening || isSpeaking) && (
                 <>
                   <div
@@ -520,6 +514,7 @@ export function FloatingChatBot() {
                 </>
               )}
 
+              {/* Processing indicator */}
               {(isProcessing || status === "in_progress") && (
                 <div
                   className="absolute -inset-3 rounded-full border-2 border-primary/50 animate-spin"
@@ -544,41 +539,45 @@ export function FloatingChatBot() {
               </div>
             </button>
 
-            <div className="mt-4 flex items-center gap-3 bg-background/90 backdrop-blur-sm px-3 py-2 rounded-full shadow-lg border border-border/50">
-              <MessageSquareText className="w-4 h-4 text-muted-foreground" />
-              <Toggle
-                checked={voiceMode}
-                onCheckedChange={toggleVoiceMode}
-                variant="default"
-                className="scale-75 origin-center"
-              />
-              <Mic className="w-4 h-4 text-muted-foreground" />
+            {/* Control buttons */}
+            <div className="mt-4 flex items-center gap-2">
+              {/* Switch to text mode */}
+              <button
+                onClick={toggleVoiceMode}
+                className="p-2 rounded-full bg-background/90 backdrop-blur-sm border border-border/50 text-muted-foreground hover:text-foreground hover:bg-background transition-colors shadow-lg"
+                aria-label="Switch to text mode"
+              >
+                <MessageSquare className="w-5 h-5" />
+              </button>
 
+              {/* Stop speaking */}
               {isSpeaking && (
                 <button
                   onClick={stopSpeaking}
-                  className="p-2 rounded-full bg-red-500/10 text-red-500 hover:bg-red-500/20 transition-colors animate-pulse"
+                  className="p-2 rounded-full bg-background/90 backdrop-blur-sm border border-border/50 text-muted-foreground hover:text-foreground hover:bg-background transition-colors shadow-lg animate-pulse"
                   aria-label="Stop speaking"
                 >
-                  <Square className="w-4 h-4" />
+                  <Square className="w-5 h-5" />
                 </button>
               )}
 
+              {/* Close */}
               <button
                 onClick={() => {
                   setIsOpen(false)
                   stopSpeaking()
                   stopListening()
                 }}
-                className="p-2 rounded-full text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors"
+                className="p-2 rounded-full bg-background/90 backdrop-blur-sm border border-border/50 text-muted-foreground hover:text-foreground hover:bg-background transition-colors shadow-lg"
                 aria-label="Close"
               >
-                <X className="w-4 h-4" />
+                <X className="w-5 h-5" />
               </button>
             </div>
           </motion.div>
         )}
 
+        {/* Expanded Chat Panel */}
         {isOpen && !voiceMode && (
           <motion.div
             key="expanded"
@@ -590,48 +589,50 @@ export function FloatingChatBot() {
             transition={{ type: "spring", stiffness: 550 / SPEED_FACTOR, damping: 45, mass: 0.7 }}
             style={{ width: PANEL_WIDTH, height: PANEL_HEIGHT }}
           >
-            <div className="flex items-center justify-between px-4 py-3 border-b border-border/50 bg-muted/30">
+            {/* Header */}
+            <div className="flex items-center justify-between px-4 py-3 border-b border-border/50">
               <div className="flex items-center gap-3">
-                <ColorOrb dimension="32px" tones={{ base: "oklch(22.64% 0 0)" }} spinDuration={20} />
+                <ColorOrb dimension="32px" tones={{ base: "oklch(22.64% 0 0)" }} spinDuration={15} />
                 <div>
-                  <h3 className="font-semibold text-sm">Panida</h3>
-                  <p className="text-xs text-muted-foreground">PND50 Assistant</p>
+                  <p className="text-foreground font-semibold text-sm">Panida</p>
+                  <p className="text-muted-foreground text-xs">
+                    {status === "in_progress" ? "Typing..." : isSpeaking ? "Speaking..." : "PND50 Assistant"}
+                  </p>
                 </div>
               </div>
               <div className="flex items-center gap-1">
-                <div className="flex items-center gap-1.5 mr-2 px-2 py-1 rounded-full bg-muted/50">
-                  <MessageSquareText className="w-3.5 h-3.5 text-muted-foreground" />
-                  <Toggle
-                    checked={voiceMode}
-                    onCheckedChange={toggleVoiceMode}
-                    variant="default"
-                    className="scale-75 origin-center"
-                  />
-                  <Mic className="w-3.5 h-3.5 text-muted-foreground" />
-                </div>
                 {speechSupported && (
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="h-8 w-8 text-muted-foreground hover:text-foreground"
+                  <button
                     onClick={toggleVoice}
-                    aria-label={voiceEnabled ? "Mute voice" : "Enable voice"}
+                    className={`text-muted-foreground hover:text-foreground hover:bg-muted rounded-lg p-1.5 transition-colors ${voiceEnabled ? "bg-muted text-foreground" : ""}`}
+                    aria-label={voiceEnabled ? "Disable voice" : "Enable voice"}
                   >
-                    {voiceEnabled ? <Volume2 className="h-4 w-4" /> : <VolumeX className="h-4 w-4" />}
-                  </Button>
+                    {voiceEnabled ? <Volume2 className="w-4 h-4" /> : <VolumeX className="w-4 h-4" />}
+                  </button>
                 )}
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="h-8 w-8 text-muted-foreground hover:text-foreground"
-                  onClick={() => setIsOpen(false)}
+                {isSpeaking && (
+                  <button
+                    onClick={stopSpeaking}
+                    className="text-muted-foreground hover:text-foreground hover:bg-muted rounded-lg p-1.5 transition-colors animate-pulse"
+                    aria-label="Stop speaking"
+                  >
+                    <Square className="w-3.5 h-3.5" />
+                  </button>
+                )}
+                <button
+                  onClick={() => {
+                    setIsOpen(false)
+                    stopSpeaking()
+                  }}
+                  className="text-muted-foreground hover:text-foreground hover:bg-muted rounded-lg p-1.5 transition-colors"
                   aria-label="Close chat"
                 >
-                  <X className="h-4 w-4" />
-                </Button>
+                  <X className="w-4 h-4" />
+                </button>
               </div>
             </div>
 
+            {/* Messages */}
             <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-muted/20">
               {messages.map((message) => (
                 <div key={message.id} className={`flex ${message.role === "user" ? "justify-end" : "justify-start"}`}>
@@ -700,6 +701,7 @@ export function FloatingChatBot() {
               <div ref={messagesEndRef} />
             </div>
 
+            {/* Input */}
             <div className="p-3 border-t border-border/50 bg-background">
               <div className="flex gap-2 items-end">
                 <div className="flex-1 relative">
@@ -708,23 +710,24 @@ export function FloatingChatBot() {
                     value={inputValue}
                     onChange={(e) => setInputValue(e.target.value)}
                     onKeyDown={handleKeyDown}
-                    placeholder={isListening ? "Listening..." : "Ask me anything..."}
+                    placeholder="Ask me anything..."
                     disabled={status === "in_progress"}
                     rows={1}
-                    className={`w-full resize-none rounded-xl border border-input bg-background px-3.5 py-2.5 text-sm outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary disabled:opacity-50 disabled:cursor-not-allowed ${isListening ? "border-primary ring-2 ring-primary/30" : ""}`}
+                    className="w-full resize-none rounded-xl border border-input bg-background px-3.5 py-2.5 text-sm outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary disabled:opacity-50 disabled:cursor-not-allowed"
                     style={{ minHeight: "42px", maxHeight: "120px" }}
                   />
                 </div>
                 {recognitionSupported && (
                   <Button
-                    onClick={isListening ? stopListening : startListening}
+                    onClick={toggleVoiceMode}
                     disabled={status === "in_progress"}
                     size="icon"
-                    variant={isListening ? "destructive" : "outline"}
-                    className={`rounded-xl h-[42px] w-[42px] shrink-0 ${isListening ? "animate-pulse" : ""}`}
-                    aria-label={isListening ? "Stop listening" : "Start voice input"}
+                    variant="outline"
+                    className="rounded-xl h-[42px] w-[42px] shrink-0 bg-transparent"
+                    aria-label="Switch to voice mode"
+                    title="Switch to voice mode"
                   >
-                    {isListening ? <MicOff className="w-4 h-4" /> : <Mic className="w-4 h-4" />}
+                    <Mic className="w-4 h-4" />
                   </Button>
                 )}
                 <Button
@@ -737,7 +740,9 @@ export function FloatingChatBot() {
                   <Send className="w-4 h-4" />
                 </Button>
               </div>
-              <p className="text-[10px] text-muted-foreground mt-2 text-center">Enter to send · Click mic to speak</p>
+              <p className="text-[10px] text-muted-foreground mt-2 text-center">
+                Enter to send · Click mic for voice mode
+              </p>
             </div>
           </motion.div>
         )}
