@@ -487,7 +487,7 @@ export default function FAQPage() {
         </motion.section>
       </div>
 
-      <LandingFooter variant="light" />
+      <LandingFooter variant="light" absolute={false} />
     </div>
   )
 }
