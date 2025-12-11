@@ -49,16 +49,12 @@ const servicesData = {
         name: "Monthly Tax Filing (Basic)",
         price: 4500,
         type: "Monthly",
-        hasVariable: true,
-        variableType: "transactions",
       },
       {
         id: "monthly-tax-medium",
         name: "Monthly Tax Filing (Medium)",
         price: 7500,
         type: "Monthly",
-        hasVariable: true,
-        variableType: "transactions",
       },
       { id: "annual-statements", name: "Annual Financial Statements", price: 22000, type: "Annual" },
       {
