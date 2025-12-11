@@ -469,10 +469,10 @@ export default function ContactPage() {
                     href="https://www.google.com/maps/dir//Bhiraj+Tower+at+EmQuartier,+689+Sukhumvit+Rd,+Khlong+Tan+Nuea,+Watthana,+Bangkok+10110"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-5 py-2.5 bg-sky-600 text-white font-medium rounded-lg hover:bg-sky-700 transition-colors"
+                    className="inline-flex items-center gap-2 text-sky-600 font-medium hover:text-sky-700 transition-colors"
                   >
-                    <MapPin className="w-4 h-4" />
                     Get Directions
+                    <ArrowRight className="w-4 h-4" />
                   </a>
                 </div>
                 {/* Map Embed */}
