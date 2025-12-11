@@ -13,6 +13,8 @@ import {
   X,
   Sparkles,
   MessageCircle,
+  Minus,
+  Plus,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -169,6 +171,10 @@ export function PricingCalculator() {
           : s,
       ),
     )
+  }
+
+  const updateQuantity = (serviceId: string, quantity: number) => {
+    setSelectedServices((prev) => prev.map((s) => (s.id === serviceId ? { ...s, quantity: Math.max(1, quantity) } : s)))
   }
 
   // Check if service needs variable input
@@ -558,6 +564,65 @@ export function PricingCalculator() {
                                         )
                                       })}
                                     </div>
+                                  </motion.div>
+                                )}
+                              </AnimatePresence>
+
+                              {/* Quantity Selector for Variable Services */}
+                              <AnimatePresence>
+                                {isSelected && service.hasVariable && (
+                                  <motion.div
+                                    initial={{ height: 0, opacity: 0 }}
+                                    animate={{ height: "auto", opacity: 1 }}
+                                    exit={{ height: 0, opacity: 0 }}
+                                    transition={{ duration: 0.2 }}
+                                    className="mt-3 pt-3 border-t border-slate-200"
+                                  >
+                                    <div className="flex items-center justify-between">
+                                      <p className="text-sm text-slate-600">
+                                        {service.variableType === "employees"
+                                          ? "Number of employees:"
+                                          : "Est. monthly transactions:"}
+                                      </p>
+                                      <div className="flex items-center gap-2">
+                                        <button
+                                          onClick={(e) => {
+                                            e.stopPropagation()
+                                            const currentService = selectedServices.find((s) => s.id === service.id)
+                                            updateQuantity(service.id, (currentService?.quantity || 1) - 1)
+                                          }}
+                                          className="w-8 h-8 rounded-lg bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-600 transition-colors"
+                                        >
+                                          <Minus className="w-4 h-4" />
+                                        </button>
+                                        <input
+                                          type="number"
+                                          min="1"
+                                          value={selectedServices.find((s) => s.id === service.id)?.quantity || 1}
+                                          onChange={(e) => {
+                                            e.stopPropagation()
+                                            updateQuantity(service.id, Number.parseInt(e.target.value) || 1)
+                                          }}
+                                          onClick={(e) => e.stopPropagation()}
+                                          className="w-16 h-8 text-center rounded-lg border border-slate-200 text-slate-800 font-medium focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent"
+                                        />
+                                        <button
+                                          onClick={(e) => {
+                                            e.stopPropagation()
+                                            const currentService = selectedServices.find((s) => s.id === service.id)
+                                            updateQuantity(service.id, (currentService?.quantity || 1) + 1)
+                                          }}
+                                          className="w-8 h-8 rounded-lg bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-600 transition-colors"
+                                        >
+                                          <Plus className="w-4 h-4" />
+                                        </button>
+                                      </div>
+                                    </div>
+                                    <p className="text-xs text-slate-400 mt-2">
+                                      {service.variableType === "employees"
+                                        ? `฿${service.price.toLocaleString()} per employee/month`
+                                        : `Base price for selected volume`}
+                                    </p>
                                   </motion.div>
                                 )}
                               </AnimatePresence>
