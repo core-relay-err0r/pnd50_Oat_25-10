@@ -95,6 +95,7 @@ interface SelectedService {
   hasVariable?: boolean
   variableType?: string
   quantity?: number
+  selectedOptions?: string[]
 }
 
 interface ContactInfo {
@@ -105,7 +106,7 @@ interface ContactInfo {
 
 export function PricingCalculator() {
   const router = useRouter()
-  const [expandedCategory, setExpandedCategory] = useState<ServiceCategory | null>(null)
+  const [activeTab, setActiveTab] = useState<ServiceCategory>("corporate")
   const [selectedServices, setSelectedServices] = useState<SelectedService[]>([])
   const [step, setStep] = useState<"selection" | "contact">("selection")
   const [contactInfo, setContactInfo] = useState<ContactInfo>({ name: "", email: "", phone: "" })
@@ -123,11 +124,6 @@ export function PricingCalculator() {
     window.addEventListener("mousemove", handleMouseMove)
     return () => window.removeEventListener("mousemove", handleMouseMove)
   }, [])
-
-  // Toggle category expansion
-  const toggleCategory = (category: ServiceCategory) => {
-    setExpandedCategory(expandedCategory === category ? null : category)
-  }
 
   // Toggle service selection
   const toggleService = (category: ServiceCategory, service: (typeof servicesData.corporate.services)[0]) => {
@@ -153,6 +149,28 @@ export function PricingCalculator() {
     }
   }
 
+  // Toggle option selection
+  const toggleOption = (
+    category: ServiceCategory,
+    serviceId: string,
+    option: { id: string; name: string; price: number },
+  ) => {
+    setSelectedServices((prev) =>
+      prev.map((s) =>
+        s.id === serviceId
+          ? {
+              ...s,
+              selectedOptions: s.selectedOptions
+                ? s.selectedOptions.includes(option.id)
+                  ? s.selectedOptions.filter((o) => o !== option.id)
+                  : [...s.selectedOptions, option.id]
+                : [option.id],
+            }
+          : s,
+      ),
+    )
+  }
+
   // Check if service needs variable input
   const servicesNeedingVariables = useMemo(() => {
     return selectedServices.filter((s) => s.hasVariable)
@@ -174,6 +192,17 @@ export function PricingCalculator() {
         monthly += price
       } else if (service.type === "Annual") {
         annual += price
+      }
+
+      // Add option prices
+      if (service.selectedOptions) {
+        service.selectedOptions.forEach((optionId) => {
+          const optionPrice =
+            servicesData[service.category].services
+              .find((s) => s.id === service.id)
+              ?.options?.find((o) => o.id === optionId)?.price || 0
+          oneTime += optionPrice
+        })
       }
     })
 
@@ -198,8 +227,9 @@ export function PricingCalculator() {
           contactInfo,
           selectedServices: selectedServices.map((s) => ({
             name: s.name,
-            price: s.price * (s.quantity || 1),
+            price: s.price * (s.quantity || 1) + (s.selectedOptions?.reduce((total, optionId) => total + (servicesData[s.category].services.find((serv) => serv.id === s.id)?.options?.find((o) => o.id === optionId)?.price || 0), 0),\
             quantity: s.quantity,
+            selectedOptions: s.selectedOptions,
           })),
           totalPrice: preliminaryTotal.yearTotal,
         }),
@@ -356,143 +386,152 @@ export function PricingCalculator() {
             >
               {/* Left Column - Service Selection */}
               <div className="lg:col-span-2 space-y-4">
-                {(Object.keys(servicesData) as ServiceCategory[]).map((categoryKey, index) => {
-                  const category = servicesData[categoryKey]
-                  const Icon = category.icon
-                  const isExpanded = expandedCategory === categoryKey
-                  const selectedCount = selectedServices.filter((s) => s.category === categoryKey).length
+                {/* Tab Navigation */}
+                <div className="flex gap-2 mb-6 bg-slate-100/80 p-1.5 rounded-xl">
+                  {(Object.keys(servicesData) as ServiceCategory[]).map((categoryKey) => {
+                    const category = servicesData[categoryKey]
+                    const Icon = category.icon
+                    const isActive = activeTab === categoryKey
+                    const selectedCount = selectedServices.filter((s) => s.category === categoryKey).length
 
-                  return (
-                    <motion.div
-                      key={categoryKey}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: index * 0.1 }}
-                      className="overflow-hidden"
-                    >
+                    return (
                       <button
-                        onClick={() => toggleCategory(categoryKey)}
-                        className={`w-full flex items-center justify-between p-4 rounded-xl transition-all duration-300 border ${
-                          isExpanded
-                            ? "bg-white shadow-lg shadow-sky-200/60 border-sky-200"
-                            : "bg-white hover:bg-white shadow-md shadow-slate-200/80 hover:shadow-lg hover:shadow-sky-100/60 border-slate-200/80 hover:border-sky-200"
+                        key={categoryKey}
+                        onClick={() => setActiveTab(categoryKey)}
+                        className={`flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-lg transition-all duration-300 ${
+                          isActive
+                            ? "bg-white shadow-md text-slate-800"
+                            : "text-slate-500 hover:text-slate-700 hover:bg-white/50"
                         }`}
                       >
-                        <div className="flex items-center gap-3">
-                          <div
-                            className={`w-10 h-10 rounded-xl bg-gradient-to-br ${category.color} flex items-center justify-center shadow-sm`}
-                          >
-                            <Icon className="w-5 h-5 text-white" />
-                          </div>
-                          <div className="text-left">
-                            <h3 className="text-base font-semibold text-slate-800">{category.title}</h3>
-                            <p className="text-sm text-slate-500">{category.services.length} services available</p>
-                          </div>
+                        <div
+                          className={`w-8 h-8 rounded-lg bg-gradient-to-br ${category.color} flex items-center justify-center`}
+                        >
+                          <Icon className="w-4 h-4 text-white" />
                         </div>
-                        <div className="flex items-center gap-3">
-                          {selectedCount > 0 && (
-                            <span className="px-3 py-1 bg-sky-100 text-sky-700 text-xs font-medium rounded-full">
-                              {selectedCount} selected
-                            </span>
-                          )}
-                          <motion.div animate={{ rotate: isExpanded ? 180 : 0 }} transition={{ duration: 0.2 }}>
-                            <ChevronDown className="w-5 h-5 text-slate-400" />
-                          </motion.div>
-                        </div>
-                      </button>
-
-                      <AnimatePresence>
-                        {isExpanded && (
-                          <motion.div
-                            initial={{ height: 0, opacity: 0 }}
-                            animate={{ height: "auto", opacity: 1 }}
-                            exit={{ height: 0, opacity: 0 }}
-                            transition={{ duration: 0.3 }}
-                            className="overflow-hidden"
-                          >
-                            <div className="p-4 space-y-2 bg-slate-50/80 rounded-b-2xl -mt-2">
-                              {category.services.map((service) => {
-                                const isSelected = selectedServices.some((s) => s.id === service.id)
-                                return (
-                                  <motion.div
-                                    key={service.id}
-                                    initial={{ opacity: 0, x: -20 }}
-                                    animate={{ opacity: 1, x: 0 }}
-                                    className={`flex flex-col p-4 rounded-xl cursor-pointer transition-all duration-200 ${
-                                      isSelected ? "bg-sky-50 border border-sky-200" : "bg-white/80 hover:bg-white"
-                                    }`}
-                                  >
-                                    <div
-                                      className="flex items-center justify-between"
-                                      onClick={() => toggleService(categoryKey, service)}
-                                    >
-                                      <div className="flex items-center gap-3">
-                                        <Checkbox
-                                          checked={isSelected}
-                                          className="data-[state=checked]:bg-sky-600 data-[state=checked]:border-sky-600"
-                                        />
-                                        <div>
-                                          <p className="font-medium text-slate-800">{service.name}</p>
-                                          <p className="text-xs text-slate-500">{service.type}</p>
-                                        </div>
-                                      </div>
-                                      <div className="text-right">
-                                        <p className="font-semibold text-sky-600">฿{formatPrice(service.price)}</p>
-                                        {service.type === "Per Employee/Month" && (
-                                          <p className="text-xs text-slate-500">/employee/month</p>
-                                        )}
-                                      </div>
-                                    </div>
-
-                                    {isSelected && service.variableType === "employees" && (
-                                      <motion.div
-                                        initial={{ opacity: 0, height: 0 }}
-                                        animate={{ opacity: 1, height: "auto" }}
-                                        exit={{ opacity: 0, height: 0 }}
-                                        className="mt-4 pt-4 border-t border-slate-200"
-                                        onClick={(e) => e.stopPropagation()}
-                                      >
-                                        <Label
-                                          htmlFor={`employees-${service.id}`}
-                                          className="text-sm text-slate-600 mb-2 block"
-                                        >
-                                          How many employees?
-                                        </Label>
-                                        <div className="flex items-center gap-3">
-                                          <Input
-                                            id={`employees-${service.id}`}
-                                            type="number"
-                                            min={1}
-                                            value={selectedServices.find((s) => s.id === service.id)?.quantity || 1}
-                                            onChange={(e) => {
-                                              const value = Math.max(1, Number.parseInt(e.target.value) || 1)
-                                              setSelectedServices((prev) =>
-                                                prev.map((s) => (s.id === service.id ? { ...s, quantity: value } : s)),
-                                              )
-                                            }}
-                                            className="w-24 bg-white border-slate-300 text-slate-800"
-                                          />
-                                          <span className="text-sm text-slate-600">
-                                            = ฿
-                                            {formatPrice(
-                                              service.price *
-                                                (selectedServices.find((s) => s.id === service.id)?.quantity || 1),
-                                            )}
-                                            /month
-                                          </span>
-                                        </div>
-                                      </motion.div>
-                                    )}
-                                  </motion.div>
-                                )
-                              })}
-                            </div>
-                          </motion.div>
+                        <span className="font-medium text-sm hidden sm:inline">
+                          {categoryKey === "corporate"
+                            ? "Corporate"
+                            : categoryKey === "accounting"
+                              ? "Accounting"
+                              : "Advisory"}
+                        </span>
+                        {selectedCount > 0 && (
+                          <span className="px-2 py-0.5 bg-sky-100 text-sky-700 text-xs font-medium rounded-full">
+                            {selectedCount}
+                          </span>
                         )}
-                      </AnimatePresence>
-                    </motion.div>
-                  )
-                })}
+                      </button>
+                    )
+                  })}
+                </div>
+
+                {/* Tab Content - Services List */}
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={activeTab}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.2 }}
+                    className="space-y-2"
+                  >
+                    <div className="mb-4">
+                      <h3 className="text-lg font-semibold text-slate-800">{servicesData[activeTab].title}</h3>
+                      <p className="text-sm text-slate-500">
+                        {servicesData[activeTab].services.length} services available
+                      </p>
+                    </div>
+                    {servicesData[activeTab].services.map((service) => {
+                      const isSelected = selectedServices.some((s) => s.id === service.id)
+                      return (
+                        <motion.div
+                          key={service.id}
+                          initial={{ opacity: 0, x: -20 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          className={`flex flex-col p-4 rounded-xl cursor-pointer transition-all duration-200 border ${
+                            isSelected ? "bg-sky-50 border-sky-200" : "bg-white hover:bg-slate-50 border-slate-200/80"
+                          }`}
+                        >
+                          <div
+                            className="flex items-center justify-between"
+                            onClick={() => toggleService(activeTab, service)}
+                          >
+                            <div className="flex items-center gap-3">
+                              <Checkbox
+                                checked={isSelected}
+                                className="data-[state=checked]:bg-sky-600 data-[state=checked]:border-sky-600"
+                              />
+                              <div>
+                                <p className="font-medium text-slate-800">{service.name}</p>
+                                <p className="text-xs text-slate-500">{service.description}</p>
+                              </div>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <span className="text-sm font-semibold text-slate-700">
+                                ฿{service.price.toLocaleString()}
+                              </span>
+                              {service.hasOptions && (
+                                <ChevronDown
+                                  className={`w-4 h-4 text-slate-400 transition-transform ${
+                                    isSelected ? "rotate-180" : ""
+                                  }`}
+                                />
+                              )}
+                            </div>
+                          </div>
+
+                          {/* Service Options */}
+                          <AnimatePresence>
+                            {isSelected && service.hasOptions && service.options && (
+                              <motion.div
+                                initial={{ height: 0, opacity: 0 }}
+                                animate={{ height: "auto", opacity: 1 }}
+                                exit={{ height: 0, opacity: 0 }}
+                                transition={{ duration: 0.2 }}
+                                className="mt-3 pt-3 border-t border-slate-200"
+                              >
+                                <p className="text-xs text-slate-500 mb-2">Select options:</p>
+                                <div className="space-y-2">
+                                  {service.options.map((option) => {
+                                    const currentService = selectedServices.find((s) => s.id === service.id)
+                                    const isOptionSelected = currentService?.selectedOptions?.includes(option.id)
+
+                                    return (
+                                      <div
+                                        key={option.id}
+                                        onClick={(e) => {
+                                          e.stopPropagation()
+                                          toggleOption(activeTab, service.id, option)
+                                        }}
+                                        className={`flex items-center justify-between p-2 rounded-lg cursor-pointer transition-all ${
+                                          isOptionSelected
+                                            ? "bg-sky-100 border border-sky-200"
+                                            : "bg-slate-50 hover:bg-slate-100 border border-transparent"
+                                        }`}
+                                      >
+                                        <div className="flex items-center gap-2">
+                                          <Checkbox
+                                            checked={isOptionSelected}
+                                            className="data-[state=checked]:bg-sky-600 data-[state=checked]:border-sky-600 w-4 h-4"
+                                          />
+                                          <span className="text-sm text-slate-700">{option.name}</span>
+                                        </div>
+                                        <span className="text-xs font-medium text-slate-600">
+                                          +฿{option.price.toLocaleString()}
+                                        </span>
+                                      </div>
+                                    )
+                                  })}
+                                </div>
+                              </motion.div>
+                            )}
+                          </AnimatePresence>
+                        </motion.div>
+                      )
+                    })}
+                  </motion.div>
+                </AnimatePresence>
               </div>
 
               {/* Right Column - Sticky Quote Panel */}
