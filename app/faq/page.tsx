@@ -446,13 +446,13 @@ export default function FAQPage() {
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
         >
-          <div className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 rounded-2xl p-8 sm:p-12 text-center relative overflow-hidden">
+          <div className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-8 sm:p-12 md:p-16 text-center relative overflow-hidden w-full">
             <div className="absolute top-0 left-0 w-full h-full">
               <div className="absolute top-10 left-10 w-32 h-32 bg-sky-500/10 rounded-full blur-2xl" />
               <div className="absolute bottom-10 right-10 w-40 h-40 bg-teal-500/10 rounded-full blur-2xl" />
             </div>
 
-            <div className="relative z-10">
+            <div className="relative z-10 max-w-2xl mx-auto">
               <div className="w-14 h-14 rounded-full bg-gradient-to-br from-sky-500/20 to-teal-500/20 flex items-center justify-center mx-auto mb-6">
                 <MessageCircle className="w-7 h-7 text-sky-400" />
               </div>
