@@ -392,8 +392,8 @@ export function FloatingChatBot() {
   }, [voiceMode])
 
   const tooltipMessages = isCalculatorPage
-    ? ["Welcome to Schedule page", "Want russian suggestion ?", "Let me help build your quote", "Trust me on this!"]
-    : ["Hi, I'm Panida", "Got questions?", "I can speak Russian!", "I'm here to help"]
+    ? ["Welcome to Schedule page", "Want suggestion in russian?", "Let me help build your quote", "Trust me on this!"]
+    : ["Hi, I'm Panida", "Got questions?", "Don't know where to start?", "I'm here to help!"]
   const randomMessage = tooltipMessages[Math.floor(Date.now() / 8000) % tooltipMessages.length]
 
   const getVoiceModeStatus = () => {
