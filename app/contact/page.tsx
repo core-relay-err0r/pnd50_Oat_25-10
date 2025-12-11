@@ -1,6 +1,7 @@
 "use client"
 
-import type React from "react"
+import React from "react"
+
 import dynamic from "next/dynamic"
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
@@ -34,7 +35,7 @@ export default function ContactPage() {
   const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle")
   const [copiedItem, setCopiedItem] = useState<string | null>(null)
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     setIsSubmitting(true)
     setSubmitStatus("idle")
@@ -78,14 +79,14 @@ export default function ContactPage() {
     }
   }
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
     })
   }
 
-  const copyToClipboard = async (text: string, itemId: string) => {
+  const copyToClipboard = async (text, itemId) => {
     try {
       await navigator.clipboard.writeText(text)
       setCopiedItem(itemId)
@@ -145,22 +146,18 @@ export default function ContactPage() {
                 </p>
 
                 {/* Quick Contact Methods */}
-                <div className="mt-8 flex flex-wrap gap-4">
-                  {contactMethods.map((method) => (
-                    <motion.a
-                      key={method.id}
-                      href={method.href}
-                      className="group flex items-center gap-3 bg-white border border-slate-200 rounded-xl px-4 py-3 hover:border-sky-300 hover:shadow-md transition-all duration-300"
-                      whileHover={{ y: -2 }}
-                    >
-                      <div className={`w-10 h-10 ${method.color} rounded-lg flex items-center justify-center`}>
-                        <method.icon className="w-5 h-5 text-white" />
-                      </div>
-                      <div>
-                        <p className="text-xs text-slate-500 uppercase tracking-wide">{method.label}</p>
-                        <p className="text-slate-800 font-medium">{method.value}</p>
-                      </div>
-                    </motion.a>
+                <div className="mt-8 flex flex-wrap items-center gap-6 text-slate-600">
+                  {contactMethods.map((method, index) => (
+                    <React.Fragment key={method.id}>
+                      <a
+                        href={method.href}
+                        className="inline-flex items-center gap-2 hover:text-sky-600 transition-colors"
+                      >
+                        <method.icon className="w-4 h-4 text-sky-500" />
+                        <span className="font-medium">{method.value}</span>
+                      </a>
+                      {index < contactMethods.length - 1 && <span className="text-slate-300">|</span>}
+                    </React.Fragment>
                   ))}
                 </div>
               </motion.div>
