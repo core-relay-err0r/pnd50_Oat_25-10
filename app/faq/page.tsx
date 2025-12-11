@@ -1,7 +1,8 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
+import dynamic from "next/dynamic"
 import {
   FileText,
   Building2,
@@ -17,6 +18,12 @@ import {
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { motion, AnimatePresence } from "framer-motion"
+import { LandingFooter } from "@/components/landing-footer"
+
+const AnimatedGridBackground = dynamic(
+  () => import("@/components/ui/animated-grid-background").then((mod) => mod.AnimatedGridBackground),
+  { ssr: false },
+)
 
 const faqCategories = [
   {
@@ -121,6 +128,18 @@ export default function FAQPage() {
   const [searchQuery, setSearchQuery] = useState("")
   const [openItems, setOpenItems] = useState<string[]>([])
   const [activeCategory, setActiveCategory] = useState<string | null>(null)
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePosition({
+        x: (e.clientX / window.innerWidth - 0.5) * 20,
+        y: (e.clientY / window.innerHeight - 0.5) * 20,
+      })
+    }
+    window.addEventListener("mousemove", handleMouseMove)
+    return () => window.removeEventListener("mousemove", handleMouseMove)
+  }, [])
 
   const toggleItem = (id: string) => {
     setOpenItems((prev) => (prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]))
@@ -142,22 +161,80 @@ export default function FAQPage() {
     : filteredCategories
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* Hero Section - Clean and minimal */}
-      <div className="pt-24 pb-12 sm:pt-32 sm:pb-16 border-b border-slate-100">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-sky-50/80 relative overflow-hidden">
+      <motion.div
+        className="absolute top-[15%] left-[8%] w-20 h-20 border-2 border-sky-300/40 rounded-2xl pointer-events-none"
+        animate={{
+          rotate: [0, 90, 180, 270, 360],
+          y: [0, -15, 0, 15, 0],
+        }}
+        transition={{ duration: 20, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
+        style={{
+          transform: `translate(${mousePosition.x * 0.3}px, ${mousePosition.y * 0.3}px)`,
+        }}
+      />
+      <motion.div
+        className="absolute top-[25%] right-[12%] w-16 h-16 border-2 border-teal-300/30 rounded-full pointer-events-none"
+        animate={{
+          scale: [1, 1.2, 1],
+          opacity: [0.3, 0.6, 0.3],
+        }}
+        transition={{ duration: 4, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
+      />
+      <motion.div
+        className="absolute bottom-[30%] left-[15%] w-12 h-12 bg-gradient-to-br from-sky-200/30 to-teal-200/30 rounded-lg pointer-events-none"
+        animate={{
+          rotate: [45, 135, 225, 315, 405],
+        }}
+        transition={{ duration: 15, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
+      />
+      <motion.div
+        className="absolute top-[60%] right-[20%] w-8 h-8 bg-gradient-to-br from-blue-300/40 to-sky-300/40 rounded-full pointer-events-none"
+        animate={{
+          y: [0, -20, 0],
+          x: [0, 10, 0],
+        }}
+        transition={{ duration: 5, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
+      />
+
+      <div
+        className="absolute top-20 left-10 w-[500px] h-[500px] bg-gradient-to-br from-sky-200/40 via-blue-200/30 to-teal-200/20 rounded-full blur-3xl pointer-events-none"
+        style={{
+          transform: `translate(${mousePosition.x}px, ${mousePosition.y}px)`,
+          transition: "transform 0.5s ease-out",
+        }}
+      />
+      <div
+        className="absolute bottom-20 right-10 w-[450px] h-[450px] bg-gradient-to-br from-teal-200/35 via-sky-200/25 to-blue-200/20 rounded-full blur-3xl pointer-events-none"
+        style={{
+          transform: `translate(${-mousePosition.x}px, ${-mousePosition.y}px)`,
+          transition: "transform 0.5s ease-out",
+        }}
+      />
+
+      {/* Hero Section - Updated to match landing page style */}
+      <div className="pt-24 pb-12 sm:pt-32 sm:pb-16 relative z-10">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl">
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-              <span className="text-sm font-medium text-sky-600 mb-4 block">Help Center</span>
-              <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-slate-900 tracking-tight mb-6">
-                Frequently Asked Questions
+              <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/80 backdrop-blur-sm border border-sky-200/50 text-sm font-medium text-sky-600 mb-6">
+                Help Center
+              </span>
+              <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight mb-6">
+                <span className="bg-gradient-to-r from-blue-600 via-sky-500 to-teal-400 bg-clip-text text-transparent">
+                  Frequently Asked
+                </span>
+                <br />
+                <span className="bg-gradient-to-r from-slate-900 via-slate-700 to-slate-500 bg-clip-text text-transparent">
+                  Questions
+                </span>
               </h1>
-              <p className="text-lg sm:text-xl text-slate-500 max-w-2xl">
+              <p className="text-lg sm:text-xl text-slate-600 max-w-2xl">
                 Clear answers about accounting, tax, and business setup in Thailand — explained in simple English.
               </p>
             </motion.div>
 
-            {/* Search */}
+            {/* Search - Updated styling */}
             <motion.div
               className="mt-8 max-w-xl"
               initial={{ opacity: 0, y: 20 }}
@@ -171,7 +248,7 @@ export default function FAQPage() {
                   placeholder="Search questions..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-12 pr-12 py-4 text-base bg-slate-50 border-slate-200 rounded-xl focus:bg-white focus:border-sky-300 transition-all"
+                  className="pl-12 pr-12 py-4 text-base bg-white/80 backdrop-blur-sm border-slate-200/50 rounded-xl focus:bg-white focus:border-sky-300 transition-all shadow-sm"
                 />
                 {searchQuery && (
                   <button
@@ -187,16 +264,16 @@ export default function FAQPage() {
         </div>
       </div>
 
-      {/* Category Filter */}
-      <div className="border-b border-slate-100 bg-slate-50/50">
+      {/* Category Filter - Updated styling */}
+      <div className="relative z-10 bg-white/50 backdrop-blur-sm border-y border-slate-200/50">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
             <button
               onClick={() => setActiveCategory(null)}
               className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all whitespace-nowrap ${
                 activeCategory === null
-                  ? "bg-slate-900 text-white"
-                  : "bg-white text-slate-600 hover:bg-slate-100 border border-slate-200"
+                  ? "bg-gradient-to-r from-blue-600 to-sky-500 text-white shadow-md"
+                  : "bg-white/80 text-slate-600 hover:bg-white border border-slate-200/50"
               }`}
             >
               All Questions
@@ -209,8 +286,8 @@ export default function FAQPage() {
                   onClick={() => setActiveCategory(activeCategory === category.id ? null : category.id)}
                   className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all whitespace-nowrap ${
                     activeCategory === category.id
-                      ? "bg-slate-900 text-white"
-                      : "bg-white text-slate-600 hover:bg-slate-100 border border-slate-200"
+                      ? "bg-gradient-to-r from-blue-600 to-sky-500 text-white shadow-md"
+                      : "bg-white/80 text-slate-600 hover:bg-white border border-slate-200/50"
                   }`}
                 >
                   <Icon className="w-4 h-4" />
@@ -222,10 +299,10 @@ export default function FAQPage() {
         </div>
       </div>
 
-      {/* FAQ Content - Two column layout */}
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+      {/* FAQ Content */}
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 relative z-10">
         <div className="grid lg:grid-cols-[280px_1fr] gap-12">
-          {/* Sidebar - Category list */}
+          {/* Sidebar - Updated styling */}
           <motion.aside
             className="hidden lg:block"
             initial={{ opacity: 0, x: -20 }}
@@ -242,13 +319,13 @@ export default function FAQPage() {
                     <a
                       key={category.id}
                       href={`#${category.id}`}
-                      className="flex items-center justify-between px-3 py-2.5 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-all group"
+                      className="flex items-center justify-between px-3 py-2.5 rounded-lg text-slate-600 hover:bg-white/80 hover:text-slate-900 transition-all group"
                     >
                       <div className="flex items-center gap-3">
                         <Icon className="w-4 h-4 text-slate-400 group-hover:text-sky-500 transition-colors" />
                         <span className="text-sm font-medium">{category.title}</span>
                       </div>
-                      <span className="text-xs text-slate-400 bg-slate-100 px-2 py-0.5 rounded-full">
+                      <span className="text-xs text-slate-400 bg-white/80 px-2 py-0.5 rounded-full">
                         {questionCount}
                       </span>
                     </a>
@@ -256,20 +333,24 @@ export default function FAQPage() {
                 })}
               </nav>
 
-              {/* Quick contact */}
-              <div className="mt-8 p-4 bg-slate-50 rounded-xl border border-slate-100">
+              {/* Quick contact - Updated styling */}
+              <div className="mt-8 p-4 bg-white/80 backdrop-blur-sm rounded-xl border border-slate-200/50 shadow-sm">
                 <h4 className="font-semibold text-slate-900 mb-2">Need more help?</h4>
                 <p className="text-sm text-slate-500 mb-4">
                   Can't find what you're looking for? Our team is here to help.
                 </p>
-                <Button asChild size="sm" className="w-full">
+                <Button
+                  asChild
+                  size="sm"
+                  className="w-full bg-gradient-to-r from-blue-600 to-sky-500 hover:from-blue-700 hover:to-sky-600"
+                >
                   <Link href="/contact">Contact Us</Link>
                 </Button>
               </div>
             </div>
           </motion.aside>
 
-          {/* Main content */}
+          {/* Main content - Updated card styling */}
           <div className="min-w-0">
             {displayCategories.length > 0 ? (
               <div className="space-y-12">
@@ -288,24 +369,29 @@ export default function FAQPage() {
                       <span className="text-sm text-slate-400">{category.questions.length} questions</span>
                     </div>
 
-                    <div className="divide-y divide-slate-100">
+                    <div className="space-y-3">
                       {category.questions.map((q) => {
                         const isOpen = openItems.includes(q.id)
                         return (
-                          <div key={q.id} className="py-5">
+                          <div
+                            key={q.id}
+                            className="bg-white/80 backdrop-blur-sm rounded-xl border border-slate-200/50 shadow-sm overflow-hidden"
+                          >
                             <button
                               onClick={() => toggleItem(q.id)}
-                              className="w-full flex items-start justify-between gap-4 text-left group"
+                              className="w-full flex items-start justify-between gap-4 text-left p-5 group"
                             >
                               <span className="text-base sm:text-lg font-medium text-slate-900 group-hover:text-sky-600 transition-colors pr-4">
                                 {q.question}
                               </span>
-                              <span className="flex-shrink-0 w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center group-hover:bg-sky-100 transition-colors">
-                                {isOpen ? (
-                                  <Minus className="w-4 h-4 text-slate-500 group-hover:text-sky-600" />
-                                ) : (
-                                  <Plus className="w-4 h-4 text-slate-500 group-hover:text-sky-600" />
-                                )}
+                              <span
+                                className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center transition-colors ${
+                                  isOpen
+                                    ? "bg-sky-100 text-sky-600"
+                                    : "bg-slate-100 text-slate-500 group-hover:bg-sky-50 group-hover:text-sky-500"
+                                }`}
+                              >
+                                {isOpen ? <Minus className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
                               </span>
                             </button>
 
@@ -318,10 +404,10 @@ export default function FAQPage() {
                                   transition={{ duration: 0.3 }}
                                   className="overflow-hidden"
                                 >
-                                  <div className="pt-4 pr-12">
-                                    <p className="text-slate-600 leading-relaxed">{q.answer}</p>
+                                  <div className="px-5 pb-5 pr-16 border-t border-slate-100">
+                                    <p className="text-slate-600 leading-relaxed pt-4">{q.answer}</p>
                                     {q.reference && (
-                                      <div className="mt-4 px-4 py-3 bg-slate-50 rounded-lg border-l-2 border-sky-400">
+                                      <div className="mt-4 px-4 py-3 bg-gradient-to-r from-sky-50 to-teal-50 rounded-lg border-l-2 border-sky-400">
                                         <p className="text-sm text-slate-500">
                                           <span className="font-medium text-slate-700">Reference:</span> {q.reference}
                                         </p>
@@ -340,7 +426,7 @@ export default function FAQPage() {
               </div>
             ) : (
               <div className="text-center py-16">
-                <div className="w-16 h-16 rounded-full bg-slate-100 flex items-center justify-center mx-auto mb-6">
+                <div className="w-16 h-16 rounded-full bg-white/80 flex items-center justify-center mx-auto mb-6 shadow-sm">
                   <Search className="w-8 h-8 text-slate-400" />
                 </div>
                 <h3 className="text-xl font-bold text-slate-900 mb-2">No results found</h3>
@@ -353,7 +439,7 @@ export default function FAQPage() {
           </div>
         </div>
 
-        {/* CTA Section */}
+        {/* CTA Section - Updated with gradient */}
         <motion.section
           className="mt-16 sm:mt-24"
           initial={{ opacity: 0, y: 20 }}
@@ -361,34 +447,47 @@ export default function FAQPage() {
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
         >
-          <div className="bg-slate-900 rounded-2xl p-8 sm:p-12 text-center">
-            <div className="w-14 h-14 rounded-full bg-white/10 flex items-center justify-center mx-auto mb-6">
-              <MessageCircle className="w-7 h-7 text-white" />
+          <div className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 rounded-2xl p-8 sm:p-12 text-center relative overflow-hidden">
+            <div className="absolute top-0 left-0 w-full h-full">
+              <div className="absolute top-10 left-10 w-32 h-32 bg-sky-500/10 rounded-full blur-2xl" />
+              <div className="absolute bottom-10 right-10 w-40 h-40 bg-teal-500/10 rounded-full blur-2xl" />
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white mb-4">Still have questions?</h2>
-            <p className="text-slate-400 max-w-lg mx-auto mb-8">
-              Can't find what you're looking for? Our team is ready to guide you step by step — in simple English, with
-              full transparency.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-3 justify-center">
-              <Button asChild size="lg" className="bg-white text-slate-900 hover:bg-slate-100">
-                <Link href="/contact" className="flex items-center gap-2">
-                  Contact Us
-                  <ChevronRight className="w-4 h-4" />
-                </Link>
-              </Button>
-              <Button
-                asChild
-                size="lg"
-                variant="outline"
-                className="border-slate-700 text-white hover:bg-slate-800 bg-transparent"
-              >
-                <Link href="/calculator">Get Free Consultation</Link>
-              </Button>
+
+            <div className="relative z-10">
+              <div className="w-14 h-14 rounded-full bg-gradient-to-br from-sky-500/20 to-teal-500/20 flex items-center justify-center mx-auto mb-6">
+                <MessageCircle className="w-7 h-7 text-sky-400" />
+              </div>
+              <h2 className="text-2xl sm:text-3xl font-bold text-white mb-4">Still have questions?</h2>
+              <p className="text-slate-400 max-w-lg mx-auto mb-8">
+                Can't find what you're looking for? Our team is ready to guide you step by step — in simple English,
+                with full transparency.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                <Button
+                  asChild
+                  size="lg"
+                  className="bg-gradient-to-r from-sky-500 to-teal-400 hover:from-sky-600 hover:to-teal-500 text-white border-0"
+                >
+                  <Link href="/contact" className="flex items-center gap-2">
+                    Contact Us
+                    <ChevronRight className="w-4 h-4" />
+                  </Link>
+                </Button>
+                <Button
+                  asChild
+                  size="lg"
+                  variant="outline"
+                  className="border-slate-600 text-white hover:bg-slate-800 bg-transparent"
+                >
+                  <Link href="/calculator">Get Free Consultation</Link>
+                </Button>
+              </div>
             </div>
           </div>
         </motion.section>
       </div>
+
+      <LandingFooter variant="light" />
     </div>
   )
 }
