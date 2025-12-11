@@ -197,7 +197,7 @@ export default function CalculatorSuccessPage() {
                 <Button
                   asChild
                   variant="outline"
-                  className="flex-1 border-slate-300 text-slate-700 bg-white hover:border-primary hover:text-primary transition-all duration-200"
+                  className="flex-1 border-slate-300 text-slate-700 bg-white hover:border-slate-400 hover:bg-slate-50 hover:shadow-sm transition-all duration-200"
                 >
                   <Link href="/calculator">Get Another Quote</Link>
                 </Button>
