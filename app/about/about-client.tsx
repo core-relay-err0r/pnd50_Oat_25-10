@@ -370,7 +370,7 @@ const AboutClientPage = () => {
       </section>
 
       <motion.section
-        className="py-12 sm:py-24 md:py-32"
+        className="pt-12 sm:pt-24 md:pt-32"
         variants={fadeInUp}
         initial="hidden"
         whileInView="visible"
