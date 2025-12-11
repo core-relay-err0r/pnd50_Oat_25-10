@@ -635,12 +635,12 @@ export function PricingCalculator() {
                     className="bg-white/90 backdrop-blur-xl rounded-2xl overflow-hidden shadow-xl shadow-sky-100/50 border border-slate-100"
                   >
                     {/* Panel Header */}
-                    <div className="p-6 border-b border-slate-100">
+                    <div className="p-4 sm:p-6 border-b border-slate-100">
                       <div className="flex items-center gap-3 mb-2">
-                        <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-sky-500 to-cyan-500 flex items-center justify-center">
+                        <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-sky-500 to-cyan-500 flex items-center justify-center flex-shrink-0">
                           <FileText className="w-5 h-5 text-white" />
                         </div>
-                        <div>
+                        <div className="min-w-0">
                           <h3 className="font-semibold text-slate-800">Your Quote</h3>
                           <p className="text-xs text-slate-500">{selectedServices.length} services selected</p>
                         </div>
@@ -648,7 +648,7 @@ export function PricingCalculator() {
                     </div>
 
                     {/* Selected Services List */}
-                    <div className="p-4 max-h-[300px] overflow-y-auto space-y-2">
+                    <div className="p-3 sm:p-4 max-h-[300px] overflow-y-auto space-y-2">
                       {selectedServices.length === 0 ? (
                         <div className="text-center py-8 text-slate-400">
                           <Calculator className="w-12 h-12 mx-auto mb-3 opacity-50" />
@@ -658,19 +658,19 @@ export function PricingCalculator() {
                         selectedServices.map((service) => (
                           <div
                             key={service.id}
-                            className="flex items-center justify-between p-3 bg-slate-50 rounded-lg"
+                            className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-2 sm:p-3 bg-slate-50 rounded-lg gap-1 sm:gap-2"
                           >
-                            <div className="flex-1 pr-2">
+                            <div className="flex-1 min-w-0">
                               <p className="text-sm font-medium text-slate-800 truncate">{service.name}</p>
                               <p className="text-xs text-slate-500">{service.type}</p>
                             </div>
-                            <div className="flex items-center gap-2">
-                              <span className="text-sm font-semibold text-sky-600">
+                            <div className="flex items-center justify-between sm:justify-end gap-2 flex-shrink-0">
+                              <span className="text-sm font-semibold text-sky-600 whitespace-nowrap">
                                 ฿{formatPrice(service.price * (service.quantity || 1))}
                               </span>
                               <button
                                 onClick={() => setSelectedServices(selectedServices.filter((s) => s.id !== service.id))}
-                                className="p-1 hover:bg-slate-200 rounded transition-colors"
+                                className="p-1 hover:bg-slate-200 rounded transition-colors flex-shrink-0"
                               >
                                 <X className="w-4 h-4 text-slate-400" />
                               </button>
@@ -682,33 +682,35 @@ export function PricingCalculator() {
 
                     {/* Price Summary */}
                     {selectedServices.length > 0 && (
-                      <div className="p-4 space-y-3 border-t border-slate-100">
+                      <div className="p-3 sm:p-4 space-y-2 sm:space-y-3 border-t border-slate-100">
                         {preliminaryTotal.oneTime > 0 && (
-                          <div className="flex justify-between text-sm">
+                          <div className="flex justify-between text-sm gap-2">
                             <span className="text-slate-500">One-time Fees</span>
-                            <span className="text-slate-800 font-medium">฿{formatPrice(preliminaryTotal.oneTime)}</span>
+                            <span className="text-slate-800 font-medium whitespace-nowrap flex-shrink-0">
+                              ฿{formatPrice(preliminaryTotal.oneTime)}
+                            </span>
                           </div>
                         )}
                         {preliminaryTotal.monthly > 0 && (
-                          <div className="flex justify-between text-sm">
+                          <div className="flex justify-between text-sm gap-2">
                             <span className="text-slate-500">Monthly Fees</span>
-                            <span className="text-slate-800 font-medium">
+                            <span className="text-slate-800 font-medium whitespace-nowrap flex-shrink-0">
                               ฿{formatPrice(preliminaryTotal.monthly)}/mo
                             </span>
                           </div>
                         )}
                         {preliminaryTotal.annual > 0 && (
-                          <div className="flex justify-between text-sm">
+                          <div className="flex justify-between text-sm gap-2">
                             <span className="text-slate-500">Annual Fees</span>
-                            <span className="text-slate-800 font-medium">
+                            <span className="text-slate-800 font-medium whitespace-nowrap flex-shrink-0">
                               ฿{formatPrice(preliminaryTotal.annual)}/yr
                             </span>
                           </div>
                         )}
-                        <div className="pt-3 border-t border-slate-100">
-                          <div className="flex justify-between">
+                        <div className="pt-2 sm:pt-3 border-t border-slate-100">
+                          <div className="flex justify-between items-center gap-2">
                             <span className="text-slate-800 font-semibold">Year 1 Total</span>
-                            <span className="text-xl font-bold text-sky-600">
+                            <span className="text-lg sm:text-xl font-bold text-sky-600 whitespace-nowrap flex-shrink-0">
                               ฿{formatPrice(preliminaryTotal.yearTotal)}
                             </span>
                           </div>
@@ -718,7 +720,7 @@ export function PricingCalculator() {
                     )}
 
                     {/* Action Button */}
-                    <div className="p-4">
+                    <div className="p-3 sm:p-4">
                       <Button
                         onClick={handleCalculate}
                         disabled={selectedServices.length === 0}
