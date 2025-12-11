@@ -7,9 +7,8 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
-import { Mail, Phone, MapPin, Send, CheckCircle2, MessageSquare, Building2 } from "lucide-react"
+import { Mail, Phone, MapPin, Send, CheckCircle2, MessageSquare, Building2, Clock, ArrowRight } from "lucide-react"
 import { motion } from "framer-motion"
-import { Card, CardContent } from "@/components/ui/card"
 
 const AnimatedGridBackground = dynamic(
   () => import("@/components/ui/animated-grid-background").then((mod) => mod.AnimatedGridBackground),
@@ -19,26 +18,6 @@ const AnimatedGridBackground = dynamic(
 const fadeInUp = {
   hidden: { opacity: 0, y: 30 },
   visible: { opacity: 1, y: 0 },
-}
-
-const fadeInLeft = {
-  hidden: { opacity: 0, x: -30 },
-  visible: { opacity: 1, x: 0 },
-}
-
-const fadeInRight = {
-  hidden: { opacity: 0, x: 30 },
-  visible: { opacity: 1, x: 0 },
-}
-
-const staggerContainer = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-    },
-  },
 }
 
 export default function ContactPage() {
@@ -116,457 +95,405 @@ export default function ContactPage() {
     }
   }
 
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-sky-50/80">
-      <AnimatedGridBackground className="min-h-screen" variant="light">
-        <motion.div
-          className="absolute top-[15%] left-[8%] w-20 h-20 border-2 border-sky-300/40 rounded-2xl"
-          animate={{
-            rotate: [0, 90, 180, 270, 360],
-            y: [0, -15, 0, 15, 0],
-          }}
-          transition={{ duration: 20, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
-        />
-        <motion.div
-          className="absolute top-[25%] right-[12%] w-16 h-16 border-2 border-teal-300/30 rounded-full"
-          animate={{
-            scale: [1, 1.2, 1],
-            opacity: [0.3, 0.6, 0.3],
-          }}
-          transition={{ duration: 4, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
-        />
-        <motion.div
-          className="absolute bottom-[30%] left-[15%] w-12 h-12 bg-gradient-to-br from-sky-200/30 to-teal-200/30 rounded-lg"
-          animate={{
-            rotate: [45, 135, 225, 315, 405],
-          }}
-          transition={{ duration: 15, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
-        />
-        <motion.div
-          className="absolute top-[40%] right-[20%] w-8 h-8 bg-gradient-to-br from-blue-300/40 to-sky-300/40 rounded-full"
-          animate={{
-            y: [0, -20, 0],
-            x: [0, 10, 0],
-          }}
-          transition={{ duration: 5, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
-        />
-        <motion.div
-          className="absolute bottom-[20%] right-[8%] w-24 h-24 border border-blue-200/30 rounded-full"
-          animate={{
-            scale: [1, 1.1, 1],
-          }}
-          transition={{ duration: 6, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
-        />
+  const contactMethods = [
+    {
+      icon: Phone,
+      label: "Call Us",
+      value: "+66 2 017 2949",
+      href: "tel:020172949",
+      copyValue: "020172949",
+      id: "phone",
+      color: "bg-sky-500",
+    },
+    {
+      icon: Mail,
+      label: "Email Us",
+      value: "info@pnd50.com",
+      href: "mailto:info@pnd50.com",
+      copyValue: "info@pnd50.com",
+      id: "email",
+      color: "bg-blue-500",
+    },
+  ]
 
+  return (
+    <div className="min-h-screen bg-slate-50">
+      <AnimatedGridBackground className="min-h-screen" variant="light">
+        {/* Decorative Elements */}
         <div className="absolute top-20 left-10 w-[500px] h-[500px] bg-gradient-to-br from-sky-200/40 via-blue-200/30 to-teal-200/20 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute bottom-20 right-10 w-[450px] h-[450px] bg-gradient-to-br from-teal-200/35 via-sky-200/25 to-blue-200/20 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-gradient-to-br from-blue-100/35 via-sky-100/25 to-teal-100/30 rounded-full blur-3xl pointer-events-none" />
 
-        {/* Hero Section */}
-        <section className="relative pt-28 pb-16 md:pt-32 md:pb-20 overflow-hidden">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 max-w-6xl">
-            <div className="text-center max-w-3xl mx-auto">
+        <section className="relative pt-24 pb-8 md:pt-32 md:pb-12 overflow-hidden">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 max-w-7xl">
+            <div className="grid lg:grid-cols-2 gap-12 items-center">
+              {/* Left: Headline */}
               <motion.div
-                className="inline-flex items-center gap-2 bg-sky-100/80 text-sky-700 px-4 py-2 rounded-full text-sm font-medium mb-6 border border-sky-200/50"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 }}
+                initial={{ opacity: 0, x: -30 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6 }}
               >
-                <MessageSquare className="w-4 h-4" />
-                Get in Touch
+                <span className="inline-block text-sky-600 font-semibold text-sm uppercase tracking-wider mb-4">
+                  Contact
+                </span>
+                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-slate-900 leading-tight mb-6">
+                  Let's talk about
+                  <br />
+                  <span className="text-sky-600">your business</span>
+                </h1>
+                <p className="text-lg text-slate-600 leading-relaxed max-w-md">
+                  Have questions about Thai accounting or compliance? We're here to help you navigate with confidence.
+                </p>
+
+                {/* Quick Contact Methods */}
+                <div className="mt-8 flex flex-wrap gap-4">
+                  {contactMethods.map((method) => (
+                    <motion.a
+                      key={method.id}
+                      href={method.href}
+                      className="group flex items-center gap-3 bg-white border border-slate-200 rounded-xl px-4 py-3 hover:border-sky-300 hover:shadow-md transition-all duration-300"
+                      whileHover={{ y: -2 }}
+                    >
+                      <div className={`w-10 h-10 ${method.color} rounded-lg flex items-center justify-center`}>
+                        <method.icon className="w-5 h-5 text-white" />
+                      </div>
+                      <div>
+                        <p className="text-xs text-slate-500 uppercase tracking-wide">{method.label}</p>
+                        <p className="text-slate-800 font-medium">{method.value}</p>
+                      </div>
+                    </motion.a>
+                  ))}
+                </div>
               </motion.div>
-              <motion.h1
-                className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight bg-gradient-to-r from-slate-700 via-sky-600 to-sky-500 bg-clip-text text-transparent"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4 }}
+
+              {/* Right: Response Time Card */}
+              <motion.div
+                initial={{ opacity: 0, x: 30 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                className="hidden lg:block"
               >
-                Let's Start a Conversation
-              </motion.h1>
-              <motion.p
-                className="text-lg text-slate-600 leading-relaxed"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5 }}
-              >
-                Have questions about our services? We're here to help you navigate Thai accounting and compliance with
-                confidence.
-              </motion.p>
+                <div className="bg-white border border-slate-200 rounded-2xl p-8 shadow-sm">
+                  <div className="flex items-center gap-4 mb-6">
+                    <div className="w-14 h-14 bg-sky-100 rounded-xl flex items-center justify-center">
+                      <Clock className="w-7 h-7 text-sky-600" />
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-bold text-slate-800">Quick Response</h3>
+                      <p className="text-slate-500">We reply within 24 hours</p>
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="bg-slate-50 rounded-xl p-4">
+                      <p className="text-3xl font-bold text-sky-600">24h</p>
+                      <p className="text-sm text-slate-600">Email Response</p>
+                    </div>
+                    <div className="bg-slate-50 rounded-xl p-4">
+                      <p className="text-3xl font-bold text-sky-600">1h</p>
+                      <p className="text-sm text-slate-600">WhatsApp Reply</p>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
             </div>
           </div>
         </section>
 
-        {/* Contact Form Section */}
-        <motion.section
-          className="py-12 md:py-20 relative z-10"
-          variants={fadeInUp}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.6 }}
-        >
+        <section className="py-12 md:py-16 relative z-10">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid lg:grid-cols-2 gap-8 md:gap-12 max-w-7xl mx-auto">
-              {/* Contact Form */}
-              <div className="order-2 lg:order-1">
-                <div className="bg-white/80 backdrop-blur-sm border-2 border-slate-200/80 rounded-2xl p-6 md:p-8 shadow-lg hover:border-sky-300 transition-all duration-300">
-                  <h2 className="text-2xl md:text-3xl font-bold text-slate-800 mb-2">Send Us a Message</h2>
-                  <p className="text-slate-600 mb-6 md:mb-8 text-sm">
-                    Fill out the form below and we'll get back to you within 24 hours.
-                  </p>
+            <div className="max-w-7xl mx-auto">
+              <div className="grid lg:grid-cols-5 gap-8">
+                {/* Contact Form - Takes 3 columns */}
+                <motion.div
+                  className="lg:col-span-3"
+                  variants={fadeInUp}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <div className="bg-white border border-slate-200 rounded-2xl p-6 md:p-8 shadow-sm">
+                    <div className="flex items-center gap-3 mb-6">
+                      <div className="w-10 h-10 bg-sky-100 rounded-lg flex items-center justify-center">
+                        <MessageSquare className="w-5 h-5 text-sky-600" />
+                      </div>
+                      <div>
+                        <h2 className="text-xl font-bold text-slate-800">Send a Message</h2>
+                        <p className="text-sm text-slate-500">Fill out the form and we'll be in touch</p>
+                      </div>
+                    </div>
 
-                  <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6">
-                    <div className="grid md:grid-cols-2 gap-4 md:gap-6">
+                    <form onSubmit={handleSubmit} className="space-y-5">
+                      <div className="grid md:grid-cols-2 gap-5">
+                        <div className="space-y-2">
+                          <Label htmlFor="name" className="text-slate-700 font-medium">
+                            Full Name *
+                          </Label>
+                          <Input
+                            id="name"
+                            name="name"
+                            type="text"
+                            placeholder="John Doe"
+                            value={formData.name}
+                            onChange={handleChange}
+                            required
+                            className="h-11 bg-slate-50 border-slate-200 focus:bg-white focus:border-sky-400 transition-colors"
+                          />
+                        </div>
+                        <div className="space-y-2">
+                          <Label htmlFor="email" className="text-slate-700 font-medium">
+                            Email *
+                          </Label>
+                          <Input
+                            id="email"
+                            name="email"
+                            type="email"
+                            placeholder="john@company.com"
+                            value={formData.email}
+                            onChange={handleChange}
+                            required
+                            className="h-11 bg-slate-50 border-slate-200 focus:bg-white focus:border-sky-400 transition-colors"
+                          />
+                        </div>
+                      </div>
+
+                      <div className="grid md:grid-cols-2 gap-5">
+                        <div className="space-y-2">
+                          <Label htmlFor="phone" className="text-slate-700 font-medium">
+                            Phone
+                          </Label>
+                          <Input
+                            id="phone"
+                            name="phone"
+                            type="tel"
+                            placeholder="+66 XX XXX XXXX"
+                            value={formData.phone}
+                            onChange={handleChange}
+                            className="h-11 bg-slate-50 border-slate-200 focus:bg-white focus:border-sky-400 transition-colors"
+                          />
+                        </div>
+                        <div className="space-y-2">
+                          <Label htmlFor="whatsapp" className="text-slate-700 font-medium">
+                            WhatsApp
+                          </Label>
+                          <Input
+                            id="whatsapp"
+                            name="whatsapp"
+                            type="tel"
+                            placeholder="+66 XX XXX XXXX"
+                            value={formData.whatsapp}
+                            onChange={handleChange}
+                            className="h-11 bg-slate-50 border-slate-200 focus:bg-white focus:border-sky-400 transition-colors"
+                          />
+                        </div>
+                      </div>
+
                       <div className="space-y-2">
-                        <Label htmlFor="name" className="text-base md:text-sm text-slate-700">
-                          Your Name *
+                        <Label htmlFor="companyName" className="text-slate-700 font-medium">
+                          Company Name
                         </Label>
                         <Input
-                          id="name"
-                          name="name"
+                          id="companyName"
+                          name="companyName"
                           type="text"
-                          placeholder="John Doe"
-                          value={formData.name}
+                          placeholder="Your Company Ltd."
+                          value={formData.companyName}
+                          onChange={handleChange}
+                          className="h-11 bg-slate-50 border-slate-200 focus:bg-white focus:border-sky-400 transition-colors"
+                        />
+                      </div>
+
+                      <div className="space-y-2">
+                        <Label htmlFor="message" className="text-slate-700 font-medium">
+                          Message *
+                        </Label>
+                        <Textarea
+                          id="message"
+                          name="message"
+                          placeholder="Tell us about your needs..."
+                          value={formData.message}
                           onChange={handleChange}
                           required
-                          className="h-12 text-base bg-white border-slate-200"
+                          rows={5}
+                          className="resize-none bg-slate-50 border-slate-200 focus:bg-white focus:border-sky-400 transition-colors"
                         />
                       </div>
 
-                      <div className="space-y-2">
-                        <Label htmlFor="email" className="text-base md:text-sm text-slate-700">
-                          Email Address *
-                        </Label>
-                        <Input
-                          id="email"
-                          name="email"
-                          type="email"
-                          placeholder="john@company.com"
-                          value={formData.email}
-                          onChange={handleChange}
-                          required
-                          className="h-12 text-base bg-white border-slate-200"
-                        />
-                      </div>
-                    </div>
-
-                    <div className="grid md:grid-cols-2 gap-4 md:gap-6">
-                      <div className="space-y-2">
-                        <Label htmlFor="phone" className="text-base md:text-sm text-slate-700">
-                          Phone Number
-                        </Label>
-                        <Input
-                          id="phone"
-                          name="phone"
-                          type="tel"
-                          placeholder="+66 XX XXX XXXX"
-                          value={formData.phone}
-                          onChange={handleChange}
-                          className="h-12 text-base bg-white border-slate-200"
-                        />
-                      </div>
-
-                      <div className="space-y-2">
-                        <Label htmlFor="whatsapp" className="text-base md:text-sm text-slate-700">
-                          WhatsApp Number
-                        </Label>
-                        <Input
-                          id="whatsapp"
-                          name="whatsapp"
-                          type="tel"
-                          placeholder="+66 XX XXX XXXX"
-                          value={formData.whatsapp}
-                          onChange={handleChange}
-                          className="h-12 text-base bg-white border-slate-200"
-                        />
-                      </div>
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label htmlFor="companyName" className="text-base md:text-sm text-slate-700">
-                        Company Name (optional)
-                      </Label>
-                      <Input
-                        id="companyName"
-                        name="companyName"
-                        type="text"
-                        placeholder="Your Company Ltd."
-                        value={formData.companyName}
-                        onChange={handleChange}
-                        className="h-12 text-base bg-white border-slate-200"
-                      />
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label htmlFor="message" className="text-base md:text-sm text-slate-700">
-                        Message *
-                      </Label>
-                      <Textarea
-                        id="message"
-                        name="message"
-                        placeholder="Tell us about your needs..."
-                        value={formData.message}
-                        onChange={handleChange}
-                        required
-                        rows={6}
-                        className="resize-none text-base bg-white border-slate-200"
-                      />
-                    </div>
-
-                    {submitStatus === "success" && (
-                      <div className="bg-emerald-50 border border-emerald-200 text-emerald-700 px-4 py-3 rounded-lg flex items-center gap-2">
-                        <CheckCircle2 className="w-5 h-5 flex-shrink-0" />
-                        <span>Thank you! We'll get back to you soon.</span>
-                      </div>
-                    )}
-
-                    {submitStatus === "error" && (
-                      <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
-                        Something went wrong. Please try again or contact us directly.
-                      </div>
-                    )}
-
-                    <Button
-                      type="submit"
-                      disabled={isSubmitting}
-                      className="w-full h-12 text-lg font-semibold bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-600 hover:to-blue-700"
-                    >
-                      {isSubmitting ? (
-                        <>
-                          <span className="animate-spin mr-2">⏳</span>
-                          Sending...
-                        </>
-                      ) : (
-                        <>
-                          <Send className="w-5 h-5 mr-2" />
-                          Send Message
-                        </>
+                      {submitStatus === "success" && (
+                        <div className="bg-emerald-50 border border-emerald-200 text-emerald-700 px-4 py-3 rounded-lg flex items-center gap-2">
+                          <CheckCircle2 className="w-5 h-5 flex-shrink-0" />
+                          <span>Thank you! We'll get back to you soon.</span>
+                        </div>
                       )}
-                    </Button>
-                  </form>
+
+                      {submitStatus === "error" && (
+                        <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
+                          Something went wrong. Please try again.
+                        </div>
+                      )}
+
+                      <Button
+                        type="submit"
+                        disabled={isSubmitting}
+                        className="w-full h-12 text-base font-semibold bg-sky-600 hover:bg-sky-700 transition-colors"
+                      >
+                        {isSubmitting ? (
+                          <span className="flex items-center gap-2">
+                            <span className="animate-spin">⏳</span>
+                            Sending...
+                          </span>
+                        ) : (
+                          <span className="flex items-center gap-2">
+                            Send Message
+                            <Send className="w-4 h-4" />
+                          </span>
+                        )}
+                      </Button>
+                    </form>
+                  </div>
+                </motion.div>
+
+                <div className="lg:col-span-2 space-y-6">
+                  {/* Office Location Card */}
+                  <motion.div
+                    variants={fadeInUp}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: 0.1 }}
+                    className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm"
+                  >
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className="w-10 h-10 bg-sky-100 rounded-lg flex items-center justify-center">
+                        <Building2 className="w-5 h-5 text-sky-600" />
+                      </div>
+                      <h3 className="text-lg font-bold text-slate-800">Office</h3>
+                    </div>
+                    <div className="text-slate-600 text-sm leading-relaxed">
+                      <p className="font-semibold text-slate-800">Suite 3065, 30th Floor</p>
+                      <p>Bhiraj Tower at EmQuartier</p>
+                      <p>689 Sukhumvit Rd, Khlong Tan Nuea</p>
+                      <p>Watthana, Bangkok 10110</p>
+                    </div>
+                  </motion.div>
+
+                  {/* Direct Contact Card */}
+                  <motion.div
+                    variants={fadeInUp}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: 0.2 }}
+                    className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm"
+                  >
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className="w-10 h-10 bg-sky-100 rounded-lg flex items-center justify-center">
+                        <Phone className="w-5 h-5 text-sky-600" />
+                      </div>
+                      <h3 className="text-lg font-bold text-slate-800">Direct Contact</h3>
+                    </div>
+                    <div className="space-y-3">
+                      <a
+                        href="tel:020172949"
+                        className="flex items-center justify-between p-3 bg-slate-50 rounded-lg hover:bg-sky-50 transition-colors group"
+                      >
+                        <span className="text-slate-700 font-medium">+66 2 017 2949</span>
+                        <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-sky-600 group-hover:translate-x-1 transition-all" />
+                      </a>
+                      <a
+                        href="mailto:info@pnd50.com"
+                        className="flex items-center justify-between p-3 bg-slate-50 rounded-lg hover:bg-sky-50 transition-colors group"
+                      >
+                        <span className="text-slate-700 font-medium">info@pnd50.com</span>
+                        <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-sky-600 group-hover:translate-x-1 transition-all" />
+                      </a>
+                    </div>
+                  </motion.div>
+
+                  {/* Social/Messaging Card */}
+                  <motion.div
+                    variants={fadeInUp}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: 0.3 }}
+                    className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm"
+                  >
+                    <h3 className="text-lg font-bold text-slate-800 mb-4">Message Us</h3>
+                    <div className="grid grid-cols-2 gap-3">
+                      <a
+                        href="https://wa.me/66843563805"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-2 p-3 bg-emerald-50 rounded-lg hover:bg-emerald-100 transition-colors"
+                      >
+                        <img src="/images/whatsapp-green-icon.png" alt="WhatsApp" className="w-5 h-5" />
+                        <span className="text-emerald-700 font-medium text-sm">WhatsApp</span>
+                      </a>
+                      <a
+                        href="https://t.me/66843563805"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-2 p-3 bg-sky-50 rounded-lg hover:bg-sky-100 transition-colors"
+                      >
+                        <img src="/images/telegram-blue-icon.png" alt="Telegram" className="w-5 h-5" />
+                        <span className="text-sky-700 font-medium text-sm">Telegram</span>
+                      </a>
+                    </div>
+                  </motion.div>
                 </div>
-              </div>
-
-              {/* Contact Information */}
-              <div className="order-1 lg:order-2 space-y-6">
-                {/* Office Location */}
-                <Card className="bg-white/80 backdrop-blur-sm rounded-2xl border-2 border-slate-200/80 hover:border-sky-300 transition-all duration-300 hover:shadow-xl">
-                  <CardContent>
-                    <div className="flex items-start gap-4 mb-6">
-                      <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-sky-100 flex items-center justify-center">
-                        <Building2 className="w-6 h-6 text-sky-600" />
-                      </div>
-                      <div>
-                        <h3 className="text-xl md:text-2xl font-bold text-slate-800 mb-2">Office Location</h3>
-                        <p className="text-slate-600 text-sm md:text-base">Visit us at our Bangkok office</p>
-                      </div>
-                    </div>
-                    <div className="space-y-2 text-slate-600">
-                      <p className="leading-relaxed text-sm md:text-base">
-                        <strong className="text-slate-800">Suite 3065, 30th Floor</strong>
-                        <br />
-                        Bhiraj Tower at EmQuartier
-                        <br />
-                        689 Sukhumvit Rd, Khlong Tan Nuea
-                        <br />
-                        Watthana, Bangkok 10110. Thailand.
-                      </p>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                {/* Contact Details */}
-                <Card className="bg-white/80 backdrop-blur-sm rounded-2xl border-2 border-slate-200/80 hover:border-sky-300 transition-all duration-300 hover:shadow-xl">
-                  <CardContent>
-                    <div className="flex items-start gap-4 mb-6">
-                      <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-sky-100 flex items-center justify-center">
-                        <Phone className="w-6 h-6 text-sky-600" />
-                      </div>
-                      <div>
-                        <h3 className="text-xl md:text-2xl font-bold text-slate-800 mb-2">Contact Details</h3>
-                        <p className="text-slate-600 text-sm md:text-base">Reach out through your preferred channel</p>
-                      </div>
-                    </div>
-                    <div className="space-y-4">
-                      <div className="flex items-center justify-between gap-3 group">
-                        <div className="flex items-center gap-3 overflow-hidden">
-                          <span className="font-semibold text-slate-800 flex-shrink-0">Phone:</span>
-                          <a
-                            href="tel:020172949"
-                            className="text-sky-600 hover:text-sky-700 transition-colors duration-300 font-medium truncate"
-                          >
-                            +66 2 017 2949
-                          </a>
-                        </div>
-                        <button
-                          onClick={() => copyToClipboard("020172949", "phone")}
-                          className="p-2 rounded-lg hover:bg-sky-100 transition-all duration-300 opacity-100 lg:opacity-0 lg:group-hover:opacity-100"
-                          title="Copy phone number"
-                        >
-                          {copiedItem === "phone" ? (
-                            <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-                          ) : (
-                            <Mail className="w-4 h-4 text-slate-500" />
-                          )}
-                        </button>
-                      </div>
-
-                      <div className="flex items-center justify-between gap-3 group">
-                        <div className="flex items-center gap-3 overflow-hidden">
-                          <span className="font-semibold text-slate-800 flex-shrink-0">Email:</span>
-                          <a
-                            href="mailto:info@pnd50.com"
-                            className="text-sky-600 hover:text-sky-700 transition-colors duration-300 font-medium truncate"
-                          >
-                            info@pnd50.com
-                          </a>
-                        </div>
-                        <button
-                          onClick={() => copyToClipboard("info@pnd50.com", "email")}
-                          className="p-2 rounded-lg hover:bg-sky-100 transition-all duration-300 opacity-100 lg:opacity-0 lg:group-hover:opacity-100"
-                          title="Copy email"
-                        >
-                          {copiedItem === "email" ? (
-                            <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-                          ) : (
-                            <Mail className="w-4 h-4 text-slate-500" />
-                          )}
-                        </button>
-                      </div>
-
-                      <div className="flex items-center justify-between gap-3 group">
-                        <div className="flex items-center gap-3 overflow-hidden">
-                          <div className="flex items-center gap-2 flex-shrink-0">
-                            <img
-                              src="/images/telegram-blue-icon.png"
-                              alt="Telegram"
-                              className="w-5 h-5 object-contain"
-                            />
-                            <span className="font-semibold text-sky-600">Telegram:</span>
-                          </div>
-                          <a
-                            href="https://t.me/66843563805"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-sky-600 hover:text-sky-700 transition-colors duration-300 font-medium truncate"
-                          >
-                            +66 84 356 3805
-                          </a>
-                        </div>
-                        <button
-                          onClick={() => copyToClipboard("0843563805", "telegram")}
-                          className="p-2 rounded-lg hover:bg-sky-100 transition-all duration-300 opacity-100 lg:opacity-0 lg:group-hover:opacity-100"
-                          title="Copy Telegram number"
-                        >
-                          {copiedItem === "telegram" ? (
-                            <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-                          ) : (
-                            <Mail className="w-4 h-4 text-slate-500" />
-                          )}
-                        </button>
-                      </div>
-
-                      <div className="flex items-center justify-between gap-3 group">
-                        <div className="flex items-center gap-3 overflow-hidden">
-                          <div className="flex items-center gap-2 flex-shrink-0">
-                            <img
-                              src="/images/whatsapp-green-icon.png"
-                              alt="WhatsApp"
-                              className="w-5 h-5 object-contain"
-                            />
-                            <span className="font-semibold text-emerald-600">WhatsApp:</span>
-                          </div>
-                          <a
-                            href="https://wa.me/66843563805"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-sky-600 hover:text-sky-700 transition-colors duration-300 font-medium truncate"
-                          >
-                            +66 84 356 3805
-                          </a>
-                        </div>
-                        <button
-                          onClick={() => copyToClipboard("0843563805", "whatsapp")}
-                          className="p-2 rounded-lg hover:bg-sky-100 transition-all duration-300 opacity-100 lg:opacity-0 lg:group-hover:opacity-100"
-                          title="Copy WhatsApp number"
-                        >
-                          {copiedItem === "whatsapp" ? (
-                            <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-                          ) : (
-                            <Mail className="w-4 h-4 text-slate-500" />
-                          )}
-                        </button>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
               </div>
             </div>
           </div>
-        </motion.section>
+        </section>
 
-        {/* Map Section */}
         <motion.section
           className="py-12 md:py-16 relative z-10"
           variants={fadeInUp}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-7xl mx-auto">
-              <div className="text-center mb-8 md:mb-12">
-                <motion.h2
-                  className="text-2xl md:text-3xl lg:text-5xl font-bold text-slate-800 mb-4"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.7 }}
-                >
-                  Find Us on the Map
-                </motion.h2>
-                <motion.p
-                  className="md:text-xl text-slate-600 text-sm"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.8 }}
-                >
-                  Located in the heart of Bangkok's business district at EmQuartier
-                </motion.p>
-              </div>
-
-              <div className="rounded-2xl overflow-hidden shadow-2xl border-2 border-slate-200/80 hover:border-sky-300 transition-all duration-300">
+              <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
+                {/* Map Header */}
+                <div className="p-6 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 bg-sky-100 rounded-lg flex items-center justify-center">
+                      <MapPin className="w-5 h-5 text-sky-600" />
+                    </div>
+                    <div>
+                      <h2 className="text-xl font-bold text-slate-800">Find Us</h2>
+                      <p className="text-sm text-slate-500">EmQuartier, Bangkok</p>
+                    </div>
+                  </div>
+                  <a
+                    href="https://www.google.com/maps/dir//Bhiraj+Tower+at+EmQuartier,+689+Sukhumvit+Rd,+Khlong+Tan+Nuea,+Watthana,+Bangkok+10110"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-5 py-2.5 bg-sky-600 text-white font-medium rounded-lg hover:bg-sky-700 transition-colors"
+                  >
+                    <MapPin className="w-4 h-4" />
+                    Get Directions
+                  </a>
+                </div>
+                {/* Map Embed */}
                 <iframe
                   src="https://maps.google.com/maps?q=Bhiraj+Tower+at+EmQuartier,+689+Sukhumvit+Rd,+Khlong+Tan+Nuea,+Watthana,+Bangkok+10110&t=&z=16&ie=UTF8&iwloc=&output=embed"
                   width="100%"
-                  height="500"
+                  height="400"
                   style={{ border: 0 }}
                   allowFullScreen
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
-                  className="w-full h-[400px] md:h-[500px]"
+                  className="w-full"
                 ></iframe>
-              </div>
-
-              <div className="mt-8 text-center">
-                <motion.a
-                  href="https://www.google.com/maps/dir//Bhiraj+Tower+at+EmQuartier,+689+Sukhumvit+Rd,+Khlong+Tan+Nuea,+Watthana,+Bangkok+10110"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-sky-500 to-blue-600 text-white font-semibold rounded-lg hover:from-sky-600 hover:to-blue-700 transition-all duration-300 hover:shadow-lg hover:scale-105"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.9 }}
-                >
-                  <MapPin className="w-5 h-5" />
-                  Get Directions
-                </motion.a>
               </div>
             </div>
           </div>
         </motion.section>
 
-        {/* Bottom padding to account for no footer */}
         <div className="pb-16" />
       </AnimatedGridBackground>
     </div>
