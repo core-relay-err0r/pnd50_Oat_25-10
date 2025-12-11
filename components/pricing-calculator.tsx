@@ -568,116 +568,111 @@ export function PricingCalculator() {
                     )}
                   </AnimatePresence>
                 </div>
-
-                {/* Right Column - Sticky Quote Panel */}
-                <div className="lg:col-span-1">
-                  <div className="sticky top-6">
-                    <motion.div
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -20 }}
-                      transition={{ duration: 0.5, ease: "easeOut" }}
-                      className="bg-white/90 backdrop-blur-xl rounded-2xl overflow-hidden shadow-xl shadow-sky-100/50 border border-slate-100"
-                    >
-                      {/* Panel Header */}
-                      <div className="p-6 border-b border-slate-100">
-                        <div className="flex items-center gap-3 mb-2">
-                          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-sky-500 to-cyan-500 flex items-center justify-center">
-                            <FileText className="w-5 h-5 text-white" />
-                          </div>
-                          <div>
-                            <h3 className="font-semibold text-slate-800">Your Quote</h3>
-                            <p className="text-xs text-slate-500">{selectedServices.length} services selected</p>
-                          </div>
+              </div>
+              {/* Right Column - Sticky Quote Panel */}
+              <div className="lg:col-span-1">
+                <div className="sticky top-6">
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
+                    transition={{ duration: 0.5, ease: "easeOut" }}
+                    className="bg-white/90 backdrop-blur-xl rounded-2xl overflow-hidden shadow-xl shadow-sky-100/50 border border-slate-100"
+                  >
+                    {/* Panel Header */}
+                    <div className="p-6 border-b border-slate-100">
+                      <div className="flex items-center gap-3 mb-2">
+                        <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-sky-500 to-cyan-500 flex items-center justify-center">
+                          <FileText className="w-5 h-5 text-white" />
+                        </div>
+                        <div>
+                          <h3 className="font-semibold text-slate-800">Your Quote</h3>
+                          <p className="text-xs text-slate-500">{selectedServices.length} services selected</p>
                         </div>
                       </div>
+                    </div>
 
-                      {/* Selected Services List */}
-                      <div className="p-4 max-h-[300px] overflow-y-auto space-y-2">
-                        {selectedServices.length === 0 ? (
-                          <div className="text-center py-8 text-slate-400">
-                            <Calculator className="w-12 h-12 mx-auto mb-3 opacity-50" />
-                            <p className="text-sm">Select services to build your quote</p>
-                          </div>
-                        ) : (
-                          selectedServices.map((service) => (
-                            <div
-                              key={service.id}
-                              className="flex items-center justify-between p-3 bg-slate-50 rounded-lg"
-                            >
-                              <div className="flex-1 pr-2">
-                                <p className="text-sm font-medium text-slate-800 truncate">{service.name}</p>
-                                <p className="text-xs text-slate-500">{service.type}</p>
-                              </div>
-                              <div className="flex items-center gap-2">
-                                <span className="text-sm font-semibold text-sky-600">
-                                  ฿{formatPrice(service.price * (service.quantity || 1))}
-                                </span>
-                                <button
-                                  onClick={() =>
-                                    setSelectedServices(selectedServices.filter((s) => s.id !== service.id))
-                                  }
-                                  className="p-1 hover:bg-slate-200 rounded transition-colors"
-                                >
-                                  <X className="w-4 h-4 text-slate-400" />
-                                </button>
-                              </div>
-                            </div>
-                          ))
-                        )}
-                      </div>
-
-                      {/* Price Summary */}
-                      {selectedServices.length > 0 && (
-                        <div className="p-4 space-y-3 border-t border-slate-100">
-                          {preliminaryTotal.oneTime > 0 && (
-                            <div className="flex justify-between text-sm">
-                              <span className="text-slate-500">One-time Fees</span>
-                              <span className="text-slate-800 font-medium">
-                                ฿{formatPrice(preliminaryTotal.oneTime)}
-                              </span>
-                            </div>
-                          )}
-                          {preliminaryTotal.monthly > 0 && (
-                            <div className="flex justify-between text-sm">
-                              <span className="text-slate-500">Monthly Fees</span>
-                              <span className="text-slate-800 font-medium">
-                                ฿{formatPrice(preliminaryTotal.monthly)}/mo
-                              </span>
-                            </div>
-                          )}
-                          {preliminaryTotal.annual > 0 && (
-                            <div className="flex justify-between text-sm">
-                              <span className="text-slate-500">Annual Fees</span>
-                              <span className="text-slate-800 font-medium">
-                                ฿{formatPrice(preliminaryTotal.annual)}/yr
-                              </span>
-                            </div>
-                          )}
-                          <div className="pt-3 border-t border-slate-100">
-                            <div className="flex justify-between">
-                              <span className="text-slate-800 font-semibold">Year 1 Total</span>
-                              <span className="text-xl font-bold text-sky-600">
-                                ฿{formatPrice(preliminaryTotal.yearTotal)}
-                              </span>
-                            </div>
-                            <p className="text-xs text-slate-500 mt-1">*Estimated based on selections</p>
-                          </div>
+                    {/* Selected Services List */}
+                    <div className="p-4 max-h-[300px] overflow-y-auto space-y-2">
+                      {selectedServices.length === 0 ? (
+                        <div className="text-center py-8 text-slate-400">
+                          <Calculator className="w-12 h-12 mx-auto mb-3 opacity-50" />
+                          <p className="text-sm">Select services to build your quote</p>
                         </div>
+                      ) : (
+                        selectedServices.map((service) => (
+                          <div
+                            key={service.id}
+                            className="flex items-center justify-between p-3 bg-slate-50 rounded-lg"
+                          >
+                            <div className="flex-1 pr-2">
+                              <p className="text-sm font-medium text-slate-800 truncate">{service.name}</p>
+                              <p className="text-xs text-slate-500">{service.type}</p>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <span className="text-sm font-semibold text-sky-600">
+                                ฿{formatPrice(service.price * (service.quantity || 1))}
+                              </span>
+                              <button
+                                onClick={() => setSelectedServices(selectedServices.filter((s) => s.id !== service.id))}
+                                className="p-1 hover:bg-slate-200 rounded transition-colors"
+                              >
+                                <X className="w-4 h-4 text-slate-400" />
+                              </button>
+                            </div>
+                          </div>
+                        ))
                       )}
+                    </div>
 
-                      {/* Action Button */}
-                      <div className="p-4">
-                        <Button
-                          onClick={handleCalculate}
-                          disabled={selectedServices.length === 0}
-                          className="w-full h-12 bg-gradient-to-r from-sky-500 to-cyan-500 hover:from-sky-600 hover:to-cyan-600 text-white font-semibold rounded-xl disabled:opacity-50 disabled:cursor-not-allowed"
-                        >
-                          Calculate Final Price
-                        </Button>
+                    {/* Price Summary */}
+                    {selectedServices.length > 0 && (
+                      <div className="p-4 space-y-3 border-t border-slate-100">
+                        {preliminaryTotal.oneTime > 0 && (
+                          <div className="flex justify-between text-sm">
+                            <span className="text-slate-500">One-time Fees</span>
+                            <span className="text-slate-800 font-medium">฿{formatPrice(preliminaryTotal.oneTime)}</span>
+                          </div>
+                        )}
+                        {preliminaryTotal.monthly > 0 && (
+                          <div className="flex justify-between text-sm">
+                            <span className="text-slate-500">Monthly Fees</span>
+                            <span className="text-slate-800 font-medium">
+                              ฿{formatPrice(preliminaryTotal.monthly)}/mo
+                            </span>
+                          </div>
+                        )}
+                        {preliminaryTotal.annual > 0 && (
+                          <div className="flex justify-between text-sm">
+                            <span className="text-slate-500">Annual Fees</span>
+                            <span className="text-slate-800 font-medium">
+                              ฿{formatPrice(preliminaryTotal.annual)}/yr
+                            </span>
+                          </div>
+                        )}
+                        <div className="pt-3 border-t border-slate-100">
+                          <div className="flex justify-between">
+                            <span className="text-slate-800 font-semibold">Year 1 Total</span>
+                            <span className="text-xl font-bold text-sky-600">
+                              ฿{formatPrice(preliminaryTotal.yearTotal)}
+                            </span>
+                          </div>
+                          <p className="text-xs text-slate-500 mt-1">*Estimated based on selections</p>
+                        </div>
                       </div>
-                    </motion.div>
-                  </div>
+                    )}
+
+                    {/* Action Button */}
+                    <div className="p-4">
+                      <Button
+                        onClick={handleCalculate}
+                        disabled={selectedServices.length === 0}
+                        className="w-full h-12 bg-gradient-to-r from-sky-500 to-cyan-500 hover:from-sky-600 hover:to-cyan-600 text-white font-semibold rounded-xl disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        Calculate Final Price
+                      </Button>
+                    </div>
+                  </motion.div>
                 </div>
               </div>
             </motion.div>
