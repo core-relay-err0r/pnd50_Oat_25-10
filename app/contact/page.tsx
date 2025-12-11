@@ -183,7 +183,8 @@ export default function ContactPage() {
               <div className="order-2 lg:order-1">
                 <div className="bg-white/80 backdrop-blur-sm border-2 border-slate-200/80 rounded-2xl p-6 md:p-8 shadow-lg hover:border-sky-300 transition-all duration-300">
                   <h2 className="text-2xl md:text-3xl font-bold text-slate-800 mb-2">Send Us a Message</h2>
-                  <p className="text-slate-600 mb-6 md:mb-8 text-sm text-sm text-sm               Fill out the form below and we'll get back to you within 24 hours.
+                  <p className="text-slate-600 mb-6 md:mb-8 text-sm">
+                    Fill out the form below and we'll get back to you within 24 hours.
                   </p>
 
                   <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6">
