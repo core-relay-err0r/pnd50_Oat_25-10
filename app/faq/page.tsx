@@ -503,9 +503,14 @@ export default function FAQPage() {
                       asChild
                       size="lg"
                       variant="outline"
-                      className="text-sm sm:text-base bg-white/80 backdrop-blur-sm w-full sm:w-auto touch-manipulation border-slate-200"
+                      className="text-sm sm:text-base w-full sm:w-auto touch-manipulation group relative overflow-hidden border-2 border-primary/30 hover:border-primary/50 bg-gradient-to-r from-primary/5 to-sky-500/5 hover:from-primary/10 hover:to-sky-500/10 transition-all duration-300"
                     >
-                      <Link href="/calculator">Get Free Consultation</Link>
+                      <Link href="/calculator" className="flex items-center justify-center gap-2">
+                        <span className="bg-gradient-to-r from-primary to-sky-600 bg-clip-text text-transparent font-semibold">
+                          Get Free Consultation
+                        </span>
+                        <ChevronRight className="w-4 h-4 text-primary group-hover:translate-x-1 transition-transform" />
+                      </Link>
                     </Button>
                   </div>
                 </div>
