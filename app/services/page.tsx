@@ -59,6 +59,31 @@ const packages = [
   },
 ]
 
+const fadeInUp = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0 },
+}
+
+const fadeInLeft = {
+  hidden: { opacity: 0, x: -30 },
+  visible: { opacity: 1, x: 0 },
+}
+
+const fadeInRight = {
+  hidden: { opacity: 0, x: 30 },
+  visible: { opacity: 1, x: 0 },
+}
+
+const staggerContainer = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+    },
+  },
+}
+
 export default function ServicesPage() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
 
@@ -210,17 +235,23 @@ export default function ServicesPage() {
 
                   <motion.div
                     className="flex flex-wrap justify-center gap-8"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.6 }}
+                    variants={staggerContainer}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, margin: "-100px" }}
                   >
                     {stats.map((stat, index) => (
-                      <div key={index} className="text-center">
+                      <motion.div
+                        key={index}
+                        className="text-center"
+                        variants={fadeInUp}
+                        transition={{ duration: 0.5, delay: index * 0.1 }}
+                      >
                         <div className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-slate-700 via-sky-600 to-sky-500 bg-clip-text text-transparent">
                           {stat.value}
                         </div>
                         <div className="text-sm text-slate-500">{stat.label}</div>
-                      </div>
+                      </motion.div>
                     ))}
                   </motion.div>
                 </div>
@@ -229,16 +260,25 @@ export default function ServicesPage() {
 
             <motion.section
               className="py-12 md:py-20"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.7, duration: 0.5 }}
+              variants={fadeInUp}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.6 }}
             >
               <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-                <div className="text-center mb-12">
+                <motion.div
+                  className="text-center mb-12"
+                  variants={fadeInUp}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5 }}
+                >
                   <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-slate-900 via-slate-700 to-slate-500 bg-clip-text text-transparent mb-4">
                     Our Services
                   </h2>
-                </div>
+                </motion.div>
 
                 <ServiceSlider />
               </div>
@@ -246,18 +286,32 @@ export default function ServicesPage() {
 
             <motion.section
               className="py-8 md:py-12"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.8, duration: 0.5 }}
+              variants={fadeInUp}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.6 }}
             >
               <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl text-center">
-                <h2 className="text-3xl md:text-5xl font-bold bg-gradient-to-r from-slate-700 via-sky-600 to-sky-500 bg-clip-text text-transparent mb-6">
+                <motion.h2
+                  className="text-3xl md:text-5xl font-bold bg-gradient-to-r from-slate-700 via-sky-600 to-sky-500 bg-clip-text text-transparent mb-6"
+                  variants={fadeInUp}
+                  transition={{ duration: 0.5 }}
+                >
                   Ready to Get Started?
-                </h2>
-                <p className="text-slate-600 mb-6 leading-relaxed text-lg">
+                </motion.h2>
+                <motion.p
+                  className="text-slate-600 mb-6 leading-relaxed text-lg"
+                  variants={fadeInUp}
+                  transition={{ duration: 0.5, delay: 0.1 }}
+                >
                   Schedule a free consultation to discuss how we can support your business in Thailand
-                </p>
-                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                </motion.p>
+                <motion.div
+                  className="flex flex-col sm:flex-row gap-4 justify-center"
+                  variants={fadeInUp}
+                  transition={{ duration: 0.5, delay: 0.2 }}
+                >
                   <Link
                     href="/calculator"
                     className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-blue-500 via-blue-600 to-indigo-600 text-white px-8 py-4 rounded-xl font-bold hover:from-blue-600 hover:via-blue-700 hover:to-indigo-700 transition-all hover:scale-105 shadow-lg shadow-blue-500/30 hover:shadow-xl hover:shadow-blue-600/40"
@@ -271,7 +325,7 @@ export default function ServicesPage() {
                   >
                     Contact Us
                   </Link>
-                </div>
+                </motion.div>
               </div>
             </motion.section>
           </div>

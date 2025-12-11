@@ -7,13 +7,39 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
-import { MapPin, Phone, Send, Check, Copy, MessageSquare } from "lucide-react"
+import { Mail, Phone, MapPin, Send, CheckCircle2, MessageSquare, Building2 } from "lucide-react"
 import { motion } from "framer-motion"
+import { Card, CardContent } from "@/components/ui/card"
 
 const AnimatedGridBackground = dynamic(
   () => import("@/components/ui/animated-grid-background").then((mod) => mod.AnimatedGridBackground),
   { ssr: false },
 )
+
+const fadeInUp = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0 },
+}
+
+const fadeInLeft = {
+  hidden: { opacity: 0, x: -30 },
+  visible: { opacity: 1, x: 0 },
+}
+
+const fadeInRight = {
+  hidden: { opacity: 0, x: 30 },
+  visible: { opacity: 1, x: 0 },
+}
+
+const staggerContainer = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+    },
+  },
+}
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -173,9 +199,11 @@ export default function ContactPage() {
         {/* Contact Form Section */}
         <motion.section
           className="py-12 md:py-20 relative z-10"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6, duration: 0.5 }}
+          variants={fadeInUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.6 }}
         >
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid lg:grid-cols-2 gap-8 md:gap-12 max-w-7xl mx-auto">
@@ -287,7 +315,7 @@ export default function ContactPage() {
 
                     {submitStatus === "success" && (
                       <div className="bg-emerald-50 border border-emerald-200 text-emerald-700 px-4 py-3 rounded-lg flex items-center gap-2">
-                        <Check className="w-5 h-5 flex-shrink-0" />
+                        <CheckCircle2 className="w-5 h-5 flex-shrink-0" />
                         <span>Thank you! We'll get back to you soon.</span>
                       </div>
                     )}
@@ -322,162 +350,189 @@ export default function ContactPage() {
               {/* Contact Information */}
               <div className="order-1 lg:order-2 space-y-6">
                 {/* Office Location */}
-                <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 md:p-8 border-2 border-slate-200/80 hover:border-sky-300 transition-all duration-300 hover:shadow-xl">
-                  <div className="flex items-start gap-4 mb-6">
-                    <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-sky-100 flex items-center justify-center">
-                      <MapPin className="w-6 h-6 text-sky-600" />
+                <Card className="bg-white/80 backdrop-blur-sm rounded-2xl border-2 border-slate-200/80 hover:border-sky-300 transition-all duration-300 hover:shadow-xl">
+                  <CardContent>
+                    <div className="flex items-start gap-4 mb-6">
+                      <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-sky-100 flex items-center justify-center">
+                        <Building2 className="w-6 h-6 text-sky-600" />
+                      </div>
+                      <div>
+                        <h3 className="text-xl md:text-2xl font-bold text-slate-800 mb-2">Office Location</h3>
+                        <p className="text-slate-600 text-sm md:text-base">Visit us at our Bangkok office</p>
+                      </div>
                     </div>
-                    <div>
-                      <h3 className="text-xl md:text-2xl font-bold text-slate-800 mb-2">Office Location</h3>
-                      <p className="text-slate-600 text-sm md:text-base">Visit us at our Bangkok office</p>
+                    <div className="space-y-2 text-slate-600">
+                      <p className="leading-relaxed text-sm md:text-base">
+                        <strong className="text-slate-800">Suite 3065, 30th Floor</strong>
+                        <br />
+                        Bhiraj Tower at EmQuartier
+                        <br />
+                        689 Sukhumvit Rd, Khlong Tan Nuea
+                        <br />
+                        Watthana, Bangkok 10110. Thailand.
+                      </p>
                     </div>
-                  </div>
-                  <div className="space-y-2 text-slate-600">
-                    <p className="leading-relaxed text-sm md:text-base">
-                      <strong className="text-slate-800">Suite 3065, 30th Floor</strong>
-                      <br />
-                      Bhiraj Tower at EmQuartier
-                      <br />
-                      689 Sukhumvit Rd, Khlong Tan Nuea
-                      <br />
-                      Watthana, Bangkok 10110. Thailand.
-                    </p>
-                  </div>
-                </div>
+                  </CardContent>
+                </Card>
 
                 {/* Contact Details */}
-                <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 md:p-8 border-2 border-slate-200/80 hover:border-sky-300 transition-all duration-300 hover:shadow-xl">
-                  <div className="flex items-start gap-4 mb-6">
-                    <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-sky-100 flex items-center justify-center">
-                      <Phone className="w-6 h-6 text-sky-600" />
-                    </div>
-                    <div>
-                      <h3 className="text-xl md:text-2xl font-bold text-slate-800 mb-2">Contact Details</h3>
-                      <p className="text-slate-600 text-sm md:text-base">Reach out through your preferred channel</p>
-                    </div>
-                  </div>
-                  <div className="space-y-4">
-                    <div className="flex items-center justify-between gap-3 group">
-                      <div className="flex items-center gap-3 overflow-hidden">
-                        <span className="font-semibold text-slate-800 flex-shrink-0">Phone:</span>
-                        <a
-                          href="tel:020172949"
-                          className="text-sky-600 hover:text-sky-700 transition-colors duration-300 font-medium truncate"
-                        >
-                          +66 2 017 2949
-                        </a>
+                <Card className="bg-white/80 backdrop-blur-sm rounded-2xl border-2 border-slate-200/80 hover:border-sky-300 transition-all duration-300 hover:shadow-xl">
+                  <CardContent>
+                    <div className="flex items-start gap-4 mb-6">
+                      <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-sky-100 flex items-center justify-center">
+                        <Phone className="w-6 h-6 text-sky-600" />
                       </div>
-                      <button
-                        onClick={() => copyToClipboard("020172949", "phone")}
-                        className="p-2 rounded-lg hover:bg-sky-100 transition-all duration-300 opacity-100 lg:opacity-0 lg:group-hover:opacity-100"
-                        title="Copy phone number"
-                      >
-                        {copiedItem === "phone" ? (
-                          <Check className="w-4 h-4 text-emerald-600" />
-                        ) : (
-                          <Copy className="w-4 h-4 text-slate-500" />
-                        )}
-                      </button>
-                    </div>
-
-                    <div className="flex items-center justify-between gap-3 group">
-                      <div className="flex items-center gap-3 overflow-hidden">
-                        <span className="font-semibold text-slate-800 flex-shrink-0">Email:</span>
-                        <a
-                          href="mailto:info@pnd50.com"
-                          className="text-sky-600 hover:text-sky-700 transition-colors duration-300 font-medium truncate"
-                        >
-                          info@pnd50.com
-                        </a>
+                      <div>
+                        <h3 className="text-xl md:text-2xl font-bold text-slate-800 mb-2">Contact Details</h3>
+                        <p className="text-slate-600 text-sm md:text-base">Reach out through your preferred channel</p>
                       </div>
-                      <button
-                        onClick={() => copyToClipboard("info@pnd50.com", "email")}
-                        className="p-2 rounded-lg hover:bg-sky-100 transition-all duration-300 opacity-100 lg:opacity-0 lg:group-hover:opacity-100"
-                        title="Copy email"
-                      >
-                        {copiedItem === "email" ? (
-                          <Check className="w-4 h-4 text-emerald-600" />
-                        ) : (
-                          <Copy className="w-4 h-4 text-slate-500" />
-                        )}
-                      </button>
                     </div>
-
-                    <div className="flex items-center justify-between gap-3 group">
-                      <div className="flex items-center gap-3 overflow-hidden">
-                        <div className="flex items-center gap-2 flex-shrink-0">
-                          <img src="/images/telegram-blue-icon.png" alt="Telegram" className="w-5 h-5 object-contain" />
-                          <span className="font-semibold text-sky-600">Telegram:</span>
+                    <div className="space-y-4">
+                      <div className="flex items-center justify-between gap-3 group">
+                        <div className="flex items-center gap-3 overflow-hidden">
+                          <span className="font-semibold text-slate-800 flex-shrink-0">Phone:</span>
+                          <a
+                            href="tel:020172949"
+                            className="text-sky-600 hover:text-sky-700 transition-colors duration-300 font-medium truncate"
+                          >
+                            +66 2 017 2949
+                          </a>
                         </div>
-                        <a
-                          href="https://t.me/66843563805"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-sky-600 hover:text-sky-700 transition-colors duration-300 font-medium truncate"
+                        <button
+                          onClick={() => copyToClipboard("020172949", "phone")}
+                          className="p-2 rounded-lg hover:bg-sky-100 transition-all duration-300 opacity-100 lg:opacity-0 lg:group-hover:opacity-100"
+                          title="Copy phone number"
                         >
-                          +66 84 356 3805
-                        </a>
+                          {copiedItem === "phone" ? (
+                            <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                          ) : (
+                            <Mail className="w-4 h-4 text-slate-500" />
+                          )}
+                        </button>
                       </div>
-                      <button
-                        onClick={() => copyToClipboard("0843563805", "telegram")}
-                        className="p-2 rounded-lg hover:bg-sky-100 transition-all duration-300 opacity-100 lg:opacity-0 lg:group-hover:opacity-100"
-                        title="Copy Telegram number"
-                      >
-                        {copiedItem === "telegram" ? (
-                          <Check className="w-4 h-4 text-emerald-600" />
-                        ) : (
-                          <Copy className="w-4 h-4 text-slate-500" />
-                        )}
-                      </button>
-                    </div>
 
-                    <div className="flex items-center justify-between gap-3 group">
-                      <div className="flex items-center gap-3 overflow-hidden">
-                        <div className="flex items-center gap-2 flex-shrink-0">
-                          <img
-                            src="/images/whatsapp-green-icon.png"
-                            alt="WhatsApp"
-                            className="w-5 h-5 object-contain"
-                          />
-                          <span className="font-semibold text-emerald-600">WhatsApp:</span>
+                      <div className="flex items-center justify-between gap-3 group">
+                        <div className="flex items-center gap-3 overflow-hidden">
+                          <span className="font-semibold text-slate-800 flex-shrink-0">Email:</span>
+                          <a
+                            href="mailto:info@pnd50.com"
+                            className="text-sky-600 hover:text-sky-700 transition-colors duration-300 font-medium truncate"
+                          >
+                            info@pnd50.com
+                          </a>
                         </div>
-                        <a
-                          href="https://wa.me/66843563805"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-sky-600 hover:text-sky-700 transition-colors duration-300 font-medium truncate"
+                        <button
+                          onClick={() => copyToClipboard("info@pnd50.com", "email")}
+                          className="p-2 rounded-lg hover:bg-sky-100 transition-all duration-300 opacity-100 lg:opacity-0 lg:group-hover:opacity-100"
+                          title="Copy email"
                         >
-                          +66 84 356 3805
-                        </a>
+                          {copiedItem === "email" ? (
+                            <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                          ) : (
+                            <Mail className="w-4 h-4 text-slate-500" />
+                          )}
+                        </button>
                       </div>
-                      <button
-                        onClick={() => copyToClipboard("0843563805", "whatsapp")}
-                        className="p-2 rounded-lg hover:bg-sky-100 transition-all duration-300 opacity-100 lg:opacity-0 lg:group-hover:opacity-100"
-                        title="Copy WhatsApp number"
-                      >
-                        {copiedItem === "whatsapp" ? (
-                          <Check className="w-4 h-4 text-emerald-600" />
-                        ) : (
-                          <Copy className="w-4 h-4 text-slate-500" />
-                        )}
-                      </button>
+
+                      <div className="flex items-center justify-between gap-3 group">
+                        <div className="flex items-center gap-3 overflow-hidden">
+                          <div className="flex items-center gap-2 flex-shrink-0">
+                            <img
+                              src="/images/telegram-blue-icon.png"
+                              alt="Telegram"
+                              className="w-5 h-5 object-contain"
+                            />
+                            <span className="font-semibold text-sky-600">Telegram:</span>
+                          </div>
+                          <a
+                            href="https://t.me/66843563805"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-sky-600 hover:text-sky-700 transition-colors duration-300 font-medium truncate"
+                          >
+                            +66 84 356 3805
+                          </a>
+                        </div>
+                        <button
+                          onClick={() => copyToClipboard("0843563805", "telegram")}
+                          className="p-2 rounded-lg hover:bg-sky-100 transition-all duration-300 opacity-100 lg:opacity-0 lg:group-hover:opacity-100"
+                          title="Copy Telegram number"
+                        >
+                          {copiedItem === "telegram" ? (
+                            <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                          ) : (
+                            <Mail className="w-4 h-4 text-slate-500" />
+                          )}
+                        </button>
+                      </div>
+
+                      <div className="flex items-center justify-between gap-3 group">
+                        <div className="flex items-center gap-3 overflow-hidden">
+                          <div className="flex items-center gap-2 flex-shrink-0">
+                            <img
+                              src="/images/whatsapp-green-icon.png"
+                              alt="WhatsApp"
+                              className="w-5 h-5 object-contain"
+                            />
+                            <span className="font-semibold text-emerald-600">WhatsApp:</span>
+                          </div>
+                          <a
+                            href="https://wa.me/66843563805"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-sky-600 hover:text-sky-700 transition-colors duration-300 font-medium truncate"
+                          >
+                            +66 84 356 3805
+                          </a>
+                        </div>
+                        <button
+                          onClick={() => copyToClipboard("0843563805", "whatsapp")}
+                          className="p-2 rounded-lg hover:bg-sky-100 transition-all duration-300 opacity-100 lg:opacity-0 lg:group-hover:opacity-100"
+                          title="Copy WhatsApp number"
+                        >
+                          {copiedItem === "whatsapp" ? (
+                            <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                          ) : (
+                            <Mail className="w-4 h-4 text-slate-500" />
+                          )}
+                        </button>
+                      </div>
                     </div>
-                  </div>
-                </div>
+                  </CardContent>
+                </Card>
               </div>
             </div>
           </div>
         </motion.section>
 
         {/* Map Section */}
-        <section className="py-12 md:py-16 relative z-10">
+        <motion.section
+          className="py-12 md:py-16 relative z-10"
+          variants={fadeInUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.6 }}
+        >
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-7xl mx-auto">
               <div className="text-center mb-8 md:mb-12">
-                <h2 className="text-2xl md:text-3xl lg:text-5xl font-bold text-slate-800 mb-4">Find Us on the Map</h2>
-                <p className="md:text-xl text-slate-600 text-sm">
+                <motion.h2
+                  className="text-2xl md:text-3xl lg:text-5xl font-bold text-slate-800 mb-4"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.7 }}
+                >
+                  Find Us on the Map
+                </motion.h2>
+                <motion.p
+                  className="md:text-xl text-slate-600 text-sm"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.8 }}
+                >
                   Located in the heart of Bangkok's business district at EmQuartier
-                </p>
+                </motion.p>
               </div>
 
               <div className="rounded-2xl overflow-hidden shadow-2xl border-2 border-slate-200/80 hover:border-sky-300 transition-all duration-300">
@@ -494,19 +549,22 @@ export default function ContactPage() {
               </div>
 
               <div className="mt-8 text-center">
-                <a
+                <motion.a
                   href="https://www.google.com/maps/dir//Bhiraj+Tower+at+EmQuartier,+689+Sukhumvit+Rd,+Khlong+Tan+Nuea,+Watthana,+Bangkok+10110"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-sky-500 to-blue-600 text-white font-semibold rounded-lg hover:from-sky-600 hover:to-blue-700 transition-all duration-300 hover:shadow-lg hover:scale-105"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.9 }}
                 >
                   <MapPin className="w-5 h-5" />
                   Get Directions
-                </a>
+                </motion.a>
               </div>
             </div>
           </div>
-        </section>
+        </motion.section>
 
         {/* Bottom padding to account for no footer */}
         <div className="pb-16" />

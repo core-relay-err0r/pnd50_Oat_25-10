@@ -9,6 +9,21 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { motion } from "framer-motion"
 
+const fadeInUp = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0 },
+}
+
+const staggerContainer = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+    },
+  },
+}
+
 const faqCategories = [
   {
     id: "accounting",
@@ -380,8 +395,8 @@ export default function FAQPage() {
       {/* Category Nav */}
       <motion.div
         className="border-b border-slate-200 bg-white/50 backdrop-blur-sm"
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
+        initial={fadeInUp.hidden}
+        animate={fadeInUp.visible}
         transition={{ delay: 0.7, duration: 0.5 }}
       >
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
@@ -420,12 +435,22 @@ export default function FAQPage() {
                   <div className="flex items-start sm:items-center justify-between mb-6 sm:mb-8 gap-4">
                     <div className="flex items-start sm:items-center gap-3 sm:gap-4">
                       <div>
-                        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-slate-900 leading-tight">
+                        <motion.h2
+                          className="text-2xl sm:text-3xl md:text-4xl font-bold text-slate-900 leading-tight"
+                          initial={fadeInUp.hidden}
+                          animate={fadeInUp.visible}
+                          transition={{ delay: 0.8, duration: 0.4 }}
+                        >
                           {category.title}
-                        </h2>
-                        <p className="text-xs sm:text-sm text-slate-500 mt-1">
+                        </motion.h2>
+                        <motion.p
+                          className="text-xs sm:text-sm text-slate-500 mt-1"
+                          initial={fadeInUp.hidden}
+                          animate={fadeInUp.visible}
+                          transition={{ delay: 0.9, duration: 0.4 }}
+                        >
                           {category.questions.length} {category.questions.length === 1 ? "question" : "questions"}
-                        </p>
+                        </motion.p>
                       </div>
                     </div>
                   </div>
@@ -481,13 +506,23 @@ export default function FAQPage() {
                   <Phone className="w-6 h-6 sm:w-8 sm:h-8 text-primary" />
                 </div>
                 <div className="flex-1">
-                  <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-slate-900 mb-3 sm:mb-4 leading-tight">
+                  <motion.h2
+                    className="text-2xl sm:text-3xl md:text-4xl font-bold text-slate-900 mb-3 sm:mb-4 leading-tight"
+                    initial={fadeInUp.hidden}
+                    animate={fadeInUp.visible}
+                    transition={{ delay: 1.0, duration: 0.4 }}
+                  >
                     Still Have Questions?
-                  </h2>
-                  <p className="text-base sm:text-lg text-slate-600 leading-relaxed mb-6 sm:mb-8 max-w-2xl">
+                  </motion.h2>
+                  <motion.p
+                    className="text-base sm:text-lg text-slate-600 leading-relaxed mb-6 sm:mb-8 max-w-2xl"
+                    initial={fadeInUp.hidden}
+                    animate={fadeInUp.visible}
+                    transition={{ delay: 1.1, duration: 0.4 }}
+                  >
                     Can't find what you're looking for? Our team is ready to guide you step by step — in simple English,
                     with full transparency. Get personalized answers to your specific situation.
-                  </p>
+                  </motion.p>
                   <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
                     <Button
                       asChild
