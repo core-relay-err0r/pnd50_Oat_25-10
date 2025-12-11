@@ -106,7 +106,7 @@ interface ContactInfo {
 
 export function PricingCalculator() {
   const router = useRouter()
-  const [activeTab, setActiveTab] = useState<ServiceCategory>("corporate")
+  const [activeTab, setActiveTab] = useState<ServiceCategory | null>(null)
   const [selectedServices, setSelectedServices] = useState<SelectedService[]>([])
   const [step, setStep] = useState<"selection" | "contact">("selection")
   const [contactInfo, setContactInfo] = useState<ContactInfo>({ name: "", email: "", phone: "" })
@@ -225,12 +225,24 @@ export function PricingCalculator() {
         },
         body: JSON.stringify({
           contactInfo,
-          selectedServices: selectedServices.map((s) => ({
-            name: s.name,
-            price: s.price * (s.quantity || 1) + (s.selectedOptions?.reduce((total, optionId) => total + (servicesData[s.category].services.find((serv) => serv.id === s.id)?.options?.find((o) => o.id === optionId)?.price || 0), 0),\
-            quantity: s.quantity,
-            selectedOptions: s.selectedOptions,
-          })),
+          selectedServices: selectedServices.map((s) => {
+            const basePrice = s.price * (s.quantity || 1)
+            const optionsPrice =
+              s.selectedOptions?.reduce((total, optionId) => {
+                const optionPrice =
+                  servicesData[s.category].services
+                    .find((serv) => serv.id === s.id)
+                    ?.options?.find((o) => o.id === optionId)?.price || 0
+                return total + optionPrice
+              }, 0) || 0
+
+            return {
+              name: s.name,
+              price: basePrice + optionsPrice,
+              quantity: s.quantity,
+              selectedOptions: s.selectedOptions,
+            }
+          }),
           totalPrice: preliminaryTotal.yearTotal,
         }),
       })
@@ -426,218 +438,246 @@ export function PricingCalculator() {
                   })}
                 </div>
 
-                {/* Tab Content - Services List */}
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={activeTab}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    transition={{ duration: 0.2 }}
-                    className="space-y-2"
-                  >
-                    <div className="mb-4">
-                      <h3 className="text-lg font-semibold text-slate-800">{servicesData[activeTab].title}</h3>
-                      <p className="text-sm text-slate-500">
-                        {servicesData[activeTab].services.length} services available
-                      </p>
-                    </div>
-                    {servicesData[activeTab].services.map((service) => {
-                      const isSelected = selectedServices.some((s) => s.id === service.id)
-                      return (
-                        <motion.div
-                          key={service.id}
-                          initial={{ opacity: 0, x: -20 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          className={`flex flex-col p-4 rounded-xl cursor-pointer transition-all duration-200 border ${
-                            isSelected ? "bg-sky-50 border-sky-200" : "bg-white hover:bg-slate-50 border-slate-200/80"
-                          }`}
-                        >
-                          <div
-                            className="flex items-center justify-between"
-                            onClick={() => toggleService(activeTab, service)}
-                          >
-                            <div className="flex items-center gap-3">
-                              <Checkbox
-                                checked={isSelected}
-                                className="data-[state=checked]:bg-sky-600 data-[state=checked]:border-sky-600"
-                              />
-                              <div>
-                                <p className="font-medium text-slate-800">{service.name}</p>
-                                <p className="text-xs text-slate-500">{service.description}</p>
+                <div className="min-h-[400px]">
+                  {/* Tab Content - Services List */}
+                  <AnimatePresence mode="wait">
+                    {activeTab === null ? (
+                      <motion.div
+                        key="standby"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="flex flex-col items-center justify-center h-[400px] text-center"
+                      >
+                        <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center mb-4">
+                          <Sparkles className="w-8 h-8 text-slate-400" />
+                        </div>
+                        <h3 className="text-lg font-semibold text-slate-700 mb-2">
+                          Select a category to view services
+                        </h3>
+                        <p className="text-sm text-slate-500 max-w-sm">
+                          Choose from Corporate, Accounting, or Advisory services above to get started with your quote.
+                        </p>
+                      </motion.div>
+                    ) : (
+                      <motion.div
+                        key={activeTab}
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        transition={{ duration: 0.2 }}
+                        className="space-y-2"
+                      >
+                        <div className="mb-4">
+                          <h3 className="text-lg font-semibold text-slate-800">{servicesData[activeTab].title}</h3>
+                          <p className="text-sm text-slate-500">
+                            {servicesData[activeTab].services.length} services available
+                          </p>
+                        </div>
+                        {servicesData[activeTab].services.map((service) => {
+                          const isSelected = selectedServices.some((s) => s.id === service.id)
+                          return (
+                            <motion.div
+                              key={service.id}
+                              initial={{ opacity: 0, x: -20 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              className={`flex flex-col p-4 rounded-xl cursor-pointer transition-all duration-200 border ${
+                                isSelected
+                                  ? "bg-sky-50 border-sky-200"
+                                  : "bg-white hover:bg-slate-50 border-slate-200/80"
+                              }`}
+                            >
+                              <div
+                                className="flex items-center justify-between"
+                                onClick={() => toggleService(activeTab, service)}
+                              >
+                                <div className="flex items-center gap-3">
+                                  <Checkbox
+                                    checked={isSelected}
+                                    className="data-[state=checked]:bg-sky-600 data-[state=checked]:border-sky-600"
+                                  />
+                                  <div>
+                                    <p className="font-medium text-slate-800">{service.name}</p>
+                                    <p className="text-xs text-slate-500">{service.description}</p>
+                                  </div>
+                                </div>
+                                <div className="flex items-center gap-2">
+                                  <span className="text-sm font-semibold text-slate-700">
+                                    ฿{service.price.toLocaleString()}
+                                  </span>
+                                  {service.hasOptions && (
+                                    <ChevronDown
+                                      className={`w-4 h-4 text-slate-400 transition-transform ${
+                                        isSelected ? "rotate-180" : ""
+                                      }`}
+                                    />
+                                  )}
+                                </div>
+                              </div>
+
+                              {/* Service Options */}
+                              <AnimatePresence>
+                                {isSelected && service.hasOptions && service.options && (
+                                  <motion.div
+                                    initial={{ height: 0, opacity: 0 }}
+                                    animate={{ height: "auto", opacity: 1 }}
+                                    exit={{ height: 0, opacity: 0 }}
+                                    transition={{ duration: 0.2 }}
+                                    className="mt-3 pt-3 border-t border-slate-200"
+                                  >
+                                    <p className="text-xs text-slate-500 mb-2">Select options:</p>
+                                    <div className="space-y-2">
+                                      {service.options.map((option) => {
+                                        const currentService = selectedServices.find((s) => s.id === service.id)
+                                        const isOptionSelected = currentService?.selectedOptions?.includes(option.id)
+
+                                        return (
+                                          <div
+                                            key={option.id}
+                                            onClick={(e) => {
+                                              e.stopPropagation()
+                                              toggleOption(activeTab, service.id, option)
+                                            }}
+                                            className={`flex items-center justify-between p-2 rounded-lg cursor-pointer transition-all ${
+                                              isOptionSelected
+                                                ? "bg-sky-100 border border-sky-200"
+                                                : "bg-slate-50 hover:bg-slate-100 border border-transparent"
+                                            }`}
+                                          >
+                                            <div className="flex items-center gap-2">
+                                              <Checkbox
+                                                checked={isOptionSelected}
+                                                className="data-[state=checked]:bg-sky-600 data-[state=checked]:border-sky-600 w-4 h-4"
+                                              />
+                                              <span className="text-sm text-slate-700">{option.name}</span>
+                                            </div>
+                                            <span className="text-xs font-medium text-slate-600">
+                                              +฿{option.price.toLocaleString()}
+                                            </span>
+                                          </div>
+                                        )
+                                      })}
+                                    </div>
+                                  </motion.div>
+                                )}
+                              </AnimatePresence>
+                            </motion.div>
+                          )
+                        })}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+
+                {/* Right Column - Sticky Quote Panel */}
+                <div className="lg:col-span-1">
+                  <div className="sticky top-6">
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -20 }}
+                      transition={{ duration: 0.5, ease: "easeOut" }}
+                      className="bg-white/90 backdrop-blur-xl rounded-2xl overflow-hidden shadow-xl shadow-sky-100/50 border border-slate-100"
+                    >
+                      {/* Panel Header */}
+                      <div className="p-6 border-b border-slate-100">
+                        <div className="flex items-center gap-3 mb-2">
+                          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-sky-500 to-cyan-500 flex items-center justify-center">
+                            <FileText className="w-5 h-5 text-white" />
+                          </div>
+                          <div>
+                            <h3 className="font-semibold text-slate-800">Your Quote</h3>
+                            <p className="text-xs text-slate-500">{selectedServices.length} services selected</p>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Selected Services List */}
+                      <div className="p-4 max-h-[300px] overflow-y-auto space-y-2">
+                        {selectedServices.length === 0 ? (
+                          <div className="text-center py-8 text-slate-400">
+                            <Calculator className="w-12 h-12 mx-auto mb-3 opacity-50" />
+                            <p className="text-sm">Select services to build your quote</p>
+                          </div>
+                        ) : (
+                          selectedServices.map((service) => (
+                            <div
+                              key={service.id}
+                              className="flex items-center justify-between p-3 bg-slate-50 rounded-lg"
+                            >
+                              <div className="flex-1 pr-2">
+                                <p className="text-sm font-medium text-slate-800 truncate">{service.name}</p>
+                                <p className="text-xs text-slate-500">{service.type}</p>
+                              </div>
+                              <div className="flex items-center gap-2">
+                                <span className="text-sm font-semibold text-sky-600">
+                                  ฿{formatPrice(service.price * (service.quantity || 1))}
+                                </span>
+                                <button
+                                  onClick={() =>
+                                    setSelectedServices(selectedServices.filter((s) => s.id !== service.id))
+                                  }
+                                  className="p-1 hover:bg-slate-200 rounded transition-colors"
+                                >
+                                  <X className="w-4 h-4 text-slate-400" />
+                                </button>
                               </div>
                             </div>
-                            <div className="flex items-center gap-2">
-                              <span className="text-sm font-semibold text-slate-700">
-                                ฿{service.price.toLocaleString()}
-                              </span>
-                              {service.hasOptions && (
-                                <ChevronDown
-                                  className={`w-4 h-4 text-slate-400 transition-transform ${
-                                    isSelected ? "rotate-180" : ""
-                                  }`}
-                                />
-                              )}
-                            </div>
-                          </div>
-
-                          {/* Service Options */}
-                          <AnimatePresence>
-                            {isSelected && service.hasOptions && service.options && (
-                              <motion.div
-                                initial={{ height: 0, opacity: 0 }}
-                                animate={{ height: "auto", opacity: 1 }}
-                                exit={{ height: 0, opacity: 0 }}
-                                transition={{ duration: 0.2 }}
-                                className="mt-3 pt-3 border-t border-slate-200"
-                              >
-                                <p className="text-xs text-slate-500 mb-2">Select options:</p>
-                                <div className="space-y-2">
-                                  {service.options.map((option) => {
-                                    const currentService = selectedServices.find((s) => s.id === service.id)
-                                    const isOptionSelected = currentService?.selectedOptions?.includes(option.id)
-
-                                    return (
-                                      <div
-                                        key={option.id}
-                                        onClick={(e) => {
-                                          e.stopPropagation()
-                                          toggleOption(activeTab, service.id, option)
-                                        }}
-                                        className={`flex items-center justify-between p-2 rounded-lg cursor-pointer transition-all ${
-                                          isOptionSelected
-                                            ? "bg-sky-100 border border-sky-200"
-                                            : "bg-slate-50 hover:bg-slate-100 border border-transparent"
-                                        }`}
-                                      >
-                                        <div className="flex items-center gap-2">
-                                          <Checkbox
-                                            checked={isOptionSelected}
-                                            className="data-[state=checked]:bg-sky-600 data-[state=checked]:border-sky-600 w-4 h-4"
-                                          />
-                                          <span className="text-sm text-slate-700">{option.name}</span>
-                                        </div>
-                                        <span className="text-xs font-medium text-slate-600">
-                                          +฿{option.price.toLocaleString()}
-                                        </span>
-                                      </div>
-                                    )
-                                  })}
-                                </div>
-                              </motion.div>
-                            )}
-                          </AnimatePresence>
-                        </motion.div>
-                      )
-                    })}
-                  </motion.div>
-                </AnimatePresence>
-              </div>
-
-              {/* Right Column - Sticky Quote Panel */}
-              <div className="lg:col-span-1">
-                <div className="sticky top-6">
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -20 }}
-                    transition={{ duration: 0.5, ease: "easeOut" }}
-                    className="bg-white/90 backdrop-blur-xl rounded-2xl overflow-hidden shadow-xl shadow-sky-100/50 border border-slate-100"
-                  >
-                    {/* Panel Header */}
-                    <div className="p-6 border-b border-slate-100">
-                      <div className="flex items-center gap-3 mb-2">
-                        <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-sky-500 to-cyan-500 flex items-center justify-center">
-                          <FileText className="w-5 h-5 text-white" />
-                        </div>
-                        <div>
-                          <h3 className="font-semibold text-slate-800">Your Quote</h3>
-                          <p className="text-xs text-slate-500">{selectedServices.length} services selected</p>
-                        </div>
+                          ))
+                        )}
                       </div>
-                    </div>
 
-                    {/* Selected Services List */}
-                    <div className="p-4 max-h-[300px] overflow-y-auto space-y-2">
-                      {selectedServices.length === 0 ? (
-                        <div className="text-center py-8 text-slate-400">
-                          <Calculator className="w-12 h-12 mx-auto mb-3 opacity-50" />
-                          <p className="text-sm">Select services to build your quote</p>
-                        </div>
-                      ) : (
-                        selectedServices.map((service) => (
-                          <div
-                            key={service.id}
-                            className="flex items-center justify-between p-3 bg-slate-50 rounded-lg"
-                          >
-                            <div className="flex-1 pr-2">
-                              <p className="text-sm font-medium text-slate-800 truncate">{service.name}</p>
-                              <p className="text-xs text-slate-500">{service.type}</p>
-                            </div>
-                            <div className="flex items-center gap-2">
-                              <span className="text-sm font-semibold text-sky-600">
-                                ฿{formatPrice(service.price * (service.quantity || 1))}
+                      {/* Price Summary */}
+                      {selectedServices.length > 0 && (
+                        <div className="p-4 space-y-3 border-t border-slate-100">
+                          {preliminaryTotal.oneTime > 0 && (
+                            <div className="flex justify-between text-sm">
+                              <span className="text-slate-500">One-time Fees</span>
+                              <span className="text-slate-800 font-medium">
+                                ฿{formatPrice(preliminaryTotal.oneTime)}
                               </span>
-                              <button
-                                onClick={() => setSelectedServices(selectedServices.filter((s) => s.id !== service.id))}
-                                className="p-1 hover:bg-slate-200 rounded transition-colors"
-                              >
-                                <X className="w-4 h-4 text-slate-400" />
-                              </button>
                             </div>
+                          )}
+                          {preliminaryTotal.monthly > 0 && (
+                            <div className="flex justify-between text-sm">
+                              <span className="text-slate-500">Monthly Fees</span>
+                              <span className="text-slate-800 font-medium">
+                                ฿{formatPrice(preliminaryTotal.monthly)}/mo
+                              </span>
+                            </div>
+                          )}
+                          {preliminaryTotal.annual > 0 && (
+                            <div className="flex justify-between text-sm">
+                              <span className="text-slate-500">Annual Fees</span>
+                              <span className="text-slate-800 font-medium">
+                                ฿{formatPrice(preliminaryTotal.annual)}/yr
+                              </span>
+                            </div>
+                          )}
+                          <div className="pt-3 border-t border-slate-100">
+                            <div className="flex justify-between">
+                              <span className="text-slate-800 font-semibold">Year 1 Total</span>
+                              <span className="text-xl font-bold text-sky-600">
+                                ฿{formatPrice(preliminaryTotal.yearTotal)}
+                              </span>
+                            </div>
+                            <p className="text-xs text-slate-500 mt-1">*Estimated based on selections</p>
                           </div>
-                        ))
+                        </div>
                       )}
-                    </div>
 
-                    {/* Price Summary */}
-                    {selectedServices.length > 0 && (
-                      <div className="p-4 space-y-3 border-t border-slate-100">
-                        {preliminaryTotal.oneTime > 0 && (
-                          <div className="flex justify-between text-sm">
-                            <span className="text-slate-500">One-time Fees</span>
-                            <span className="text-slate-800 font-medium">฿{formatPrice(preliminaryTotal.oneTime)}</span>
-                          </div>
-                        )}
-                        {preliminaryTotal.monthly > 0 && (
-                          <div className="flex justify-between text-sm">
-                            <span className="text-slate-500">Monthly Fees</span>
-                            <span className="text-slate-800 font-medium">
-                              ฿{formatPrice(preliminaryTotal.monthly)}/mo
-                            </span>
-                          </div>
-                        )}
-                        {preliminaryTotal.annual > 0 && (
-                          <div className="flex justify-between text-sm">
-                            <span className="text-slate-500">Annual Fees</span>
-                            <span className="text-slate-800 font-medium">
-                              ฿{formatPrice(preliminaryTotal.annual)}/yr
-                            </span>
-                          </div>
-                        )}
-                        <div className="pt-3 border-t border-slate-100">
-                          <div className="flex justify-between">
-                            <span className="text-slate-800 font-semibold">Year 1 Total</span>
-                            <span className="text-xl font-bold text-sky-600">
-                              ฿{formatPrice(preliminaryTotal.yearTotal)}
-                            </span>
-                          </div>
-                          <p className="text-xs text-slate-500 mt-1">*Estimated based on selections</p>
-                        </div>
+                      {/* Action Button */}
+                      <div className="p-4">
+                        <Button
+                          onClick={handleCalculate}
+                          disabled={selectedServices.length === 0}
+                          className="w-full h-12 bg-gradient-to-r from-sky-500 to-cyan-500 hover:from-sky-600 hover:to-cyan-600 text-white font-semibold rounded-xl disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
+                          Calculate Final Price
+                        </Button>
                       </div>
-                    )}
-
-                    {/* Action Button */}
-                    <div className="p-4">
-                      <Button
-                        onClick={handleCalculate}
-                        disabled={selectedServices.length === 0}
-                        className="w-full h-12 bg-gradient-to-r from-sky-500 to-cyan-500 hover:from-sky-600 hover:to-cyan-600 text-white font-semibold rounded-xl disabled:opacity-50 disabled:cursor-not-allowed"
-                      >
-                        Calculate Final Price
-                      </Button>
-                    </div>
-                  </motion.div>
+                    </motion.div>
+                  </div>
                 </div>
               </div>
             </motion.div>
