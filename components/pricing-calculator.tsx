@@ -46,14 +46,8 @@ const servicesData = {
     services: [
       {
         id: "monthly-tax-basic",
-        name: "Monthly Tax Filing (Basic)",
+        name: "Monthly Tax Filing",
         price: 4500,
-        type: "Monthly",
-      },
-      {
-        id: "monthly-tax-medium",
-        name: "Monthly Tax Filing (Medium)",
-        price: 7500,
         type: "Monthly",
       },
       { id: "annual-statements", name: "Annual Financial Statements", price: 22000, type: "Annual" },
