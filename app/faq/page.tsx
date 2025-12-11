@@ -18,7 +18,6 @@ import {
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { motion, AnimatePresence } from "framer-motion"
-import { LandingFooter } from "@/components/landing-footer"
 
 const AnimatedGridBackground = dynamic(
   () => import("@/components/ui/animated-grid-background").then((mod) => mod.AnimatedGridBackground),
@@ -486,8 +485,6 @@ export default function FAQPage() {
           </div>
         </motion.section>
       </div>
-
-      <LandingFooter variant="light" absolute={false} />
     </div>
   )
 }
