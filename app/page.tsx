@@ -133,15 +133,13 @@ export default function PND50Landing() {
               <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center w-full">
                 {/* Left side - Hero content */}
                 <div className="text-center lg:text-left space-y-6 md:space-y-8">
-                  
-
                   <motion.h1
                     className="text-6xl sm:text-7xl md:text-8xl lg:text-7xl xl:text-8xl font-bold mb-4 leading-tight tracking-tight"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.3, duration: 0.5 }}
                   >
-                    <span className="bg-gradient-to-r from-slate-700 via-sky-600 to-sky-500 bg-clip-text text-transparent animate-gradient-shift inline-block pb-2 leading-[1.15]">
+                    <span className="bg-gradient-to-r from-blue-600 via-sky-500 to-teal-400 bg-clip-text text-transparent animate-gradient-shift inline-block pb-2 leading-[1.15]">
                       AI Boutique
                     </span>
                     <br />
