@@ -1,10 +1,9 @@
 "use client"
 
 import React from "react"
-
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { ArrowRight, Mail, MessageSquare, Target, CheckCircle2, Heart } from "lucide-react"
+import { ArrowRight, Mail, MessageSquare, Target, CheckCircle2, Heart, Award, Users, TrendingUp } from "lucide-react"
 import { useEffect, useState } from "react"
 import { Testimonial } from "@/components/ui/testimonial-card"
 import { motion } from "framer-motion"
@@ -196,7 +195,8 @@ const AboutClientPage = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5 }}
               >
-                PND50 is an accounting and advisory firm based in Thailand, helping foreign-owned businesses navigate Thai accounting and compliance with clarity and confidence.
+                PND50 is an accounting and advisory firm based in Thailand, helping foreign-owned businesses navigate
+                Thai accounting and compliance with clarity and confidence.
               </motion.p>
 
               <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6 }}>
@@ -270,7 +270,9 @@ const AboutClientPage = () => {
                 label: "Years of Excellence",
                 description: "Trusted expertise in Thai accounting",
                 gradient: "from-blue-500 to-sky-400",
-                icon: "📊",
+                icon: Award,
+                iconColor: "text-blue-600",
+                iconBg: "from-blue-50 to-sky-50",
               },
               {
                 value: stats.clients,
@@ -278,7 +280,9 @@ const AboutClientPage = () => {
                 label: "Happy Clients",
                 description: "International businesses served",
                 gradient: "from-sky-500 to-teal-400",
-                icon: "🤝",
+                icon: Users,
+                iconColor: "text-sky-600",
+                iconBg: "from-sky-50 to-teal-50",
               },
               {
                 value: stats.satisfaction,
@@ -286,7 +290,9 @@ const AboutClientPage = () => {
                 label: "Client Satisfaction",
                 description: "Rated by our customers",
                 gradient: "from-teal-500 to-emerald-400",
-                icon: "⭐",
+                icon: TrendingUp,
+                iconColor: "text-teal-600",
+                iconBg: "from-teal-50 to-emerald-50",
               },
             ].map((stat, index) => (
               <motion.div
@@ -295,7 +301,9 @@ const AboutClientPage = () => {
                 variants={fadeInUp}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
               >
-                <div className="text-5xl mb-4">{stat.icon}</div>
+                <div className={`inline-flex p-4 rounded-xl bg-gradient-to-br ${stat.iconBg} mb-6`}>
+                  <stat.icon className={`w-8 h-8 ${stat.iconColor}`} strokeWidth={2} />
+                </div>
                 <div
                   className={`text-4xl sm:text-5xl font-bold bg-gradient-to-r ${stat.gradient} bg-clip-text text-transparent mb-2`}
                 >
