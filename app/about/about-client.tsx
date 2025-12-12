@@ -272,6 +272,7 @@ const AboutClientPage = () => {
                 gradient: "from-blue-500 to-sky-400",
                 icon: Award,
                 iconBg: "from-blue-500/10 to-sky-500/10",
+                iconColor: "text-blue-600",
               },
               {
                 value: stats.clients,
@@ -281,6 +282,7 @@ const AboutClientPage = () => {
                 gradient: "from-sky-500 to-teal-400",
                 icon: Users,
                 iconBg: "from-sky-500/10 to-teal-500/10",
+                iconColor: "text-sky-600",
               },
               {
                 value: stats.satisfaction,
@@ -290,6 +292,7 @@ const AboutClientPage = () => {
                 gradient: "from-teal-500 to-emerald-400",
                 icon: TrendingUp,
                 iconBg: "from-teal-500/10 to-emerald-500/10",
+                iconColor: "text-teal-600",
               },
             ].map((stat, index) => (
               <motion.div
@@ -299,10 +302,7 @@ const AboutClientPage = () => {
                 transition={{ duration: 0.5, delay: index * 0.1 }}
               >
                 <div className={`inline-flex p-3 rounded-xl bg-gradient-to-br ${stat.iconBg} mb-4`}>
-                  <stat.icon
-                    className={`w-8 h-8 bg-gradient-to-r ${stat.gradient} bg-clip-text text-transparent`}
-                    strokeWidth={2}
-                  />
+                  <stat.icon className={`w-8 h-8 ${stat.iconColor}`} strokeWidth={2} />
                 </div>
                 <div
                   className={`text-4xl sm:text-5xl font-bold bg-gradient-to-r ${stat.gradient} bg-clip-text text-transparent mb-2`}
