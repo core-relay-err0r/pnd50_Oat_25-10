@@ -4,7 +4,7 @@ import type React from "react"
 import type { SpeechRecognition } from "web-speech-api"
 
 import { useState, useEffect, useRef, useCallback } from "react"
-import { X, Send, Mic, Square, MessageSquare } from "lucide-react"
+import { X, Send, Mic, Square, MessageSquare, History, Plus, Trash2, ChevronLeft } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useChat } from "@ai-sdk/react"
 import { DefaultChatTransport } from "ai"
@@ -12,6 +12,17 @@ import { usePathname } from "next/navigation"
 import { useIsMobile } from "@/components/ui/use-mobile"
 import { AnimatePresence, motion } from "framer-motion"
 import { ColorOrb } from "@/components/ui/color-orb"
+import {
+  getOrCreateSession,
+  getChatSessions,
+  getChatMessages,
+  saveMessage,
+  updateSessionTitle,
+  deleteChatSession,
+  createNewSession,
+  generateTitle,
+  type ChatSession,
+} from "@/app/actions/chat-history"
 
 const WELCOME_MESSAGE = {
   id: "welcome-static",
@@ -38,6 +49,16 @@ const CALCULATOR_WELCOME_MESSAGE = {
 }
 
 const SPEED_FACTOR = 1
+
+function getSessionToken(): string {
+  if (typeof window === "undefined") return ""
+  let token = localStorage.getItem("panida_session_token")
+  if (!token) {
+    token = `anon_${crypto.randomUUID()}`
+    localStorage.setItem("panida_session_token", token)
+  }
+  return token
+}
 
 export function FloatingChatBot() {
   const wrapperRef = useRef<HTMLDivElement>(null)
@@ -68,9 +89,46 @@ export function FloatingChatBot() {
 
   const [inputValue, setInputValue] = useState("")
 
+  const [showHistory, setShowHistory] = useState(false)
+  const [chatSessions, setChatSessions] = useState<ChatSession[]>([])
+  const [currentSessionId, setCurrentSessionId] = useState<string | null>(null)
+  const [sessionToken, setSessionToken] = useState<string>("")
+  const [isLoadingHistory, setIsLoadingHistory] = useState(false)
+  const [hasSetTitle, setHasSetTitle] = useState(false)
+
   // Panel dimensions
   const PANEL_WIDTH = isMobile ? 340 : 400
   const PANEL_HEIGHT = 520
+
+  useEffect(() => {
+    const token = getSessionToken()
+    setSessionToken(token)
+
+    if (token) {
+      // Get or create a session when component mounts
+      getOrCreateSession(token).then((session) => {
+        if (session) {
+          setCurrentSessionId(session.id)
+          // Load existing messages for this session
+          getChatMessages(session.id).then((msgs) => {
+            if (msgs.length > 0) {
+              setHasSetTitle(true)
+            }
+          })
+        }
+      })
+    }
+  }, [])
+
+  useEffect(() => {
+    if (showHistory && sessionToken) {
+      setIsLoadingHistory(true)
+      getChatSessions(sessionToken).then((sessions) => {
+        setChatSessions(sessions)
+        setIsLoadingHistory(false)
+      })
+    }
+  }, [showHistory, sessionToken])
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -138,6 +196,7 @@ export function FloatingChatBot() {
     messages: aiMessages,
     sendMessage,
     status,
+    setMessages,
   } = useChat({
     transport: new DefaultChatTransport({
       api: "/api/chatbot",
@@ -150,6 +209,34 @@ export function FloatingChatBot() {
   const welcomeMessage = isCalculatorPage ? CALCULATOR_WELCOME_MESSAGE : WELCOME_MESSAGE
   const messages = [welcomeMessage, ...aiMessages]
 
+  useEffect(() => {
+    if (!currentSessionId || aiMessages.length === 0) return
+
+    const lastMessage = aiMessages[aiMessages.length - 1]
+    if (!lastMessage) return
+
+    // Extract text content from message parts
+    const content = lastMessage.parts
+      .filter((part) => part.type === "text")
+      .map((part) => part.text)
+      .join("")
+
+    if (!content) return
+
+    // Save message to database
+    saveMessage(currentSessionId, lastMessage.role as "user" | "assistant", content, {
+      page: pathname,
+      voiceMode,
+    })
+
+    // Auto-generate title from first user message
+    if (!hasSetTitle && lastMessage.role === "user") {
+      const title = generateTitle(content)
+      updateSessionTitle(currentSessionId, title)
+      setHasSetTitle(true)
+    }
+  }, [aiMessages, currentSessionId, pathname, voiceMode, hasSetTitle])
+
   const speakWithElevenLabs = useCallback(async (text: string) => {
     if (!text) return
 
@@ -159,7 +246,7 @@ export function FloatingChatBot() {
       const response = await fetch("/api/text-to-speech", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text }),
+        body: JSON.JSON.stringify({ text }),
       })
 
       if (!response.ok) {
@@ -365,6 +452,55 @@ export function FloatingChatBot() {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
   }, [messages])
 
+  const handleNewChat = useCallback(async () => {
+    if (!sessionToken) return
+
+    const newSession = await createNewSession(sessionToken)
+    if (newSession) {
+      setCurrentSessionId(newSession.id)
+      setMessages([]) // Clear current messages
+      setHasSetTitle(false)
+      setShowHistory(false)
+    }
+  }, [sessionToken, setMessages])
+
+  const handleLoadSession = useCallback(
+    async (session: ChatSession) => {
+      setCurrentSessionId(session.id)
+      setHasSetTitle(!!session.title)
+
+      // Load messages for this session
+      const msgs = await getChatMessages(session.id)
+
+      // Convert to the format expected by useChat
+      const formattedMessages = msgs.map((msg) => ({
+        id: msg.id,
+        role: msg.role as "user" | "assistant",
+        parts: [{ type: "text" as const, text: msg.content }],
+        createdAt: new Date(msg.created_at),
+      }))
+
+      setMessages(formattedMessages)
+      setShowHistory(false)
+    },
+    [setMessages],
+  )
+
+  const handleDeleteSession = useCallback(
+    async (sessionId: string, e: React.MouseEvent) => {
+      e.stopPropagation()
+      const success = await deleteChatSession(sessionId)
+      if (success) {
+        setChatSessions((prev) => prev.filter((s) => s.id !== sessionId))
+        // If deleting current session, create a new one
+        if (sessionId === currentSessionId) {
+          handleNewChat()
+        }
+      }
+    },
+    [currentSessionId, handleNewChat],
+  )
+
   const handleSend = () => {
     if (!inputValue.trim() || status === "in_progress") return
     sendMessage({ text: inputValue })
@@ -401,6 +537,17 @@ export function FloatingChatBot() {
     if (isProcessing || status === "in_progress") return "Thinking..."
     if (isSpeaking) return "Speaking..."
     return "Tap to talk"
+  }
+
+  const formatSessionDate = (dateStr: string) => {
+    const date = new Date(dateStr)
+    const now = new Date()
+    const diffDays = Math.floor((now.getTime() - date.getTime()) / (1000 * 60 * 60 * 24))
+
+    if (diffDays === 0) return "Today"
+    if (diffDays === 1) return "Yesterday"
+    if (diffDays < 7) return `${diffDays} days ago`
+    return date.toLocaleDateString()
   }
 
   return (
@@ -604,6 +751,22 @@ export function FloatingChatBot() {
                 </div>
               </div>
               <div className="flex items-center gap-1">
+                <button
+                  onClick={() => setShowHistory(!showHistory)}
+                  className={`text-muted-foreground hover:text-foreground hover:bg-muted rounded-lg p-1.5 transition-colors ${showHistory ? "bg-muted text-foreground" : ""}`}
+                  aria-label="Chat history"
+                  title="Chat history"
+                >
+                  <History className="w-4 h-4" />
+                </button>
+                <button
+                  onClick={handleNewChat}
+                  className="text-muted-foreground hover:text-foreground hover:bg-muted rounded-lg p-1.5 transition-colors"
+                  aria-label="New chat"
+                  title="New chat"
+                >
+                  <Plus className="w-4 h-4" />
+                </button>
                 {isSpeaking && (
                   <button
                     onClick={stopSpeaking}
@@ -617,6 +780,7 @@ export function FloatingChatBot() {
                   onClick={() => {
                     setIsOpen(false)
                     stopSpeaking()
+                    setShowHistory(false)
                   }}
                   className="text-muted-foreground hover:text-foreground hover:bg-muted rounded-lg p-1.5 transition-colors"
                   aria-label="Close chat"
@@ -625,6 +789,67 @@ export function FloatingChatBot() {
                 </button>
               </div>
             </div>
+
+            <AnimatePresence>
+              {showHistory && (
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  className="absolute inset-0 top-[57px] bg-background z-10 flex flex-col"
+                >
+                  <div className="flex items-center justify-between px-4 py-3 border-b border-border/50">
+                    <button
+                      onClick={() => setShowHistory(false)}
+                      className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+                    >
+                      <ChevronLeft className="w-4 h-4" />
+                      Back to chat
+                    </button>
+                  </div>
+
+                  <div className="flex-1 overflow-y-auto p-3 space-y-2">
+                    {isLoadingHistory ? (
+                      <div className="flex items-center justify-center py-8">
+                        <div className="animate-spin rounded-full h-6 w-6 border-2 border-primary border-t-transparent" />
+                      </div>
+                    ) : chatSessions.length === 0 ? (
+                      <div className="text-center py-8 text-muted-foreground text-sm">
+                        <History className="w-8 h-8 mx-auto mb-2 opacity-50" />
+                        <p>No chat history yet</p>
+                        <p className="text-xs mt-1">Start a conversation to see it here</p>
+                      </div>
+                    ) : (
+                      chatSessions.map((session) => (
+                        <div
+                          key={session.id}
+                          onClick={() => handleLoadSession(session)}
+                          className={`group flex items-center justify-between p-3 rounded-xl cursor-pointer transition-colors ${
+                            session.id === currentSessionId
+                              ? "bg-primary/10 border border-primary/30"
+                              : "bg-muted/50 hover:bg-muted border border-transparent"
+                          }`}
+                        >
+                          <div className="flex-1 min-w-0">
+                            <p className="text-sm font-medium truncate">{session.title || "New conversation"}</p>
+                            <p className="text-xs text-muted-foreground mt-0.5">
+                              {formatSessionDate(session.updated_at)}
+                            </p>
+                          </div>
+                          <button
+                            onClick={(e) => handleDeleteSession(session.id, e)}
+                            className="opacity-0 group-hover:opacity-100 p-1.5 rounded-lg text-muted-foreground hover:text-red-500 hover:bg-red-50 transition-all"
+                            aria-label="Delete conversation"
+                          >
+                            <Trash2 className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
+                      ))
+                    )}
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
 
             {/* Messages */}
             <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-muted/20">

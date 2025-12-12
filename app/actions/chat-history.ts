@@ -1,0 +1,175 @@
+"use server"
+
+import { createServerClient } from "@/lib/supabase/server"
+
+export interface ChatSession {
+  id: string
+  session_token: string
+  title: string | null
+  created_at: string
+  updated_at: string
+}
+
+export interface ChatMessage {
+  id: string
+  session_id: string
+  role: "user" | "assistant"
+  content: string
+  metadata: Record<string, unknown>
+  created_at: string
+}
+
+// Get or create a chat session for the given token
+export async function getOrCreateSession(sessionToken: string): Promise<ChatSession | null> {
+  const supabase = await createServerClient()
+
+  // First try to find existing session
+  const { data: existing } = await supabase
+    .from("chat_sessions")
+    .select("*")
+    .eq("session_token", sessionToken)
+    .order("updated_at", { ascending: false })
+    .limit(1)
+    .single()
+
+  if (existing) {
+    return existing as ChatSession
+  }
+
+  // Create new session
+  const { data: newSession, error } = await supabase
+    .from("chat_sessions")
+    .insert({ session_token: sessionToken })
+    .select()
+    .single()
+
+  if (error) {
+    console.error("Error creating chat session:", error)
+    return null
+  }
+
+  return newSession as ChatSession
+}
+
+// Create a new chat session (for "New Chat" button)
+export async function createNewSession(sessionToken: string): Promise<ChatSession | null> {
+  const supabase = await createServerClient()
+
+  const { data, error } = await supabase.from("chat_sessions").insert({ session_token: sessionToken }).select().single()
+
+  if (error) {
+    console.error("Error creating new session:", error)
+    return null
+  }
+
+  return data as ChatSession
+}
+
+// Get all chat sessions for a user/device
+export async function getChatSessions(sessionToken: string): Promise<ChatSession[]> {
+  const supabase = await createServerClient()
+
+  const { data, error } = await supabase
+    .from("chat_sessions")
+    .select("*")
+    .eq("session_token", sessionToken)
+    .order("updated_at", { ascending: false })
+
+  if (error) {
+    console.error("Error fetching chat sessions:", error)
+    return []
+  }
+
+  return (data || []) as ChatSession[]
+}
+
+// Get messages for a specific session
+export async function getChatMessages(sessionId: string): Promise<ChatMessage[]> {
+  const supabase = await createServerClient()
+
+  const { data, error } = await supabase
+    .from("chat_messages")
+    .select("*")
+    .eq("session_id", sessionId)
+    .order("created_at", { ascending: true })
+
+  if (error) {
+    console.error("Error fetching chat messages:", error)
+    return []
+  }
+
+  return (data || []) as ChatMessage[]
+}
+
+// Save a message to the database
+export async function saveMessage(
+  sessionId: string,
+  role: "user" | "assistant",
+  content: string,
+  metadata: Record<string, unknown> = {},
+): Promise<ChatMessage | null> {
+  const supabase = await createServerClient()
+
+  const { data, error } = await supabase
+    .from("chat_messages")
+    .insert({
+      session_id: sessionId,
+      role,
+      content,
+      metadata,
+    })
+    .select()
+    .single()
+
+  if (error) {
+    console.error("Error saving message:", error)
+    return null
+  }
+
+  // Update session's updated_at timestamp
+  await supabase.from("chat_sessions").update({ updated_at: new Date().toISOString() }).eq("id", sessionId)
+
+  return data as ChatMessage
+}
+
+// Update session title (auto-generate from first message)
+export async function updateSessionTitle(sessionId: string, title: string): Promise<void> {
+  const supabase = await createServerClient()
+
+  await supabase.from("chat_sessions").update({ title }).eq("id", sessionId)
+}
+
+// Delete a chat session and its messages
+export async function deleteChatSession(sessionId: string): Promise<boolean> {
+  const supabase = await createServerClient()
+
+  const { error } = await supabase.from("chat_sessions").delete().eq("id", sessionId)
+
+  if (error) {
+    console.error("Error deleting session:", error)
+    return false
+  }
+
+  return true
+}
+
+// Delete all chat history for a session token
+export async function clearAllChatHistory(sessionToken: string): Promise<boolean> {
+  const supabase = await createServerClient()
+
+  const { error } = await supabase.from("chat_sessions").delete().eq("session_token", sessionToken)
+
+  if (error) {
+    console.error("Error clearing chat history:", error)
+    return false
+  }
+
+  return true
+}
+
+// Generate a title from the first user message
+export function generateTitle(message: string): string {
+  // Truncate to first 50 chars and clean up
+  const cleaned = message.trim().replace(/\n/g, " ").substring(0, 50)
+  return cleaned.length < message.length ? `${cleaned}...` : cleaned
+}
