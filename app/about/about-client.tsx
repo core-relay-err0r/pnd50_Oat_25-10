@@ -181,7 +181,7 @@ const AboutClientPage = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4 }}
               >
-                <span className="text-slate-900">Simplifying Thai</span>
+                <span className="text-slate-900">Regional corporate</span>
                 <br />
                 <span className="text-slate-900">Accounting for</span>
                 <br />
