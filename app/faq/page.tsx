@@ -437,54 +437,54 @@ export default function FAQPage() {
             )}
           </div>
         </div>
+
+        {/* CTA Section - Updated with gradient */}
+        <motion.section
+          className="mt-16 sm:mt-24"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+        >
+          <div className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-8 sm:p-12 md:p-16 text-center relative overflow-hidden w-full">
+            <div className="absolute top-0 left-0 w-full h-full">
+              <div className="absolute top-10 left-10 w-32 h-32 bg-sky-500/10 rounded-full blur-2xl" />
+              <div className="absolute bottom-10 right-10 w-40 h-40 bg-teal-500/10 rounded-full blur-2xl" />
+            </div>
+
+            <div className="relative z-10 max-w-2xl mx-auto">
+              <div className="w-14 h-14 rounded-full bg-gradient-to-br from-sky-500/20 to-teal-500/20 flex items-center justify-center mx-auto mb-6">
+                <MessageCircle className="w-7 h-7 text-sky-400" />
+              </div>
+              <h2 className="text-2xl sm:text-3xl font-bold text-white mb-4">Still have questions?</h2>
+              <p className="text-slate-400 max-w-lg mx-auto mb-8">
+                Can't find what you're looking for? Our team is ready to guide you step by step — in simple English,
+                with full transparency.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                <Button
+                  asChild
+                  size="lg"
+                  className="bg-gradient-to-r from-sky-500 to-teal-400 hover:from-sky-600 hover:to-teal-500 text-white border-0"
+                >
+                  <Link href="/contact" className="flex items-center gap-2">
+                    Contact Us
+                    <ChevronRight className="w-4 h-4" />
+                  </Link>
+                </Button>
+                <Button
+                  asChild
+                  size="lg"
+                  variant="outline"
+                  className="border-slate-600 text-white hover:bg-slate-800 bg-transparent"
+                >
+                  <Link href="/calculator">Get Free Consultation</Link>
+                </Button>
+              </div>
+            </div>
+          </div>
+        </motion.section>
       </div>
-
-      {/* CTA Section - Now outside container for true full-width */}
-      <motion.section
-        className="mt-16 sm:mt-24"
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.5 }}
-      >
-        <div className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-8 sm:p-12 md:p-16 text-center relative overflow-hidden w-full">
-          <div className="absolute top-0 left-0 w-full h-full">
-            <div className="absolute top-10 left-10 w-32 h-32 bg-sky-500/10 rounded-full blur-2xl" />
-            <div className="absolute bottom-10 right-10 w-40 h-40 bg-teal-500/10 rounded-full blur-2xl" />
-          </div>
-
-          <div className="relative z-10 max-w-2xl mx-auto">
-            <div className="w-14 h-14 rounded-full bg-gradient-to-br from-sky-500/20 to-teal-500/20 flex items-center justify-center mx-auto mb-6">
-              <MessageCircle className="w-7 h-7 text-sky-400" />
-            </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white mb-4">Still have questions?</h2>
-            <p className="text-slate-400 max-w-lg mx-auto mb-8">
-              Can't find what you're looking for? Our team is ready to guide you step by step — in simple English, with
-              full transparency.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-3 justify-center">
-              <Button
-                asChild
-                size="lg"
-                className="bg-gradient-to-r from-sky-500 to-teal-400 hover:from-sky-600 hover:to-teal-500 text-white border-0"
-              >
-                <Link href="/contact" className="flex items-center gap-2">
-                  Contact Us
-                  <ChevronRight className="w-4 h-4" />
-                </Link>
-              </Button>
-              <Button
-                asChild
-                size="lg"
-                variant="outline"
-                className="border-slate-600 text-white hover:bg-slate-800 bg-transparent"
-              >
-                <Link href="/calculator">Get Free Consultation</Link>
-              </Button>
-            </div>
-          </div>
-        </div>
-      </motion.section>
     </div>
   )
 }

@@ -1,5 +1,7 @@
 "use client"
 
+import React from "react"
+
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { ArrowRight, Mail, MessageSquare, Target, CheckCircle2, Heart } from "lucide-react"
@@ -34,6 +36,8 @@ const staggerContainer = {
 
 const AboutClientPage = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
+  const [stats, setStats] = useState({ years: 0, clients: 0, satisfaction: 0 })
+  const [hasAnimated, setHasAnimated] = useState(false)
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -46,6 +50,45 @@ const AboutClientPage = () => {
     window.addEventListener("mousemove", handleMouseMove)
     return () => window.removeEventListener("mousemove", handleMouseMove)
   }, [])
+
+  useEffect(() => {
+    if (!hasAnimated) return
+
+    const duration = 2000
+    const steps = 60
+    const interval = duration / steps
+
+    const targets = { years: 10, clients: 150, satisfaction: 100 }
+
+    const current = { years: 0, clients: 0, satisfaction: 0 }
+    const increments = {
+      years: targets.years / steps,
+      clients: targets.clients / steps,
+      satisfaction: targets.satisfaction / steps,
+    }
+
+    const timer = setInterval(() => {
+      current.years = Math.min(current.years + increments.years, targets.years)
+      current.clients = Math.min(current.clients + increments.clients, targets.clients)
+      current.satisfaction = Math.min(current.satisfaction + increments.satisfaction, targets.satisfaction)
+
+      setStats({
+        years: Math.floor(current.years),
+        clients: Math.floor(current.clients),
+        satisfaction: Math.floor(current.satisfaction),
+      })
+
+      if (
+        current.years >= targets.years &&
+        current.clients >= targets.clients &&
+        current.satisfaction >= targets.satisfaction
+      ) {
+        clearInterval(timer)
+      }
+    }, interval)
+
+    return () => clearInterval(timer)
+  }, [hasAnimated])
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-sky-50/80">
@@ -102,7 +145,7 @@ const AboutClientPage = () => {
           }}
         />
 
-        <div className="container mx-auto px-4 sm:px-6 relative z-10 lg:px-0">
+        <div className="container mx-auto px-4 sm:px-6 relative z-10 lg:px-0 max-w-7xl">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
@@ -111,7 +154,9 @@ const AboutClientPage = () => {
             <Link
               href="/"
               className="inline-flex items-center gap-2 text-slate-400 hover:text-primary transition-colors group mb-6 sm:mb-8 touch-manipulation"
-            ></Link>
+            >
+              {/* Link content */}
+            </Link>
           </motion.div>
 
           <div className="flex flex-col lg:grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
@@ -131,26 +176,28 @@ const AboutClientPage = () => {
               </motion.div>
 
               <motion.h1
-                className="text-4xl md:text-5xl lg:text-6xl font-bold text-slate-900 mb-6 leading-tight"
+                className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4 }}
               >
-                Regional corporate specialist with
+                <span className="text-slate-900">Simplifying Thai</span>
                 <br />
-                <span className="bg-gradient-to-r from-primary via-chart-2 to-primary bg-clip-text text-transparent font-extrabold">
-                  Global standards
+                <span className="text-slate-900">Accounting for</span>
+                <br />
+                <span className="bg-gradient-to-r from-blue-600 via-sky-500 to-teal-400 bg-clip-text text-transparent font-extrabold">
+                  International Businesses
                 </span>
               </motion.h1>
 
               <motion.p
-                className="text-slate-600 leading-relaxed mb-8 text-base"
+                className="text-lg text-slate-600 leading-relaxed mb-8 max-w-xl mx-auto lg:mx-0"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5 }}
               >
-                PND50 is an accounting and advisory firm based in Thailand, helping foreign-owned businesses navigate
-                Thai accounting and compliance with clarity and confidence.
+                Expert accounting, tax, and compliance services designed specifically for foreign-owned businesses
+                navigating Thailand's regulatory landscape.
               </motion.p>
 
               <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6 }}>
@@ -194,107 +241,164 @@ const AboutClientPage = () => {
               </div>
             </motion.div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section className="py-12 sm:py-24 md:py-32 bg-white/50 relative overflow-hidden lg:scale-[0.85] lg:origin-center">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-sky-100/50 rounded-full blur-3xl"></div>
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="max-w-7xl mx-auto">
-            <div className="flex flex-col lg:grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-              {/* Image - with scroll animation */}
+        {/* Stats Section */}
+        <motion.section
+          className="py-12 sm:py-16 px-4 sm:px-6 lg:px-8 bg-white/50 backdrop-blur-sm relative overflow-hidden"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          onViewportEnter={() => setHasAnimated(true)}
+          variants={fadeInUp}
+          transition={{ duration: 0.6 }}
+        >
+          <div className="absolute top-0 right-1/4 w-96 h-96 bg-sky-200/20 rounded-full blur-3xl" />
+          <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-teal-200/20 rounded-full blur-3xl" />
+
+          <div className="container mx-auto relative z-10 max-w-6xl">
+            <motion.div
+              className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8"
+              variants={staggerContainer}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+            >
+              {[
+                {
+                  value: stats.years,
+                  suffix: "+",
+                  label: "Years of Excellence",
+                  description: "Trusted expertise in Thai accounting",
+                  gradient: "from-blue-500 to-sky-400",
+                  icon: "📊",
+                },
+                {
+                  value: stats.clients,
+                  suffix: "+",
+                  label: "Happy Clients",
+                  description: "International businesses served",
+                  gradient: "from-sky-500 to-teal-400",
+                  icon: "🤝",
+                },
+                {
+                  value: stats.satisfaction,
+                  suffix: "%",
+                  label: "Client Satisfaction",
+                  description: "Rated by our customers",
+                  gradient: "from-teal-500 to-emerald-400",
+                  icon: "⭐",
+                },
+              ].map((stat, index) => (
+                <motion.div
+                  key={index}
+                  className="group relative bg-white rounded-2xl p-6 sm:p-8 shadow-lg shadow-slate-100 border border-slate-100 hover:shadow-xl hover:shadow-sky-100/50 hover:-translate-y-1 transition-all duration-300"
+                  variants={fadeInUp}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                >
+                  <div className="text-5xl mb-4">{stat.icon}</div>
+                  <div
+                    className={`text-4xl sm:text-5xl font-bold bg-gradient-to-r ${stat.gradient} bg-clip-text text-transparent mb-2`}
+                  >
+                    {stat.value}
+                    {stat.suffix}
+                  </div>
+                  <div className="text-lg font-semibold text-slate-900 mb-2">{stat.label}</div>
+                  <div className="text-sm text-slate-600">{stat.description}</div>
+                </motion.div>
+              ))}
+            </motion.div>
+          </div>
+        </motion.section>
+
+        <section className="py-16 sm:py-24 md:py-32 relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-sky-100/50 rounded-full blur-3xl"></div>
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 max-w-7xl">
+            <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+              {/* Image */}
               <motion.div
-                className="relative w-full min-w-0 lg:order-last order-first"
+                className="relative w-full order-first lg:order-last"
                 variants={fadeInRight}
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true, margin: "-100px" }}
                 transition={{ duration: 0.7, ease: "easeOut" }}
               >
-                <div className="relative aspect-[3/4] rounded-3xl overflow-hidden shadow-2xl mx-auto max-w-md lg:max-w-full">
+                <div className="relative aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl">
                   <img
                     src="/images/design-mode/1762249087-4ee906051d74732ad592c02379087e35-4.png.jpeg"
-                    alt="Professional team consultation meeting"
-                    className="w-full h-full object-cover parallax-image"
+                    alt="Professional team consultation"
+                    className="w-full h-full object-cover"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-white/30 to-transparent"></div>
-
-                  <div className="absolute bottom-4 sm:bottom-6 left-4 sm:left-6 right-4 sm:right-6 bg-white/90 backdrop-blur-md rounded-2xl p-3 sm:p-4 border border-slate-200 max-w-full z-20">
-                    <div className="grid grid-cols-3 gap-2 sm:gap-3 text-center">
-                      <div className="min-w-0">
-                        <div className="text-xl sm:text-2xl md:text-3xl font-bold text-primary mb-1">10+</div>
-                        <div className="text-[10px] sm:text-xs text-slate-500 break-words">Years Experience</div>
-                      </div>
-                      <div className="min-w-0">
-                        <div className="text-xl sm:text-2xl md:text-3xl font-bold text-primary mb-1">50+</div>
-                        <div className="text-[10px] sm:text-xs text-slate-500 break-words">Happy Clients</div>
-                      </div>
-                      <div className="min-w-0">
-                        <div className="text-xl sm:text-2xl md:text-3xl font-bold text-primary mb-1">100%</div>
-                        <div className="text-[10px] sm:text-xs text-slate-500 break-words">Compliant</div>
-                      </div>
-                    </div>
-                  </div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900/40 via-transparent to-transparent"></div>
                 </div>
-                <div className="absolute -top-6 -left-6 w-32 h-32 bg-teal-200/40 rounded-full blur-3xl animate-pulse pointer-events-none"></div>
+                <div className="absolute -bottom-4 -right-4 w-32 h-32 bg-gradient-to-br from-sky-400/20 to-teal-400/20 rounded-full blur-2xl" />
               </motion.div>
 
-              {/* Text Content - with scroll animation */}
+              {/* Text Content */}
               <motion.div
-                className="text-center lg:text-left flex flex-col justify-center min-w-0 w-full"
+                className="text-center lg:text-left"
                 variants={fadeInLeft}
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true, margin: "-100px" }}
                 transition={{ duration: 0.7, ease: "easeOut" }}
               >
-                <p className="text-sm font-semibold text-primary mb-3 tracking-wide uppercase">Our Mission</p>
-                <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-900 mb-4 sm:mb-6 leading-tight break-words">
-                  Making Accounting Simple and Stress-Free
+                <div className="inline-flex items-center gap-2 rounded-full bg-sky-100 px-4 py-2 text-sm font-semibold text-sky-700 mb-4">
+                  Our Mission
+                </div>
+                <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-900 mb-6 leading-tight">
+                  Making Thai Accounting{" "}
+                  <span className="bg-gradient-to-r from-sky-600 to-teal-500 bg-clip-text text-transparent">
+                    Clear & Stress-Free
+                  </span>
                 </h2>
-                <p className="sm:text-lg text-slate-600 mb-6 sm:mb-8 leading-relaxed break-words text-sm">
-                  We believe that numbers should never cause confusion. Our approach is to make accounting simple and
-                  transparent for foreign-owned businesses in Thailand.
+                <p className="text-lg text-slate-600 mb-8 leading-relaxed">
+                  We believe accounting should empower, not confuse. Our approach combines expert knowledge with modern
+                  technology to make Thai compliance transparent and manageable.
                 </p>
 
                 <motion.div
-                  className="space-y-4 sm:space-y-6"
+                  className="space-y-6"
                   variants={staggerContainer}
                   initial="hidden"
                   whileInView="visible"
-                  viewport={{ once: true, margin: "-50px" }}
+                  viewport={{ once: true }}
                 >
                   {[
                     {
                       icon: Target,
-                      title: "Clear",
-                      description: "We make accounting simple and transparent — not create confusion.",
+                      title: "Crystal Clear",
+                      description: "Plain-English communication about your numbers and obligations",
+                      color: "sky",
                     },
                     {
                       icon: CheckCircle2,
-                      title: "Compliant",
-                      description: "Stay compliant while maintaining full visibility into your financial health.",
+                      title: "Always Compliant",
+                      description: "Stay ahead of deadlines with proactive compliance management",
+                      color: "teal",
                     },
                     {
                       icon: Heart,
-                      title: "Stress-Free",
-                      description: "Human expertise combined with reliable technology for peace of mind.",
+                      title: "Peace of Mind",
+                      description: "Human expertise backed by reliable technology and real-time support",
+                      color: "blue",
                     },
                   ].map((item, index) => (
                     <motion.div
                       key={index}
-                      className="flex items-start gap-4 group mx-auto lg:mx-0 max-w-md lg:max-w-none"
+                      className="flex items-start gap-4 group"
                       variants={fadeInUp}
                       transition={{ duration: 0.5 }}
                     >
-                      <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-sky-100 flex items-center justify-center group-hover:bg-primary group-hover:scale-110 transition-all duration-300">
-                        <item.icon className="w-6 h-6 text-primary group-hover:text-white transition-colors" />
+                      <div
+                        className={`flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br from-${item.color}-100 to-${item.color}-50 flex items-center justify-center group-hover:scale-110 group-hover:shadow-lg transition-all duration-300`}
+                      >
+                        {React.createElement(item.icon, { className: `w-6 h-6 text-${item.color}-600` })}
                       </div>
-                      <div className="text-left min-w-0 flex-1">
-                        <h3 className="text-lg sm:text-xl font-bold text-slate-900 mb-2 break-words">{item.title}</h3>
-                        <p className="sm:text-base text-slate-600 leading-relaxed break-words text-xs">
-                          {item.description}
-                        </p>
+                      <div className="text-left flex-1">
+                        <h3 className="text-lg font-bold text-slate-900 mb-1">{item.title}</h3>
+                        <p className="text-slate-600 leading-relaxed">{item.description}</p>
                       </div>
                     </motion.div>
                   ))}
@@ -302,136 +406,136 @@ const AboutClientPage = () => {
               </motion.div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section className="py-12 sm:py-24 md:py-32 bg-gradient-to-br from-sky-50/50 to-white relative overflow-hidden">
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-teal-100/30 rounded-full blur-3xl"></div>
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="max-w-7xl mx-auto">
-            <motion.div
-              className="text-center mb-12 sm:mb-16"
-              variants={fadeInUp}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.6 }}
-            >
-              <p className="text-sm font-semibold text-primary mb-3 tracking-wide uppercase">Our Success Stories</p>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-900 mb-4 leading-tight">
-                Trusted by Businesses Across Thailand
-              </h2>
-              <p className="sm:text-lg text-slate-600 max-w-3xl mx-auto text-sm">
-                We&#39;re proud to support international startups — especially from Russia and Vietnam. Helping them
-                manage accounting, tax, and compliance with confidence in Thailand.
-              </p>
-            </motion.div>
-
-            <motion.div
-              className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
-              variants={staggerContainer}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-50px" }}
-            >
-              <motion.div variants={fadeInUp} transition={{ duration: 0.5 }}>
-                <Testimonial
-                  name="Sarah Mitchell"
-                  role="Operations Manager"
-                  company="TechStart Asia"
-                  rating={5}
-                  image="https://i.pravatar.cc/150?u=sarah"
-                  testimonial="PND50 transformed our accounting process completely. Their AI-powered system made compliance effortless and saved our team countless hours every month. The real-time support in English was invaluable."
-                />
+        <section className="py-12 sm:py-24 md:py-32 bg-gradient-to-br from-sky-50/50 to-white relative overflow-hidden">
+          <div className="absolute bottom-0 left-0 w-96 h-96 bg-teal-100/30 rounded-full blur-3xl"></div>
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div className="max-w-7xl mx-auto">
+              <motion.div
+                className="text-center mb-12 sm:mb-16"
+                variants={fadeInUp}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ duration: 0.6 }}
+              >
+                <p className="text-sm font-semibold text-primary mb-3 tracking-wide uppercase">Our Success Stories</p>
+                <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-900 mb-4 leading-tight">
+                  Trusted by Businesses Across Thailand
+                </h2>
+                <p className="sm:text-lg text-slate-600 max-w-3xl mx-auto text-sm">
+                  We&#39;re proud to support international startups — especially from Russia and Vietnam. Helping them
+                  manage accounting, tax, and compliance with confidence in Thailand.
+                </p>
               </motion.div>
-              <motion.div variants={fadeInUp} transition={{ duration: 0.5 }}>
-                <Testimonial
-                  name="Michael Chen"
-                  role="CEO"
-                  company="Digital Commerce Co."
-                  rating={5}
-                  image="https://i.pravatar.cc/150?u=michael"
-                  testimonial="As a foreign company navigating Thai regulations, PND50 was a game-changer. They handle everything with precision and clarity. No more confusion about deadlines or compliance requirements."
-                />
-              </motion.div>
-              <motion.div variants={fadeInUp} transition={{ duration: 0.5 }}>
-                <Testimonial
-                  name="Priya Sharma"
-                  role="Finance Director"
-                  company="Southeast Ventures"
-                  rating={5}
-                  image="https://i.pravatar.cc/150?u=priya"
-                  testimonial="The combination of expert accountants and modern technology sets PND50 apart. They're proactive, transparent, and make financial reporting stress-free. Highly recommend for any international business in Thailand."
-                />
-              </motion.div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
 
-      <motion.section
-        className="pt-12 sm:pt-24 md:pt-32"
-        variants={fadeInUp}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 0.6 }}
-      >
-        <div className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-8 sm:p-12 md:p-16 text-center relative overflow-hidden">
-          <div className="absolute top-0 left-0 w-full h-full">
-            <div className="absolute top-10 left-10 w-32 h-32 bg-sky-500/10 rounded-full blur-2xl" />
-            <div className="absolute bottom-10 right-10 w-40 h-40 bg-teal-500/10 rounded-full blur-2xl" />
-          </div>
-
-          <div className="relative z-10 max-w-2xl mx-auto">
-            <div className="w-14 h-14 rounded-full bg-gradient-to-br from-sky-500/20 to-teal-500/20 flex items-center justify-center mx-auto mb-6">
-              <Mail className="w-7 h-7 text-sky-400" />
+              <motion.div
+                className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
+                variants={staggerContainer}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: "-50px" }}
+              >
+                <motion.div variants={fadeInUp} transition={{ duration: 0.5 }}>
+                  <Testimonial
+                    name="Sarah Mitchell"
+                    role="Operations Manager"
+                    company="TechStart Asia"
+                    rating={5}
+                    image="https://i.pravatar.cc/150?u=sarah"
+                    testimonial="PND50 transformed our accounting process completely. Their AI-powered system made compliance effortless and saved our team countless hours every month. The real-time support in English was invaluable."
+                  />
+                </motion.div>
+                <motion.div variants={fadeInUp} transition={{ duration: 0.5 }}>
+                  <Testimonial
+                    name="Michael Chen"
+                    role="CEO"
+                    company="Digital Commerce Co."
+                    rating={5}
+                    image="https://i.pravatar.cc/150?u=michael"
+                    testimonial="As a foreign company navigating Thai regulations, PND50 was a game-changer. They handle everything with precision and clarity. No more confusion about deadlines or compliance requirements."
+                  />
+                </motion.div>
+                <motion.div variants={fadeInUp} transition={{ duration: 0.5 }}>
+                  <Testimonial
+                    name="Priya Sharma"
+                    role="Finance Director"
+                    company="Southeast Ventures"
+                    rating={5}
+                    image="https://i.pravatar.cc/150?u=priya"
+                    testimonial="The combination of expert accountants and modern technology sets PND50 apart. They're proactive, transparent, and make financial reporting stress-free. Highly recommend for any international business in Thailand."
+                  />
+                </motion.div>
+              </motion.div>
             </div>
-            <motion.h2
-              className="text-2xl sm:text-3xl font-bold text-white mb-4"
-              variants={fadeInUp}
-              transition={{ duration: 0.5 }}
-            >
-              Let's Simplify Accounting in Thailand — Together.
-            </motion.h2>
-            <motion.p
-              className="text-slate-400 max-w-lg mx-auto mb-8"
-              variants={fadeInUp}
-              transition={{ duration: 0.5, delay: 0.1 }}
-            >
-              Your business deserves clear, compliant, and modern accounting support. Reach out today to see how we can
-              help.
-            </motion.p>
-            <motion.div
-              className="flex flex-col sm:flex-row gap-3 justify-center"
-              variants={fadeInUp}
-              transition={{ duration: 0.5, delay: 0.2 }}
-            >
-              <Button
-                asChild
-                size="lg"
-                className="bg-gradient-to-r from-sky-500 to-teal-400 hover:from-sky-600 hover:to-teal-500 text-white border-0"
-              >
-                <Link href="/contact" className="flex items-center gap-2">
-                  <MessageSquare className="w-4 h-4" />
-                  Get in Touch
-                </Link>
-              </Button>
-              <Button
-                asChild
-                size="lg"
-                variant="outline"
-                className="border-slate-600 text-white hover:bg-slate-800 bg-transparent"
-              >
-                <Link href="/calculator" className="flex items-center gap-2">
-                  Get Your Quote
-                  <ArrowRight className="w-4 h-4" />
-                </Link>
-              </Button>
-            </motion.div>
           </div>
-        </div>
-      </motion.section>
+        </section>
+
+        <motion.section
+          className="pt-12 sm:pt-24 md:pt-32"
+          variants={fadeInUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.6 }}
+        >
+          <div className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-8 sm:p-12 md:p-16 text-center relative overflow-hidden">
+            <div className="absolute top-0 left-0 w-full h-full">
+              <div className="absolute top-10 left-10 w-32 h-32 bg-sky-500/10 rounded-full blur-2xl" />
+              <div className="absolute bottom-10 right-10 w-40 h-40 bg-teal-500/10 rounded-full blur-2xl" />
+            </div>
+
+            <div className="relative z-10 max-w-2xl mx-auto">
+              <div className="w-14 h-14 rounded-full bg-gradient-to-br from-sky-500/20 to-teal-500/20 flex items-center justify-center mx-auto mb-6">
+                <Mail className="w-7 h-7 text-sky-400" />
+              </div>
+              <motion.h2
+                className="text-2xl sm:text-3xl font-bold text-white mb-4"
+                variants={fadeInUp}
+                transition={{ duration: 0.5 }}
+              >
+                Let's Simplify Accounting in Thailand — Together.
+              </motion.h2>
+              <motion.p
+                className="text-slate-400 max-w-lg mx-auto mb-8"
+                variants={fadeInUp}
+                transition={{ duration: 0.5, delay: 0.1 }}
+              >
+                Your business deserves clear, compliant, and modern accounting support. Reach out today to see how we
+                can help.
+              </motion.p>
+              <motion.div
+                className="flex flex-col sm:flex-row gap-3 justify-center"
+                variants={fadeInUp}
+                transition={{ duration: 0.5, delay: 0.2 }}
+              >
+                <Button
+                  asChild
+                  size="lg"
+                  className="bg-gradient-to-r from-sky-500 to-teal-400 hover:from-sky-600 hover:to-teal-500 text-white border-0"
+                >
+                  <Link href="/contact" className="flex items-center gap-2">
+                    <MessageSquare className="w-4 h-4" />
+                    Get in Touch
+                  </Link>
+                </Button>
+                <Button
+                  asChild
+                  size="lg"
+                  variant="outline"
+                  className="border-slate-600 text-white hover:bg-slate-800 bg-transparent"
+                >
+                  <Link href="/calculator" className="flex items-center gap-2">
+                    Get Your Quote
+                    <ArrowRight className="w-4 h-4" />
+                  </Link>
+                </Button>
+              </motion.div>
+            </div>
+          </div>
+        </motion.section>
+      </div>
     </div>
   )
 }
