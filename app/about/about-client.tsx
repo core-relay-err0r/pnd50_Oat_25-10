@@ -183,10 +183,10 @@ const AboutClientPage = () => {
               >
                 <span className="text-slate-900">Regional corporate</span>
                 <br />
-                <span className="text-slate-900">Accounting for</span>
+                <span className="text-slate-900">specialist with</span>
                 <br />
                 <span className="bg-gradient-to-r from-blue-600 via-sky-500 to-teal-400 bg-clip-text text-transparent font-extrabold">
-                  International Businesses
+                  {"Global standards\n"}
                 </span>
               </motion.h1>
 
