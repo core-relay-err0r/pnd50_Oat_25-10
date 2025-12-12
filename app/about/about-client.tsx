@@ -196,8 +196,7 @@ const AboutClientPage = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5 }}
               >
-                Expert accounting, tax, and compliance services designed specifically for foreign-owned businesses
-                navigating Thailand's regulatory landscape.
+                PND50 is an accounting and advisory firm based in Thailand, helping foreign-owned businesses navigate Thai accounting and compliance with clarity and confidence.
               </motion.p>
 
               <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6 }}>
