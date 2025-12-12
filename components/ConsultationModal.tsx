@@ -1,5 +1,5 @@
 "use client"
-import { useEffect, useState, useTransition, useEffectEvent } from "react"
+import { useEffect, useState, useTransition, useRef, useCallback } from "react"
 import { scheduleConsultation, type FormState } from "@/app/actions"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -20,16 +20,15 @@ export default function ConsultationModal({ isOpen, onClose }: ConsultationModal
   const [state, setState] = useState<FormState>(initialState)
   const [isPending, startTransition] = useTransition()
 
-  const formAction = async (formData: FormData) => {
-    startTransition(async () => {
-      const result = await scheduleConsultation(initialState, formData)
-      setState(result)
-    })
-  }
+  const onCloseRef = useRef(onClose)
 
-  const handleAutoClose = useEffectEvent(() => {
-    onClose()
-  })
+  useEffect(() => {
+    onCloseRef.current = onClose
+  }, [onClose])
+
+  const handleAutoClose = useCallback(() => {
+    onCloseRef.current()
+  }, [])
 
   useEffect(() => {
     if (state.status === "success") {
@@ -38,12 +37,19 @@ export default function ConsultationModal({ isOpen, onClose }: ConsultationModal
       }, 2000)
       return () => clearTimeout(timer)
     }
-  }, [state.status]) // Only depend on status, not onClose
+  }, [state.status, handleAutoClose])
 
   const handleClose = () => {
     if (!isPending) {
       onClose()
     }
+  }
+
+  const formAction = async (formData: FormData) => {
+    startTransition(async () => {
+      const result = await scheduleConsultation(initialState, formData)
+      setState(result)
+    })
   }
 
   return (
