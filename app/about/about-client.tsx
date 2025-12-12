@@ -1,10 +1,9 @@
 "use client"
 
 import React from "react"
-
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { ArrowRight, Mail, MessageSquare, Target, CheckCircle2, Heart } from "lucide-react"
+import { ArrowRight, Award, Users, TrendingUp, MessageCircle, Mail } from "lucide-react"
 import { useEffect, useState } from "react"
 import { Testimonial } from "@/components/ui/testimonial-card"
 import { motion } from "framer-motion"
@@ -196,7 +195,8 @@ const AboutClientPage = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5 }}
               >
-                PND50 is an accounting and advisory firm based in Thailand, helping foreign-owned businesses navigate Thai accounting and compliance with clarity and confidence.
+                PND50 is an accounting and advisory firm based in Thailand, helping foreign-owned businesses navigate
+                Thai accounting and compliance with clarity and confidence.
               </motion.p>
 
               <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6 }}>
@@ -270,7 +270,8 @@ const AboutClientPage = () => {
                 label: "Years of Excellence",
                 description: "Trusted expertise in Thai accounting",
                 gradient: "from-blue-500 to-sky-400",
-                icon: "📊",
+                icon: Award,
+                iconBg: "from-blue-500/10 to-sky-500/10",
               },
               {
                 value: stats.clients,
@@ -278,7 +279,8 @@ const AboutClientPage = () => {
                 label: "Happy Clients",
                 description: "International businesses served",
                 gradient: "from-sky-500 to-teal-400",
-                icon: "🤝",
+                icon: Users,
+                iconBg: "from-sky-500/10 to-teal-500/10",
               },
               {
                 value: stats.satisfaction,
@@ -286,7 +288,8 @@ const AboutClientPage = () => {
                 label: "Client Satisfaction",
                 description: "Rated by our customers",
                 gradient: "from-teal-500 to-emerald-400",
-                icon: "⭐",
+                icon: TrendingUp,
+                iconBg: "from-teal-500/10 to-emerald-500/10",
               },
             ].map((stat, index) => (
               <motion.div
@@ -295,7 +298,12 @@ const AboutClientPage = () => {
                 variants={fadeInUp}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
               >
-                <div className="text-5xl mb-4">{stat.icon}</div>
+                <div className={`inline-flex p-3 rounded-xl bg-gradient-to-br ${stat.iconBg} mb-4`}>
+                  <stat.icon
+                    className={`w-8 h-8 bg-gradient-to-r ${stat.gradient} bg-clip-text text-transparent`}
+                    strokeWidth={2}
+                  />
+                </div>
                 <div
                   className={`text-4xl sm:text-5xl font-bold bg-gradient-to-r ${stat.gradient} bg-clip-text text-transparent mb-2`}
                 >
@@ -366,19 +374,19 @@ const AboutClientPage = () => {
               >
                 {[
                   {
-                    icon: Target,
+                    icon: Award,
                     title: "Crystal Clear",
                     description: "Plain-English communication about your numbers and obligations",
                     color: "sky",
                   },
                   {
-                    icon: CheckCircle2,
+                    icon: Users,
                     title: "Always Compliant",
                     description: "Stay ahead of deadlines with proactive compliance management",
                     color: "teal",
                   },
                   {
-                    icon: Heart,
+                    icon: TrendingUp,
                     title: "Peace of Mind",
                     description: "Human expertise backed by reliable technology and real-time support",
                     color: "blue",
@@ -515,7 +523,7 @@ const AboutClientPage = () => {
                 className="bg-gradient-to-r from-sky-500 to-teal-400 hover:from-sky-600 hover:to-teal-500 text-white border-0"
               >
                 <Link href="/contact" className="flex items-center gap-2">
-                  <MessageSquare className="w-4 h-4" />
+                  <MessageCircle className="w-4 h-4" />
                   Get in Touch
                 </Link>
               </Button>
