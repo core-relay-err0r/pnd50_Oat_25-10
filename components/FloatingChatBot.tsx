@@ -60,7 +60,7 @@ function getSessionToken(): string {
   return token
 }
 
-export function FloatingChatBot() {
+export default function FloatingChatBot() {
   const wrapperRef = useRef<HTMLDivElement>(null)
   const textareaRef = useRef<HTMLTextAreaElement | null>(null)
   const messagesEndRef = useRef<HTMLDivElement>(null)
@@ -95,6 +95,7 @@ export function FloatingChatBot() {
   const [sessionToken, setSessionToken] = useState<string>("")
   const [isLoadingHistory, setIsLoadingHistory] = useState(false)
   const [hasSetTitle, setHasSetTitle] = useState(false)
+  const [savedMessageIds, setSavedMessageIds] = useState<Set<string>>(new Set())
 
   // Panel dimensions
   const PANEL_WIDTH = isMobile ? 340 : 400
@@ -215,6 +216,12 @@ export function FloatingChatBot() {
     const lastMessage = aiMessages[aiMessages.length - 1]
     if (!lastMessage) return
 
+    // Skip if this message was already saved
+    if (savedMessageIds.has(lastMessage.id)) return
+
+    // Only save when streaming is complete (status is "ready")
+    if (status !== "ready") return
+
     // Extract text content from message parts
     const content = lastMessage.parts
       .filter((part) => part.type === "text")
@@ -227,6 +234,9 @@ export function FloatingChatBot() {
     saveMessage(currentSessionId, lastMessage.role as "user" | "assistant", content, {
       page: pathname,
       voiceMode,
+    }).then(() => {
+      // Mark this message as saved
+      setSavedMessageIds((prev) => new Set([...prev, lastMessage.id]))
     })
 
     // Auto-generate title from first user message
@@ -235,7 +245,7 @@ export function FloatingChatBot() {
       updateSessionTitle(currentSessionId, title)
       setHasSetTitle(true)
     }
-  }, [aiMessages, currentSessionId, pathname, voiceMode, hasSetTitle])
+  }, [aiMessages, currentSessionId, pathname, voiceMode, hasSetTitle, status, savedMessageIds])
 
   const speakWithElevenLabs = useCallback(async (text: string) => {
     if (!text) return
@@ -246,7 +256,7 @@ export function FloatingChatBot() {
       const response = await fetch("/api/text-to-speech", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.JSON.stringify({ text }),
+        body: JSON.stringify({ text }),
       })
 
       if (!response.ok) {
@@ -460,7 +470,8 @@ export function FloatingChatBot() {
       setCurrentSessionId(newSession.id)
       setMessages([]) // Clear current messages
       setHasSetTitle(false)
-      setShowHistory(false)
+      setSavedMessageIds(new Set()) // Clear saved message tracking
+      setIsOpen(true)
     }
   }, [sessionToken, setMessages])
 
@@ -721,7 +732,7 @@ export function FloatingChatBot() {
                   stopListening()
                 }}
                 className="p-1.5 rounded-full text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors"
-                aria-label="Close"
+                aria-label="Close chat"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -952,3 +963,5 @@ export function FloatingChatBot() {
     </div>
   )
 }
+
+export { FloatingChatBot }
