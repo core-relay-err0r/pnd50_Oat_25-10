@@ -1,4 +1,4 @@
-import { convertToModelMessages, streamText, type UIMessage } from "ai"
+import { consumeStream, convertToModelMessages, streamText, type UIMessage } from "ai"
 
 export const maxDuration = 30
 
@@ -124,7 +124,7 @@ You'll see your quote building on the right side. Click 'Schedule Consultation' 
 EXISTING COMPANY - TAX/ACCOUNTING:
 "For accounting support, go to 'Accounting & Tax' and select:
 - 'Monthly Accounting' - Basic (฿4,500/mo) or Medium (฿7,500/mo) based on your transaction volume
-- 'Annual Financial Statements' (฿22,000/yr) for year-end requirements
+- 'Annual Financial Statements' (฿22,000) for year-end requirements
 Click 'Schedule Consultation' at the top to get started with your business needs."
 
 HIRING FOREIGNERS:
@@ -178,11 +178,20 @@ GUIDELINES:
 `
 
   const result = await streamText({
-    model: "openai/gpt-5",
+    model: "openai/gpt-4o",
     system: systemPrompt,
     prompt,
     abortSignal: req.signal,
+    maxOutputTokens: 1000,
+    temperature: 0.7,
   })
 
-  return result.toUIMessageStreamResponse()
+  return result.toUIMessageStreamResponse({
+    onFinish: async ({ isAborted }) => {
+      if (isAborted) {
+        console.log("[v0] Chat request aborted")
+      }
+    },
+    consumeStream: consumeStream,
+  })
 }
