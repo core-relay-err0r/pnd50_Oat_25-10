@@ -173,16 +173,9 @@ GUIDELINES:
 `
 
   const result = streamText({
-    model: "openai/gpt-5",
-    prompt: convertToModelMessages([
-      {
-        id: "system",
-        role: "system" as const,
-        content: systemPrompt,
-        parts: [{ type: "text", text: systemPrompt }],
-      },
-      ...messages,
-    ]),
+    model: "anthropic/claude-sonnet-4-20250514",
+    system: systemPrompt,
+    messages: convertToModelMessages(messages),
     abortSignal: req.signal,
   })
 
