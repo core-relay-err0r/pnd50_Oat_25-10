@@ -178,12 +178,10 @@ GUIDELINES:
 `
 
   const result = await streamText({
-    model: "openai/gpt-4o",
+    model: "openai/gpt-5",
     system: systemPrompt,
-    messages: prompt,
+    prompt,
     abortSignal: req.signal,
-    maxTokens: 1000,
-    temperature: 0.7,
   })
 
   return result.toUIMessageStreamResponse()
