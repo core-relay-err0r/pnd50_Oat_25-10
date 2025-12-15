@@ -190,6 +190,6 @@ GUIDELINES:
         console.log("[v0] Chat request aborted")
       }
     },
-    consumeStream: consumeStream,
+    consumeSseStream: consumeStream,
   })
 }
