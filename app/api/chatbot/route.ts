@@ -1,4 +1,4 @@
-import { consumeStream, convertToModelMessages, streamText, type UIMessage } from "ai"
+import { convertToModelMessages, streamText, type UIMessage } from "ai"
 
 export const maxDuration = 30
 
@@ -178,20 +178,10 @@ GUIDELINES:
 `
 
   const result = streamText({
-    model: "openai/gpt-5",
+    model: "openai/gpt-4o",
     system: systemPrompt,
-    prompt,
-    abortSignal: req.signal,
-    maxOutputTokens: 1000,
-    temperature: 0.7,
+    messages,
   })
 
-  return result.toUIMessageStreamResponse({
-    onFinish: async ({ isAborted }) => {
-      if (isAborted) {
-        console.log("[v0] Chat request aborted")
-      }
-    },
-    consumeSseStream: consumeStream,
-  })
+  return result.toUIMessageStreamResponse()
 }

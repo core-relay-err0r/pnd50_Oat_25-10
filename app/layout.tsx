@@ -10,6 +10,7 @@ import { Navbar } from "@/components/ui/mini-navbar"
 import Footer from "@/components/layout/Footer"
 import { Analytics } from "@vercel/analytics/react"
 import { SpeedInsights } from "@vercel/speed-insights/next"
+import { FloatingChatBot } from "@/components/FloatingChatBot"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -36,7 +37,7 @@ export default function RootLayout({
           <Footer />
           <Suspense fallback={null}>
             <Toaster />
-            {/* <FloatingChatBot /> */}
+            <FloatingChatBot />
           </Suspense>
           <LayoutClientComponent />
         </ModalProvider>
