@@ -1,4 +1,4 @@
-import { consumeStream, convertToModelMessages, streamText, type UIMessage } from "ai"
+import { convertToModelMessages, streamText, type UIMessage } from "ai"
 
 export const maxDuration = 30
 
@@ -177,21 +177,14 @@ GUIDELINES:
 - Every 2-3 exchanges, if they haven't clicked it yet, gently remind them: "Whenever you're ready, click 'Schedule Consultation' to see your options and pricing."
 `
 
-  const result = streamText({
-    model: "openai/gpt-5-mini",
+  const result = await streamText({
+    model: "openai/gpt-4o",
     system: systemPrompt,
-    prompt,
+    messages: prompt,
     abortSignal: req.signal,
-    maxOutputTokens: 1000,
+    maxTokens: 1000,
     temperature: 0.7,
   })
 
-  return result.toUIMessageStreamResponse({
-    onFinish: async ({ isAborted }) => {
-      if (isAborted) {
-        console.log("[v0] Chat request aborted")
-      }
-    },
-    consumeSseStream: consumeStream,
-  })
+  return result.toUIMessageStreamResponse()
 }
