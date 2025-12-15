@@ -1,17 +1,25 @@
 "use client"
 
 import type React from "react"
-import { useState, useRef, useEffect, useCallback } from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import { MessageSquare, X, Send, Volume2, VolumeX, Trash2, Plus, History } from "lucide-react"
+import type { SpeechRecognition } from "web-speech-api"
+
+import { useState, useEffect, useRef, useCallback } from "react"
+import { X, Send, Mic, Square, MessageSquare, History, Plus, Trash2, ChevronLeft } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { useChat } from "@ai-sdk/react"
 import { usePathname } from "next/navigation"
 import { useIsMobile } from "@/components/ui/use-mobile"
+import { AnimatePresence, motion } from "framer-motion"
+import { ColorOrb } from "@/components/ui/color-orb"
 import {
   getOrCreateSession,
   getChatSessions,
   getChatMessages,
+  saveMessage,
+  updateSessionTitle,
   deleteChatSession,
   createNewSession,
+  generateTitle,
   type ChatSession,
 } from "@/app/actions/chat-history"
 
@@ -74,8 +82,8 @@ export function FloatingChatBot() {
   const [speechSupported, setSpeechSupported] = useState(false)
   const [recognitionSupported, setRecognitionSupported] = useState(false)
 
-  const recognitionRef = useRef<any | null>(null)
-  const synthRef = useRef<any | null>(null)
+  const recognitionRef = useRef<SpeechRecognition | null>(null)
+  const synthRef = useRef<SpeechSynthesis | null>(null)
   const lastSpokenMessageRef = useRef<string | null>(null)
 
   const [inputValue, setInputValue] = useState("")
@@ -86,16 +94,6 @@ export function FloatingChatBot() {
   const [sessionToken, setSessionToken] = useState<string>("")
   const [isLoadingHistory, setIsLoadingHistory] = useState(false)
   const [hasSetTitle, setHasSetTitle] = useState(false)
-
-  type ChatMessage = {
-    id: string
-    role: "user" | "assistant"
-    parts: { type: "text"; text: string }[]
-    createdAt: Date
-  }
-
-  const [aiMessages, setAiMessages] = useState<ChatMessage[]>([])
-  const [status, setStatus] = useState<"ready" | "in_progress">("ready")
 
   // Panel dimensions
   const PANEL_WIDTH = isMobile ? 340 : 400
@@ -193,97 +191,48 @@ export function FloatingChatBot() {
     return () => document.removeEventListener("mousedown", clickOutsideHandler)
   }, [isOpen])
 
-  const handleAiSubmit = useCallback(
-    async (options: { text: string }) => {
-      const userMessage: ChatMessage = {
-        id: `user-${Date.now()}`,
-        role: "user",
-        parts: [{ type: "text", text: options.text }],
-        createdAt: new Date(),
-      }
-
-      setAiMessages((prev) => [...prev, userMessage])
-      setStatus("in_progress")
-
-      try {
-        const response = await fetch("/api/chatbot", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "X-Current-Page": pathname || "/",
-          },
-          body: JSON.stringify({
-            messages: [...aiMessages, userMessage].map((m) => ({
-              role: m.role,
-              content: m.parts.map((p) => p.text).join(""),
-            })),
-          }),
-        })
-
-        if (!response.ok) {
-          throw new Error("Failed to get response")
-        }
-
-        const reader = response.body?.getReader()
-        const decoder = new TextDecoder()
-        let assistantText = ""
-        const assistantId = `assistant-${Date.now()}`
-
-        // Add empty assistant message
-        setAiMessages((prev) => [
-          ...prev,
-          {
-            id: assistantId,
-            role: "assistant",
-            parts: [{ type: "text", text: "" }],
-            createdAt: new Date(),
-          },
-        ])
-
-        if (reader) {
-          while (true) {
-            const { done, value } = await reader.read()
-            if (done) break
-
-            const chunk = decoder.decode(value, { stream: true })
-            // Parse SSE data
-            const lines = chunk.split("\n")
-            for (const line of lines) {
-              if (line.startsWith("0:")) {
-                // Text chunk format from AI SDK
-                try {
-                  const text = JSON.parse(line.slice(2))
-                  assistantText += text
-                  setAiMessages((prev) =>
-                    prev.map((m) =>
-                      m.id === assistantId ? { ...m, parts: [{ type: "text", text: assistantText }] } : m,
-                    ),
-                  )
-                } catch {
-                  // Ignore parsing errors
-                }
-              }
-            }
-          }
-        }
-      } catch (error) {
-        console.error("Chat error:", error)
-        // Add error message
-        setAiMessages((prev) => [
-          ...prev,
-          {
-            id: `error-${Date.now()}`,
-            role: "assistant",
-            parts: [{ type: "text", text: "Sorry, I encountered an error. Please try again." }],
-            createdAt: new Date(),
-          },
-        ])
-      } finally {
-        setStatus("ready")
-      }
+  const {
+    messages: aiMessages,
+    sendMessage,
+    status,
+    setMessages,
+  } = useChat({
+    api: "/api/chatbot",
+    headers: {
+      "X-Current-Page": pathname || "/",
     },
-    [aiMessages, pathname],
-  )
+  })
+
+  const welcomeMessage = isCalculatorPage ? CALCULATOR_WELCOME_MESSAGE : WELCOME_MESSAGE
+  const messages = [welcomeMessage, ...aiMessages]
+
+  useEffect(() => {
+    if (!currentSessionId || aiMessages.length === 0) return
+
+    const lastMessage = aiMessages[aiMessages.length - 1]
+    if (!lastMessage) return
+
+    // Extract text content from message parts
+    const content = lastMessage.parts
+      .filter((part) => part.type === "text")
+      .map((part) => part.text)
+      .join("")
+
+    if (!content) return
+
+    // Save message to database
+    saveMessage(currentSessionId, lastMessage.role as "user" | "assistant", content, {
+      page: pathname,
+      voiceMode,
+    })
+
+    // Auto-generate title from first user message
+    if (!hasSetTitle && lastMessage.role === "user") {
+      const title = generateTitle(content)
+      updateSessionTitle(currentSessionId, title)
+      setHasSetTitle(true)
+    }
+  }, [aiMessages, currentSessionId, pathname, voiceMode, hasSetTitle])
 
   const speakWithElevenLabs = useCallback(async (text: string) => {
     if (!text) return
@@ -441,7 +390,7 @@ export function FloatingChatBot() {
       const transcript = event.results[0][0].transcript
       if (transcript.trim()) {
         setIsProcessing(true)
-        handleAiSubmit({ text: transcript })
+        sendMessage({ text: transcript })
       }
       setIsListening(false)
     }
@@ -461,7 +410,7 @@ export function FloatingChatBot() {
       console.error("Speech recognition error:", error)
       setIsListening(false)
     }
-  }, [isListening, isSpeaking, handleAiSubmit])
+  }, [isListening, isSpeaking, sendMessage])
 
   const startListening = useCallback(() => {
     if (!recognitionRef.current || isListening) return
@@ -498,7 +447,7 @@ export function FloatingChatBot() {
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
-  }, [aiMessages])
+  }, [messages])
 
   const handleNewChat = useCallback(async () => {
     if (!sessionToken) return
@@ -506,11 +455,11 @@ export function FloatingChatBot() {
     const newSession = await createNewSession(sessionToken)
     if (newSession) {
       setCurrentSessionId(newSession.id)
-      setAiMessages([]) // Clear current messages
+      setMessages([]) // Clear current messages
       setHasSetTitle(false)
       setShowHistory(false)
     }
-  }, [sessionToken, setAiMessages])
+  }, [sessionToken, setMessages])
 
   const handleLoadSession = useCallback(
     async (session: ChatSession) => {
@@ -528,10 +477,10 @@ export function FloatingChatBot() {
         createdAt: new Date(msg.created_at),
       }))
 
-      setAiMessages(formattedMessages)
+      setMessages(formattedMessages)
       setShowHistory(false)
     },
-    [setAiMessages],
+    [setMessages],
   )
 
   const handleDeleteSession = useCallback(
@@ -551,7 +500,7 @@ export function FloatingChatBot() {
 
   const handleSend = () => {
     if (!inputValue.trim() || status === "in_progress") return
-    handleAiSubmit({ text: inputValue })
+    sendMessage({ text: inputValue })
     setInputValue("")
   }
 
@@ -597,9 +546,6 @@ export function FloatingChatBot() {
     if (diffDays < 7) return `${diffDays} days ago`
     return date.toLocaleDateString()
   }
-
-  const welcomeMessage = isCalculatorPage ? CALCULATOR_WELCOME_MESSAGE : WELCOME_MESSAGE
-  const messages = [welcomeMessage, ...aiMessages]
 
   return (
     <div className="fixed bottom-4 md:bottom-6 right-4 md:right-6 z-50 flex items-end justify-end">
@@ -659,7 +605,11 @@ export function FloatingChatBot() {
               <div
                 className={`relative ${isCalculatorPage ? "rounded-full shadow-[0_0_25px_rgba(251,191,36,0.6)]" : ""}`}
               >
-                {/* Placeholder for ColorOrb */}
+                <ColorOrb
+                  dimension={isMobile ? "48px" : "64px"}
+                  tones={{ base: "oklch(22.64% 0 0)" }}
+                  spinDuration={15}
+                />
               </div>
             </button>
           </motion.div>
@@ -725,7 +675,11 @@ export function FloatingChatBot() {
                       : "shadow-lg"
                 }`}
               >
-                {/* Placeholder for ColorOrb */}
+                <ColorOrb
+                  dimension={isMobile ? "80px" : "100px"}
+                  tones={{ base: "oklch(22.64% 0 0)" }}
+                  spinDuration={isListening ? 5 : isSpeaking ? 8 : 15}
+                />
               </div>
             </button>
 
@@ -750,7 +704,7 @@ export function FloatingChatBot() {
                     className="p-1.5 rounded-full text-red-500 hover:text-red-600 hover:bg-red-50 transition-colors animate-pulse"
                     aria-label="Stop speaking"
                   >
-                    <VolumeX className="w-4 h-4" />
+                    <Square className="w-4 h-4" />
                   </button>
                   <div className="w-px h-4 bg-border/50" />
                 </>
@@ -787,7 +741,7 @@ export function FloatingChatBot() {
             {/* Header */}
             <div className="flex items-center justify-between px-4 py-3 border-b border-border/50 bg-gradient-to-r from-muted/30 to-transparent">
               <div className="flex items-center gap-3">
-                {/* Placeholder for ColorOrb */}
+                <ColorOrb dimension="32px" tones={{ base: "oklch(22.64% 0 0)" }} spinDuration={20} />
                 <div>
                   <h3 className="font-semibold text-sm text-foreground">Panida</h3>
                   <p className="text-xs text-muted-foreground">PND50 Assistant</p>
@@ -816,7 +770,7 @@ export function FloatingChatBot() {
                     className="text-muted-foreground hover:text-foreground hover:bg-muted rounded-lg p-1.5 transition-colors animate-pulse"
                     aria-label="Stop speaking"
                   >
-                    <VolumeX className="w-4 h-4" />
+                    <Square className="w-4 h-4" />
                   </button>
                 )}
                 <button
@@ -846,7 +800,7 @@ export function FloatingChatBot() {
                       onClick={() => setShowHistory(false)}
                       className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
                     >
-                      <X className="w-4 h-4" />
+                      <ChevronLeft className="w-4 h-4" />
                       Back to chat
                     </button>
                   </div>
@@ -963,7 +917,7 @@ export function FloatingChatBot() {
                   />
                 </div>
                 {recognitionSupported && (
-                  <button
+                  <Button
                     onClick={toggleVoiceMode}
                     disabled={status === "in_progress"}
                     size="icon"
@@ -972,10 +926,10 @@ export function FloatingChatBot() {
                     aria-label="Switch to voice mode"
                     title="Switch to voice mode"
                   >
-                    <Volume2 className="w-4 h-4" />
-                  </button>
+                    <Mic className="w-4 h-4" />
+                  </Button>
                 )}
-                <button
+                <Button
                   onClick={handleSend}
                   disabled={status === "in_progress" || !inputValue.trim()}
                   size="icon"
@@ -983,7 +937,7 @@ export function FloatingChatBot() {
                   aria-label="Send message"
                 >
                   <Send className="w-4 h-4" />
-                </button>
+                </Button>
               </div>
               <p className="text-[10px] text-muted-foreground mt-2 text-center">
                 Enter to send · Click mic for voice mode

@@ -1,16 +1,16 @@
 import { Suspense } from "react"
 import type React from "react"
 import type { Metadata } from "next"
-import { Inter } from "next/font/google"
+import { Inter } from 'next/font/google'
 import "./globals.css"
 import { ModalProvider } from "@/contexts/modal-context"
 import LayoutClientComponent from "@/components/layout/LayoutClientComponent"
 import { Toaster } from "@/components/ui/toaster"
 import { Navbar } from "@/components/ui/mini-navbar"
 import Footer from "@/components/layout/Footer"
+import { FloatingChatBot } from "@/components/FloatingChatBot"
 import { Analytics } from "@vercel/analytics/react"
 import { SpeedInsights } from "@vercel/speed-insights/next"
-import { FloatingChatBot } from "@/components/FloatingChatBot"
 
 const inter = Inter({ subsets: ["latin"] })
 

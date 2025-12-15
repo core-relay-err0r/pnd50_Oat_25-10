@@ -22,7 +22,10 @@ export interface ChatMessage {
 // Get or create a chat session for the given token
 export async function getOrCreateSession(sessionToken: string): Promise<ChatSession | null> {
   try {
+    console.log("[v0] getOrCreateSession called with token:", sessionToken)
     const supabase = await createServerClient()
+
+    console.log("[v0] Supabase client created, checking for existing session...")
 
     // First try to find existing session
     const { data: existing, error: fetchError } = await supabase
@@ -33,9 +36,14 @@ export async function getOrCreateSession(sessionToken: string): Promise<ChatSess
       .limit(1)
       .single()
 
+    console.log("[v0] Existing session query result:", { existing, fetchError })
+
     if (existing && !fetchError) {
+      console.log("[v0] Found existing session:", existing.id)
       return existing as ChatSession
     }
+
+    console.log("[v0] No existing session, creating new one...")
 
     // Create new session
     const { data: newSession, error } = await supabase
@@ -44,14 +52,20 @@ export async function getOrCreateSession(sessionToken: string): Promise<ChatSess
       .select()
       .single()
 
+    console.log("[v0] New session creation result:", { newSession, error })
+
     if (error) {
-      console.error("Error creating chat session:", error)
+      console.error("[v0] Error creating chat session:", error)
+      console.error("[v0] Error details:", JSON.stringify(error, null, 2))
       return null
     }
 
+    console.log("[v0] Successfully created session:", newSession.id)
     return newSession as ChatSession
   } catch (error) {
-    console.error("Error in getOrCreateSession:", error)
+    console.error("[v0] Exception in getOrCreateSession:", error)
+    console.error("[v0] Error type:", typeof error)
+    console.error("[v0] Error stringified:", JSON.stringify(error, null, 2))
     return null
   }
 }
