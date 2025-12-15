@@ -1,4 +1,4 @@
-import { consumeStream, convertToModelMessages, streamText, type UIMessage } from "ai"
+import { streamText, convertToModelMessages, consumeStream, type UIMessage } from "ai"
 
 export const maxDuration = 30
 
@@ -172,30 +172,21 @@ GUIDELINES:
 - Every 2-3 exchanges, if they haven't clicked it yet, gently remind them: "Whenever you're ready, click 'Schedule Consultation' to see your options and pricing."
 `
 
-  const messagesWithSystem: UIMessage[] = [
-    {
-      id: "system",
-      role: "system" as const,
-      content: systemPrompt,
-      parts: [{ type: "text", text: systemPrompt }],
-    },
-    ...messages,
-  ]
-
-  const prompt = convertToModelMessages(messagesWithSystem)
-
   const result = streamText({
     model: "openai/gpt-5",
-    prompt,
+    prompt: convertToModelMessages([
+      {
+        id: "system",
+        role: "system" as const,
+        content: systemPrompt,
+        parts: [{ type: "text", text: systemPrompt }],
+      },
+      ...messages,
+    ]),
     abortSignal: req.signal,
   })
 
   return result.toUIMessageStreamResponse({
-    onFinish: async ({ isAborted }) => {
-      if (isAborted) {
-        console.log("Aborted")
-      }
-    },
     consumeSseStream: consumeStream,
   })
 }
