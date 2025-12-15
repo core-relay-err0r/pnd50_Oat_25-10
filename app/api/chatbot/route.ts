@@ -124,7 +124,7 @@ You'll see your quote building on the right side. Click 'Schedule Consultation' 
 EXISTING COMPANY - TAX/ACCOUNTING:
 "For accounting support, go to 'Accounting & Tax' and select:
 - 'Monthly Accounting' - Basic (฿4,500/mo) or Medium (฿7,500/mo) based on your transaction volume
-- 'Annual Financial Statements' (฿22,000) for year-end requirements
+- 'Annual Financial Statements' (฿22,000/yr) for year-end requirements
 Click 'Schedule Consultation' at the top to get started with your business needs."
 
 HIRING FOREIGNERS:
@@ -178,7 +178,7 @@ GUIDELINES:
 `
 
   const result = streamText({
-    model: "openai/gpt-4o",
+    model: "openai/gpt-5",
     system: systemPrompt,
     prompt,
     abortSignal: req.signal,
@@ -192,6 +192,6 @@ GUIDELINES:
         console.log("[v0] Chat request aborted")
       }
     },
-    consumeStream: consumeStream,
+    consumeSseStream: consumeStream,
   })
 }
