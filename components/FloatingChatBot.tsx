@@ -5,17 +5,13 @@ import { useState, useRef, useEffect, useCallback } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { MessageSquare, X, Send, Volume2, VolumeX, Trash2, Plus, History } from "lucide-react"
 import { usePathname } from "next/navigation"
-import { useChat } from "@ai-sdk/react"
 import { useIsMobile } from "@/components/ui/use-mobile"
 import {
   getOrCreateSession,
   getChatSessions,
   getChatMessages,
-  saveMessage,
-  updateSessionTitle,
   deleteChatSession,
   createNewSession,
-  generateTitle,
   type ChatSession,
 } from "@/app/actions/chat-history"
 
@@ -90,6 +86,16 @@ export function FloatingChatBot() {
   const [sessionToken, setSessionToken] = useState<string>("")
   const [isLoadingHistory, setIsLoadingHistory] = useState(false)
   const [hasSetTitle, setHasSetTitle] = useState(false)
+
+  type ChatMessage = {
+    id: string
+    role: "user" | "assistant"
+    parts: { type: "text"; text: string }[]
+    createdAt: Date
+  }
+
+  const [aiMessages, setAiMessages] = useState<ChatMessage[]>([])
+  const [status, setStatus] = useState<"ready" | "in_progress">("ready")
 
   // Panel dimensions
   const PANEL_WIDTH = isMobile ? 340 : 400
@@ -187,50 +193,97 @@ export function FloatingChatBot() {
     return () => document.removeEventListener("mousedown", clickOutsideHandler)
   }, [isOpen])
 
-  const {
-    messages: aiMessages,
-    input,
-    handleInputChange,
-    handleSubmit: handleAiSubmit,
-    status,
-    setMessages: setAiMessages,
-  } = useChat({
-    api: "/api/chatbot",
-    headers: {
-      "X-Current-Page": pathname || "/",
+  const handleAiSubmit = useCallback(
+    async (options: { text: string }) => {
+      const userMessage: ChatMessage = {
+        id: `user-${Date.now()}`,
+        role: "user",
+        parts: [{ type: "text", text: options.text }],
+        createdAt: new Date(),
+      }
+
+      setAiMessages((prev) => [...prev, userMessage])
+      setStatus("in_progress")
+
+      try {
+        const response = await fetch("/api/chatbot", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-Current-Page": pathname || "/",
+          },
+          body: JSON.stringify({
+            messages: [...aiMessages, userMessage].map((m) => ({
+              role: m.role,
+              content: m.parts.map((p) => p.text).join(""),
+            })),
+          }),
+        })
+
+        if (!response.ok) {
+          throw new Error("Failed to get response")
+        }
+
+        const reader = response.body?.getReader()
+        const decoder = new TextDecoder()
+        let assistantText = ""
+        const assistantId = `assistant-${Date.now()}`
+
+        // Add empty assistant message
+        setAiMessages((prev) => [
+          ...prev,
+          {
+            id: assistantId,
+            role: "assistant",
+            parts: [{ type: "text", text: "" }],
+            createdAt: new Date(),
+          },
+        ])
+
+        if (reader) {
+          while (true) {
+            const { done, value } = await reader.read()
+            if (done) break
+
+            const chunk = decoder.decode(value, { stream: true })
+            // Parse SSE data
+            const lines = chunk.split("\n")
+            for (const line of lines) {
+              if (line.startsWith("0:")) {
+                // Text chunk format from AI SDK
+                try {
+                  const text = JSON.parse(line.slice(2))
+                  assistantText += text
+                  setAiMessages((prev) =>
+                    prev.map((m) =>
+                      m.id === assistantId ? { ...m, parts: [{ type: "text", text: assistantText }] } : m,
+                    ),
+                  )
+                } catch {
+                  // Ignore parsing errors
+                }
+              }
+            }
+          }
+        }
+      } catch (error) {
+        console.error("Chat error:", error)
+        // Add error message
+        setAiMessages((prev) => [
+          ...prev,
+          {
+            id: `error-${Date.now()}`,
+            role: "assistant",
+            parts: [{ type: "text", text: "Sorry, I encountered an error. Please try again." }],
+            createdAt: new Date(),
+          },
+        ])
+      } finally {
+        setStatus("ready")
+      }
     },
-  })
-
-  const welcomeMessage = isCalculatorPage ? CALCULATOR_WELCOME_MESSAGE : WELCOME_MESSAGE
-  const messages = [welcomeMessage, ...aiMessages]
-
-  useEffect(() => {
-    if (!currentSessionId || aiMessages.length === 0) return
-
-    const lastMessage = aiMessages[aiMessages.length - 1]
-    if (!lastMessage) return
-
-    // Extract text content from message parts
-    const content = lastMessage.parts
-      .filter((part) => part.type === "text")
-      .map((part) => part.text)
-      .join("")
-
-    if (!content) return
-
-    // Save message to database
-    saveMessage(currentSessionId, lastMessage.role as "user" | "assistant", content, {
-      page: pathname,
-      voiceMode,
-    })
-
-    // Auto-generate title from first user message
-    if (!hasSetTitle && lastMessage.role === "user") {
-      const title = generateTitle(content)
-      updateSessionTitle(currentSessionId, title)
-      setHasSetTitle(true)
-    }
-  }, [aiMessages, currentSessionId, pathname, voiceMode, hasSetTitle])
+    [aiMessages, pathname],
+  )
 
   const speakWithElevenLabs = useCallback(async (text: string) => {
     if (!text) return
@@ -445,7 +498,7 @@ export function FloatingChatBot() {
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
-  }, [messages])
+  }, [aiMessages])
 
   const handleNewChat = useCallback(async () => {
     if (!sessionToken) return
@@ -544,6 +597,9 @@ export function FloatingChatBot() {
     if (diffDays < 7) return `${diffDays} days ago`
     return date.toLocaleDateString()
   }
+
+  const welcomeMessage = isCalculatorPage ? CALCULATOR_WELCOME_MESSAGE : WELCOME_MESSAGE
+  const messages = [welcomeMessage, ...aiMessages]
 
   return (
     <div className="fixed bottom-4 md:bottom-6 right-4 md:right-6 z-50 flex items-end justify-end">
