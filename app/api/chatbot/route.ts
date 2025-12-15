@@ -177,7 +177,7 @@ GUIDELINES:
 - Every 2-3 exchanges, if they haven't clicked it yet, gently remind them: "Whenever you're ready, click 'Schedule Consultation' to see your options and pricing."
 `
 
-  const result = streamText({
+  const result = await streamText({
     model: "openai/gpt-4o",
     system: systemPrompt,
     messages,
