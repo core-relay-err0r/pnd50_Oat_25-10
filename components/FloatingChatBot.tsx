@@ -1,17 +1,12 @@
 "use client"
 
 import type React from "react"
-import type { SpeechRecognition } from "web-speech-api"
-
-import { useState, useEffect, useRef, useCallback } from "react"
-import { X, Send, Mic, Square, MessageSquare, History, Plus, Trash2, ChevronLeft } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { useChat } from "@ai-sdk/react"
-import { DefaultChatTransport } from "ai"
+import { useState, useRef, useEffect, useCallback } from "react"
+import { motion, AnimatePresence } from "framer-motion"
+import { MessageSquare, X, Send, Volume2, VolumeX, Trash2, Plus, History } from "lucide-react"
 import { usePathname } from "next/navigation"
+import { useChat } from "@ai-sdk/react"
 import { useIsMobile } from "@/components/ui/use-mobile"
-import { AnimatePresence, motion } from "framer-motion"
-import { ColorOrb } from "@/components/ui/color-orb"
 import {
   getOrCreateSession,
   getChatSessions,
@@ -83,8 +78,8 @@ export function FloatingChatBot() {
   const [speechSupported, setSpeechSupported] = useState(false)
   const [recognitionSupported, setRecognitionSupported] = useState(false)
 
-  const recognitionRef = useRef<SpeechRecognition | null>(null)
-  const synthRef = useRef<SpeechSynthesis | null>(null)
+  const recognitionRef = useRef<any | null>(null)
+  const synthRef = useRef<any | null>(null)
   const lastSpokenMessageRef = useRef<string | null>(null)
 
   const [inputValue, setInputValue] = useState("")
@@ -194,16 +189,16 @@ export function FloatingChatBot() {
 
   const {
     messages: aiMessages,
-    sendMessage,
+    input,
+    handleInputChange,
+    handleSubmit: handleAiSubmit,
     status,
-    setMessages,
+    setMessages: setAiMessages,
   } = useChat({
-    transport: new DefaultChatTransport({
-      api: "/api/chatbot",
-      headers: {
-        "X-Current-Page": pathname || "/",
-      },
-    }),
+    api: "/api/chatbot",
+    headers: {
+      "X-Current-Page": pathname || "/",
+    },
   })
 
   const welcomeMessage = isCalculatorPage ? CALCULATOR_WELCOME_MESSAGE : WELCOME_MESSAGE
@@ -246,7 +241,7 @@ export function FloatingChatBot() {
       const response = await fetch("/api/text-to-speech", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.JSON.stringify({ text }),
+        body: JSON.stringify({ text }),
       })
 
       if (!response.ok) {
@@ -393,7 +388,7 @@ export function FloatingChatBot() {
       const transcript = event.results[0][0].transcript
       if (transcript.trim()) {
         setIsProcessing(true)
-        sendMessage({ text: transcript })
+        handleAiSubmit({ text: transcript })
       }
       setIsListening(false)
     }
@@ -413,7 +408,7 @@ export function FloatingChatBot() {
       console.error("Speech recognition error:", error)
       setIsListening(false)
     }
-  }, [isListening, isSpeaking, sendMessage])
+  }, [isListening, isSpeaking, handleAiSubmit])
 
   const startListening = useCallback(() => {
     if (!recognitionRef.current || isListening) return
@@ -458,11 +453,11 @@ export function FloatingChatBot() {
     const newSession = await createNewSession(sessionToken)
     if (newSession) {
       setCurrentSessionId(newSession.id)
-      setMessages([]) // Clear current messages
+      setAiMessages([]) // Clear current messages
       setHasSetTitle(false)
       setShowHistory(false)
     }
-  }, [sessionToken, setMessages])
+  }, [sessionToken, setAiMessages])
 
   const handleLoadSession = useCallback(
     async (session: ChatSession) => {
@@ -480,10 +475,10 @@ export function FloatingChatBot() {
         createdAt: new Date(msg.created_at),
       }))
 
-      setMessages(formattedMessages)
+      setAiMessages(formattedMessages)
       setShowHistory(false)
     },
-    [setMessages],
+    [setAiMessages],
   )
 
   const handleDeleteSession = useCallback(
@@ -503,7 +498,7 @@ export function FloatingChatBot() {
 
   const handleSend = () => {
     if (!inputValue.trim() || status === "in_progress") return
-    sendMessage({ text: inputValue })
+    handleAiSubmit({ text: inputValue })
     setInputValue("")
   }
 
@@ -608,11 +603,7 @@ export function FloatingChatBot() {
               <div
                 className={`relative ${isCalculatorPage ? "rounded-full shadow-[0_0_25px_rgba(251,191,36,0.6)]" : ""}`}
               >
-                <ColorOrb
-                  dimension={isMobile ? "48px" : "64px"}
-                  tones={{ base: "oklch(22.64% 0 0)" }}
-                  spinDuration={15}
-                />
+                {/* Placeholder for ColorOrb */}
               </div>
             </button>
           </motion.div>
@@ -678,11 +669,7 @@ export function FloatingChatBot() {
                       : "shadow-lg"
                 }`}
               >
-                <ColorOrb
-                  dimension={isMobile ? "80px" : "100px"}
-                  tones={{ base: "oklch(22.64% 0 0)" }}
-                  spinDuration={isListening ? 5 : isSpeaking ? 8 : 15}
-                />
+                {/* Placeholder for ColorOrb */}
               </div>
             </button>
 
@@ -707,7 +694,7 @@ export function FloatingChatBot() {
                     className="p-1.5 rounded-full text-red-500 hover:text-red-600 hover:bg-red-50 transition-colors animate-pulse"
                     aria-label="Stop speaking"
                   >
-                    <Square className="w-4 h-4" />
+                    <VolumeX className="w-4 h-4" />
                   </button>
                   <div className="w-px h-4 bg-border/50" />
                 </>
@@ -744,7 +731,7 @@ export function FloatingChatBot() {
             {/* Header */}
             <div className="flex items-center justify-between px-4 py-3 border-b border-border/50 bg-gradient-to-r from-muted/30 to-transparent">
               <div className="flex items-center gap-3">
-                <ColorOrb dimension="32px" tones={{ base: "oklch(22.64% 0 0)" }} spinDuration={20} />
+                {/* Placeholder for ColorOrb */}
                 <div>
                   <h3 className="font-semibold text-sm text-foreground">Panida</h3>
                   <p className="text-xs text-muted-foreground">PND50 Assistant</p>
@@ -773,7 +760,7 @@ export function FloatingChatBot() {
                     className="text-muted-foreground hover:text-foreground hover:bg-muted rounded-lg p-1.5 transition-colors animate-pulse"
                     aria-label="Stop speaking"
                   >
-                    <Square className="w-4 h-4" />
+                    <VolumeX className="w-4 h-4" />
                   </button>
                 )}
                 <button
@@ -803,7 +790,7 @@ export function FloatingChatBot() {
                       onClick={() => setShowHistory(false)}
                       className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
                     >
-                      <ChevronLeft className="w-4 h-4" />
+                      <X className="w-4 h-4" />
                       Back to chat
                     </button>
                   </div>
@@ -920,7 +907,7 @@ export function FloatingChatBot() {
                   />
                 </div>
                 {recognitionSupported && (
-                  <Button
+                  <button
                     onClick={toggleVoiceMode}
                     disabled={status === "in_progress"}
                     size="icon"
@@ -929,10 +916,10 @@ export function FloatingChatBot() {
                     aria-label="Switch to voice mode"
                     title="Switch to voice mode"
                   >
-                    <Mic className="w-4 h-4" />
-                  </Button>
+                    <Volume2 className="w-4 h-4" />
+                  </button>
                 )}
-                <Button
+                <button
                   onClick={handleSend}
                   disabled={status === "in_progress" || !inputValue.trim()}
                   size="icon"
@@ -940,7 +927,7 @@ export function FloatingChatBot() {
                   aria-label="Send message"
                 >
                   <Send className="w-4 h-4" />
-                </Button>
+                </button>
               </div>
               <p className="text-[10px] text-muted-foreground mt-2 text-center">
                 Enter to send · Click mic for voice mode
