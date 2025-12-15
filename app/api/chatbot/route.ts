@@ -173,7 +173,7 @@ GUIDELINES:
 `
 
   const result = streamText({
-    model: "anthropic/claude-sonnet-4-20250514",
+    model: "openai/gpt-4o",
     system: systemPrompt,
     messages: convertToModelMessages(messages),
     abortSignal: req.signal,
