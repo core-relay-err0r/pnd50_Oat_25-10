@@ -178,7 +178,7 @@ GUIDELINES:
 `
 
   const result = streamText({
-    model: "openai/gpt-5",
+    model: "openai/gpt-4o-mini",
     system: systemPrompt,
     prompt,
     abortSignal: req.signal,
