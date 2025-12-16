@@ -108,10 +108,10 @@ export default function ServicesPage() {
 
   return (
     <main className="min-h-screen">
-      <section className="relative w-full min-h-screen flex flex-col bg-gradient-to-br from-slate-50 via-white to-slate-100/80">
+      <section className="relative w-full min-h-screen flex flex-col bg-gradient-to-br from-slate-50 via-white to-sky-50/80">
         <AnimatedGridBackground className="min-h-screen flex-1" variant="light">
           <motion.div
-            className="absolute top-[15%] left-[8%] w-20 h-20 border-2 border-slate-300/40 rounded-2xl backdrop-blur-sm"
+            className="absolute top-[15%] left-[8%] w-20 h-20 border-2 border-sky-400/30 rounded-2xl backdrop-blur-sm"
             animate={{
               rotate: [0, 90, 180, 270, 360],
               y: [0, -15, 0, 15, 0],
@@ -122,7 +122,7 @@ export default function ServicesPage() {
             }}
           />
           <motion.div
-            className="absolute top-[25%] right-[12%] w-16 h-16 border-2 border-slate-400/30 rounded-full backdrop-blur-sm"
+            className="absolute top-[25%] right-[12%] w-16 h-16 border-2 border-blue-400/25 rounded-full backdrop-blur-sm"
             animate={{
               scale: [1, 1.2, 1],
               opacity: [0.3, 0.6, 0.3],
@@ -130,14 +130,14 @@ export default function ServicesPage() {
             transition={{ duration: 4, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
           />
           <motion.div
-            className="absolute bottom-[30%] left-[15%] w-12 h-12 bg-gradient-to-br from-slate-200/30 to-slate-300/20 rounded-lg backdrop-blur-sm"
+            className="absolute bottom-[30%] left-[15%] w-12 h-12 bg-gradient-to-br from-sky-300/20 to-blue-300/20 rounded-lg backdrop-blur-sm"
             animate={{
               rotate: [45, 135, 225, 315, 405],
             }}
             transition={{ duration: 15, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
           />
           <motion.div
-            className="absolute top-[40%] right-[20%] w-8 h-8 bg-gradient-to-br from-slate-300/40 to-slate-400/30 rounded-full"
+            className="absolute top-[40%] right-[20%] w-8 h-8 bg-gradient-to-br from-blue-400/30 to-sky-400/30 rounded-full"
             animate={{
               y: [0, -20, 0],
               x: [0, 10, 0],
@@ -145,14 +145,14 @@ export default function ServicesPage() {
             transition={{ duration: 5, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
           />
           <motion.div
-            className="absolute bottom-[20%] right-[8%] w-24 h-24 border border-slate-300/30 rounded-full backdrop-blur-sm"
+            className="absolute bottom-[20%] right-[8%] w-24 h-24 border border-sky-300/25 rounded-full backdrop-blur-sm"
             animate={{
               scale: [1, 1.1, 1],
             }}
             transition={{ duration: 6, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
           />
           <motion.div
-            className="absolute top-[60%] left-[5%] w-6 h-6 bg-slate-400/30 rounded-full"
+            className="absolute top-[60%] left-[5%] w-6 h-6 bg-blue-400/25 rounded-full"
             animate={{
               y: [0, -30, 0],
               opacity: [0.3, 0.7, 0.3],
@@ -161,21 +161,21 @@ export default function ServicesPage() {
           />
 
           <div
-            className="absolute top-20 left-10 w-[500px] h-[500px] bg-gradient-to-br from-slate-200/40 via-slate-300/25 to-slate-400/15 rounded-full blur-3xl pointer-events-none"
+            className="absolute top-20 left-10 w-[500px] h-[500px] bg-gradient-to-br from-sky-300/30 via-blue-300/20 to-indigo-300/15 rounded-full blur-3xl pointer-events-none"
             style={{
               transform: `translate(${mousePosition.x}px, ${mousePosition.y}px)`,
               transition: "transform 0.5s ease-out",
             }}
           />
           <div
-            className="absolute bottom-20 right-10 w-[450px] h-[450px] bg-gradient-to-br from-slate-300/30 via-slate-200/25 to-slate-400/20 rounded-full blur-3xl pointer-events-none"
+            className="absolute bottom-20 right-10 w-[450px] h-[450px] bg-gradient-to-br from-blue-300/25 via-sky-300/20 to-indigo-300/15 rounded-full blur-3xl pointer-events-none"
             style={{
               transform: `translate(${-mousePosition.x}px, ${-mousePosition.y}px)`,
               transition: "transform 0.5s ease-out",
             }}
           />
           <div
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-gradient-to-br from-slate-100/40 via-slate-200/30 to-slate-300/25 rounded-full blur-3xl pointer-events-none"
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-gradient-to-br from-blue-200/25 via-sky-200/20 to-indigo-200/20 rounded-full blur-3xl pointer-events-none"
             style={{
               transform: `translate(calc(-50% + ${mousePosition.x * 0.5}px), calc(-50% + ${mousePosition.y * 0.5}px))`,
               transition: "transform 0.5s ease-out",
@@ -187,14 +187,14 @@ export default function ServicesPage() {
               <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
                 <div className="max-w-4xl mx-auto text-center">
                   <motion.div
-                    className="inline-flex items-center gap-2 bg-gradient-to-r from-slate-50 to-slate-100 text-slate-700 px-5 py-2.5 rounded-full text-sm font-semibold mb-8 border border-slate-300/60 shadow-sm shadow-slate-200/50"
+                    className="inline-flex items-center gap-2 bg-gradient-to-r from-sky-50 to-blue-50 text-sky-700 px-5 py-2.5 rounded-full text-sm font-semibold mb-8 border border-sky-200/60 shadow-sm shadow-sky-100/50"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.2 }}
                   >
                     <span className="relative flex h-2.5 w-2.5">
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-slate-500 opacity-75"></span>
-                      <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-slate-600"></span>
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-sky-500"></span>
                     </span>
                     Trusted by 200+ Businesses
                   </motion.div>
@@ -235,7 +235,7 @@ export default function ServicesPage() {
                     {stats.map((stat, index) => (
                       <motion.div
                         key={index}
-                        className="group relative bg-white/60 backdrop-blur-md border border-slate-200/60 rounded-2xl p-6 md:p-8 min-w-[160px] hover:bg-white/80 hover:border-slate-400/60 hover:shadow-xl hover:shadow-slate-200/50 transition-all duration-300 hover:-translate-y-1"
+                        className="group relative bg-white/60 backdrop-blur-md border border-slate-200/60 rounded-2xl p-6 md:p-8 min-w-[160px] hover:bg-white/80 hover:border-slate-300/60 hover:shadow-xl hover:shadow-slate-100/50 transition-all duration-300 hover:-translate-y-1"
                         variants={fadeInUp}
                         transition={{ duration: 0.5, delay: index * 0.1 }}
                       >
@@ -270,7 +270,7 @@ export default function ServicesPage() {
                   viewport={{ once: true }}
                   transition={{ duration: 0.5 }}
                 >
-                  <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-slate-800 via-slate-700 to-slate-600 bg-clip-text text-transparent mb-4 text-balance">
+                  <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-slate-700 via-slate-800 to-slate-900 bg-clip-text text-transparent mb-4 text-balance">
                     Our Services
                   </h2>
                   <p className="text-slate-600 text-lg max-w-2xl mx-auto text-pretty">
@@ -298,6 +298,13 @@ export default function ServicesPage() {
                 >
                   Ready to Get Started?
                 </motion.h2>
+                <motion.p
+                  className="text-slate-600 mb-8 leading-relaxed text-lg md:text-xl max-w-2xl mx-auto text-pretty"
+                  variants={fadeInUp}
+                  transition={{ duration: 0.5, delay: 0.1 }}
+                >
+                  Schedule a free consultation to discuss how we can support your business in Thailand
+                </motion.p>
                 <motion.div
                   className="flex flex-col sm:flex-row gap-4 justify-center"
                   variants={fadeInUp}
@@ -312,7 +319,7 @@ export default function ServicesPage() {
                   </Link>
                   <Link
                     href="/contact"
-                    className="inline-flex items-center justify-center gap-2 bg-white/70 backdrop-blur-md border-2 border-slate-300/80 text-slate-700 px-8 py-4 rounded-xl font-semibold hover:border-slate-500/80 hover:bg-white/90 hover:text-slate-900 transition-all hover:scale-105 shadow-lg shadow-slate-200/50 hover:shadow-xl hover:shadow-slate-300/50"
+                    className="inline-flex items-center justify-center gap-2 bg-white/70 backdrop-blur-md border-2 border-slate-200/80 text-slate-700 px-8 py-4 rounded-xl font-semibold hover:border-slate-400/80 hover:bg-white/90 hover:text-slate-800 transition-all hover:scale-105 shadow-lg shadow-slate-200/50 hover:shadow-xl hover:shadow-slate-300/50"
                   >
                     Contact Us
                   </Link>
