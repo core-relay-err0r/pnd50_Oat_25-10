@@ -205,12 +205,12 @@ export default function ServicesPage() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.3 }}
                   >
-                    <span className="inline-block bg-gradient-to-r from-slate-700 via-slate-800 to-slate-900 bg-clip-text text-transparent">
+                    <span className="inline-block bg-gradient-to-r from-blue-600 via-sky-500 to-teal-400 bg-clip-text text-transparent">
                       Business Compliance &amp;
                       <br />
                       Accounting
                     </span>{" "}
-                    <span className="inline-block bg-gradient-to-r from-slate-600 via-slate-700 to-slate-800 bg-clip-text text-transparent">
+                    <span className="inline-block bg-gradient-to-r from-slate-800 via-slate-700 to-slate-600 bg-clip-text text-transparent">
                       Services in Thailand
                     </span>
                   </motion.h1>
@@ -235,13 +235,13 @@ export default function ServicesPage() {
                     {stats.map((stat, index) => (
                       <motion.div
                         key={index}
-                        className="group relative bg-white/60 backdrop-blur-md border border-slate-200/60 rounded-2xl p-6 md:p-8 min-w-[160px] hover:bg-white/80 hover:border-slate-300/60 hover:shadow-xl hover:shadow-slate-100/50 transition-all duration-300 hover:-translate-y-1"
+                        className="group relative bg-white/60 backdrop-blur-md border border-slate-200/60 rounded-2xl p-6 md:p-8 min-w-[160px] hover:bg-white/80 hover:border-sky-300/60 hover:shadow-xl hover:shadow-sky-100/50 transition-all duration-300 hover:-translate-y-1"
                         variants={fadeInUp}
                         transition={{ duration: 0.5, delay: index * 0.1 }}
                       >
-                        <div className="absolute inset-0 bg-gradient-to-br from-slate-500/5 to-slate-600/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                        <div className="absolute inset-0 bg-gradient-to-br from-sky-500/5 to-blue-500/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                         <div className="relative">
-                          <div className="text-4xl md:text-5xl font-bold bg-gradient-to-br from-slate-700 via-slate-800 to-slate-900 bg-clip-text text-transparent mb-2">
+                          <div className="text-4xl md:text-5xl font-bold bg-gradient-to-br from-sky-600 via-blue-600 to-indigo-600 bg-clip-text text-transparent mb-2">
                             {stat.value}
                           </div>
                           <div className="text-sm md:text-base text-slate-600 font-medium">{stat.label}</div>
@@ -270,7 +270,7 @@ export default function ServicesPage() {
                   viewport={{ once: true }}
                   transition={{ duration: 0.5 }}
                 >
-                  <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-slate-700 via-slate-800 to-slate-900 bg-clip-text text-transparent mb-4 text-balance">
+                  <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-slate-800 via-slate-700 to-slate-600 bg-clip-text text-transparent mb-4 text-balance">
                     Our Services
                   </h2>
                   <p className="text-slate-600 text-lg max-w-2xl mx-auto text-pretty">
@@ -292,7 +292,7 @@ export default function ServicesPage() {
             >
               <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl text-center">
                 <motion.h2
-                  className="text-3xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-slate-700 via-slate-800 to-slate-900 bg-clip-text text-transparent mb-6 text-balance"
+                  className="text-3xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-sky-600 via-blue-600 to-indigo-600 bg-clip-text text-transparent mb-6 text-balance"
                   variants={fadeInUp}
                   transition={{ duration: 0.5 }}
                 >
@@ -312,14 +312,14 @@ export default function ServicesPage() {
                 >
                   <Link
                     href="/calculator"
-                    className="group inline-flex items-center justify-center gap-2 bg-gradient-to-r from-slate-700 via-slate-800 to-slate-900 text-white px-8 py-4 rounded-xl font-semibold hover:from-slate-800 hover:via-slate-900 hover:to-black transition-all hover:scale-105 shadow-lg shadow-slate-500/30 hover:shadow-xl hover:shadow-slate-600/40"
+                    className="group inline-flex items-center justify-center gap-2 bg-gradient-to-r from-sky-500 via-blue-600 to-indigo-600 text-white px-8 py-4 rounded-xl font-semibold hover:from-sky-600 hover:via-blue-700 hover:to-indigo-700 transition-all hover:scale-105 shadow-lg shadow-blue-500/30 hover:shadow-xl hover:shadow-blue-600/40"
                   >
                     Schedule Consultation
                     <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                   </Link>
                   <Link
                     href="/contact"
-                    className="inline-flex items-center justify-center gap-2 bg-white/70 backdrop-blur-md border-2 border-slate-200/80 text-slate-700 px-8 py-4 rounded-xl font-semibold hover:border-slate-400/80 hover:bg-white/90 hover:text-slate-800 transition-all hover:scale-105 shadow-lg shadow-slate-200/50 hover:shadow-xl hover:shadow-slate-300/50"
+                    className="inline-flex items-center justify-center gap-2 bg-white/70 backdrop-blur-md border-2 border-slate-200/80 text-slate-700 px-8 py-4 rounded-xl font-semibold hover:border-sky-400/80 hover:bg-white/90 hover:text-sky-600 transition-all hover:scale-105 shadow-lg shadow-slate-200/50 hover:shadow-xl hover:shadow-sky-200/50"
                   >
                     Contact Us
                   </Link>
