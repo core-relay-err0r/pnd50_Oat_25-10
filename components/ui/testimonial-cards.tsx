@@ -1,18 +1,9 @@
 "use client"
 
-import * as React from "react"
-import { motion } from "framer-motion"
+import type React from "react"
+import { useEffect, useRef, useState } from "react"
 import * as d3 from "d3"
 import { feature } from "topojson-client"
-
-interface TestimonialCardProps {
-  handleShuffle: () => void
-  testimonial: string
-  position: "front" | "middle" | "back"
-  id: number
-  author: string
-  image?: string
-}
 
 interface GeoFeature {
   type: string
@@ -34,34 +25,21 @@ function interpolateProjection(raw0: any, raw1: any) {
   })
 }
 
-export function TestimonialCard({ handleShuffle, position }: TestimonialCardProps) {
-  const svgRef = React.useRef<SVGSVGElement>(null)
-  const [isAnimating, setIsAnimating] = React.useState(false)
-  const [progress, setProgress] = React.useState([0])
-  const [worldData, setWorldData] = React.useState<GeoFeature[]>([])
-  const [rotation, setRotation] = React.useState([0, 0])
-  const [translation, setTranslation] = React.useState([0, 0])
-  const [isDragging, setIsDragging] = React.useState(false)
-  const [lastMouse, setLastMouse] = React.useState([0, 0])
-
-  const dragRef = React.useRef(0)
-  const dragStartTime = React.useRef(0)
-  const isFront = position === "front"
-
-  const [isDesktop, setIsDesktop] = React.useState(true)
-
-  React.useEffect(() => {
-    const checkDesktop = () => setIsDesktop(window.innerWidth >= 1024)
-    checkDesktop()
-    window.addEventListener("resize", checkDesktop)
-    return () => window.removeEventListener("resize", checkDesktop)
-  }, [])
+export function TestimonialCard() {
+  const svgRef = useRef<SVGSVGElement>(null)
+  const [isAnimating, setIsAnimating] = useState(false)
+  const [progress, setProgress] = useState([0])
+  const [worldData, setWorldData] = useState<GeoFeature[]>([])
+  const [rotation, setRotation] = useState([0, 0])
+  const [translation, setTranslation] = useState([0, 0])
+  const [isDragging, setIsDragging] = useState(false)
+  const [lastMouse, setLastMouse] = useState([0, 0])
 
   const width = 800
   const height = 500
 
   // Load world data
-  React.useEffect(() => {
+  useEffect(() => {
     const loadWorldData = async () => {
       try {
         const response = await fetch("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json")
@@ -130,7 +108,7 @@ export function TestimonialCard({ handleShuffle, position }: TestimonialCardProp
     setIsDragging(false)
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!svgRef.current || worldData.length === 0) return
 
     const svg = d3.select(svgRef.current)
@@ -188,9 +166,9 @@ export function TestimonialCard({ handleShuffle, position }: TestimonialCardProp
         }
       })
       .attr("fill", "none")
-      .attr("stroke", "#e0e7ff")
+      .attr("stroke", "#cccccc")
       .attr("stroke-width", 1.0)
-      .attr("opacity", 0.8)
+      .attr("opacity", 1.0)
       .style("visibility", function () {
         const pathData = d3.select(this).attr("d")
         return pathData && pathData.length > 0 && !pathData.includes("NaN") ? "visible" : "hidden"
@@ -204,8 +182,8 @@ export function TestimonialCard({ handleShuffle, position }: TestimonialCardProp
           .datum({ type: "Sphere" })
           .attr("d", sphereOutline)
           .attr("fill", "none")
-          .attr("stroke", "#cbd5e1")
-          .attr("stroke-width", 2)
+          .attr("stroke", "#222222")
+          .attr("stroke-width", 1)
           .attr("opacity", 1.0)
       }
     } catch (error) {
@@ -213,36 +191,41 @@ export function TestimonialCard({ handleShuffle, position }: TestimonialCardProp
     }
   }, [worldData, progress, rotation, translation])
 
-  React.useEffect(() => {
+  useEffect(() => {
     const animate = () => {
-      setProgress([0])
+      const startProgress = 0
+      const endProgress = 100
+      const duration = 2000
+
       const startTime = Date.now()
-      const duration = 3000
 
       const tick = () => {
         const elapsed = Date.now() - startTime
         const t = Math.min(elapsed / duration, 1)
+
         const eased = t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t
-        const currentProgress = eased * 100
+        const currentProgress = startProgress + (endProgress - startProgress) * eased
 
         setProgress([currentProgress])
 
         if (t < 1) {
           requestAnimationFrame(tick)
         } else {
+          // Wait 2 seconds then reverse
           setTimeout(() => {
             const reverseStart = Date.now()
             const reverseTick = () => {
               const elapsed = Date.now() - reverseStart
               const t = Math.min(elapsed / duration, 1)
               const eased = t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t
-              const currentProgress = 100 - eased * 100
+              const currentProgress = endProgress - (endProgress - startProgress) * eased
 
               setProgress([currentProgress])
 
               if (t < 1) {
                 requestAnimationFrame(reverseTick)
               } else {
+                // Wait 2 seconds then restart
                 setTimeout(animate, 2000)
               }
             }
@@ -250,15 +233,25 @@ export function TestimonialCard({ handleShuffle, position }: TestimonialCardProp
           }, 2000)
         }
       }
+
       tick()
     }
 
     animate()
   }, [])
 
-  const blurFilter = isDesktop && position !== "front" ? "blur(0.8px)" : undefined
-
   return (
-    null
+    <div className="relative flex items-center justify-center w-full h-full">
+      <svg
+        ref={svgRef}
+        viewBox={`0 0 ${width} ${height}`}
+        className="w-full h-full border rounded-lg bg-transparent border-neutral-800 cursor-grab active:cursor-grabbing"
+        preserveAspectRatio="xMidYMid meet"
+        onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
+        onMouseUp={handleMouseUp}
+        onMouseLeave={handleMouseUp}
+      />
+    </div>
   )
 }
