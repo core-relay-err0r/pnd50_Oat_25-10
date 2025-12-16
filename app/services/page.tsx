@@ -210,10 +210,10 @@ export default function ServicesPage() {
                     transition={{ delay: 0.3 }}
                   >
                     <span className="bg-gradient-to-r from-slate-700 via-sky-600 to-sky-500 bg-clip-text text-transparent">
-                      Professional Services
+                      Business Compliance &amp; Accounting
                     </span>{" "}
                     <span className="bg-gradient-to-r from-slate-900 via-slate-700 to-slate-500 bg-clip-text text-transparent">
-                      Tailored for You
+                       Services in Thailand
                     </span>
                   </motion.h1>
 
