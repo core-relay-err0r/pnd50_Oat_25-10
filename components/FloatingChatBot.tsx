@@ -6,7 +6,8 @@ import type { SpeechRecognition } from "web-speech-api"
 import { useState, useEffect, useRef, useCallback } from "react"
 import { X, Send, Mic, Square, MessageSquare, History, Plus, Trash2, ChevronLeft } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { useChat } from "ai"
+import { useChat } from "@ai-sdk/react"
+import { DefaultChatTransport } from "ai"
 import { usePathname } from "next/navigation"
 import { useIsMobile } from "@/components/ui/use-mobile"
 import { AnimatePresence, motion } from "framer-motion"
@@ -197,10 +198,12 @@ export function FloatingChatBot() {
     status,
     setMessages,
   } = useChat({
-    api: "/api/chatbot",
-    headers: {
-      "X-Current-Page": pathname || "/",
-    },
+    transport: new DefaultChatTransport({
+      api: "/api/chatbot",
+      headers: {
+        "X-Current-Page": pathname || "/",
+      },
+    }),
   })
 
   const welcomeMessage = isCalculatorPage ? CALCULATOR_WELCOME_MESSAGE : WELCOME_MESSAGE
@@ -243,7 +246,7 @@ export function FloatingChatBot() {
       const response = await fetch("/api/text-to-speech", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text }),
+        body: JSON.JSON.stringify({ text }),
       })
 
       if (!response.ok) {

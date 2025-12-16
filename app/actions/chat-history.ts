@@ -22,10 +22,7 @@ export interface ChatMessage {
 // Get or create a chat session for the given token
 export async function getOrCreateSession(sessionToken: string): Promise<ChatSession | null> {
   try {
-    console.log("[v0] getOrCreateSession called with token:", sessionToken)
     const supabase = await createServerClient()
-
-    console.log("[v0] Supabase client created, checking for existing session...")
 
     // First try to find existing session
     const { data: existing, error: fetchError } = await supabase
@@ -36,14 +33,9 @@ export async function getOrCreateSession(sessionToken: string): Promise<ChatSess
       .limit(1)
       .single()
 
-    console.log("[v0] Existing session query result:", { existing, fetchError })
-
     if (existing && !fetchError) {
-      console.log("[v0] Found existing session:", existing.id)
       return existing as ChatSession
     }
-
-    console.log("[v0] No existing session, creating new one...")
 
     // Create new session
     const { data: newSession, error } = await supabase
@@ -52,20 +44,14 @@ export async function getOrCreateSession(sessionToken: string): Promise<ChatSess
       .select()
       .single()
 
-    console.log("[v0] New session creation result:", { newSession, error })
-
     if (error) {
-      console.error("[v0] Error creating chat session:", error)
-      console.error("[v0] Error details:", JSON.stringify(error, null, 2))
+      console.error("Error creating chat session:", error)
       return null
     }
 
-    console.log("[v0] Successfully created session:", newSession.id)
     return newSession as ChatSession
   } catch (error) {
-    console.error("[v0] Exception in getOrCreateSession:", error)
-    console.error("[v0] Error type:", typeof error)
-    console.error("[v0] Error stringified:", JSON.stringify(error, null, 2))
+    console.error("Error in getOrCreateSession:", error)
     return null
   }
 }
@@ -129,12 +115,14 @@ export async function getChatMessages(sessionId: string): Promise<ChatMessage[]>
 
     if (error) {
       console.error("Error fetching chat messages:", error)
+      // Return empty array instead of throwing, so UI doesn't break
       return []
     }
 
     return (data || []) as ChatMessage[]
   } catch (error) {
     console.error("Error in getChatMessages:", error)
+    // Return empty array to prevent JSON parsing errors in the UI
     return []
   }
 }
