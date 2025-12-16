@@ -16,18 +16,18 @@ export const siteConfig = {
     name: "PND50 Co., Ltd.",
     legalName: "PND50 Company Limited",
     type: "AccountingService",
-    email: "oat3653377@gmail.com",
-    phone: "+66-XX-XXX-XXXX", // Update with actual phone
+    email: "info@pnd50.com",
+    phone: "+66-2-017-2949",
     address: {
-      streetAddress: "123 Business District", // Update with actual address
-      addressLocality: "Bangkok",
+      streetAddress: "Bhiraj Tower at EmQuartier, 689 Sukhumvit Rd, Khlong Tan Nuea",
+      addressLocality: "Watthana",
       addressRegion: "Bangkok",
       postalCode: "10110",
       addressCountry: "TH",
     },
     geo: {
-      latitude: 13.7563, // Bangkok coordinates - update with actual
-      longitude: 100.5018,
+      latitude: 13.7304,
+      longitude: 100.5696,
     },
     openingHours: ["Mo-Fr 09:00-18:00"],
     foundingDate: "2014",
