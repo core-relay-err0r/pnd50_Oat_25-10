@@ -7,7 +7,6 @@ import { useState, useEffect, useRef, useCallback } from "react"
 import { X, Send, Mic, Square, MessageSquare, History, Plus, Trash2, ChevronLeft } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useChat } from "@ai-sdk/react"
-import { DefaultChatTransport } from "ai"
 import { usePathname } from "next/navigation"
 import { useIsMobile } from "@/components/ui/use-mobile"
 import { AnimatePresence, motion } from "framer-motion"
@@ -194,16 +193,16 @@ export function FloatingChatBot() {
 
   const {
     messages: aiMessages,
-    sendMessage,
+    input,
+    handleSubmit,
+    setInput,
     status,
-    setMessages,
   } = useChat({
-    transport: new DefaultChatTransport({
-      api: "/api/chatbot",
-      headers: {
-        "X-Current-Page": pathname || "/",
-      },
-    }),
+    api: "/api/chatbot",
+    headers: {
+      "X-Current-Page": pathname,
+      "X-Session-Id": currentSessionId || "",
+    },
   })
 
   const welcomeMessage = isCalculatorPage ? CALCULATOR_WELCOME_MESSAGE : WELCOME_MESSAGE
@@ -215,6 +214,9 @@ export function FloatingChatBot() {
     const lastMessage = aiMessages[aiMessages.length - 1]
     if (!lastMessage) return
 
+    // Only save user messages here - assistant messages are saved server-side in onFinish
+    if (lastMessage.role !== "user") return
+
     // Extract text content from message parts
     const content = lastMessage.parts
       .filter((part) => part.type === "text")
@@ -223,14 +225,14 @@ export function FloatingChatBot() {
 
     if (!content) return
 
-    // Save message to database
-    saveMessage(currentSessionId, lastMessage.role as "user" | "assistant", content, {
+    // Save user message to database
+    saveMessage(currentSessionId, "user", content, {
       page: pathname,
       voiceMode,
     })
 
     // Auto-generate title from first user message
-    if (!hasSetTitle && lastMessage.role === "user") {
+    if (!hasSetTitle) {
       const title = generateTitle(content)
       updateSessionTitle(currentSessionId, title)
       setHasSetTitle(true)
@@ -246,7 +248,7 @@ export function FloatingChatBot() {
       const response = await fetch("/api/text-to-speech", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.JSON.stringify({ text }),
+        body: JSON.stringify({ text }),
       })
 
       if (!response.ok) {
@@ -393,7 +395,8 @@ export function FloatingChatBot() {
       const transcript = event.results[0][0].transcript
       if (transcript.trim()) {
         setIsProcessing(true)
-        sendMessage({ text: transcript })
+        setInput(transcript)
+        handleSubmit()
       }
       setIsListening(false)
     }
@@ -413,7 +416,7 @@ export function FloatingChatBot() {
       console.error("Speech recognition error:", error)
       setIsListening(false)
     }
-  }, [isListening, isSpeaking, sendMessage])
+  }, [isListening, isSpeaking, setInput, handleSubmit])
 
   const startListening = useCallback(() => {
     if (!recognitionRef.current || isListening) return
@@ -458,11 +461,11 @@ export function FloatingChatBot() {
     const newSession = await createNewSession(sessionToken)
     if (newSession) {
       setCurrentSessionId(newSession.id)
-      setMessages([]) // Clear current messages
+      setInput("")
       setHasSetTitle(false)
       setShowHistory(false)
     }
-  }, [sessionToken, setMessages])
+  }, [sessionToken, setInput])
 
   const handleLoadSession = useCallback(
     async (session: ChatSession) => {
@@ -480,10 +483,10 @@ export function FloatingChatBot() {
         createdAt: new Date(msg.created_at),
       }))
 
-      setMessages(formattedMessages)
+      setInput("")
       setShowHistory(false)
     },
-    [setMessages],
+    [setInput],
   )
 
   const handleDeleteSession = useCallback(
@@ -503,7 +506,8 @@ export function FloatingChatBot() {
 
   const handleSend = () => {
     if (!inputValue.trim() || status === "in_progress") return
-    sendMessage({ text: inputValue })
+    setInput(inputValue)
+    handleSubmit()
     setInputValue("")
   }
 
