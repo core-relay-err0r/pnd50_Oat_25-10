@@ -222,10 +222,12 @@ export function FloatingChatBot() {
     const content =
       typeof lastMessage.content === "string"
         ? lastMessage.content
-        : lastMessage.content
-            .filter((part): part is { type: "text"; text: string } => part.type === "text")
-            .map((part) => part.text)
-            .join("")
+        : Array.isArray(lastMessage.content)
+          ? lastMessage.content
+              .filter((part): part is { type: "text"; text: string } => part.type === "text")
+              .map((part) => part.text)
+              .join("")
+          : ""
 
     if (!content) return
 
