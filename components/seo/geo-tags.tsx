@@ -48,6 +48,14 @@ export function ServiceAreaSchema() {
     "@type": "AccountingService",
     name: siteConfig.business.name,
     url: siteConfig.url,
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: siteConfig.business.address.streetAddress,
+      addressLocality: siteConfig.business.address.addressLocality,
+      addressRegion: siteConfig.business.address.addressRegion,
+      postalCode: siteConfig.business.address.postalCode,
+      addressCountry: siteConfig.business.address.addressCountry,
+    },
     areaServed: serviceAreas.map((area) => ({
       "@type": "City",
       name: area.name,
@@ -70,6 +78,14 @@ export function InternationalServiceAreaSchema() {
     name: siteConfig.business.name,
     url: siteConfig.url,
     description: siteConfig.description,
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: siteConfig.business.address.streetAddress,
+      addressLocality: siteConfig.business.address.addressLocality,
+      addressRegion: siteConfig.business.address.addressRegion,
+      postalCode: siteConfig.business.address.postalCode,
+      addressCountry: siteConfig.business.address.addressCountry,
+    },
     areaServed: [
       {
         "@type": "Country",
