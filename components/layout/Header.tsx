@@ -7,7 +7,6 @@ import Link from "next/link"
 import { useModal } from "@/contexts/modal-context"
 import { Button } from "@/components/ui/button"
 import { Menu, X } from "lucide-react"
-import { LanguageSwitcher } from "@/components/language-switcher"
 
 export default function Header() {
   const { isModalOpen, closeModal, openConsultation } = useModal()
@@ -86,7 +85,6 @@ export default function Header() {
 
           {/* Right: CTA & Mobile Menu Toggle */}
           <div className="flex items-center gap-2 sm:gap-4">
-            <LanguageSwitcher />
             <Link href="/calculator" className="hidden sm:block">
               <Button className="relative bg-primary hover:bg-primary/90 text-primary-foreground font-semibold text-base px-8 py-3 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-102">
                 <span className="relative z-10">Schedule Consultation</span>

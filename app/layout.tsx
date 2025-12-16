@@ -18,7 +18,7 @@ import {
   WebsiteSchema,
   ProfessionalServiceSchema,
 } from "@/components/seo/structured-data"
-import { GeoTags, ServiceAreaSchema } from "@/components/seo/geo-tags"
+import { GeoTags, ServiceAreaSchema, InternationalServiceAreaSchema } from "@/components/seo/geo-tags"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -90,14 +90,12 @@ export const metadata: Metadata = {
     google: "iGGUkvE04EL6uchGN6JnXOw63Y57BsCZBmCXO0WSlcM",
   },
 
+  // Alternate languages
   alternates: {
     canonical: siteConfig.url,
     languages: {
       "en-US": siteConfig.url,
-      en: siteConfig.url,
       "th-TH": `${siteConfig.url}/th`,
-      th: `${siteConfig.url}/th`,
-      "x-default": siteConfig.url,
     },
   },
 
@@ -130,6 +128,7 @@ export default function RootLayout({
         <WebsiteSchema />
         <ProfessionalServiceSchema />
         <ServiceAreaSchema />
+        <InternationalServiceAreaSchema />
 
         {/* Geo/Local SEO Tags */}
         <GeoTags city="Bangkok" region="Bangkok" />

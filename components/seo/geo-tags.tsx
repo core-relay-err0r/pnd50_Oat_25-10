@@ -61,3 +61,50 @@ export function ServiceAreaSchema() {
 
   return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
 }
+
+// International Service Area Schema for target countries
+export function InternationalServiceAreaSchema() {
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    name: siteConfig.business.name,
+    url: siteConfig.url,
+    description: siteConfig.description,
+    areaServed: [
+      {
+        "@type": "Country",
+        name: "Thailand",
+        description: "Primary market - Full accounting and tax services",
+      },
+      {
+        "@type": "Country",
+        name: "Singapore",
+        description: "Singapore companies expanding to Thailand",
+      },
+      {
+        "@type": "Country",
+        name: "Russia",
+        description: "Russian entrepreneurs and businesses in Thailand",
+      },
+      {
+        "@type": "Country",
+        name: "Taiwan",
+        description: "Taiwanese companies with operations in Thailand",
+      },
+    ],
+    availableLanguage: [
+      {
+        "@type": "Language",
+        name: "English",
+        alternateName: "en",
+      },
+      {
+        "@type": "Language",
+        name: "Thai",
+        alternateName: "th",
+      },
+    ],
+  }
+
+  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
+}

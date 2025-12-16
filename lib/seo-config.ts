@@ -211,3 +211,33 @@ export const industryKeywords = {
   ecommerce: ["ecommerce accounting Thailand", "online business tax Thailand", "digital business accounting"],
   startup: ["startup accounting Thailand", "SME accounting Bangkok", "small business tax Thailand"],
 }
+
+// Target countries for international SEO
+export const targetCountries = [
+  {
+    code: "SG",
+    name: "Singapore",
+    language: "en-SG",
+    description: "Accounting services for Singapore companies expanding to Thailand",
+  },
+  {
+    code: "RU",
+    name: "Russia",
+    language: "ru-RU",
+    description: "Accounting services for Russian businesses in Thailand",
+    altLanguage: "en-RU",
+  },
+  {
+    code: "TW",
+    name: "Taiwan",
+    language: "zh-TW",
+    description: "Accounting services for Taiwanese companies in Thailand",
+    altLanguage: "en-TW",
+  },
+  {
+    code: "TH",
+    name: "Thailand",
+    language: "th-TH",
+    description: "Local accounting services in Thailand",
+  },
+]

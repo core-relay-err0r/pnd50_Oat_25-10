@@ -12,84 +12,42 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: new Date(),
       changeFrequency: "weekly" as const,
       priority: 1,
-      alternates: {
-        languages: {
-          en: baseUrl,
-          th: `${baseUrl}/th`,
-        },
-      },
     },
     {
       url: `${baseUrl}/about`,
       lastModified: new Date(),
       changeFrequency: "monthly" as const,
       priority: 0.8,
-      alternates: {
-        languages: {
-          en: `${baseUrl}/about`,
-          th: `${baseUrl}/th/about`,
-        },
-      },
     },
     {
       url: `${baseUrl}/services`,
       lastModified: new Date(),
       changeFrequency: "weekly" as const,
       priority: 0.9,
-      alternates: {
-        languages: {
-          en: `${baseUrl}/services`,
-          th: `${baseUrl}/th/services`,
-        },
-      },
     },
     {
       url: `${baseUrl}/calculator`,
       lastModified: new Date(),
       changeFrequency: "monthly" as const,
       priority: 0.9,
-      alternates: {
-        languages: {
-          en: `${baseUrl}/calculator`,
-          th: `${baseUrl}/th/calculator`,
-        },
-      },
     },
     {
       url: `${baseUrl}/contact`,
       lastModified: new Date(),
       changeFrequency: "monthly" as const,
       priority: 0.8,
-      alternates: {
-        languages: {
-          en: `${baseUrl}/contact`,
-          th: `${baseUrl}/th/contact`,
-        },
-      },
     },
     {
       url: `${baseUrl}/faq`,
       lastModified: new Date(),
       changeFrequency: "monthly" as const,
       priority: 0.7,
-      alternates: {
-        languages: {
-          en: `${baseUrl}/faq`,
-          th: `${baseUrl}/th/faq`,
-        },
-      },
     },
     {
       url: `${baseUrl}/case-studies`,
       lastModified: new Date(),
       changeFrequency: "monthly" as const,
       priority: 0.7,
-      alternates: {
-        languages: {
-          en: `${baseUrl}/case-studies`,
-          th: `${baseUrl}/th/case-studies`,
-        },
-      },
     },
   ]
 
@@ -109,12 +67,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     lastModified: new Date(),
     changeFrequency: "monthly" as const,
     priority: 0.8,
-    alternates: {
-      languages: {
-        en: `${baseUrl}/services/${service}`,
-        th: `${baseUrl}/th/services/${service}`,
-      },
-    },
   }))
 
   // Package pages
@@ -123,13 +75,29 @@ export default function sitemap(): MetadataRoute.Sitemap {
     lastModified: new Date(),
     changeFrequency: "monthly" as const,
     priority: 0.8,
-    alternates: {
-      languages: {
-        en: `${baseUrl}/services/packages/${pkg}`,
-        th: `${baseUrl}/th/services/packages/${pkg}`,
-      },
-    },
   }))
+
+  // Geo-targeted landing pages for target countries
+  const geoPages = [
+    {
+      url: `${baseUrl}/for/singapore`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/for/russia`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/for/taiwan`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.8,
+    },
+  ]
 
   // Legal pages (lower priority)
   const legalPages = [
@@ -147,5 +115,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ]
 
-  return [...mainPages, ...servicePages, ...packagePages, ...legalPages]
+  return [...mainPages, ...servicePages, ...packagePages, ...geoPages, ...legalPages]
 }
