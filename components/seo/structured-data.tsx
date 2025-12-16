@@ -99,6 +99,14 @@ export function ServiceSchema({ name, description, url, provider = siteConfig.bu
       "@type": "Organization",
       name: provider,
       url: siteConfig.url,
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: siteConfig.business.address.streetAddress,
+        addressLocality: siteConfig.business.address.addressLocality,
+        addressRegion: siteConfig.business.address.addressRegion,
+        postalCode: siteConfig.business.address.postalCode,
+        addressCountry: siteConfig.business.address.addressCountry,
+      },
     },
     areaServed: {
       "@type": "Country",
