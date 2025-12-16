@@ -504,7 +504,7 @@ export function FloatingChatBot() {
   )
 
   const handleSend = () => {
-    if (!input.trim() || status === "in_progress") return
+    if (!input?.trim() || status === "in_progress") return
     handleSubmit()
   }
 
