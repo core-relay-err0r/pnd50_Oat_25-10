@@ -330,11 +330,7 @@ export default function ServicesPage() {
               </div>
             </motion.section>
 
-            <section className="py-8 md:py-12">
-              <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-                <ServicesRelatedLinks />
-              </div>
-            </section>
+            
           </div>
         </AnimatedGridBackground>
       </section>
