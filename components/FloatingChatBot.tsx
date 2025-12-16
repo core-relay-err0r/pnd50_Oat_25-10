@@ -4,7 +4,7 @@ import type React from "react"
 import type { SpeechRecognition } from "web-speech-api"
 
 import { useState, useEffect, useRef, useCallback } from "react"
-import { X, Send, Mic, Square, MessageSquare, History, Plus, Trash2, ChevronLeft } from "lucide-react"
+import { X, Send, Mic, Square, MessageSquare, History, Trash2, ChevronLeft } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useChat } from "@ai-sdk/react"
 import { DefaultChatTransport } from "ai"
@@ -783,14 +783,6 @@ export function FloatingChatBot() {
                   title="Chat history"
                 >
                   <History className="w-4 h-4" />
-                </button>
-                <button
-                  onClick={handleNewChat}
-                  className="text-muted-foreground hover:text-foreground hover:bg-muted rounded-lg p-1.5 transition-colors"
-                  aria-label="New chat"
-                  title="New chat"
-                >
-                  <Plus className="w-4 h-4" />
                 </button>
                 {isSpeaking && (
                   <button
