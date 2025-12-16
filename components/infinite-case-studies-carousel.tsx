@@ -1,7 +1,5 @@
 "use client"
 
-import type React from "react"
-
 import { useState, useEffect, useRef, useCallback } from "react"
 import { ChevronLeft, ChevronRight, Quote, CheckCircle2 } from "lucide-react"
 import Image from "next/image"
@@ -31,7 +29,7 @@ const caseStudies: CaseStudy[] = [
     id: "1",
     country: "Russia",
     countryCode: "RU",
-    flagUrl: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-74BQypMc0KUaBUV1KtrFwSn7wC9AWC.png",
+    flagUrl: "/images/image.png",
     industry: "E-commerce Startup",
     title: "Russian Tech Startup Expansion",
     challenge: "Language barrier and tight 2-week timeline for company setup",
@@ -62,7 +60,7 @@ const caseStudies: CaseStudy[] = [
     id: "2",
     country: "Vietnam",
     countryCode: "VN",
-    flagUrl: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-Q1OzJ7rPh6JUcpptmxM2fHuZ6AYWky.png",
+    flagUrl: "/images/image.png",
     industry: "SaaS Company",
     title: "Vietnamese SaaS Company Launch",
     challenge: "Limited accounting knowledge and time constraints for product development",
@@ -93,7 +91,7 @@ const caseStudies: CaseStudy[] = [
     id: "3",
     country: "Russia",
     countryCode: "RU",
-    flagUrl: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-74BQypMc0KUaBUV1KtrFwSn7wC9AWC.png",
+    flagUrl: "/images/image.png",
     industry: "Digital Marketing",
     title: "Russian Digital Marketing Agency",
     challenge: "Confusing terminology, disorganized records, and missed deadlines",
@@ -124,7 +122,7 @@ const caseStudies: CaseStudy[] = [
     id: "4",
     country: "Vietnam",
     countryCode: "VN",
-    flagUrl: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-Q1OzJ7rPh6JUcpptmxM2fHuZ6AYWky.png",
+    flagUrl: "/images/image.png",
     industry: "Fintech Startup",
     title: "Vietnamese Fintech Platform",
     challenge: "Complex regulatory requirements and multi-currency accounting needs",
@@ -155,7 +153,7 @@ const caseStudies: CaseStudy[] = [
     id: "5",
     country: "Russia",
     countryCode: "RU",
-    flagUrl: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-74BQypMc0KUaBUV1KtrFwSn7wC9AWC.png",
+    flagUrl: "/images/image.png",
     industry: "EdTech Platform",
     title: "Russian EdTech Expansion",
     challenge: "Rapid growth with 200+ monthly transactions and VAT complexity",
@@ -205,362 +203,152 @@ const colorClasses = {
   },
 }
 
-export function InfiniteCaseStudiesCarousel() {
-  const [currentIndex, setCurrentIndex] = useState(1) // Start at 1 because of cloned first item
-  const [isTransitioning, setIsTransitioning] = useState(false)
-  const [isPaused, setIsPaused] = useState(false)
-  const [isDragging, setIsDragging] = useState(false)
-  const [startX, setStartX] = useState(0)
-  const [translateX, setTranslateX] = useState(0)
-  const [dragOffset, setDragOffset] = useState(0)
-
+export default function InfiniteCaseStudiesCarousel() {
+  const [currentIndex, setCurrentIndex] = useState(0)
+  const [visibleCount, setVisibleCount] = useState(1)
   const trackRef = useRef<HTMLDivElement>(null)
-  const autoplayRef = useRef<NodeJS.Timeout | null>(null)
-  const transitionTimeoutRef = useRef<NodeJS.Timeout | null>(null)
-
-  const extendedCaseStudies = [caseStudies[caseStudies.length - 1], ...caseStudies, caseStudies[0]]
-
-  const getCardWidth = useCallback(() => {
-    if (typeof window === "undefined") return 400
-    const width = window.innerWidth
-    // Responsive breakpoints with wider cards across all screen sizes
-    if (width < 640) return width - 32 // Mobile: Full width minus padding
-    if (width < 768) return width - 64 // Small tablet: Nearly full width
-    if (width < 1024) return width * 0.75 // Tablet: 75% of viewport
-    if (width < 1280) return width * 0.65 // Small desktop: 65% of viewport
-    if (width < 1536) return width * 0.55 // Desktop: 55% of viewport
-    return width * 0.48 // Large desktop: 48% of viewport
-  }, [])
-
-  const [cardWidth, setCardWidth] = useState(getCardWidth())
 
   useEffect(() => {
     const handleResize = () => {
-      setCardWidth(getCardWidth())
+      const width = window.innerWidth
+      if (width < 640) {
+        setVisibleCount(1)
+      } else if (width < 1024) {
+        setVisibleCount(2)
+      } else {
+        setVisibleCount(3)
+      }
     }
     window.addEventListener("resize", handleResize)
+    handleResize()
     return () => window.removeEventListener("resize", handleResize)
-  }, [getCardWidth])
-
-  const getTranslateX = useCallback(() => {
-    return -(currentIndex * cardWidth) + dragOffset
-  }, [currentIndex, cardWidth, dragOffset])
-
-  const handleTransitionEnd = () => {
-    setIsTransitioning(false)
-
-    if (currentIndex === 0) {
-      // On cloned last item, jump to real last item
-      setCurrentIndex(caseStudies.length)
-      if (trackRef.current) {
-        trackRef.current.style.transition = "none"
-      }
-    } else if (currentIndex === extendedCaseStudies.length - 1) {
-      // On cloned first item, jump to real first item
-      setCurrentIndex(1)
-      if (trackRef.current) {
-        trackRef.current.style.transition = "none"
-      }
-    }
-  }
-
-  const goToSlide = useCallback(
-    (index: number) => {
-      if (isTransitioning) return
-      setIsTransitioning(true)
-      setCurrentIndex(index)
-      if (trackRef.current) {
-        trackRef.current.style.transition = "transform 300ms cubic-bezier(0.4, 0, 0.2, 1)"
-      }
-    },
-    [isTransitioning],
-  )
+  }, [])
 
   const goToNext = useCallback(() => {
-    goToSlide(currentIndex + 1)
-  }, [currentIndex, goToSlide])
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % caseStudies.length)
+  }, [])
 
-  const goToPrev = useCallback(() => {
-    goToSlide(currentIndex - 1)
-  }, [currentIndex, goToSlide])
-
-  useEffect(() => {
-    if (isPaused || isDragging) {
-      if (autoplayRef.current) {
-        clearInterval(autoplayRef.current)
-        autoplayRef.current = null
-      }
-      return
-    }
-
-    autoplayRef.current = setInterval(() => {
-      goToNext()
-    }, 3000)
-
-    return () => {
-      if (autoplayRef.current) {
-        clearInterval(autoplayRef.current)
-      }
-    }
-  }, [isPaused, isDragging, goToNext])
-
-  const handleMouseDown = (e: React.MouseEvent) => {
-    setIsDragging(true)
-    setStartX(e.clientX)
-    setIsPaused(true)
-    if (trackRef.current) {
-      trackRef.current.style.transition = "none"
-    }
-  }
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (!isDragging) return
-    const diff = e.clientX - startX
-    setDragOffset(diff)
-  }
-
-  const handleMouseUp = () => {
-    if (!isDragging) return
-    setIsDragging(false)
-
-    const threshold = cardWidth * 0.3
-    if (Math.abs(dragOffset) > threshold) {
-      if (dragOffset > 0) {
-        goToPrev()
-      } else {
-        goToNext()
-      }
-    }
-
-    setDragOffset(0)
-    setTimeout(() => setIsPaused(false), 500)
-  }
-
-  const handleTouchStart = (e: React.TouchEvent) => {
-    setIsDragging(true)
-    setStartX(e.touches[0].clientX)
-    setIsPaused(true)
-    if (trackRef.current) {
-      trackRef.current.style.transition = "none"
-    }
-  }
-
-  const handleTouchMove = (e: React.TouchEvent) => {
-    if (!isDragging) return
-    const diff = e.touches[0].clientX - startX
-    setDragOffset(diff)
-  }
-
-  const handleTouchEnd = () => {
-    if (!isDragging) return
-    setIsDragging(false)
-
-    const threshold = cardWidth * 0.3
-    if (Math.abs(dragOffset) > threshold) {
-      if (dragOffset > 0) {
-        goToPrev()
-      } else {
-        goToNext()
-      }
-    }
-
-    setDragOffset(0)
-    setTimeout(() => setIsPaused(false), 500)
-  }
-
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "ArrowLeft") {
-        e.preventDefault()
-        goToPrev()
-        setIsPaused(true)
-        setTimeout(() => setIsPaused(false), 3000)
-      } else if (e.key === "ArrowRight") {
-        e.preventDefault()
-        goToNext()
-        setIsPaused(true)
-        setTimeout(() => setIsPaused(false), 3000)
-      }
-    }
-
-    window.addEventListener("keydown", handleKeyDown)
-    return () => window.removeEventListener("keydown", handleKeyDown)
-  }, [goToNext, goToPrev])
+  const goToPrevious = useCallback(() => {
+    setCurrentIndex((prevIndex) => (prevIndex - 1 + caseStudies.length) % caseStudies.length)
+  }, [])
 
   return (
-    <div
-      className="relative pb-[calc(80px+env(safe-area-inset-bottom))] sm:pb-0"
-      onMouseEnter={() => setIsPaused(true)}
-      onMouseLeave={() => setIsPaused(false)}
-      role="region"
-      aria-label="Case studies carousel"
-    >
-      <button
-        onClick={goToPrev}
-        className="absolute left-1 sm:left-0 top-1/2 -translate-y-1/2 z-20 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-background border border-border shadow-sm flex items-center justify-center transition-all duration-300 hover:bg-primary hover:border-primary hover:text-primary-foreground hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
-        aria-label="Previous case study"
-      >
-        <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" />
-      </button>
+    <section className="py-16 md:py-24 bg-gradient-to-br from-sky-50/80 via-white to-indigo-50/60 overflow-hidden">
+      <div className="container mx-auto px-4">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold text-slate-800 mb-4">Client Success Stories</h2>
+          <p className="text-slate-600 max-w-2xl mx-auto">
+            See how businesses from around the world have grown with our support
+          </p>
+        </div>
 
-      <button
-        onClick={goToNext}
-        className="absolute right-1 sm:right-0 top-1/2 -translate-y-1/2 z-20 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-background border border-border shadow-sm flex items-center justify-center transition-all duration-300 hover:bg-primary hover:border-primary hover:text-primary-foreground hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
-        aria-label="Next case study"
-      >
-        <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
-      </button>
+        <div className="relative">
+          <button
+            onClick={goToPrevious}
+            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 p-2 rounded-full bg-white/90 backdrop-blur-sm shadow-lg shadow-blue-100/40 border border-blue-100/50 hover:bg-white hover:border-blue-300 hover:shadow-xl transition-all duration-300 -ml-4 md:ml-0"
+            aria-label="Previous case study"
+          >
+            <ChevronLeft className="w-5 h-5 text-slate-600 hover:text-blue-600" />
+          </button>
 
-      <div className="overflow-hidden px-4 sm:px-8 md:px-12 lg:px-16 snap-x snap-mandatory">
-        <div
-          ref={trackRef}
-          className="flex gap-3 sm:gap-4 md:gap-6 cursor-grab active:cursor-grabbing items-start"
-          style={{
-            transform: `translateX(${getTranslateX()}px)`,
-            transition: isDragging ? "none" : "transform 300ms cubic-bezier(0.4, 0, 0.2, 1)",
-          }}
-          onTransitionEnd={handleTransitionEnd}
-          onMouseDown={handleMouseDown}
-          onMouseMove={handleMouseMove}
-          onMouseUp={handleMouseUp}
-          onMouseLeave={handleMouseUp}
-          onTouchStart={handleTouchStart}
-          onTouchMove={handleTouchMove}
-          onTouchEnd={handleTouchEnd}
-        >
-          {extendedCaseStudies.map((caseStudy, index) => (
+          <button
+            onClick={goToNext}
+            className="absolute right-0 top-1/2 -translate-y-1/2 z-10 p-2 rounded-full bg-white/90 backdrop-blur-sm shadow-lg shadow-blue-100/40 border border-blue-100/50 hover:bg-white hover:border-blue-300 hover:shadow-xl transition-all duration-300 -mr-4 md:mr-0"
+            aria-label="Next case study"
+          >
+            <ChevronRight className="w-5 h-5 text-slate-600 hover:text-blue-600" />
+          </button>
+
+          <div className="overflow-hidden mx-8 md:mx-12">
             <div
-              key={`${caseStudy.id}-${index}`}
-              className="flex-shrink-0 snap-center group focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-xl"
-              style={{ width: `${cardWidth}px` }}
-              tabIndex={0}
-              role="article"
-              aria-label={`Case study: ${caseStudy.title}`}
+              className="flex transition-transform duration-500 ease-out"
+              style={{ transform: `translateX(-${currentIndex * (100 / visibleCount)}%)` }}
             >
-              <div className="h-auto bg-card border-2 border-border rounded-2xl hover:border-primary/40 hover:shadow-2xl transition-all duration-300 hover:-translate-y-1">
-                <div className="flex flex-col md:flex-row items-start min-h-[400px] sm:min-h-[450px]">
-                  <div
-                    className={`md:w-2/5 bg-muted/30 border-b md:border-b-0 md:border-r border-border p-4 sm:p-6 md:p-8 py-5 sm:py-7 md:py-9 flex flex-col`}
-                  >
-                    <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-5">
-                      <div className="relative w-9 h-9 sm:w-11 sm:h-11 md:w-12 md:h-12 rounded-full overflow-hidden border-2 border-background shadow-sm flex-shrink-0">
-                        <Image
-                          src={caseStudy.flagUrl || "/placeholder.svg"}
-                          alt={`${caseStudy.country} Flag`}
-                          fill
-                          className="object-cover"
-                        />
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <div
-                          className={`text-xs sm:text-sm font-medium uppercase tracking-wide ${
-                            caseStudy.country === "Russia" ? "text-blue-600" : "text-emerald-600"
-                          }`}
-                        >
-                          {caseStudy.country} → Thailand
+              {caseStudies.map((study, index) => (
+                <div
+                  key={`${study.id}-${index}`}
+                  className={`flex-shrink-0 px-3 ${
+                    visibleCount === 1 ? "w-full" : visibleCount === 2 ? "w-1/2" : "w-1/3"
+                  }`}
+                >
+                  <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg shadow-blue-100/30 border border-blue-100/50 overflow-hidden h-full hover:shadow-xl hover:shadow-blue-200/40 hover:border-blue-200 transition-all duration-300">
+                    <div className="bg-gradient-to-r from-blue-500 via-indigo-500 to-blue-600 p-4">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-full overflow-hidden bg-white/20 backdrop-blur-sm flex-shrink-0 border border-white/30">
+                          <Image
+                            src={study.flagUrl || "/placeholder.svg"}
+                            alt={`${study.country} flag`}
+                            width={40}
+                            height={40}
+                            className="w-full h-full object-cover"
+                          />
                         </div>
-                        <div className="text-xs sm:text-sm text-muted-foreground whitespace-normal break-words">
-                          {caseStudy.industry}
+                        <div>
+                          <p className="text-white font-semibold">{study.country}</p>
+                          <p className="text-blue-100 text-sm">{study.industry}</p>
                         </div>
-                      </div>
-                    </div>
-                    <h3 className="text-base sm:text-xl md:text-2xl font-bold text-foreground mb-3 sm:mb-5 whitespace-normal break-words leading-snug">
-                      {caseStudy.title}
-                    </h3>
-
-                    <div className="space-y-3 sm:space-y-4 mb-4 sm:mb-5 flex-1">
-                      <div>
-                        <div className="text-xs sm:text-sm font-semibold text-orange-600 uppercase tracking-wide mb-1.5 sm:mb-2">
-                          Challenge
-                        </div>
-                        <p className="text-xs sm:text-sm md:text-base text-muted-foreground leading-relaxed whitespace-normal break-words">
-                          {caseStudy.challenge}
-                        </p>
-                      </div>
-                      <div>
-                        <div className="text-xs sm:text-sm font-semibold text-blue-600 uppercase tracking-wide mb-1.5 sm:mb-2">
-                          Solution
-                        </div>
-                        <p className="text-xs sm:text-sm md:text-base text-muted-foreground leading-relaxed whitespace-normal break-words">
-                          {caseStudy.solution}
-                        </p>
                       </div>
                     </div>
 
-                    <div className="bg-primary/5 border-l-2 border-primary rounded-r-lg p-3 sm:p-4 mt-auto">
-                      <Quote className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-primary mb-2" />
-                      <p className="text-xs sm:text-sm md:text-base text-foreground italic mb-2 sm:mb-3 leading-relaxed whitespace-normal break-words">
-                        {caseStudy.testimonial.quote}
-                      </p>
-                      <p className="text-xs sm:text-sm font-semibold text-foreground">{caseStudy.testimonial.author}</p>
-                    </div>
-                  </div>
+                    <div className="p-6">
+                      <div className="mb-4">
+                        <h3 className="font-semibold text-slate-700 text-sm mb-1">Challenge</h3>
+                        <p className="text-slate-600 text-sm">{study.challenge}</p>
+                      </div>
 
-                  <div className="md:w-3/5 p-4 sm:p-6 md:p-8 py-5 sm:py-7 md:py-9 bg-background">
-                    <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-5">
-                      <CheckCircle2 className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
-                      <h4 className="text-sm sm:text-base md:text-lg font-bold text-foreground">Success Highlights</h4>
-                    </div>
-                    <div className="flex flex-col gap-3 sm:gap-4 md:gap-5">
-                      {caseStudy.successHighlights.map((highlight, idx) => (
-                        <div
-                          key={idx}
-                          className={`bg-gradient-to-br ${colorClasses[highlight.color as keyof typeof colorClasses].bg} border-2 ${colorClasses[highlight.color as keyof typeof colorClasses].border} rounded-xl p-3 sm:p-4 md:p-5 hover:scale-[1.02] transition-transform duration-300`}
-                        >
-                          <div className="flex items-start gap-3 sm:gap-4">
-                            <div
-                              className={`w-7 h-7 sm:w-9 sm:h-9 md:w-10 md:h-10 rounded-full ${colorClasses[highlight.color as keyof typeof colorClasses].iconBg} flex items-center justify-center flex-shrink-0`}
-                            >
-                              <CheckCircle2
-                                className={`w-3.5 h-3.5 sm:w-4 sm:h-4 md:w-5 md:h-5 ${colorClasses[highlight.color as keyof typeof colorClasses].iconColor}`}
-                              />
-                            </div>
-                            <div className="flex-1 min-w-0">
-                              <h5 className="font-semibold text-foreground text-xs sm:text-sm md:text-base mb-1 sm:mb-1.5 whitespace-normal break-words leading-snug">
-                                {highlight.title}
-                              </h5>
-                              <p className="text-xs sm:text-sm md:text-base text-muted-foreground leading-relaxed whitespace-normal break-words">
-                                {highlight.description}
-                              </p>
+                      <div className="mb-4">
+                        <h3 className="font-semibold text-slate-700 text-sm mb-1">Solution</h3>
+                        <p className="text-slate-600 text-sm">{study.solution}</p>
+                      </div>
+
+                      <div className="bg-gradient-to-br from-sky-50 to-blue-50/50 rounded-xl p-4 mb-4 border border-blue-100/50">
+                        <Quote className="w-4 h-4 text-blue-400 mb-2" />
+                        <p className="text-slate-700 text-sm italic mb-2">"{study.testimonial.quote}"</p>
+                        <p className="text-blue-600 text-xs font-medium">— {study.testimonial.author}</p>
+                      </div>
+
+                      <div className="space-y-2">
+                        {study.successHighlights.map((highlight, hIndex) => (
+                          <div key={hIndex} className="flex items-start gap-2">
+                            <CheckCircle2
+                              className={`w-4 h-4 flex-shrink-0 mt-0.5 ${
+                                highlight.color === "green"
+                                  ? "text-emerald-500"
+                                  : highlight.color === "blue"
+                                    ? "text-blue-500"
+                                    : "text-violet-500"
+                              }`}
+                            />
+                            <div>
+                              <p className="text-slate-800 text-xs font-semibold">{highlight.title}</p>
+                              <p className="text-slate-500 text-xs">{highlight.description}</p>
                             </div>
                           </div>
-                        </div>
-                      ))}
+                        ))}
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              ))}
             </div>
-          ))}
+          </div>
+
+          <div className="flex justify-center mt-6 gap-2">
+            {caseStudies.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrentIndex(index)}
+                className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                  index === currentIndex
+                    ? "bg-gradient-to-r from-blue-500 to-indigo-500 w-6"
+                    : "bg-slate-300/60 hover:bg-slate-400/60"
+                }`}
+                aria-label={`Go to case study ${index + 1}`}
+              />
+            ))}
+          </div>
         </div>
       </div>
-
-      <div className="flex justify-center gap-2.5 mt-8" role="tablist" aria-label="Case study pagination">
-        {caseStudies.map((_, index) => {
-          const actualIndex =
-            currentIndex === 0
-              ? caseStudies.length - 1
-              : currentIndex === extendedCaseStudies.length - 1
-                ? 0
-                : currentIndex - 1
-          return (
-            <button
-              key={index}
-              onClick={() => goToSlide(index + 1)}
-              className={`h-2.5 rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 ${
-                actualIndex === index ? "bg-primary w-10" : "bg-border hover:bg-primary/50 w-2.5"
-              }`}
-              aria-label={`Go to case study ${index + 1}`}
-              role="tab"
-              aria-selected={actualIndex === index}
-            />
-          )
-        })}
-      </div>
-
-      <div className="text-center mt-5 text-sm text-muted-foreground">
-        {isPaused ? "Paused" : "Auto-playing"} • Use arrow keys or drag to navigate
-      </div>
-    </div>
+    </section>
   )
 }

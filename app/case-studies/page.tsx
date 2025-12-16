@@ -15,6 +15,8 @@ import {
   ChevronDown,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { RelatedLinks } from "@/components/seo/related-links"
+import { Calculator, FileText, HelpCircle } from "lucide-react"
 
 export const metadata: Metadata = {
   title: "Case Studies | PND50",
@@ -49,7 +51,7 @@ export default function CaseStudiesPage() {
         </Link>
 
         {/* Hero content */}
-        <div className="container relative z-10 mx-auto px-4 py-20">
+        <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8 py-20">
           <div className="max-w-4xl mx-auto text-center space-y-10">
             {/* Badge */}
             <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/5 backdrop-blur-md border border-white/10 text-white text-sm font-medium">
@@ -98,7 +100,7 @@ export default function CaseStudiesPage() {
       </div>
 
       {/* Case Studies Section */}
-      <div className="container mx-auto px-4 py-24">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-24">
         <div className="max-w-6xl mx-auto space-y-32">
           {/* Case Study 1: Russian Startup */}
           <div className="group">
@@ -865,26 +867,34 @@ export default function CaseStudiesPage() {
 
         {/* CTA Section */}
         <div className="max-w-4xl mx-auto mt-24">
-          <div className="bg-gradient-to-br from-primary to-primary/90 rounded-2xl p-12 text-center shadow-2xl">
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Ready to Write Your Success Story?</h2>
-            <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
-              Whether you're from Russia, Vietnam, or anywhere else — PND50 makes accounting and compliance clear, fast,
-              and stress-free.
-            </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Button asChild size="lg" variant="secondary" className="text-base px-8 shadow-lg">
-                <Link href="/calculator">Get a Free Quote</Link>
-              </Button>
-              <Button
-                asChild
-                size="lg"
-                variant="outline"
-                className="text-base px-8 bg-white/10 border-white/30 text-white hover:bg-white/20"
-              >
-                <Link href="/contact">Talk to Our Team</Link>
-              </Button>
-            </div>
-          </div>
+          
+        </div>
+
+        {/* Related Links Section */}
+        <div className="max-w-6xl mx-auto mt-16">
+          <RelatedLinks
+            title="Explore More"
+            links={[
+              {
+                title: "Our Services",
+                description: "See how we can help your business succeed in Thailand",
+                href: "/services",
+                icon: <FileText className="w-5 h-5" />,
+              },
+              {
+                title: "Price Calculator",
+                description: "Get an instant quote tailored to your needs",
+                href: "/calculator",
+                icon: <Calculator className="w-5 h-5" />,
+              },
+              {
+                title: "FAQ",
+                description: "Common questions about Thai accounting & tax",
+                href: "/faq",
+                icon: <HelpCircle className="w-5 h-5" />,
+              },
+            ]}
+          />
         </div>
       </div>
     </div>
