@@ -90,12 +90,14 @@ export const metadata: Metadata = {
     google: "iGGUkvE04EL6uchGN6JnXOw63Y57BsCZBmCXO0WSlcM",
   },
 
-  // Alternate languages
   alternates: {
     canonical: siteConfig.url,
     languages: {
       "en-US": siteConfig.url,
+      en: siteConfig.url,
       "th-TH": `${siteConfig.url}/th`,
+      th: `${siteConfig.url}/th`,
+      "x-default": siteConfig.url,
     },
   },
 
