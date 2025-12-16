@@ -209,11 +209,18 @@ export function FloatingChatBot() {
   const welcomeMessage = isCalculatorPage ? CALCULATOR_WELCOME_MESSAGE : WELCOME_MESSAGE
   const messages = [welcomeMessage, ...aiMessages]
 
+  // Ref to track saved message IDs and debounce timer
+  const savedMessageIds = useRef<Set<string>>(new Set())
+  const saveTimerRef = useRef<NodeJS.Timeout | null>(null)
+
   useEffect(() => {
     if (!currentSessionId || aiMessages.length === 0) return
 
     const lastMessage = aiMessages[aiMessages.length - 1]
     if (!lastMessage) return
+
+    // Skip if already saved
+    if (savedMessageIds.current.has(lastMessage.id)) return
 
     // Extract text content from message parts
     const content = lastMessage.parts
@@ -223,17 +230,35 @@ export function FloatingChatBot() {
 
     if (!content) return
 
-    // Save message to database
-    saveMessage(currentSessionId, lastMessage.role as "user" | "assistant", content, {
-      page: pathname,
-      voiceMode,
-    })
+    // Clear previous timer
+    if (saveTimerRef.current) {
+      clearTimeout(saveTimerRef.current)
+    }
 
-    // Auto-generate title from first user message
-    if (!hasSetTitle && lastMessage.role === "user") {
-      const title = generateTitle(content)
-      updateSessionTitle(currentSessionId, title)
-      setHasSetTitle(true)
+    // Set new debounced timer - saves after 2 seconds of no updates
+    saveTimerRef.current = setTimeout(() => {
+      // Mark as saved to prevent duplicates
+      savedMessageIds.current.add(lastMessage.id)
+
+      // Save message to database
+      saveMessage(currentSessionId, lastMessage.role as "user" | "assistant", content, {
+        page: pathname,
+        voiceMode,
+      })
+
+      // Auto-generate title from first user message
+      if (!hasSetTitle && lastMessage.role === "user") {
+        const title = generateTitle(content)
+        updateSessionTitle(currentSessionId, title)
+        setHasSetTitle(true)
+      }
+    }, 2000)
+
+    // Cleanup timer on unmount
+    return () => {
+      if (saveTimerRef.current) {
+        clearTimeout(saveTimerRef.current)
+      }
     }
   }, [aiMessages, currentSessionId, pathname, voiceMode, hasSetTitle])
 
