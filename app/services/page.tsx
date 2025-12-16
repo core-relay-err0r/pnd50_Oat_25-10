@@ -223,8 +223,7 @@ export default function ServicesPage() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.4 }}
                   >
-                    From company setup to ongoing compliance, we provide end-to-end business solutions for foreign-owned
-                    companies in Thailand.
+                    {"End-to-end company registration, accounting, and tax compliance for expats and foreign-owned businesses operating in Thailand.\n"}
                   </motion.p>
 
                   <motion.div
