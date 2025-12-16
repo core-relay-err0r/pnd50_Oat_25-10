@@ -95,35 +95,7 @@ export function RelatedLinks({ title = "Related Pages", links, variant = "cards"
 
   // Cards variant (default)
   return (
-    <section aria-labelledby="related-links-title" className="py-12 border-t border-slate-200/50">
-      <h2 id="related-links-title" className="text-2xl font-bold text-slate-900 mb-6">
-        {title}
-      </h2>
-      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        {links.map((link) => (
-          <Link
-            key={link.href}
-            href={link.href}
-            className="group p-5 bg-white/80 backdrop-blur-sm rounded-xl border border-slate-200/50 hover:border-sky-200 hover:shadow-md transition-all"
-          >
-            <div className="flex items-start gap-4">
-              {link.icon && (
-                <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-gradient-to-br from-sky-50 to-teal-50 flex items-center justify-center text-sky-600 group-hover:from-sky-100 group-hover:to-teal-100 transition-colors">
-                  {link.icon}
-                </div>
-              )}
-              <div className="flex-1 min-w-0">
-                <h3 className="font-semibold text-slate-900 group-hover:text-sky-600 transition-colors flex items-center gap-2">
-                  {link.title}
-                  <ArrowRight className="w-4 h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
-                </h3>
-                <p className="text-sm text-slate-500 mt-1">{link.description}</p>
-              </div>
-            </div>
-          </Link>
-        ))}
-      </div>
-    </section>
+    null
   )
 }
 
