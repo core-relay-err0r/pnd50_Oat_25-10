@@ -259,54 +259,6 @@ export function TestimonialCard({ handleShuffle, position }: TestimonialCardProp
   const blurFilter = isDesktop && position !== "front" ? "blur(0.8px)" : undefined
 
   return (
-    <motion.div
-      style={{
-        zIndex: position === "front" ? "2" : position === "middle" ? "1" : "0",
-        filter: blurFilter,
-      }}
-      animate={{
-        rotate: position === "front" ? "0deg" : position === "middle" ? "3deg" : "6deg",
-        x: position === "front" ? "0%" : position === "middle" ? "33%" : "66%",
-      }}
-      drag={true}
-      dragElastic={0.35}
-      dragListener={isFront}
-      dragConstraints={{
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-      }}
-      onDragStart={(e) => {
-        dragRef.current = e.clientX
-        dragStartTime.current = Date.now()
-      }}
-      onDragEnd={(e) => {
-        const dragDistance = dragRef.current - e.clientX
-        const dragDuration = Date.now() - dragStartTime.current
-        const velocity = dragDistance / dragDuration
-
-        if (dragDistance > 50 || velocity > 0.3) {
-          handleShuffle()
-        }
-        dragRef.current = 0
-        dragStartTime.current = 0
-      }}
-      transition={{ duration: 0.35 }}
-      className={`absolute left-0 top-0 grid h-[450px] w-[350px] select-none place-content-center rounded-3xl border border-sky-200/60 bg-gradient-to-br from-slate-900 via-slate-800 to-blue-950 shadow-xl shadow-sky-900/50 backdrop-blur-sm overflow-hidden ${isFront ? "cursor-grab active:cursor-grabbing" : ""}`}
-    >
-      <div className="relative flex items-center justify-center w-full h-full p-4">
-        <svg
-          ref={svgRef}
-          viewBox={`0 0 ${width} ${height}`}
-          className="w-full h-full rounded-lg bg-transparent cursor-grab active:cursor-grabbing"
-          preserveAspectRatio="xMidYMid meet"
-          onMouseDown={handleMouseDown}
-          onMouseMove={handleMouseMove}
-          onMouseUp={handleMouseUp}
-          onMouseLeave={handleMouseUp}
-        />
-      </div>
-    </motion.div>
+    null
   )
 }
