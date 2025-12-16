@@ -130,6 +130,33 @@ export function TestimonialCard() {
 
     const path = d3.geoPath(projection)
 
+    const defs = svg.append("defs")
+
+    const oceanGradient = defs
+      .append("radialGradient")
+      .attr("id", "ocean-gradient")
+      .attr("cx", "50%")
+      .attr("cy", "50%")
+      .attr("r", "50%")
+
+    oceanGradient.append("stop").attr("offset", "0%").attr("stop-color", "#0ea5e9").attr("stop-opacity", 0.3)
+
+    oceanGradient.append("stop").attr("offset", "100%").attr("stop-color", "#06b6d4").attr("stop-opacity", 0.5)
+
+    const landGradient = defs
+      .append("linearGradient")
+      .attr("id", "land-gradient")
+      .attr("x1", "0%")
+      .attr("y1", "0%")
+      .attr("x2", "100%")
+      .attr("y2", "100%")
+
+    landGradient.append("stop").attr("offset", "0%").attr("stop-color", "#0284c7")
+
+    landGradient.append("stop").attr("offset", "50%").attr("stop-color", "#0ea5e9")
+
+    landGradient.append("stop").attr("offset", "100%").attr("stop-color", "#14b8a6")
+
     try {
       const graticule = d3.geoGraticule()
       const graticulePath = path(graticule())
@@ -139,9 +166,9 @@ export function TestimonialCard() {
           .datum(graticule())
           .attr("d", graticulePath)
           .attr("fill", "none")
-          .attr("stroke", "#cccccc")
-          .attr("stroke-width", 1)
-          .attr("opacity", 0.2)
+          .attr("stroke", "#ffffff")
+          .attr("stroke-width", 0.5)
+          .attr("opacity", 0.15)
       }
     } catch (error) {
       console.log("Error creating graticule:", error)
@@ -165,10 +192,11 @@ export function TestimonialCard() {
           return ""
         }
       })
-      .attr("fill", "none")
-      .attr("stroke", "#cccccc")
-      .attr("stroke-width", 1.0)
-      .attr("opacity", 1.0)
+      .attr("fill", "url(#land-gradient)")
+      .attr("stroke", "#ffffff")
+      .attr("stroke-width", 0.8)
+      .attr("opacity", 0.9)
+      .style("filter", "drop-shadow(0 2px 4px rgba(0,0,0,0.2))")
       .style("visibility", function () {
         const pathData = d3.select(this).attr("d")
         return pathData && pathData.length > 0 && !pathData.includes("NaN") ? "visible" : "hidden"
@@ -177,14 +205,26 @@ export function TestimonialCard() {
     try {
       const sphereOutline = path({ type: "Sphere" })
       if (sphereOutline) {
+        // Outer glow
         svg
           .append("path")
           .datum({ type: "Sphere" })
           .attr("d", sphereOutline)
           .attr("fill", "none")
-          .attr("stroke", "#222222")
-          .attr("stroke-width", 1)
-          .attr("opacity", 1.0)
+          .attr("stroke", "#0ea5e9")
+          .attr("stroke-width", 3)
+          .attr("opacity", 0.3)
+          .style("filter", "blur(4px)")
+
+        // Main outline
+        svg
+          .append("path")
+          .datum({ type: "Sphere" })
+          .attr("d", sphereOutline)
+          .attr("fill", "none")
+          .attr("stroke", "#06b6d4")
+          .attr("stroke-width", 2)
+          .attr("opacity", 0.8)
       }
     } catch (error) {
       console.log("Error creating sphere outline:", error)
@@ -241,11 +281,15 @@ export function TestimonialCard() {
   }, [])
 
   return (
-    <div className="relative flex items-center justify-center w-full h-full">
+    <div className="relative flex items-center justify-center w-full h-full bg-gradient-to-br from-slate-900 via-slate-800 to-blue-950 rounded-2xl shadow-2xl p-8">
+      <div className="absolute inset-0 bg-gradient-radial from-blue-500/10 via-transparent to-transparent rounded-2xl pointer-events-none" />
+      <div className="absolute top-0 left-0 w-64 h-64 bg-blue-400/20 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-0 right-0 w-64 h-64 bg-teal-400/20 rounded-full blur-3xl pointer-events-none" />
+
       <svg
         ref={svgRef}
         viewBox={`0 0 ${width} ${height}`}
-        className="w-full h-full border rounded-lg bg-transparent border-neutral-800 cursor-grab active:cursor-grabbing"
+        className="w-full h-full cursor-grab active:cursor-grabbing relative z-10"
         preserveAspectRatio="xMidYMid meet"
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
