@@ -49,7 +49,7 @@ export default function CaseStudiesPage() {
         </Link>
 
         {/* Hero content */}
-        <div className="container relative z-10 mx-auto px-4 py-20">
+        <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8 py-20">
           <div className="max-w-4xl mx-auto text-center space-y-10">
             {/* Badge */}
             <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/5 backdrop-blur-md border border-white/10 text-white text-sm font-medium">
@@ -98,7 +98,7 @@ export default function CaseStudiesPage() {
       </div>
 
       {/* Case Studies Section */}
-      <div className="container mx-auto px-4 py-24">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-24">
         <div className="max-w-6xl mx-auto space-y-32">
           {/* Case Study 1: Russian Startup */}
           <div className="group">
