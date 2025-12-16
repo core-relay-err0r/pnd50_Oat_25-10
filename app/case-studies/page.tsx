@@ -867,26 +867,7 @@ export default function CaseStudiesPage() {
 
         {/* CTA Section */}
         <div className="max-w-4xl mx-auto mt-24">
-          <div className="bg-gradient-to-br from-primary to-primary/90 rounded-2xl p-12 text-center shadow-2xl">
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Ready to Write Your Success Story?</h2>
-            <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
-              Whether you're from Russia, Vietnam, or anywhere else — PND50 makes accounting and compliance clear, fast,
-              and stress-free.
-            </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Button asChild size="lg" variant="secondary" className="text-base px-8 shadow-lg">
-                <Link href="/calculator">Get a Free Quote</Link>
-              </Button>
-              <Button
-                asChild
-                size="lg"
-                variant="outline"
-                className="text-base px-8 bg-white/10 border-white/30 text-white hover:bg-white/20"
-              >
-                <Link href="/contact">Talk to Our Team</Link>
-              </Button>
-            </div>
-          </div>
+          
         </div>
 
         {/* Related Links Section */}
