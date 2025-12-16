@@ -8,10 +8,30 @@ export const metadata: Metadata = {
   title: pageMetadata.services.title,
   description: pageMetadata.services.description,
   keywords: siteConfig.keywords.services,
+  alternates: {
+    canonical: `${siteConfig.url}/services`,
+  },
   openGraph: {
     title: pageMetadata.services.title,
     description: pageMetadata.services.description,
     url: `${siteConfig.url}/services`,
+    type: "website",
+    locale: "en_US",
+    siteName: siteConfig.name,
+    images: [
+      {
+        url: `${siteConfig.url}${siteConfig.ogImage}`,
+        width: 1200,
+        height: 630,
+        alt: "PND50 - Accounting & Tax Services in Thailand",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: pageMetadata.services.title,
+    description: pageMetadata.services.description,
+    images: [`${siteConfig.url}${siteConfig.ogImage}`],
   },
 }
 

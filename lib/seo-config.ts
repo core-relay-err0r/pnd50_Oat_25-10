@@ -73,9 +73,9 @@ export const pageMetadata = {
       "Tech-driven accounting and consulting services. Expert human advisors powered by AI for 5x faster, error-free tax filing, bookkeeping, and business consulting in Thailand.",
   },
   services: {
-    title: "Professional Accounting & Tax Services | PND50 Thailand",
+    title: "Business Services | PND50 (ภ.ง.ด.50) Accounting Thailand",
     description:
-      "Comprehensive accounting services including company registration, tax planning, VAT management, payroll, and audit support for foreign-owned businesses in Thailand.",
+      "Complete accounting, tax filing (ภ.ง.ด.50/P.N.D.50), and business compliance services for foreign-owned companies in Thailand. Expert support from setup to ongoing operations.",
   },
   calculator: {
     title: "Accounting Fee Calculator | Get Instant Quote | PND50",
