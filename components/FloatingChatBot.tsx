@@ -11,6 +11,7 @@ import { usePathname } from "next/navigation"
 import { useIsMobile } from "@/components/ui/use-mobile"
 import { AnimatePresence, motion } from "framer-motion"
 import { ColorOrb } from "@/components/ui/color-orb"
+import { Textarea } from "@/components/ui/textarea"
 import {
   getOrCreateSession,
   getChatSessions,
@@ -85,8 +86,6 @@ export function FloatingChatBot() {
   const recognitionRef = useRef<SpeechRecognition | null>(null)
   const synthRef = useRef<SpeechSynthesis | null>(null)
   const lastSpokenMessageRef = useRef<string | null>(null)
-
-  const [inputValue, setInputValue] = useState("")
 
   const [showHistory, setShowHistory] = useState(false)
   const [chatSessions, setChatSessions] = useState<ChatSession[]>([])
@@ -423,7 +422,7 @@ export function FloatingChatBot() {
 
     recognitionRef.current.onresult = (event) => {
       const transcript = event.results[0][0].transcript
-      setInputValue((prev) => prev + (prev ? " " : "") + transcript)
+      setInput((prev) => prev + (prev ? " " : "") + transcript)
       setIsListening(false)
     }
 
@@ -505,18 +504,15 @@ export function FloatingChatBot() {
   )
 
   const handleSend = () => {
-    if (!inputValue.trim() || status === "in_progress") return
-    setInput(inputValue)
+    if (!input.trim() || status === "in_progress") return
     handleSubmit()
-    setInputValue("")
   }
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === "Escape") {
       setIsOpen(false)
       stopSpeaking()
-    }
-    if (e.key === "Enter" && !e.shiftKey) {
+    } else if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault()
       handleSend()
     }
@@ -911,16 +907,17 @@ export function FloatingChatBot() {
             <div className="p-3 border-t border-border/50 bg-background">
               <div className="flex gap-2 items-end">
                 <div className="flex-1 relative">
-                  <textarea
+                  <Textarea
                     ref={textareaRef}
-                    value={inputValue}
-                    onChange={(e) => setInputValue(e.target.value)}
+                    placeholder={
+                      isCalculatorPage
+                        ? "Ask about calculations, results, or energy calculations..."
+                        : "Ask me anything about solar panels..."
+                    }
+                    value={input}
+                    onChange={(e) => setInput(e.target.value)}
                     onKeyDown={handleKeyDown}
-                    placeholder="Ask me anything..."
-                    disabled={status === "in_progress"}
-                    rows={1}
-                    className="w-full resize-none rounded-xl border border-input bg-background px-3.5 py-2.5 text-sm outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary disabled:opacity-50 disabled:cursor-not-allowed"
-                    style={{ minHeight: "42px", maxHeight: "120px" }}
+                    className="flex-1 min-h-[60px] max-h-[120px] resize-none bg-background border-border focus:border-primary/50 transition-colors"
                   />
                 </div>
                 {recognitionSupported && (
@@ -938,7 +935,7 @@ export function FloatingChatBot() {
                 )}
                 <Button
                   onClick={handleSend}
-                  disabled={status === "in_progress" || !inputValue.trim()}
+                  disabled={status === "in_progress" || !input.trim()}
                   size="icon"
                   className="rounded-xl h-[42px] w-[42px] shrink-0"
                   aria-label="Send message"
