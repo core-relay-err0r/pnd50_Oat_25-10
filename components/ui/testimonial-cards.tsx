@@ -2,6 +2,7 @@
 
 import * as React from "react"
 import { motion } from "framer-motion"
+import { GlobeToMapTransform } from "@/components/ui/globe-to-map-transform"
 
 interface TestimonialCardProps {
   handleShuffle: () => void
@@ -63,20 +64,28 @@ export function TestimonialCard({ handleShuffle, testimonial, position, id, auth
         dragStartTime.current = 0
       }}
       transition={{ duration: 0.35 }}
-      className={`absolute left-0 top-0 grid h-[450px] w-[350px] select-none place-content-center space-y-6 rounded-3xl border border-sky-200/60 p-8 bg-gradient-to-b from-white via-sky-50/80 to-blue-50/70 shadow-xl shadow-sky-200/30 backdrop-blur-sm ${isFront ? "cursor-grab active:cursor-grabbing" : ""}`}
+      className={`absolute left-0 top-0 grid h-[450px] w-[350px] select-none place-content-center rounded-3xl border border-sky-200/60 bg-gradient-to-br from-slate-900 via-slate-800 to-blue-950 shadow-xl shadow-sky-900/50 backdrop-blur-sm overflow-hidden ${isFront ? "cursor-grab active:cursor-grabbing" : ""}`}
     >
-      <div className="relative mx-auto">
-        <div className="absolute -inset-1 rounded-full bg-gradient-to-br from-sky-300 via-blue-200 to-teal-300 opacity-50 blur-sm" />
-        <img
-          src={image || `https://i.pravatar.cc/128?img=${id}`}
-          alt={`Avatar of ${author}`}
-          className="relative pointer-events-none h-32 w-32 rounded-full border-4 border-sky-100 object-cover shadow-md"
-        />
+      {/* Globe component as background */}
+      <div className="absolute inset-0 opacity-40">
+        <GlobeToMapTransform />
       </div>
-      <span className="text-center leading-relaxed font-light text-slate-700 text-base">"{testimonial}"</span>
-      <span className="text-center text-sm font-semibold bg-gradient-to-r from-sky-600 to-blue-600 bg-clip-text text-transparent">
-        {author}
-      </span>
+
+      {/* Content overlay */}
+      <div className="relative z-10 space-y-6 p-8">
+        <div className="relative mx-auto">
+          <div className="absolute -inset-1 rounded-full bg-gradient-to-br from-sky-400 via-blue-300 to-teal-400 opacity-70 blur-sm" />
+          <img
+            src={image || `https://i.pravatar.cc/128?img=${id}`}
+            alt={`Avatar of ${author}`}
+            className="relative pointer-events-none h-32 w-32 rounded-full border-4 border-sky-200/80 object-cover shadow-lg"
+          />
+        </div>
+        <span className="text-center leading-relaxed font-light text-sky-50 text-base block">"{testimonial}"</span>
+        <span className="text-center text-sm font-semibold bg-gradient-to-r from-sky-300 to-teal-300 bg-clip-text text-transparent block">
+          {author}
+        </span>
+      </div>
     </motion.div>
   )
 }
