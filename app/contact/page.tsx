@@ -10,6 +10,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 import { Mail, Phone, MapPin, Send, CheckCircle2, MessageSquare, Building2, Clock, ArrowRight } from "lucide-react"
 import { motion } from "framer-motion"
+import { ContactRelatedLinks } from "@/components/seo/related-links"
 
 const AnimatedGridBackground = dynamic(
   () => import("@/components/ui/animated-grid-background").then((mod) => mod.AnimatedGridBackground),
@@ -490,6 +491,12 @@ export default function ContactPage() {
             </div>
           </div>
         </motion.section>
+
+        <section className="py-12">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+            <ContactRelatedLinks />
+          </div>
+        </section>
 
         <div className="pb-16" />
       </AnimatedGridBackground>

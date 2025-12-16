@@ -23,6 +23,7 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { useRouter } from "next/navigation"
 import { AnimatedGridBackground } from "@/components/ui/animated-grid-background"
 import { LandingFooter } from "@/components/landing-footer"
+import { CalculatorRelatedLinks } from "@/components/seo/related-links"
 
 // Service Data Structure
 const servicesData = {
@@ -263,7 +264,7 @@ export function PricingCalculator() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-sky-50/80">
+    <div className="min-h-screen relative">
       <AnimatedGridBackground className="min-h-screen" variant="light">
         <motion.div
           className="absolute top-[15%] left-[8%] w-20 h-20 border-2 border-sky-300/40 rounded-2xl"
@@ -833,6 +834,13 @@ export function PricingCalculator() {
             )}
           </AnimatePresence>
         </motion.div>
+
+        {/* Related Links Section */}
+        <section className="py-12 relative z-10">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+            <CalculatorRelatedLinks />
+          </div>
+        </section>
       </AnimatedGridBackground>
     </div>
   )

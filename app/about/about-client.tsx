@@ -7,6 +7,7 @@ import { ArrowRight, Mail, MessageSquare, Target, CheckCircle2, Heart, Award, Us
 import { useEffect, useState } from "react"
 import { Testimonial } from "@/components/ui/testimonial-card"
 import { motion } from "framer-motion"
+import { CTABanner } from "@/components/seo/cta-banner"
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 30 },
@@ -90,7 +91,7 @@ const AboutClientPage = () => {
   }, [hasAnimated])
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-sky-50/80">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-sky-50/80 overflow-hidden">
       {/* Hero Section */}
       <section className="relative pb-24 overflow-hidden md:pb-32 md:pt-28 pt-24 px-4 sm:px-6 lg:px-8">
         {/* ... existing floating elements ... */}
@@ -542,6 +543,13 @@ const AboutClientPage = () => {
           </div>
         </div>
       </motion.section>
+
+      {/* CTA Banner Section */}
+      <section className="py-16 bg-gradient-to-br from-slate-50 via-white to-sky-50/30">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
+          <CTABanner variant="default" />
+        </div>
+      </section>
     </div>
   )
 }

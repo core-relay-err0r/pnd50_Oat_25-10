@@ -15,6 +15,8 @@ import {
   ChevronDown,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { RelatedLinks } from "@/components/seo/related-links"
+import { Calculator, FileText, HelpCircle } from "lucide-react"
 
 export const metadata: Metadata = {
   title: "Case Studies | PND50",
@@ -885,6 +887,33 @@ export default function CaseStudiesPage() {
               </Button>
             </div>
           </div>
+        </div>
+
+        {/* Related Links Section */}
+        <div className="max-w-6xl mx-auto mt-16">
+          <RelatedLinks
+            title="Explore More"
+            links={[
+              {
+                title: "Our Services",
+                description: "See how we can help your business succeed in Thailand",
+                href: "/services",
+                icon: <FileText className="w-5 h-5" />,
+              },
+              {
+                title: "Price Calculator",
+                description: "Get an instant quote tailored to your needs",
+                href: "/calculator",
+                icon: <Calculator className="w-5 h-5" />,
+              },
+              {
+                title: "FAQ",
+                description: "Common questions about Thai accounting & tax",
+                href: "/faq",
+                icon: <HelpCircle className="w-5 h-5" />,
+              },
+            ]}
+          />
         </div>
       </div>
     </div>

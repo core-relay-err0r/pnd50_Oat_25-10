@@ -5,6 +5,7 @@ import ServiceSlider from "@/components/service-slider"
 import { motion } from "framer-motion"
 import dynamic from "next/dynamic"
 import { useState, useEffect } from "react"
+import { ServicesRelatedLinks } from "@/components/seo/related-links"
 
 const AnimatedGridBackground = dynamic(
   () => import("@/components/ui/animated-grid-background").then((mod) => mod.AnimatedGridBackground),
@@ -328,6 +329,12 @@ export default function ServicesPage() {
                 </motion.div>
               </div>
             </motion.section>
+
+            <section className="py-8 md:py-12">
+              <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+                <ServicesRelatedLinks />
+              </div>
+            </section>
           </div>
         </AnimatedGridBackground>
       </section>
