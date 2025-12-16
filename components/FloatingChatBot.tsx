@@ -7,11 +7,11 @@ import { useState, useEffect, useRef, useCallback } from "react"
 import { X, Send, Mic, Square, MessageSquare, History, Plus, Trash2, ChevronLeft } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useChat } from "@ai-sdk/react"
+import { DefaultChatTransport } from "ai"
 import { usePathname } from "next/navigation"
 import { useIsMobile } from "@/components/ui/use-mobile"
 import { AnimatePresence, motion } from "framer-motion"
 import { ColorOrb } from "@/components/ui/color-orb"
-import { Textarea } from "@/components/ui/textarea"
 import {
   getOrCreateSession,
   getChatSessions,
@@ -20,9 +20,9 @@ import {
   updateSessionTitle,
   deleteChatSession,
   createNewSession,
-  generateTitle,
   type ChatSession,
 } from "@/app/actions/chat-history"
+import { generateTitle } from "@/lib/chat-utils"
 
 const WELCOME_MESSAGE = {
   id: "welcome-static",
@@ -86,6 +86,8 @@ export function FloatingChatBot() {
   const recognitionRef = useRef<SpeechRecognition | null>(null)
   const synthRef = useRef<SpeechSynthesis | null>(null)
   const lastSpokenMessageRef = useRef<string | null>(null)
+
+  const [inputValue, setInputValue] = useState("")
 
   const [showHistory, setShowHistory] = useState(false)
   const [chatSessions, setChatSessions] = useState<ChatSession[]>([])
@@ -192,16 +194,16 @@ export function FloatingChatBot() {
 
   const {
     messages: aiMessages,
-    input,
-    handleSubmit,
-    setInput,
+    sendMessage,
     status,
+    setMessages,
   } = useChat({
-    api: "/api/chatbot",
-    headers: {
-      "X-Current-Page": pathname,
-      "X-Session-Id": currentSessionId || "",
-    },
+    transport: new DefaultChatTransport({
+      api: "/api/chatbot",
+      headers: {
+        "X-Current-Page": pathname || "/",
+      },
+    }),
   })
 
   const welcomeMessage = isCalculatorPage ? CALCULATOR_WELCOME_MESSAGE : WELCOME_MESSAGE
@@ -213,9 +215,6 @@ export function FloatingChatBot() {
     const lastMessage = aiMessages[aiMessages.length - 1]
     if (!lastMessage) return
 
-    // Only save user messages here - assistant messages are saved server-side in onFinish
-    if (lastMessage.role !== "user") return
-
     // Extract text content from message parts
     const content = lastMessage.parts
       .filter((part) => part.type === "text")
@@ -224,14 +223,14 @@ export function FloatingChatBot() {
 
     if (!content) return
 
-    // Save user message to database
-    saveMessage(currentSessionId, "user", content, {
+    // Save message to database
+    saveMessage(currentSessionId, lastMessage.role as "user" | "assistant", content, {
       page: pathname,
       voiceMode,
     })
 
     // Auto-generate title from first user message
-    if (!hasSetTitle) {
+    if (!hasSetTitle && lastMessage.role === "user") {
       const title = generateTitle(content)
       updateSessionTitle(currentSessionId, title)
       setHasSetTitle(true)
@@ -247,7 +246,7 @@ export function FloatingChatBot() {
       const response = await fetch("/api/text-to-speech", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text }),
+        body: JSON.JSON.stringify({ text }),
       })
 
       if (!response.ok) {
@@ -394,8 +393,7 @@ export function FloatingChatBot() {
       const transcript = event.results[0][0].transcript
       if (transcript.trim()) {
         setIsProcessing(true)
-        setInput(transcript)
-        handleSubmit()
+        sendMessage({ text: transcript })
       }
       setIsListening(false)
     }
@@ -415,14 +413,14 @@ export function FloatingChatBot() {
       console.error("Speech recognition error:", error)
       setIsListening(false)
     }
-  }, [isListening, isSpeaking, setInput, handleSubmit])
+  }, [isListening, isSpeaking, sendMessage])
 
   const startListening = useCallback(() => {
     if (!recognitionRef.current || isListening) return
 
     recognitionRef.current.onresult = (event) => {
       const transcript = event.results[0][0].transcript
-      setInput((prev) => prev + (prev ? " " : "") + transcript)
+      setInputValue((prev) => prev + (prev ? " " : "") + transcript)
       setIsListening(false)
     }
 
@@ -460,11 +458,11 @@ export function FloatingChatBot() {
     const newSession = await createNewSession(sessionToken)
     if (newSession) {
       setCurrentSessionId(newSession.id)
-      setInput("")
+      setMessages([]) // Clear current messages
       setHasSetTitle(false)
       setShowHistory(false)
     }
-  }, [sessionToken, setInput])
+  }, [sessionToken, setMessages])
 
   const handleLoadSession = useCallback(
     async (session: ChatSession) => {
@@ -482,10 +480,10 @@ export function FloatingChatBot() {
         createdAt: new Date(msg.created_at),
       }))
 
-      setInput("")
+      setMessages(formattedMessages)
       setShowHistory(false)
     },
-    [setInput],
+    [setMessages],
   )
 
   const handleDeleteSession = useCallback(
@@ -504,15 +502,17 @@ export function FloatingChatBot() {
   )
 
   const handleSend = () => {
-    if (!input?.trim() || status === "in_progress") return
-    handleSubmit()
+    if (!inputValue.trim() || status === "in_progress") return
+    sendMessage({ text: inputValue })
+    setInputValue("")
   }
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === "Escape") {
       setIsOpen(false)
       stopSpeaking()
-    } else if (e.key === "Enter" && !e.shiftKey) {
+    }
+    if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault()
       handleSend()
     }
@@ -907,17 +907,16 @@ export function FloatingChatBot() {
             <div className="p-3 border-t border-border/50 bg-background">
               <div className="flex gap-2 items-end">
                 <div className="flex-1 relative">
-                  <Textarea
+                  <textarea
                     ref={textareaRef}
-                    placeholder={
-                      isCalculatorPage
-                        ? "Ask about calculations, results, or energy calculations..."
-                        : "Ask me anything about solar panels..."
-                    }
-                    value={input}
-                    onChange={(e) => setInput(e.target.value)}
+                    value={inputValue}
+                    onChange={(e) => setInputValue(e.target.value)}
                     onKeyDown={handleKeyDown}
-                    className="flex-1 min-h-[60px] max-h-[120px] resize-none bg-background border-border focus:border-primary/50 transition-colors"
+                    placeholder="Ask me anything..."
+                    disabled={status === "in_progress"}
+                    rows={1}
+                    className="w-full resize-none rounded-xl border border-input bg-background px-3.5 py-2.5 text-sm outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary disabled:opacity-50 disabled:cursor-not-allowed"
+                    style={{ minHeight: "42px", maxHeight: "120px" }}
                   />
                 </div>
                 {recognitionSupported && (
@@ -935,7 +934,7 @@ export function FloatingChatBot() {
                 )}
                 <Button
                   onClick={handleSend}
-                  disabled={status === "in_progress" || !input.trim()}
+                  disabled={status === "in_progress" || !inputValue.trim()}
                   size="icon"
                   className="rounded-xl h-[42px] w-[42px] shrink-0"
                   aria-label="Send message"

@@ -6,7 +6,6 @@ export async function POST(req: Request) {
   const { messages }: { messages: UIMessage[] } = await req.json()
 
   const currentPage = req.headers.get("X-Current-Page") || "/"
-  const sessionId = req.headers.get("X-Session-Id") || null
   const isOnCalculator = currentPage === "/calculator"
 
   const prompt = convertToModelMessages(messages)
@@ -188,35 +187,9 @@ GUIDELINES:
   })
 
   return result.toUIMessageStreamResponse({
-    onFinish: async ({ isAborted, message }) => {
+    onFinish: async ({ isAborted }) => {
       if (isAborted) {
         console.log("[v0] Chat request aborted")
-        return
-      }
-
-      // Save the completed assistant message to Supabase
-      if (sessionId && message?.content) {
-        try {
-          const { saveMessage } = await import("@/app/actions/chat-history")
-
-          // Extract text content from message
-          const content =
-            typeof message.content === "string"
-              ? message.content
-              : message.content
-                  .filter((part: any) => part.type === "text")
-                  .map((part: any) => part.text)
-                  .join("")
-
-          if (content) {
-            await saveMessage(sessionId, "assistant", content, {
-              page: currentPage,
-            })
-            console.log("[v0] Saved assistant message to database")
-          }
-        } catch (error) {
-          console.error("[v0] Error saving message:", error)
-        }
       }
     },
     consumeStream: consumeStream,
