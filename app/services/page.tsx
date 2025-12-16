@@ -111,7 +111,7 @@ export default function ServicesPage() {
       <section className="relative w-full min-h-screen flex flex-col bg-gradient-to-br from-slate-50 via-white to-sky-50/80">
         <AnimatedGridBackground className="min-h-screen flex-1" variant="light">
           <motion.div
-            className="absolute top-[15%] left-[8%] w-20 h-20 border-2 border-sky-300/40 rounded-2xl"
+            className="absolute top-[15%] left-[8%] w-20 h-20 border-2 border-sky-400/30 rounded-2xl backdrop-blur-sm"
             animate={{
               rotate: [0, 90, 180, 270, 360],
               y: [0, -15, 0, 15, 0],
@@ -122,7 +122,7 @@ export default function ServicesPage() {
             }}
           />
           <motion.div
-            className="absolute top-[25%] right-[12%] w-16 h-16 border-2 border-teal-300/30 rounded-full"
+            className="absolute top-[25%] right-[12%] w-16 h-16 border-2 border-blue-400/25 rounded-full backdrop-blur-sm"
             animate={{
               scale: [1, 1.2, 1],
               opacity: [0.3, 0.6, 0.3],
@@ -130,14 +130,14 @@ export default function ServicesPage() {
             transition={{ duration: 4, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
           />
           <motion.div
-            className="absolute bottom-[30%] left-[15%] w-12 h-12 bg-gradient-to-br from-sky-200/30 to-teal-200/30 rounded-lg"
+            className="absolute bottom-[30%] left-[15%] w-12 h-12 bg-gradient-to-br from-sky-300/20 to-blue-300/20 rounded-lg backdrop-blur-sm"
             animate={{
               rotate: [45, 135, 225, 315, 405],
             }}
             transition={{ duration: 15, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
           />
           <motion.div
-            className="absolute top-[40%] right-[20%] w-8 h-8 bg-gradient-to-br from-blue-300/40 to-sky-300/40 rounded-full"
+            className="absolute top-[40%] right-[20%] w-8 h-8 bg-gradient-to-br from-blue-400/30 to-sky-400/30 rounded-full"
             animate={{
               y: [0, -20, 0],
               x: [0, 10, 0],
@@ -145,14 +145,14 @@ export default function ServicesPage() {
             transition={{ duration: 5, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
           />
           <motion.div
-            className="absolute bottom-[20%] right-[8%] w-24 h-24 border border-blue-200/30 rounded-full"
+            className="absolute bottom-[20%] right-[8%] w-24 h-24 border border-sky-300/25 rounded-full backdrop-blur-sm"
             animate={{
               scale: [1, 1.1, 1],
             }}
             transition={{ duration: 6, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
           />
           <motion.div
-            className="absolute top-[60%] left-[5%] w-6 h-6 bg-teal-400/30 rounded-full"
+            className="absolute top-[60%] left-[5%] w-6 h-6 bg-blue-400/25 rounded-full"
             animate={{
               y: [0, -30, 0],
               opacity: [0.3, 0.7, 0.3],
@@ -161,80 +161,72 @@ export default function ServicesPage() {
           />
 
           <div
-            className="absolute top-20 left-10 w-[500px] h-[500px] bg-gradient-to-br from-sky-200/40 via-blue-200/30 to-teal-200/20 rounded-full blur-3xl pointer-events-none"
+            className="absolute top-20 left-10 w-[500px] h-[500px] bg-gradient-to-br from-sky-300/30 via-blue-300/20 to-indigo-300/15 rounded-full blur-3xl pointer-events-none"
             style={{
               transform: `translate(${mousePosition.x}px, ${mousePosition.y}px)`,
               transition: "transform 0.5s ease-out",
             }}
           />
           <div
-            className="absolute bottom-20 right-10 w-[450px] h-[450px] bg-gradient-to-br from-teal-200/35 via-sky-200/25 to-blue-200/20 rounded-full blur-3xl pointer-events-none"
+            className="absolute bottom-20 right-10 w-[450px] h-[450px] bg-gradient-to-br from-blue-300/25 via-sky-300/20 to-indigo-300/15 rounded-full blur-3xl pointer-events-none"
             style={{
               transform: `translate(${-mousePosition.x}px, ${-mousePosition.y}px)`,
               transition: "transform 0.5s ease-out",
             }}
           />
           <div
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-gradient-to-br from-blue-100/35 via-sky-100/25 to-teal-100/30 rounded-full blur-3xl pointer-events-none"
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-gradient-to-br from-blue-200/25 via-sky-200/20 to-indigo-200/20 rounded-full blur-3xl pointer-events-none"
             style={{
               transform: `translate(calc(-50% + ${mousePosition.x * 0.5}px), calc(-50% + ${mousePosition.y * 0.5}px))`,
               transition: "transform 0.5s ease-out",
-            }}
-          />
-          <div
-            className="absolute top-[10%] right-[30%] w-[300px] h-[300px] bg-gradient-to-br from-emerald-100/25 to-teal-100/20 rounded-full blur-3xl pointer-events-none"
-            style={{
-              transform: `translate(${mousePosition.x * 0.7}px, ${mousePosition.y * 0.7}px)`,
-              transition: "transform 0.6s ease-out",
             }}
           />
 
           <div className="flex-1 w-full flex flex-col lg:scale-[0.85] lg:origin-top">
             <section className="relative py-8 md:py-16 pt-[100px] lg:pt-[140px]">
               <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-                <div className="max-w-3xl mx-auto text-center">
+                <div className="max-w-4xl mx-auto text-center">
                   <motion.div
-                    className="inline-flex items-center gap-2 bg-sky-100 text-sky-700 px-4 py-2 rounded-full text-sm font-medium mb-6 border border-sky-200"
+                    className="inline-flex items-center gap-2 bg-gradient-to-r from-sky-50 to-blue-50 text-sky-700 px-5 py-2.5 rounded-full text-sm font-semibold mb-8 border border-sky-200/60 shadow-sm shadow-sky-100/50"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.2 }}
                   >
-                    <span className="w-2 h-2 bg-sky-500 rounded-full animate-pulse"></span>
+                    <span className="relative flex h-2.5 w-2.5">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-sky-500"></span>
+                    </span>
                     Trusted by 200+ Businesses
                   </motion.div>
 
                   <motion.h1
-                    className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-[1.1] tracking-tight"
+                    className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-8 leading-[1.1] tracking-tight text-balance"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.3 }}
                   >
-                    <span className="bg-gradient-to-r from-slate-700 via-sky-600 to-sky-500 bg-clip-text text-transparent">
-                      Business Compliance &amp; Accounting
+                    <span className="inline-block bg-gradient-to-r from-sky-600 via-blue-600 to-indigo-600 bg-clip-text text-transparent">
+                      Business Compliance &amp;
+                      <br />
+                      Accounting
                     </span>{" "}
-                    <span className="bg-gradient-to-r from-slate-900 via-slate-700 to-slate-500 bg-clip-text text-transparent">
-                       Services in Thailand
+                    <span className="inline-block bg-gradient-to-r from-slate-800 via-slate-700 to-slate-600 bg-clip-text text-transparent">
+                      Services in Thailand
                     </span>
                   </motion.h1>
 
                   <motion.p
-                    className="text-slate-600 leading-relaxed text-lg md:text-xl mb-8 max-w-xl mx-auto"
+                    className="text-slate-600 leading-relaxed text-lg md:text-xl lg:text-2xl mb-12 max-w-2xl mx-auto text-pretty font-light"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.4 }}
                   >
-                    {"End-to-end company registration, accounting, and tax compliance for expats and foreign-owned businesses operating in Thailand.\n"}
+                    From company setup to ongoing compliance, we provide end-to-end business solutions for foreign-owned
+                    companies in Thailand.
                   </motion.p>
 
                   <motion.div
-                    className="flex flex-col sm:flex-row gap-4 justify-center mb-10"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.5 }}
-                  ></motion.div>
-
-                  <motion.div
-                    className="flex flex-wrap justify-center gap-8"
+                    className="flex flex-wrap justify-center gap-6 md:gap-8 mt-16"
                     variants={staggerContainer}
                     initial="hidden"
                     whileInView="visible"
@@ -243,14 +235,17 @@ export default function ServicesPage() {
                     {stats.map((stat, index) => (
                       <motion.div
                         key={index}
-                        className="text-center"
+                        className="group relative bg-white/60 backdrop-blur-md border border-slate-200/60 rounded-2xl p-6 md:p-8 min-w-[160px] hover:bg-white/80 hover:border-sky-300/60 hover:shadow-xl hover:shadow-sky-100/50 transition-all duration-300 hover:-translate-y-1"
                         variants={fadeInUp}
                         transition={{ duration: 0.5, delay: index * 0.1 }}
                       >
-                        <div className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-slate-700 via-sky-600 to-sky-500 bg-clip-text text-transparent">
-                          {stat.value}
+                        <div className="absolute inset-0 bg-gradient-to-br from-sky-500/5 to-blue-500/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                        <div className="relative">
+                          <div className="text-4xl md:text-5xl font-bold bg-gradient-to-br from-sky-600 via-blue-600 to-indigo-600 bg-clip-text text-transparent mb-2">
+                            {stat.value}
+                          </div>
+                          <div className="text-sm md:text-base text-slate-600 font-medium">{stat.label}</div>
                         </div>
-                        <div className="text-sm text-slate-500">{stat.label}</div>
                       </motion.div>
                     ))}
                   </motion.div>
@@ -259,7 +254,7 @@ export default function ServicesPage() {
             </section>
 
             <motion.section
-              className="py-12 md:py-20"
+              className="py-16 md:py-24"
               variants={fadeInUp}
               initial="hidden"
               whileInView="visible"
@@ -268,16 +263,19 @@ export default function ServicesPage() {
             >
               <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
                 <motion.div
-                  className="text-center mb-12"
+                  className="text-center mb-16"
                   variants={fadeInUp}
                   initial="hidden"
                   whileInView="visible"
                   viewport={{ once: true }}
                   transition={{ duration: 0.5 }}
                 >
-                  <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-slate-900 via-slate-700 to-slate-500 bg-clip-text text-transparent mb-4">
+                  <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-slate-800 via-slate-700 to-slate-600 bg-clip-text text-transparent mb-4 text-balance">
                     Our Services
                   </h2>
+                  <p className="text-slate-600 text-lg max-w-2xl mx-auto text-pretty">
+                    Comprehensive accounting and compliance solutions tailored for your business
+                  </p>
                 </motion.div>
 
                 <ServiceSlider />
@@ -285,7 +283,7 @@ export default function ServicesPage() {
             </motion.section>
 
             <motion.section
-              className="py-8 md:py-12"
+              className="py-16 md:py-20"
               variants={fadeInUp}
               initial="hidden"
               whileInView="visible"
@@ -294,14 +292,14 @@ export default function ServicesPage() {
             >
               <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl text-center">
                 <motion.h2
-                  className="text-3xl md:text-5xl font-bold bg-gradient-to-r from-slate-700 via-sky-600 to-sky-500 bg-clip-text text-transparent mb-6"
+                  className="text-3xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-sky-600 via-blue-600 to-indigo-600 bg-clip-text text-transparent mb-6 text-balance"
                   variants={fadeInUp}
                   transition={{ duration: 0.5 }}
                 >
                   Ready to Get Started?
                 </motion.h2>
                 <motion.p
-                  className="text-slate-600 mb-6 leading-relaxed text-lg"
+                  className="text-slate-600 mb-8 leading-relaxed text-lg md:text-xl max-w-2xl mx-auto text-pretty"
                   variants={fadeInUp}
                   transition={{ duration: 0.5, delay: 0.1 }}
                 >
@@ -314,14 +312,14 @@ export default function ServicesPage() {
                 >
                   <Link
                     href="/calculator"
-                    className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-blue-500 via-blue-600 to-indigo-600 text-white px-8 py-4 rounded-xl font-bold hover:from-blue-600 hover:via-blue-700 hover:to-indigo-700 transition-all hover:scale-105 shadow-lg shadow-blue-500/30 hover:shadow-xl hover:shadow-blue-600/40"
+                    className="group inline-flex items-center justify-center gap-2 bg-gradient-to-r from-sky-500 via-blue-600 to-indigo-600 text-white px-8 py-4 rounded-xl font-semibold hover:from-sky-600 hover:via-blue-700 hover:to-indigo-700 transition-all hover:scale-105 shadow-lg shadow-blue-500/30 hover:shadow-xl hover:shadow-blue-600/40"
                   >
                     Schedule Consultation
-                    <ArrowRight className="w-5 h-5" />
+                    <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                   </Link>
                   <Link
                     href="/contact"
-                    className="inline-flex items-center justify-center gap-2 bg-white/60 backdrop-blur-md border-2 border-slate-300/50 text-slate-700 px-8 py-4 rounded-xl font-bold hover:border-sky-400/60 hover:bg-white/80 hover:text-sky-600 transition-all hover:scale-105 shadow-lg shadow-slate-200/50 hover:shadow-xl hover:shadow-sky-200/50"
+                    className="inline-flex items-center justify-center gap-2 bg-white/70 backdrop-blur-md border-2 border-slate-200/80 text-slate-700 px-8 py-4 rounded-xl font-semibold hover:border-sky-400/80 hover:bg-white/90 hover:text-sky-600 transition-all hover:scale-105 shadow-lg shadow-slate-200/50 hover:shadow-xl hover:shadow-sky-200/50"
                   >
                     Contact Us
                   </Link>
@@ -329,7 +327,7 @@ export default function ServicesPage() {
               </div>
             </motion.section>
 
-            
+            <ServicesRelatedLinks />
           </div>
         </AnimatedGridBackground>
       </section>
