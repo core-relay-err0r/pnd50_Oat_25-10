@@ -217,44 +217,50 @@ export function FloatingChatBot() {
     if (!currentSessionId || aiMessages.length === 0) return
 
     const lastMessage = aiMessages[aiMessages.length - 1]
-    if (!lastMessage) return
+    if (!lastMessage || savedMessageIds.current.has(lastMessage.id)) return
 
-    // Skip if already saved
-    if (savedMessageIds.current.has(lastMessage.id)) return
-
-    // Extract text content from message parts
-    const content = lastMessage.parts
-      .filter((part) => part.type === "text")
-      .map((part) => part.text)
-      .join("")
+    const content =
+      typeof lastMessage.content === "string"
+        ? lastMessage.content
+        : lastMessage.content
+            .filter((part): part is { type: "text"; text: string } => part.type === "text")
+            .map((part) => part.text)
+            .join("")
 
     if (!content) return
 
-    // Clear previous timer
-    if (saveTimerRef.current) {
-      clearTimeout(saveTimerRef.current)
-    }
-
-    // Set new debounced timer - saves after 2 seconds of no updates
-    saveTimerRef.current = setTimeout(() => {
-      // Mark as saved to prevent duplicates
+    // User messages: save immediately (no streaming)
+    if (lastMessage.role === "user") {
       savedMessageIds.current.add(lastMessage.id)
-
-      // Save message to database
-      saveMessage(currentSessionId, lastMessage.role as "user" | "assistant", content, {
+      saveMessage(currentSessionId, "user", content, {
         page: pathname,
         voiceMode,
       })
 
       // Auto-generate title from first user message
-      if (!hasSetTitle && lastMessage.role === "user") {
+      if (!hasSetTitle) {
         const title = generateTitle(content)
         updateSessionTitle(currentSessionId, title)
         setHasSetTitle(true)
       }
+      return
+    }
+
+    // Assistant messages: debounce to save only final message
+    if (saveTimerRef.current) {
+      clearTimeout(saveTimerRef.current)
+    }
+
+    saveTimerRef.current = setTimeout(() => {
+      if (savedMessageIds.current.has(lastMessage.id)) return
+
+      savedMessageIds.current.add(lastMessage.id)
+      saveMessage(currentSessionId, "assistant", content, {
+        page: pathname,
+        voiceMode,
+      })
     }, 2000)
 
-    // Cleanup timer on unmount
     return () => {
       if (saveTimerRef.current) {
         clearTimeout(saveTimerRef.current)
@@ -271,7 +277,7 @@ export function FloatingChatBot() {
       const response = await fetch("/api/text-to-speech", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.JSON.stringify({ text }),
+        body: JSON.stringify({ text }),
       })
 
       if (!response.ok) {
