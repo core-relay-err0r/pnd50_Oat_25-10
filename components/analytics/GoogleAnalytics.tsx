@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect } from "react"
+import { useEffect, Suspense } from "react"
 import { usePathname, useSearchParams } from "next/navigation"
 
 // Google Analytics measurement ID
@@ -44,8 +44,7 @@ export const event = ({
   })
 }
 
-// Component to automatically track page views
-export function GoogleAnalytics() {
+function GoogleAnalyticsTracker() {
   const pathname = usePathname()
   const searchParams = useSearchParams()
 
@@ -56,6 +55,10 @@ export function GoogleAnalytics() {
     pageview(url)
   }, [pathname, searchParams])
 
+  return null
+}
+
+export function GoogleAnalytics() {
   if (!GA_MEASUREMENT_ID) {
     return null
   }
@@ -77,6 +80,9 @@ export function GoogleAnalytics() {
           `,
         }}
       />
+      <Suspense fallback={null}>
+        <GoogleAnalyticsTracker />
+      </Suspense>
     </>
   )
 }
