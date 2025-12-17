@@ -203,14 +203,12 @@ export function PricingCalculator() {
       }
     })
 
-    const proratedAnnual = (annual / 12) * selectedMonths
-    const periodTotal = oneTime + monthly * selectedMonths + proratedAnnual
+    const periodTotal = oneTime + monthly * selectedMonths + annual
 
     return {
       oneTime,
       monthly,
       annual,
-      proratedAnnual,
       periodTotal,
       yearTotal: oneTime + monthly * 12 + annual,
     }
