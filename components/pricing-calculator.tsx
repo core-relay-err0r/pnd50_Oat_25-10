@@ -231,24 +231,38 @@ export function PricingCalculator() {
         body: JSON.stringify({
           contactInfo,
           selectedServices: selectedServices.map((s) => {
+            const serviceData = servicesData[s.category].services.find((serv) => serv.id === s.id)
             const basePrice = s.price * (s.quantity || 1)
-            const optionsPrice =
-              s.selectedOptions?.reduce((total, optionId) => {
-                const optionPrice =
-                  servicesData[s.category].services
-                    .find((serv) => serv.id === s.id)
-                    ?.options?.find((o) => o.id === optionId)?.price || 0
-                return total + optionPrice
-              }, 0) || 0
+            const selectedOptionsDetails =
+              s.selectedOptions?.map((optionId) => {
+                const option = serviceData?.options?.find((o) => o.id === optionId)
+                return {
+                  id: optionId,
+                  name: option?.name || optionId,
+                  price: option?.price || 0,
+                }
+              }) || []
+            const optionsPrice = selectedOptionsDetails.reduce((total, opt) => total + opt.price, 0)
 
             return {
               name: s.name,
-              price: basePrice + optionsPrice,
+              category: s.category,
+              type: s.type,
+              basePrice: s.price,
               quantity: s.quantity,
-              selectedOptions: s.selectedOptions,
+              selectedOptions: selectedOptionsDetails,
+              optionsPrice,
+              totalPrice: basePrice + optionsPrice,
             }
           }),
-          totalPrice: preliminaryTotal.yearTotal,
+          priceBreakdown: {
+            oneTime: preliminaryTotal.oneTime,
+            monthly: preliminaryTotal.monthly,
+            annual: preliminaryTotal.annual,
+            periodTotal: preliminaryTotal.periodTotal,
+          },
+          selectedMonths,
+          totalPrice: preliminaryTotal.periodTotal,
         }),
       })
 
@@ -257,7 +271,7 @@ export function PricingCalculator() {
         throw new Error(errorData.error || "Failed to send quote")
       }
 
-      router.push("/calculator/success")
+      router.push("/schedule/success")
     } catch (error) {
       console.error("Error submitting quote:", error)
       alert("Failed to send quote. Please try again.")
