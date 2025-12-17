@@ -95,7 +95,30 @@ export function RelatedLinks({ title = "Related Pages", links, variant = "cards"
 
   // Cards variant (default)
   return (
-    null
+    <section className="py-12 bg-gradient-to-br from-slate-50/50 to-sky-50/30">
+      <div className="container mx-auto px-4">
+        <h2 className="text-2xl font-bold text-center mb-8 text-slate-800">{title}</h2>
+        <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+          {links.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className="group p-6 bg-white rounded-xl border border-slate-200 hover:border-sky-300 hover:shadow-lg transition-all"
+            >
+              <div className="flex items-start gap-3">
+                {link.icon}
+                <div>
+                  <h3 className="font-semibold text-slate-900 group-hover:text-sky-600 transition-colors">
+                    {link.title}
+                  </h3>
+                  <p className="text-sm text-slate-600 mt-1">{link.description}</p>
+                </div>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </div>
+    </section>
   )
 }
 
@@ -109,19 +132,19 @@ export function ServicesRelatedLinks() {
           title: "Price Calculator",
           description: "Get an instant quote tailored to your business",
           href: "/calculator",
-          icon: <Calculator className="w-5 h-5" />,
+          icon: <Calculator className="w-5 h-5 text-sky-600 mt-1" />,
         },
         {
           title: "FAQ",
           description: "Common questions about Thai accounting & tax",
           href: "/faq",
-          icon: <HelpCircle className="w-5 h-5" />,
+          icon: <HelpCircle className="w-5 h-5 text-sky-600 mt-1" />,
         },
         {
           title: "Contact Us",
           description: "Speak with our expert advisors",
           href: "/contact",
-          icon: <Users className="w-5 h-5" />,
+          icon: <Users className="w-5 h-5 text-sky-600 mt-1" />,
         },
       ]}
     />
@@ -137,19 +160,19 @@ export function CalculatorRelatedLinks() {
           title: "Our Services",
           description: "Detailed breakdown of what we offer",
           href: "/services",
-          icon: <FileText className="w-5 h-5" />,
+          icon: <FileText className="w-5 h-5 text-sky-600 mt-1" />,
         },
         {
           title: "Case Studies",
           description: "See how we've helped businesses succeed",
           href: "/case-studies",
-          icon: <Building2 className="w-5 h-5" />,
+          icon: <Building2 className="w-5 h-5 text-sky-600 mt-1" />,
         },
         {
           title: "About Us",
           description: "Meet the team behind PND50",
           href: "/about",
-          icon: <Users className="w-5 h-5" />,
+          icon: <Users className="w-5 h-5 text-sky-600 mt-1" />,
         },
       ]}
     />
@@ -165,19 +188,19 @@ export function FAQRelatedLinks() {
           title: "Contact Us",
           description: "Get personalized answers from our team",
           href: "/contact",
-          icon: <Users className="w-5 h-5" />,
+          icon: <Users className="w-5 h-5 text-sky-600 mt-1" />,
         },
         {
           title: "Our Services",
           description: "Explore our accounting packages",
           href: "/services",
-          icon: <FileText className="w-5 h-5" />,
+          icon: <FileText className="w-5 h-5 text-sky-600 mt-1" />,
         },
         {
           title: "Price Calculator",
           description: "Calculate your monthly accounting costs",
           href: "/calculator",
-          icon: <Calculator className="w-5 h-5" />,
+          icon: <Calculator className="w-5 h-5 text-sky-600 mt-1" />,
         },
       ]}
     />
@@ -193,19 +216,19 @@ export function ContactRelatedLinks() {
           title: "FAQ",
           description: "Find quick answers to common questions",
           href: "/faq",
-          icon: <HelpCircle className="w-5 h-5" />,
+          icon: <HelpCircle className="w-5 h-5 text-sky-600 mt-1" />,
         },
         {
           title: "Our Services",
           description: "Learn about what we offer",
           href: "/services",
-          icon: <FileText className="w-5 h-5" />,
+          icon: <FileText className="w-5 h-5 text-sky-600 mt-1" />,
         },
         {
           title: "Case Studies",
           description: "See our success stories",
           href: "/case-studies",
-          icon: <Building2 className="w-5 h-5" />,
+          icon: <Building2 className="w-5 h-5 text-sky-600 mt-1" />,
         },
       ]}
     />
