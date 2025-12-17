@@ -21,6 +21,7 @@ import {
 } from "@/components/seo/structured-data"
 import { GeoTags, ServiceAreaSchema, InternationalServiceAreaSchema } from "@/components/seo/geo-tags"
 import { AISearchContent, EntityDefinition, QAPageSchema } from "@/components/seo/ai-search-optimization"
+import { GoogleAnalytics } from "@/components/analytics/GoogleAnalytics"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -171,6 +172,8 @@ export default function RootLayout({
 
         <link rel="dns-prefetch" href="https://www.google-analytics.com" />
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+
+        <GoogleAnalytics />
       </head>
       <body className={inter.className}>
         <ModalProvider>

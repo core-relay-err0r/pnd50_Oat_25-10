@@ -23,7 +23,6 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { useRouter } from "next/navigation"
 import { AnimatedGridBackground } from "@/components/ui/animated-grid-background"
 import { LandingFooter } from "@/components/landing-footer"
-import { CalculatorRelatedLinks } from "@/components/seo/related-links"
 
 // Service Data Structure
 const servicesData = {
@@ -105,6 +104,7 @@ export function PricingCalculator() {
   const [contactInfo, setContactInfo] = useState<ContactInfo>({ name: "", email: "", phone: "" })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
+  const [selectedMonths, setSelectedMonths] = useState<number>(12)
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -203,8 +203,18 @@ export function PricingCalculator() {
       }
     })
 
-    return { oneTime, monthly, annual, yearTotal: oneTime + monthly * 12 + annual }
-  }, [selectedServices])
+    const proratedAnnual = (annual / 12) * selectedMonths
+    const periodTotal = oneTime + monthly * selectedMonths + proratedAnnual
+
+    return {
+      oneTime,
+      monthly,
+      annual,
+      proratedAnnual,
+      periodTotal,
+      yearTotal: oneTime + monthly * 12 + annual,
+    }
+  }, [selectedServices, selectedMonths])
 
   // Handle Calculate button click
   const handleCalculate = () => {
@@ -709,12 +719,42 @@ export function PricingCalculator() {
                           </div>
                         )}
                         <div className="pt-2 sm:pt-3 border-t border-slate-100">
+                          <div className="flex items-center justify-between gap-2 mb-3">
+                            <span className="text-sm text-slate-600">Select Duration</span>
+                            <div className="flex gap-1">
+                              {[1, 3, 6, 12].map((months) => (
+                                <button
+                                  key={months}
+                                  onClick={() => setSelectedMonths(months)}
+                                  className={`px-2 py-1 text-xs font-medium rounded-md transition-all ${
+                                    selectedMonths === months
+                                      ? "bg-sky-500 text-white shadow-sm"
+                                      : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+                                  }`}
+                                >
+                                  {months === 12 ? "1 Year" : `${months} Mo`}
+                                </button>
+                              ))}
+                            </div>
+                          </div>
+
                           <div className="flex justify-between items-center gap-2">
-                            <span className="text-slate-800 font-semibold">Year 1 Total</span>
+                            <span className="text-slate-800 font-semibold">
+                              {selectedMonths === 12 ? "Year 1 Total" : `${selectedMonths}-Month Total`}
+                            </span>
                             <span className="text-lg sm:text-xl font-bold text-sky-600 whitespace-nowrap flex-shrink-0">
-                              ฿{formatPrice(preliminaryTotal.yearTotal)}
+                              ฿{formatPrice(preliminaryTotal.periodTotal)}
                             </span>
                           </div>
+
+                          {/* Show monthly breakdown when not 12 months */}
+                          {selectedMonths !== 12 && preliminaryTotal.monthly > 0 && (
+                            <p className="text-xs text-slate-500 mt-1">
+                              ฿{formatPrice(preliminaryTotal.monthly)}/mo × {selectedMonths} months
+                              {preliminaryTotal.oneTime > 0 && ` + ฿${formatPrice(preliminaryTotal.oneTime)} one-time`}
+                            </p>
+                          )}
+
                           <p className="text-xs text-slate-500 mt-1">*Estimated based on selections</p>
                         </div>
                       </div>
@@ -762,8 +802,10 @@ export function PricingCalculator() {
                       <Check className="w-8 h-8 text-white" />
                     </div>
                     <h3 className="text-xl font-semibold text-slate-800">Your Final Quote</h3>
-                    <p className="text-3xl font-bold text-sky-600 mt-2">฿{formatPrice(preliminaryTotal.yearTotal)}</p>
-                    <p className="text-sm text-slate-500">Year 1 Total</p>
+                    <p className="text-3xl font-bold text-sky-600 mt-2">฿{formatPrice(preliminaryTotal.periodTotal)}</p>
+                    <p className="text-sm text-slate-500">
+                      {selectedMonths === 12 ? "Year 1 Total" : `${selectedMonths}-Month Total`}
+                    </p>
                   </div>
 
                   <div className="space-y-4 mb-6">
@@ -836,7 +878,6 @@ export function PricingCalculator() {
         </motion.div>
 
         {/* Related Links Section */}
-        
       </AnimatedGridBackground>
     </div>
   )
