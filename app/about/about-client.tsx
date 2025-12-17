@@ -3,7 +3,7 @@
 import React from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { ArrowRight, Mail, MessageSquare, Target, CheckCircle2, Heart, Award, Users, TrendingUp } from "lucide-react"
+import { ArrowRight, Target, CheckCircle2, Heart, Award, Users, TrendingUp } from "lucide-react"
 import { useEffect, useState } from "react"
 import { Testimonial } from "@/components/ui/testimonial-card"
 import { motion } from "framer-motion"
@@ -488,70 +488,6 @@ const AboutClientPage = () => {
           </div>
         </div>
       </section>
-
-      <motion.section
-        className="pt-12 sm:pt-24 md:pt-32"
-        variants={fadeInUp}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 0.6 }}
-      >
-        <div className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-8 sm:p-12 md:p-16 text-center relative overflow-hidden">
-          <div className="absolute top-0 left-0 w-full h-full">
-            <div className="absolute top-10 left-10 w-32 h-32 bg-sky-500/10 rounded-full blur-2xl" />
-            <div className="absolute bottom-10 right-10 w-40 h-40 bg-teal-500/10 rounded-full blur-2xl" />
-          </div>
-
-          <div className="relative z-10 max-w-2xl mx-auto">
-            <div className="w-14 h-14 rounded-full bg-gradient-to-br from-sky-500/20 to-teal-500/20 flex items-center justify-center mx-auto mb-6">
-              <Mail className="w-7 h-7 text-sky-400" />
-            </div>
-            <motion.h2
-              className="text-2xl sm:text-3xl font-bold text-white mb-4"
-              variants={fadeInUp}
-              transition={{ duration: 0.5 }}
-            >
-              Let's Simplify Accounting in Thailand — Together.
-            </motion.h2>
-            <motion.p
-              className="text-slate-400 max-w-lg mx-auto mb-8"
-              variants={fadeInUp}
-              transition={{ duration: 0.5, delay: 0.1 }}
-            >
-              Your business deserves clear, compliant, and modern accounting support. Reach out today to see how we can
-              help.
-            </motion.p>
-            <motion.div
-              className="flex flex-col sm:flex-row gap-3 justify-center"
-              variants={fadeInUp}
-              transition={{ duration: 0.5, delay: 0.2 }}
-            >
-              <Button
-                asChild
-                size="lg"
-                className="bg-gradient-to-r from-sky-500 to-teal-400 hover:from-sky-600 hover:to-teal-500 text-white border-0"
-              >
-                <Link href="/contact" className="flex items-center gap-2">
-                  <MessageSquare className="w-4 h-4" />
-                  Get in Touch
-                </Link>
-              </Button>
-              <Button
-                asChild
-                size="lg"
-                variant="outline"
-                className="border-slate-600 text-white hover:bg-slate-800 bg-transparent"
-              >
-                <Link href="/schedule" className="flex items-center gap-2">
-                  Get Your Quote
-                  <ArrowRight className="w-4 h-4" />
-                </Link>
-              </Button>
-            </motion.div>
-          </div>
-        </div>
-      </motion.section>
 
       {/* CTA Banner Section */}
       <CTABanner />
