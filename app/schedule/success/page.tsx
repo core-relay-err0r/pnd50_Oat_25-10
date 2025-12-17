@@ -81,7 +81,7 @@ export default function CalculatorSuccessPage() {
         <motion.div initial="initial" animate="animate" variants={pageVariants} className="relative z-10">
           {/* Header with back button */}
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-4">
-            <Link href="/calculator">
+            <Link href="/schedule">
               <Button variant="ghost" className="text-slate-500 hover:text-slate-700 hover:bg-slate-100">
                 <ArrowLeft className="mr-2 h-4 w-4" />
                 Back to Calculator
@@ -199,7 +199,7 @@ export default function CalculatorSuccessPage() {
                   variant="outline"
                   className="flex-1 border-slate-300 text-slate-700 bg-white hover:border-slate-400 hover:bg-slate-50 hover:text-slate-700 hover:shadow-sm transition-all duration-200"
                 >
-                  <Link href="/calculator">Get Another Quote</Link>
+                  <Link href="/schedule">Get Another Quote</Link>
                 </Button>
               </div>
             </motion.div>

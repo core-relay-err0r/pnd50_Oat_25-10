@@ -311,10 +311,10 @@ export default function ServicesPage() {
                   transition={{ duration: 0.5, delay: 0.2 }}
                 >
                   <Link
-                    href="/calculator"
+                    href="/schedule" // Updated from /calculator to /schedule
                     className="group inline-flex items-center justify-center gap-2 bg-gradient-to-r from-sky-500 via-blue-600 to-indigo-600 text-white px-8 py-4 rounded-xl font-semibold hover:from-sky-600 hover:via-blue-700 hover:to-indigo-700 transition-all hover:scale-105 shadow-lg shadow-blue-500/30 hover:shadow-xl hover:shadow-blue-600/40"
                   >
-                    Get Instant Quote
+                    Schedule Consultation
                     <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                   </Link>
                   <Link

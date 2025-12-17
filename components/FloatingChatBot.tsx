@@ -70,7 +70,7 @@ export function FloatingChatBot() {
   const pathname = usePathname()
   const isMobile = useIsMobile()
 
-  const isCalculatorPage = pathname === "/calculator"
+  const isCalculatorPage = pathname === "/schedule" // Updated from /calculator to /schedule
 
   const [hasAutoSent, setHasAutoSent] = useState(false)
   const [showTooltip, setShowTooltip] = useState(false)

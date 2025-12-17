@@ -85,7 +85,7 @@ export function Navbar() {
   ]
 
   const isContactActive = pathname === "/contact"
-  const isCalculatorActive = pathname === "/calculator"
+  const isCalculatorActive = pathname === "/schedule"
 
   const contactButtonElement = (onClickHandler?: () => void) => (
     <Link href="/contact" className="w-full sm:w-auto" onClick={onClickHandler}>
@@ -111,7 +111,7 @@ export function Navbar() {
                      transition-all duration-300 ease-out
                      group-hover:opacity-60 group-hover:blur-xl group-hover:-m-3"
       ></div>
-      <Link href="/calculator" onClick={onClickHandler}>
+      <Link href="/schedule" onClick={onClickHandler}>
         <button
           className={`relative z-10 px-4 py-2 sm:px-3 text-xs sm:text-sm font-semibold text-white rounded-full transition-all duration-200 w-full sm:w-auto ${
             isCalculatorActive

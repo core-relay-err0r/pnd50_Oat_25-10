@@ -5,8 +5,6 @@ import { useEffect, useState, useMemo } from "react"
 import { ShuffleTestimonials } from "@/components/ShuffleTestimonials"
 import { motion } from "framer-motion"
 import { LandingFooter } from "@/components/landing-footer"
-import Link from "next/link"
-import { Calculator } from "lucide-react"
 
 const AnimatedGridBackground = dynamic(
   () => import("@/components/ui/animated-grid-background").then((mod) => mod.AnimatedGridBackground),
@@ -210,29 +208,6 @@ export default function PND50Landing() {
                     transition={{ delay: 0.5, duration: 0.5 }}
                   >
                     <HomepageCtas />
-                  </motion.div>
-
-                  <motion.div
-                    className="pt-6 flex justify-center lg:justify-start"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.6, duration: 0.5 }}
-                  >
-                    <Link
-                      href="/calculator"
-                      className="inline-flex items-center gap-2 text-sky-600 hover:text-sky-700 font-semibold group transition-colors"
-                    >
-                      <Calculator className="w-5 h-5" />
-                      <span>Calculate Your Fees</span>
-                      <svg
-                        className="w-4 h-4 group-hover:translate-x-1 transition-transform"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                      </svg>
-                    </Link>
                   </motion.div>
                 </div>
 

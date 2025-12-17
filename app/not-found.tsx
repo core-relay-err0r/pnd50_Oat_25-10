@@ -71,6 +71,12 @@ export default function NotFound() {
             >
               About Us
             </Link>
+            <Link
+              href="/schedule"
+              className="px-4 py-2 text-sm text-slate-600 hover:text-sky-600 bg-slate-50 hover:bg-sky-50 rounded-lg transition-colors"
+            >
+              Schedule Consultation
+            </Link>
           </div>
         </div>
       </div>

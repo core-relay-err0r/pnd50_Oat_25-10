@@ -20,7 +20,7 @@ export function FinalCta() {
         asChild
         className="bg-white text-primary hover:bg-white/90 text-lg px-8 py-6 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
       >
-        <Link href="/calculator">
+        <Link href="/schedule">
           <Calendar className="mr-2 h-5 w-5" />
           Schedule Consultation
         </Link>

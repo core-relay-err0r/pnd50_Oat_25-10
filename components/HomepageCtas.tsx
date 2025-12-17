@@ -6,7 +6,7 @@ import Link from "next/link"
 export function HomepageCtas() {
   return (
     <div className="flex flex-col sm:flex-row gap-4 items-center justify-start">
-      <Link href="/calculator" className="w-full sm:w-auto">
+      <Link href="/schedule" className="w-full sm:w-auto">
         <Button
           className="w-full sm:w-auto bg-gradient-to-r from-blue-500 via-blue-600 to-indigo-600 hover:from-blue-600 hover:via-blue-700 hover:to-indigo-700 text-white px-8 text-lg font-bold rounded-xl shadow-lg shadow-blue-500/30 transition-all duration-300 transform hover:scale-105 hover:shadow-xl hover:shadow-blue-600/40 flex items-center justify-center border-0"
           style={{ minHeight: "60px", height: "60px" }}

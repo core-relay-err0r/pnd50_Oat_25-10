@@ -27,7 +27,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1.0,
     },
     {
-      url: `${baseUrl}/calculator`,
+      url: `${baseUrl}/schedule`,
       lastModified: currentDate,
       changeFrequency: "monthly" as const,
       priority: 0.7,

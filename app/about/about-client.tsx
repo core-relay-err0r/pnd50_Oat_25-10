@@ -543,7 +543,7 @@ const AboutClientPage = () => {
                 variant="outline"
                 className="border-slate-600 text-white hover:bg-slate-800 bg-transparent"
               >
-                <Link href="/calculator" className="flex items-center gap-2">
+                <Link href="/schedule" className="flex items-center gap-2">
                   Get Your Quote
                   <ArrowRight className="w-4 h-4" />
                 </Link>

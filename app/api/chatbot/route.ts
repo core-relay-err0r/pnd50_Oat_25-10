@@ -6,7 +6,7 @@ export async function POST(req: Request) {
   const { messages }: { messages: UIMessage[] } = await req.json()
 
   const currentPage = req.headers.get("X-Current-Page") || "/"
-  const isOnCalculator = currentPage === "/calculator"
+  const isOnCalculator = currentPage === "/schedule"
 
   const prompt = convertToModelMessages(messages)
 
@@ -169,7 +169,7 @@ CONTACT (only if asked):
 Phone: +66 2 017 2949 | Email: info@pnd50.com | Telegram/WhatsApp: +66 84 356 3805
 
 GUIDELINES:
-- Never mention URLs like "/calculator" - say "Schedule Consultation" instead
+- Never mention URLs like "/schedule" - say "Schedule Consultation" instead
 - Ask one question at a time
 - Be helpful first, guide toward consultation naturally
 - If they seem confused, simplify: "Let's start with the basics - what does your business need help with?"
