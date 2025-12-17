@@ -40,21 +40,6 @@ export function CTABanner({ variant = "default", title, description }: CTABanner
   const config = configs[variant]
 
   return (
-    <div className="bg-white p-6 rounded-lg shadow-md flex flex-col items-center justify-center space-y-4">
-      <h2 className="text-2xl font-bold">{title || config.title}</h2>
-      <p className="text-gray-600 text-center">{description || config.description}</p>
-      <div className="flex space-x-4">
-        <Button asChild variant="default">
-          <Link href={config.primaryCTA.href}>
-            {config.primaryCTA.icon} {config.primaryCTA.label}
-          </Link>
-        </Button>
-        <Button asChild variant="secondary">
-          <Link href={config.secondaryCTA.href}>
-            {config.secondaryCTA.icon} {config.secondaryCTA.label}
-          </Link>
-        </Button>
-      </div>
-    </div>
+    null
   )
 }
