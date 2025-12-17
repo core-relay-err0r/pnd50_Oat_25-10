@@ -65,7 +65,10 @@ export default function Header() {
           </Link>
 
           {/* Center: Desktop Nav */}
-          <nav className="hidden md:flex items-center gap-6 text-sm font-medium" aria-label="Main navigation">
+          <nav
+            className="hidden md:flex items-center gap-3 lg:gap-6 text-xs lg:text-sm font-medium"
+            aria-label="Main navigation"
+          >
             <Link href="/services" className="text-muted-foreground transition-colors hover:text-primary">
               Services
             </Link>
@@ -86,8 +89,9 @@ export default function Header() {
           {/* Right: CTA & Mobile Menu Toggle */}
           <div className="flex items-center gap-2 sm:gap-4">
             <Link href="/calculator" className="hidden sm:block">
-              <Button className="relative bg-primary hover:bg-primary/90 text-primary-foreground font-semibold text-base px-8 py-3 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-102">
-                <span className="relative z-10">Schedule Consultation</span>
+              <Button className="relative bg-primary hover:bg-primary/90 text-primary-foreground font-semibold text-sm lg:text-base px-4 lg:px-8 py-2 lg:py-3 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-102">
+                <span className="relative z-10 hidden md:inline">Schedule Consultation</span>
+                <span className="relative z-10 md:hidden">Schedule</span>
               </Button>
             </Link>
             {/* Mobile version - enhanced */}
