@@ -5,7 +5,6 @@ import ServiceSlider from "@/components/service-slider"
 import { motion } from "framer-motion"
 import dynamic from "next/dynamic"
 import { useState, useEffect } from "react"
-import { ServicesRelatedLinks } from "@/components/seo/related-links"
 
 const AnimatedGridBackground = dynamic(
   () => import("@/components/ui/animated-grid-background").then((mod) => mod.AnimatedGridBackground),
@@ -311,7 +310,7 @@ export default function ServicesPage() {
                   transition={{ duration: 0.5, delay: 0.2 }}
                 >
                   <Link
-                    href="/schedule" // Updated from /calculator to /schedule
+                    href="/schedule"
                     className="group inline-flex items-center justify-center gap-2 bg-gradient-to-r from-sky-500 via-blue-600 to-indigo-600 text-white px-8 py-4 rounded-xl font-semibold hover:from-sky-600 hover:via-blue-700 hover:to-indigo-700 transition-all hover:scale-105 shadow-lg shadow-blue-500/30 hover:shadow-xl hover:shadow-blue-600/40"
                   >
                     Schedule Consultation
@@ -326,8 +325,6 @@ export default function ServicesPage() {
                 </motion.div>
               </div>
             </motion.section>
-
-            <ServicesRelatedLinks />
           </div>
         </AnimatedGridBackground>
       </section>
