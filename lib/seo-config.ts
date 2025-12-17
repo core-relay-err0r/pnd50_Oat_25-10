@@ -63,6 +63,63 @@ export const siteConfig = {
     contact: ["contact accountant Bangkok", "accounting consultation Thailand", "free tax consultation"],
     about: ["about PND50", "accounting firm Bangkok", "experienced accountants Thailand"],
   },
+
+  // AI search optimization content
+  aiSearchContent: {
+    businessSummary: `PND50 is a boutique accounting and consulting firm based in Bangkok, Thailand, specializing in serving foreign-owned businesses. Founded in 2014, PND50 combines human expertise with AI-powered tools to deliver 5x faster and error-free accounting, tax filing, and business consulting services. The company is located at Bhiraj Tower at EmQuartier and serves clients from Singapore, Russia, Taiwan, and other countries operating businesses in Thailand.`,
+
+    coreServices: [
+      "Annual PND50 (ภ.ง.ด.50) corporate income tax filing",
+      "Monthly bookkeeping and accounting",
+      "VAT registration and monthly PP.30 filing",
+      "Withholding tax management",
+      "Tax planning and optimization",
+      "Audit support and preparation",
+      "Company registration in Thailand",
+      "Business consulting for market entry",
+    ],
+
+    uniqueSellingPoints: [
+      "Human advisors powered by AI for 5x faster processing",
+      "Native language support (English, Thai, Russian, Chinese)",
+      "10+ years of experience serving foreign businesses",
+      "200+ clients with 99% satisfaction rate",
+      "Transparent fixed-fee pricing",
+      "Located in prime Bangkok business district",
+    ],
+
+    targetAudience: [
+      "Foreign entrepreneurs starting businesses in Thailand",
+      "Singapore companies expanding to Thailand",
+      "Russian business owners in Thailand",
+      "Taiwanese companies with Thailand operations",
+      "E-commerce businesses needing Thai accounting",
+      "Startups requiring compliance support",
+    ],
+
+    frequentlyAskedQuestions: [
+      {
+        question: "What is PND50 tax filing in Thailand?",
+        answer:
+          "PND50 (ภ.ง.ด.50) is the annual corporate income tax return that all companies registered in Thailand must file within 150 days after their fiscal year ends. PND50 accounting firm specializes in preparing and filing this return accurately and on time.",
+      },
+      {
+        question: "How much does accounting cost in Thailand?",
+        answer:
+          "Accounting fees in Thailand typically range from 5,000-50,000 THB per month depending on transaction volume and complexity. PND50 offers transparent pricing starting from 8,000 THB/month for startups with our Startup Package.",
+      },
+      {
+        question: "Can foreigners own 100% of a Thai company?",
+        answer:
+          "Yes, foreigners can own 100% of certain types of businesses in Thailand, particularly those promoted by the BOI or operating under the Foreign Business Act exemptions. PND50 can advise on the best structure for your business.",
+      },
+      {
+        question: "Do I need a Thai accountant for my business?",
+        answer:
+          "Yes, all companies registered in Thailand must maintain accounting records in Thai Baht according to Thai Accounting Standards. A qualified accountant familiar with Thai regulations is essential for compliance.",
+      },
+    ],
+  },
 }
 
 // Page-specific metadata configurations

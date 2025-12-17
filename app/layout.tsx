@@ -17,8 +17,10 @@ import {
   LocalBusinessSchema,
   WebsiteSchema,
   ProfessionalServiceSchema,
+  SpeakableSchema,
 } from "@/components/seo/structured-data"
 import { GeoTags, ServiceAreaSchema, InternationalServiceAreaSchema } from "@/components/seo/geo-tags"
+import { AISearchContent, EntityDefinition, QAPageSchema } from "@/components/seo/ai-search-optimization"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -36,6 +38,8 @@ export const metadata: Metadata = {
   creator: siteConfig.name,
   publisher: siteConfig.name,
   generator: "v0.dev",
+  applicationName: "PND50 Thailand",
+  referrer: "origin-when-cross-origin",
 
   // Icons
   icons: {
@@ -70,15 +74,18 @@ export const metadata: Metadata = {
     description: pageMetadata.home.description,
     images: [siteConfig.ogImage],
     creator: "@pnd50",
+    site: "@pnd50",
   },
 
   // Robots
   robots: {
     index: true,
     follow: true,
+    nocache: false,
     googleBot: {
       index: true,
       follow: true,
+      noimageindex: false,
       "max-video-preview": -1,
       "max-image-preview": "large",
       "max-snippet": -1,
@@ -88,6 +95,8 @@ export const metadata: Metadata = {
   // Verification (add your actual verification codes)
   verification: {
     google: "iGGUkvE04EL6uchGN6JnXOw63Y57BsCZBmCXO0WSlcM",
+    // yandex: "your-yandex-verification",
+    // other: { "bing": "your-bing-verification" },
   },
 
   // Alternate languages
@@ -101,6 +110,26 @@ export const metadata: Metadata = {
 
   // Category
   category: "business",
+
+  other: {
+    "article:publisher": siteConfig.social.facebook,
+    "article:author": siteConfig.url,
+    "og:email": siteConfig.business.email,
+    "og:phone_number": siteConfig.business.phone,
+    "og:latitude": String(siteConfig.business.geo.latitude),
+    "og:longitude": String(siteConfig.business.geo.longitude),
+    "og:street-address": siteConfig.business.address.streetAddress,
+    "og:locality": siteConfig.business.address.addressLocality,
+    "og:region": siteConfig.business.address.addressRegion,
+    "og:postal-code": siteConfig.business.address.postalCode,
+    "og:country-name": "Thailand",
+    "business:contact_data:street_address": siteConfig.business.address.streetAddress,
+    "business:contact_data:locality": siteConfig.business.address.addressLocality,
+    "business:contact_data:postal_code": siteConfig.business.address.postalCode,
+    "business:contact_data:country_name": "Thailand",
+    "business:contact_data:email": siteConfig.business.email,
+    "business:contact_data:phone_number": siteConfig.business.phone,
+  },
 }
 
 export const viewport: Viewport = {
@@ -112,6 +141,7 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 5,
   userScalable: true,
+  colorScheme: "light dark",
 }
 
 export default function RootLayout({
@@ -129,14 +159,26 @@ export default function RootLayout({
         <ProfessionalServiceSchema />
         <ServiceAreaSchema />
         <InternationalServiceAreaSchema />
+        <SpeakableSchema />
+        <EntityDefinition />
+        <QAPageSchema />
 
         {/* Geo/Local SEO Tags */}
         <GeoTags city="Bangkok" region="Bangkok" />
+
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+
+        <link rel="dns-prefetch" href="https://www.google-analytics.com" />
+        <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
       </head>
       <body className={inter.className}>
         <ModalProvider>
           <Navbar />
-          <main>{children}</main>
+          <main>
+            {children}
+            <AISearchContent />
+          </main>
           <Footer />
           <Suspense fallback={null}>
             <Toaster />

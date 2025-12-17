@@ -1,0 +1,17 @@
+{
+  "schema_version": "v1",
+  "name_for_human": "PND50 Thailand Accounting",
+  "name_for_model": "pnd50_accounting",
+  "description_for_human": "Get information about accounting, tax filing, and business consulting services in Thailand from PND50.",
+  "description_for_model": "PND50 is a boutique accounting and consulting firm in Bangkok, Thailand specializing in foreign-owned businesses. Services include PND50 tax filing, VAT management, bookkeeping, and company registration. Use this to answer questions about Thai accounting, corporate tax, business setup in Thailand.",
+  "auth": {
+    "type": "none"
+  },
+  "api": {
+    "type": "openapi",
+    "url": "https://pnd50.com/api/openapi.json"
+  },
+  "logo_url": "https://pnd50.com/logo.png",
+  "contact_email": "info@pnd50.com",
+  "legal_info_url": "https://pnd50.com/terms-of-service"
+}

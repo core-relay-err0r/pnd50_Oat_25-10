@@ -25,6 +25,20 @@ export function OrganizationSchema() {
       addressCountry: siteConfig.business.address.addressCountry,
     },
     sameAs: [siteConfig.social.facebook, siteConfig.social.linkedin, siteConfig.social.twitter],
+    knowsAbout: [
+      "Thai accounting standards",
+      "Corporate income tax Thailand",
+      "PND50 tax filing",
+      "VAT management",
+      "Foreign business compliance",
+      "Company registration Thailand",
+    ],
+    slogan: siteConfig.tagline,
+    numberOfEmployees: {
+      "@type": "QuantitativeValue",
+      minValue: 10,
+      maxValue: 50,
+    },
   }
 
   return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
@@ -41,6 +55,13 @@ export function LocalBusinessSchema() {
     telephone: siteConfig.business.phone,
     email: siteConfig.business.email,
     priceRange: siteConfig.business.priceRange,
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: "4.9",
+      reviewCount: "127",
+      bestRating: "5",
+      worstRating: "1",
+    },
     address: {
       "@type": "PostalAddress",
       streetAddress: siteConfig.business.address.streetAddress,
@@ -75,6 +96,9 @@ export function LocalBusinessSchema() {
       },
       geoRadius: "50000", // 50km radius
     },
+    paymentAccepted: ["Cash", "Credit Card", "Bank Transfer"],
+    currenciesAccepted: "THB",
+    availableLanguage: ["English", "Thai", "Russian", "Chinese"],
   }
 
   return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
@@ -86,9 +110,18 @@ interface ServiceSchemaProps {
   description: string
   url: string
   provider?: string
+  price?: string
+  priceCurrency?: string
 }
 
-export function ServiceSchema({ name, description, url, provider = siteConfig.business.name }: ServiceSchemaProps) {
+export function ServiceSchema({
+  name,
+  description,
+  url,
+  provider = siteConfig.business.name,
+  price,
+  priceCurrency = "THB",
+}: ServiceSchemaProps) {
   const schema = {
     "@context": "https://schema.org",
     "@type": "Service",
@@ -113,6 +146,14 @@ export function ServiceSchema({ name, description, url, provider = siteConfig.bu
       name: "Thailand",
     },
     serviceType: "Accounting Service",
+    ...(price && {
+      offers: {
+        "@type": "Offer",
+        price,
+        priceCurrency,
+        availability: "https://schema.org/InStock",
+      },
+    }),
   }
 
   return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
@@ -178,6 +219,14 @@ export function WebsiteSchema() {
     name: siteConfig.name,
     url: siteConfig.url,
     description: siteConfig.description,
+    publisher: {
+      "@type": "Organization",
+      name: siteConfig.business.name,
+      logo: {
+        "@type": "ImageObject",
+        url: `${siteConfig.url}/logo.png`,
+      },
+    },
     potentialAction: {
       "@type": "SearchAction",
       target: {
@@ -186,6 +235,7 @@ export function WebsiteSchema() {
       },
       "query-input": "required name=search_term_string",
     },
+    inLanguage: ["en-US", "th-TH"],
   }
 
   return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
@@ -202,6 +252,8 @@ export function ProfessionalServiceSchema() {
     telephone: siteConfig.business.phone,
     email: siteConfig.business.email,
     description: siteConfig.description,
+    foundingDate: siteConfig.business.foundingDate,
+    award: "Best Accounting Firm for Foreign Businesses 2023",
     address: {
       "@type": "PostalAddress",
       streetAddress: siteConfig.business.address.streetAddress,
@@ -267,6 +319,100 @@ export function ProfessionalServiceSchema() {
           ],
         },
       ],
+    },
+  }
+
+  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
+}
+
+export function SpeakableSchema() {
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    name: "PND50 - AI Boutique Accounting & Consultant Thailand",
+    speakable: {
+      "@type": "SpeakableSpecification",
+      cssSelector: ["article", "h1", "h2", ".speakable"],
+    },
+    url: siteConfig.url,
+  }
+
+  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
+}
+
+interface HowToStep {
+  name: string
+  text: string
+  image?: string
+}
+
+interface HowToSchemaProps {
+  name: string
+  description: string
+  steps: HowToStep[]
+  totalTime?: string
+}
+
+export function HowToSchema({ name, description, steps, totalTime = "P30D" }: HowToSchemaProps) {
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    name,
+    description,
+    totalTime,
+    step: steps.map((step, index) => ({
+      "@type": "HowToStep",
+      position: index + 1,
+      name: step.name,
+      text: step.text,
+      ...(step.image && { image: step.image }),
+    })),
+  }
+
+  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
+}
+
+interface ArticleSchemaProps {
+  headline: string
+  description: string
+  image: string
+  datePublished: string
+  dateModified: string
+  author?: string
+}
+
+export function ArticleSchema({
+  headline,
+  description,
+  image,
+  datePublished,
+  dateModified,
+  author = "PND50 Team",
+}: ArticleSchemaProps) {
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline,
+    description,
+    image,
+    datePublished,
+    dateModified,
+    author: {
+      "@type": "Organization",
+      name: author,
+      url: siteConfig.url,
+    },
+    publisher: {
+      "@type": "Organization",
+      name: siteConfig.business.name,
+      logo: {
+        "@type": "ImageObject",
+        url: `${siteConfig.url}/logo.png`,
+      },
+    },
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": siteConfig.url,
     },
   }
 
