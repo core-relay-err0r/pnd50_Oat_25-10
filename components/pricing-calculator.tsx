@@ -268,9 +268,9 @@ export function PricingCalculator() {
     }
   }
 
-  // Format price in THB
+  // Format price in USD
   const formatPrice = (price: number) => {
-    return new Intl.NumberFormat("th-TH").format(price)
+    return new Intl.NumberFormat("en-US").format(price)
   }
 
   return (
@@ -510,7 +510,7 @@ export function PricingCalculator() {
                                 </div>
                                 <div className="flex items-center gap-2 pl-8 sm:pl-0 flex-shrink-0">
                                   <span className="text-sm font-semibold text-slate-700">
-                                    ฿{service.price.toLocaleString()}
+                                    ${service.price.toLocaleString()}
                                   </span>
                                   {service.hasOptions && (
                                     <ChevronDown
@@ -559,7 +559,7 @@ export function PricingCalculator() {
                                               <span className="text-sm text-slate-700">{option.name}</span>
                                             </div>
                                             <span className="text-xs font-medium text-slate-600">
-                                              +฿{option.price.toLocaleString()}
+                                              +${option.price.toLocaleString()}
                                             </span>
                                           </div>
                                         )
@@ -621,7 +621,7 @@ export function PricingCalculator() {
                                     </div>
                                     <p className="text-xs text-slate-400 mt-2">
                                       {service.variableType === "employees"
-                                        ? `฿${service.price.toLocaleString()} per employee/month`
+                                        ? `$${service.price.toLocaleString()} per employee/month`
                                         : `Base price for selected volume`}
                                     </p>
                                   </motion.div>
@@ -677,7 +677,7 @@ export function PricingCalculator() {
                             </div>
                             <div className="flex items-center justify-between sm:justify-end gap-2 flex-shrink-0">
                               <span className="text-sm font-semibold text-sky-600 whitespace-nowrap">
-                                ฿{formatPrice(service.price * (service.quantity || 1))}
+                                ${formatPrice(service.price * (service.quantity || 1))}
                               </span>
                               <button
                                 onClick={() => setSelectedServices(selectedServices.filter((s) => s.id !== service.id))}
@@ -698,7 +698,7 @@ export function PricingCalculator() {
                           <div className="flex justify-between text-sm gap-2">
                             <span className="text-slate-500">One-time Fees</span>
                             <span className="text-slate-800 font-medium whitespace-nowrap flex-shrink-0">
-                              ฿{formatPrice(preliminaryTotal.oneTime)}
+                              ${formatPrice(preliminaryTotal.oneTime)}
                             </span>
                           </div>
                         )}
@@ -706,7 +706,7 @@ export function PricingCalculator() {
                           <div className="flex justify-between text-sm gap-2">
                             <span className="text-slate-500">Monthly Fees</span>
                             <span className="text-slate-800 font-medium whitespace-nowrap flex-shrink-0">
-                              ฿{formatPrice(preliminaryTotal.monthly)}/mo
+                              ${formatPrice(preliminaryTotal.monthly)}/mo
                             </span>
                           </div>
                         )}
@@ -714,7 +714,7 @@ export function PricingCalculator() {
                           <div className="flex justify-between text-sm gap-2">
                             <span className="text-slate-500">Annual Fees</span>
                             <span className="text-slate-800 font-medium whitespace-nowrap flex-shrink-0">
-                              ฿{formatPrice(preliminaryTotal.annual)}/yr
+                              ${formatPrice(preliminaryTotal.annual)}/yr
                             </span>
                           </div>
                         )}
@@ -743,15 +743,15 @@ export function PricingCalculator() {
                               {selectedMonths === 12 ? "Year 1 Total" : `${selectedMonths}-Month Total`}
                             </span>
                             <span className="text-lg sm:text-xl font-bold text-sky-600 whitespace-nowrap flex-shrink-0">
-                              ฿{formatPrice(preliminaryTotal.periodTotal)}
+                              ${formatPrice(preliminaryTotal.periodTotal)}
                             </span>
                           </div>
 
                           {/* Show monthly breakdown when not 12 months */}
                           {selectedMonths !== 12 && preliminaryTotal.monthly > 0 && (
                             <p className="text-xs text-slate-500 mt-1">
-                              ฿{formatPrice(preliminaryTotal.monthly)}/mo × {selectedMonths} months
-                              {preliminaryTotal.oneTime > 0 && ` + ฿${formatPrice(preliminaryTotal.oneTime)} one-time`}
+                              ${formatPrice(preliminaryTotal.monthly)}/mo × {selectedMonths} months
+                              {preliminaryTotal.oneTime > 0 && ` + $${formatPrice(preliminaryTotal.oneTime)} one-time`}
                             </p>
                           )}
 
@@ -802,7 +802,7 @@ export function PricingCalculator() {
                       <Check className="w-8 h-8 text-white" />
                     </div>
                     <h3 className="text-xl font-semibold text-slate-800">Your Final Quote</h3>
-                    <p className="text-3xl font-bold text-sky-600 mt-2">฿{formatPrice(preliminaryTotal.periodTotal)}</p>
+                    <p className="text-3xl font-bold text-sky-600 mt-2">${formatPrice(preliminaryTotal.periodTotal)}</p>
                     <p className="text-sm text-slate-500">
                       {selectedMonths === 12 ? "Year 1 Total" : `${selectedMonths}-Month Total`}
                     </p>
