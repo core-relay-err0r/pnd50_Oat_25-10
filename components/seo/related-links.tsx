@@ -12,8 +12,8 @@ interface RelatedLink {
 
 interface RelatedLinksProps {
   title?: string
-  links: RelatedLink[]
-  variant?: "cards" | "list" | "inline"
+  links?: RelatedLink[] // Make links optional
+  variant?: "cards" | "list" | "inline" | "services" // Add services variant
 }
 
 const defaultLinks: Record<string, RelatedLink[]> = {
@@ -54,10 +54,16 @@ const defaultLinks: Record<string, RelatedLink[]> = {
 }
 
 export function RelatedLinks({ title = "Related Pages", links, variant = "cards" }: RelatedLinksProps) {
+  const linksToRender = links || (variant === "services" ? defaultLinks.services : [])
+
+  if (!linksToRender || linksToRender.length === 0) {
+    return null
+  }
+
   if (variant === "inline") {
     return (
       <div className="flex flex-wrap gap-2">
-        {links.map((link) => (
+        {linksToRender.map((link) => (
           <Link
             key={link.href}
             href={link.href}
@@ -76,7 +82,7 @@ export function RelatedLinks({ title = "Related Pages", links, variant = "cards"
       <nav aria-label={title} className="space-y-2">
         <h3 className="text-sm font-semibold text-slate-900 mb-3">{title}</h3>
         <ul className="space-y-2">
-          {links.map((link) => (
+          {linksToRender.map((link) => (
             <li key={link.href}>
               <Link
                 href={link.href}
@@ -96,7 +102,7 @@ export function RelatedLinks({ title = "Related Pages", links, variant = "cards"
   // Cards variant (default)
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-      {links.map((link) => (
+      {linksToRender.map((link) => (
         <Link key={link.href} href={link.href} className="block bg-white rounded-lg shadow-md overflow-hidden">
           <div className="p-4">
             {link.icon && <span className="text-slate-400">{link.icon}</span>}
