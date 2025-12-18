@@ -51,6 +51,8 @@ export const siteConfig = {
       "ที่ปรึกษาภาษี",
       "foreign company accounting Thailand",
       "AI accounting",
+      "open business in Thailand",
+      "start company in Thailand",
     ],
     services: [
       "corporate tax planning Thailand",
@@ -58,10 +60,18 @@ export const siteConfig = {
       "withholding tax",
       "audit support Bangkok",
       "company registration Thailand",
+      "open business in Thailand",
+      "start business Thailand",
+      "register company Thailand for foreigners",
     ],
     calculator: ["tax calculator Thailand", "accounting fee calculator", "business cost estimate Thailand"],
     contact: ["contact accountant Bangkok", "accounting consultation Thailand", "free tax consultation"],
     about: ["about PND50", "accounting firm Bangkok", "experienced accountants Thailand"],
+    faq: ["frequently asked questions", "accounting questions", "tax questions", "business questions"],
+    caseStudies: ["client success stories", "case studies", "business success stories"],
+    portfolio: ["our portfolio", "portfolio of projects", "client engagements"],
+    privacyPolicy: ["privacy policy", "data protection", "personal information security"],
+    termsOfService: ["terms of service", "service agreement", "user agreement"],
   },
 
   // AI search optimization content
@@ -77,6 +87,9 @@ export const siteConfig = {
       "Audit support and preparation",
       "Company registration in Thailand",
       "Business consulting for market entry",
+      "Open business in Thailand assistance",
+      "Foreign company setup and registration",
+      "BOI promotion application support",
     ],
 
     uniqueSellingPoints: [
@@ -86,6 +99,7 @@ export const siteConfig = {
       "200+ clients with 99% satisfaction rate",
       "Transparent fixed-fee pricing",
       "Located in prime Bangkok business district",
+      "End-to-end support to open and operate business in Thailand",
     ],
 
     targetAudience: [
@@ -95,6 +109,8 @@ export const siteConfig = {
       "Taiwanese companies with Thailand operations",
       "E-commerce businesses needing Thai accounting",
       "Startups requiring compliance support",
+      "Investors looking to open business in Thailand",
+      "Expats wanting to register company in Thailand",
     ],
 
     frequentlyAskedQuestions: [
@@ -117,6 +133,16 @@ export const siteConfig = {
         question: "Do I need a Thai accountant for my business?",
         answer:
           "Yes, all companies registered in Thailand must maintain accounting records in Thai Baht according to Thai Accounting Standards. A qualified accountant familiar with Thai regulations is essential for compliance.",
+      },
+      {
+        question: "How do I open a business in Thailand as a foreigner?",
+        answer:
+          "To open a business in Thailand as a foreigner, you need to: 1) Choose a business structure (Thai Limited Company, BOI-promoted company, or Foreign Business License), 2) Register with the Department of Business Development, 3) Register for tax and social security, 4) Open a corporate bank account. PND50 provides end-to-end assistance for the entire process.",
+      },
+      {
+        question: "How much does it cost to start a company in Thailand?",
+        answer:
+          "Starting a company in Thailand typically costs 30,000-100,000 THB for registration fees, depending on registered capital and business type. Additional costs include initial accounting setup, work permits if needed, and ongoing compliance. PND50 offers transparent startup packages starting from 45,000 THB.",
       },
     ],
   },
@@ -219,6 +245,11 @@ export const serviceMetadata = {
     title: "Corporate Tax Planning | Tax Strategy | PND50 Thailand",
     description: "Comprehensive corporate tax planning and strategy services for businesses operating in Thailand.",
   },
+  "business-setup": {
+    title: "Business Setup Services | PND50 Thailand",
+    description:
+      "End-to-end support for opening and registering businesses in Thailand for foreign owners. Get help with BOI promotions and more.",
+  },
 }
 
 // Package metadata
@@ -244,6 +275,7 @@ export const thaiKeywords = {
   general: ["บริษัทบัญชี", "สำนักงานบัญชี", "ที่ปรึกษาภาษี", "รับทำบัญชี", "บริการบัญชี", "วางแผนภาษี"],
   services: ["ยื่น ภงด.50", "ภาษีนิติบุคคล", "ภาษีมูลค่าเพิ่ม", "ภาษีหัก ณ ที่จ่าย", "จดทะเบียนบริษัท", "ตรวจสอบบัญชี"],
   location: ["บัญชี กรุงเทพ", "ที่ปรึกษาภาษี กรุงเทพ", "สำนักงานบัญชี กรุงเทพ", "accounting Bangkok", "tax consultant Bangkok"],
+  businessSetup: ["เปิดบริษัทในไทย", "จดทะเบียนบริษัท", "เปิดธุรกิจในไทย", "ตั้งบริษัทต่างชาติ", "จดทะเบียนนิติบุคคล"],
 }
 
 // Local business areas served
@@ -264,9 +296,24 @@ export const industryKeywords = {
     "international business Thailand",
     "expat business services",
     "foreign investment Thailand",
+    "open business in Thailand",
+    "start company Thailand foreigner",
+    "register business Thailand",
+    "how to open company in Thailand",
+    "Thailand company formation",
   ],
   ecommerce: ["ecommerce accounting Thailand", "online business tax Thailand", "digital business accounting"],
   startup: ["startup accounting Thailand", "SME accounting Bangkok", "small business tax Thailand"],
+  businessSetup: [
+    "open business in Thailand",
+    "start company in Thailand",
+    "register company Thailand",
+    "Thailand company registration for foreigners",
+    "set up business Thailand",
+    "foreign business license Thailand",
+    "BOI promotion Thailand",
+    "Thailand business setup cost",
+  ],
 }
 
 // Target countries for international SEO

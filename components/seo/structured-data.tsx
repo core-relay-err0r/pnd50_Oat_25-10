@@ -33,6 +33,10 @@ export function OrganizationSchema() {
       "VAT management",
       "Foreign business compliance",
       "Company registration Thailand",
+      "Open business in Thailand",
+      "Thailand company formation for foreigners",
+      "BOI promotion application",
+      "Foreign Business License Thailand",
     ],
     slogan: siteConfig.tagline,
     numberOfEmployees: {
@@ -317,6 +321,36 @@ export function ProfessionalServiceSchema() {
                 "@type": "Service",
                 name: "Audit Support",
                 description: "Audit preparation and support services",
+              },
+            },
+          ],
+        },
+        {
+          "@type": "OfferCatalog",
+          name: "Business Setup Services",
+          itemListElement: [
+            {
+              "@type": "Offer",
+              itemOffered: {
+                "@type": "Service",
+                name: "Company Registration Thailand",
+                description: "Complete company registration service for foreigners to open business in Thailand",
+              },
+            },
+            {
+              "@type": "Offer",
+              itemOffered: {
+                "@type": "Service",
+                name: "BOI Promotion Application",
+                description: "Board of Investment promotion application and support",
+              },
+            },
+            {
+              "@type": "Offer",
+              itemOffered: {
+                "@type": "Service",
+                name: "Foreign Business License",
+                description: "Foreign Business License application for 100% foreign-owned companies",
               },
             },
           ],
