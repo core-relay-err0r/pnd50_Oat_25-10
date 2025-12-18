@@ -1,8 +1,8 @@
 import type { Metadata } from "next"
-import Link from "next/link"
-import { ArrowRight, BookOpen, CheckCircle, ArrowLeft } from "lucide-react"
+import { BookOpen } from "lucide-react"
 import { ServiceSchema, BreadcrumbSchema, FAQSchema } from "@/components/seo/structured-data"
 import { siteConfig } from "@/lib/seo-config"
+import { ServicePageClient } from "@/components/services/service-page-client"
 
 export const metadata: Metadata = {
   title: "Accounting & Bookkeeping Services in Thailand | PND50",
@@ -15,17 +15,9 @@ export const metadata: Metadata = {
     "monthly bookkeeping Thailand",
     "financial statements Thailand",
     "expat accounting Thailand",
-    "English accounting Thailand",
-    "foreign company accounting Bangkok",
   ],
   alternates: {
     canonical: `${siteConfig.url}/services/accounting`,
-  },
-  openGraph: {
-    title: "Accounting & Bookkeeping Services in Thailand | PND50",
-    description: "Professional accounting and bookkeeping services for foreign businesses in Thailand.",
-    url: `${siteConfig.url}/services/accounting`,
-    type: "website",
   },
 }
 
@@ -73,69 +65,13 @@ export default function AccountingPage() {
       />
       <FAQSchema faqs={faqs} />
 
-      <main className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-sky-50/80">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl py-16 pt-28 lg:pt-32">
-          <Link href="/services" className="inline-flex items-center gap-2 text-sky-600 hover:text-sky-700 mb-8 group">
-            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-            Back to Services
-          </Link>
-
-          <div className="flex items-center gap-4 mb-6">
-            <div className="w-14 h-14 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-xl flex items-center justify-center shadow-lg shadow-blue-200">
-              <BookOpen className="w-7 h-7 text-white" />
-            </div>
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-800">
-              Accounting & Bookkeeping in Thailand
-            </h1>
-          </div>
-
-          <p className="text-lg md:text-xl text-slate-600 mb-12 leading-relaxed">
-            Professional accounting services for foreign-owned businesses in Thailand. We handle your monthly
-            bookkeeping, financial statements, and reconciliations with precision — all delivered in English.
-          </p>
-
-          <section className="mb-12">
-            <h2 className="text-2xl font-bold text-slate-800 mb-6">What We Offer</h2>
-            <div className="grid gap-4">
-              {features.map((feature, index) => (
-                <div
-                  key={index}
-                  className="flex items-start gap-3 bg-white/60 backdrop-blur-sm border border-slate-200/60 rounded-xl p-4"
-                >
-                  <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
-                  <span className="text-slate-700">{feature}</span>
-                </div>
-              ))}
-            </div>
-          </section>
-
-          <section className="mb-12">
-            <h2 className="text-2xl font-bold text-slate-800 mb-6">Frequently Asked Questions</h2>
-            <div className="space-y-4">
-              {faqs.map((faq, index) => (
-                <div key={index} className="bg-white/60 backdrop-blur-sm border border-slate-200/60 rounded-xl p-6">
-                  <h3 className="font-semibold text-slate-800 mb-2">{faq.question}</h3>
-                  <p className="text-slate-600">{faq.answer}</p>
-                </div>
-              ))}
-            </div>
-          </section>
-
-          <section className="bg-gradient-to-r from-sky-500 via-blue-600 to-indigo-600 rounded-2xl p-8 text-center text-white">
-            <h2 className="text-2xl font-bold mb-4">Ready to Get Started?</h2>
-            <p className="mb-6 text-sky-100">
-              Schedule a free consultation to discuss your accounting needs in Thailand.
-            </p>
-            <Link
-              href="/schedule"
-              className="inline-flex items-center gap-2 bg-white text-blue-600 px-6 py-3 rounded-xl font-semibold hover:bg-sky-50 transition-colors group"
-            >
-              Schedule Consultation
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </Link>
-          </section>
-        </div>
-      </main>
+      <ServicePageClient
+        title="Accounting & Bookkeeping in Thailand"
+        description="Professional accounting services for foreign-owned businesses in Thailand. We handle your monthly bookkeeping, financial statements, and reconciliations with precision — all delivered in English."
+        icon={<BookOpen className="w-6 h-6 text-white" />}
+        features={features}
+        faqs={faqs}
+      />
     </>
   )
 }

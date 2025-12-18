@@ -54,6 +54,7 @@
     "embla-carousel-react": "latest",
     "framer-motion": "latest",
     "geist": "latest",
+    "gsap": "3.14.2",
     "input-otp": "latest",
     "lucide-react": "^0.454.0",
     "motion": "latest",
