@@ -38,7 +38,6 @@ interface QuoteRequest {
   }
   selectedServices: SelectedService[]
   priceBreakdown: PriceBreakdown
-  selectedMonths: number
   totalPrice: number
 }
 
@@ -50,8 +49,7 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    const { contactInfo, selectedServices, priceBreakdown, selectedMonths, totalPrice }: QuoteRequest =
-      await request.json()
+    const { contactInfo, selectedServices, priceBreakdown, totalPrice }: QuoteRequest = await request.json()
 
     // Format services list for email with full details
     const servicesHtml = selectedServices
@@ -81,8 +79,6 @@ export async function POST(request: NextRequest) {
         `
       })
       .join("")
-
-    const durationLabel = selectedMonths === 12 ? "Year 1 Total" : `${selectedMonths}-Month Total`
 
     // Email template for company (internal notification)
     const companyEmailHtml = `
@@ -115,10 +111,6 @@ export async function POST(request: NextRequest) {
                   <td style="padding: 4px 0;"><strong>Phone:</strong></td>
                   <td style="padding: 4px 0;">${contactInfo.phone || "Not provided"}</td>
                 </tr>
-                <tr>
-                  <td style="padding: 4px 0;"><strong>Selected Duration:</strong></td>
-                  <td style="padding: 4px 0;"><strong style="color: #06b6d4;">${selectedMonths} months</strong></td>
-                </tr>
               </table>
             </div>
 
@@ -143,8 +135,8 @@ export async function POST(request: NextRequest) {
                   <td style="padding: 8px 0; text-align: right; font-weight: bold;">${formatPrice(priceBreakdown.oneTime)}</td>
                 </tr>
                 <tr>
-                  <td style="padding: 8px 0;">Monthly Fees (× ${selectedMonths} months):</td>
-                  <td style="padding: 8px 0; text-align: right; font-weight: bold;">${formatPrice(priceBreakdown.monthly)} × ${selectedMonths} = ${formatPrice(priceBreakdown.monthly * selectedMonths)}</td>
+                  <td style="padding: 8px 0;">Monthly Fees (× 12 months):</td>
+                  <td style="padding: 8px 0; text-align: right; font-weight: bold;">${formatPrice(priceBreakdown.monthly)} × 12 = ${formatPrice(priceBreakdown.monthly * 12)}</td>
                 </tr>
                 <tr>
                   <td style="padding: 8px 0;">Annual Fees:</td>
@@ -154,7 +146,7 @@ export async function POST(request: NextRequest) {
             </div>
 
             <div style="background: linear-gradient(135deg, #4f46e5 0%, #06b6d4 100%); color: white; padding: 24px; border-radius: 8px; text-align: center; margin: 20px 0;">
-              <h3 style="margin: 0 0 8px 0; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; opacity: 0.9;">${durationLabel}</h3>
+              <h3 style="margin: 0 0 8px 0; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; opacity: 0.9;">Year 1 Total</h3>
               <div style="font-size: 36px; font-weight: bold;">${formatPrice(totalPrice)}</div>
             </div>
 
@@ -176,7 +168,7 @@ export async function POST(request: NextRequest) {
     const companyResult = await resend.emails.send({
       from: "PND50 Quote System <onboarding@resend.dev>",
       to: COMPANY_EMAIL,
-      subject: `New Quote Request: ${formatPrice(totalPrice)} (${selectedMonths}mo) - ${contactInfo.name}`,
+      subject: `New Quote Request: ${formatPrice(totalPrice)} (Year 1) - ${contactInfo.name}`,
       html: companyEmailHtml,
     })
 
