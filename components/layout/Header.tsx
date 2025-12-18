@@ -4,12 +4,10 @@ import type React from "react"
 
 import { useState } from "react"
 import Link from "next/link"
-import { useModal } from "@/contexts/modal-context"
 import { Button } from "@/components/ui/button"
 import { Menu, X } from "lucide-react"
 
 export default function Header() {
-  const { isModalOpen, closeModal, openConsultation } = useModal()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   const toggleMenu = () => {
@@ -17,20 +15,6 @@ export default function Header() {
   }
 
   const handleLinkClick = () => {
-    setIsMenuOpen(false)
-  }
-
-  const handleContactClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault()
-    const contactSection = document.getElementById("contact")
-    if (contactSection) {
-      contactSection.scrollIntoView({ behavior: "smooth", block: "start" })
-    }
-    setIsMenuOpen(false)
-  }
-
-  const handleConsultationClick = () => {
-    openConsultation()
     setIsMenuOpen(false)
   }
 
@@ -159,7 +143,6 @@ export default function Header() {
           </nav>
         )}
       </header>
-      {/* <ConsultationModal isOpen={isModalOpen} onClose={closeModal} /> */}
     </>
   )
 }

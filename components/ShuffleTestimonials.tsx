@@ -9,21 +9,21 @@ const testimonials = [
     testimonial:
       "PND50 transformed accounting process completely. Our AI-powered system made compliance effortless and saved clients countless hours every month.",
     author: "Sarah M. - Expat specialist @ PND50",
-    image: "/images/testimonials/sarah.webp",
+    image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-fqOjt4F2iQkcMOnon4i2dKObje3S4k.png",
   },
   {
     id: 2,
     testimonial:
       "We're an accounting firm that understands tech companies. The real-time dashboard and expert support are game-changers for our business.",
     author: "Chanika M. - Senior accountant @ PND50",
-    image: "/images/testimonials/chanika.webp",
+    image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-f5YmafBegD1DBf0uCVBZMQtEWyLneW.png",
   },
   {
     id: 3,
     testimonial:
       "As an expat entrepreneur, I can understand the difficulty of navigating Thai regulations. PND50's team will make sure everything clear and handle it all seamlessly.",
     author: "Eugene Prudchenko - Director @ Burakorn Partners",
-    image: "/images/testimonials/eugene.webp",
+    image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-bmjPZgdEWF3ghcNfVWLFCGoXEkrQJA.png",
   },
 ]
 
