@@ -1,74 +1,75 @@
 import type { Metadata } from "next"
 import Link from "next/link"
-import { ArrowRight, BookOpen, CheckCircle, ArrowLeft } from "lucide-react"
+import { ArrowRight, FileText, CheckCircle, ArrowLeft } from "lucide-react"
 import { ServiceSchema, BreadcrumbSchema, FAQSchema } from "@/components/seo/structured-data"
 import { siteConfig } from "@/lib/seo-config"
 
 export const metadata: Metadata = {
-  title: "Accounting & Bookkeeping Services in Thailand | PND50",
+  title: "Tax Filing & Compliance Services in Thailand | PND50",
   description:
-    "Professional accounting and bookkeeping services in Thailand for foreign businesses. Monthly financial statements, bank reconciliations, and TR Cloud system. Full English support.",
+    "Expert tax filing and compliance services in Thailand for foreign businesses. VAT, withholding tax, corporate income tax, and Revenue Department compliance. Full English support.",
   keywords: [
-    "accounting services Thailand",
-    "bookkeeping Thailand",
-    "accounting for foreign business Thailand",
-    "monthly bookkeeping Thailand",
-    "financial statements Thailand",
-    "expat accounting Thailand",
-    "English accounting Thailand",
-    "foreign company accounting Bangkok",
+    "tax filing Thailand",
+    "VAT Thailand foreign business",
+    "corporate income tax Thailand",
+    "withholding tax Thailand",
+    "tax compliance Thailand",
+    "PND50 tax filing",
+    "PND51 tax filing",
+    "Revenue Department Thailand",
+    "expat business tax Thailand",
   ],
   alternates: {
-    canonical: `${siteConfig.url}/services/accounting`,
+    canonical: `${siteConfig.url}/services/tax`,
   },
   openGraph: {
-    title: "Accounting & Bookkeeping Services in Thailand | PND50",
-    description: "Professional accounting and bookkeeping services for foreign businesses in Thailand.",
-    url: `${siteConfig.url}/services/accounting`,
+    title: "Tax Filing & Compliance Services in Thailand | PND50",
+    description: "Expert tax filing and compliance services in Thailand for foreign businesses.",
+    url: `${siteConfig.url}/services/tax`,
     type: "website",
   },
 }
 
 const features = [
-  "Monthly bookkeeping in English",
-  "Financial statements preparation",
-  "Bank reconciliations",
-  "TR Cloud accounting system",
-  "Monthly reports via email",
-  "Compliance with Thai Accounting Standards",
+  "Monthly VAT filing (PP30)",
+  "Withholding tax submissions (PND1, PND3, PND53)",
+  "Corporate income tax (PND50, PND51)",
+  "Revenue Department compliance",
+  "Tax planning and optimization",
+  "English-language tax advisory",
 ]
 
 const faqs = [
   {
-    question: "Do I need an accountant for my business in Thailand?",
+    question: "What taxes does a company pay in Thailand?",
     answer:
-      "Yes, all companies registered in Thailand must maintain accounting records according to Thai Accounting Standards. Financial statements must be prepared in Thai Baht and audited annually.",
+      "Companies in Thailand typically pay Corporate Income Tax (20%), VAT (7%), and Withholding Tax on certain payments. We handle all filings to ensure full compliance with Thai tax law.",
   },
   {
-    question: "Can you provide accounting reports in English?",
+    question: "When is corporate tax due in Thailand?",
     answer:
-      "Yes, we provide all reports and communication in English. Our team is fluent in English and experienced in serving foreign-owned businesses in Thailand.",
+      "Corporate income tax (PND50) is due within 150 days after the fiscal year end. Half-year tax (PND51) is due within 2 months after the first 6 months. We track all deadlines for you.",
   },
   {
-    question: "What accounting system do you use?",
+    question: "Can you help reduce my tax burden legally in Thailand?",
     answer:
-      "We use TR Cloud, a secure accounting system operated by our team. All reports are delivered directly to you via email every month with clear explanations.",
+      "Yes, we provide tax planning advice to help optimize your tax position within Thai law. This includes BOI incentives, expense deductions, and proper structuring.",
   },
 ]
 
-export default function AccountingPage() {
+export default function TaxPage() {
   return (
     <>
       <ServiceSchema
-        name="Accounting & Bookkeeping Services in Thailand"
-        description="Professional accounting and bookkeeping services for foreign businesses operating in Thailand."
-        url="/services/accounting"
+        name="Tax Filing & Compliance Services in Thailand"
+        description="Expert tax filing and compliance services for foreign businesses operating in Thailand."
+        url="/services/tax"
       />
       <BreadcrumbSchema
         items={[
           { name: "Home", url: "/" },
           { name: "Services", url: "/services" },
-          { name: "Accounting & Bookkeeping", url: "/services/accounting" },
+          { name: "Tax & Compliance", url: "/services/tax" },
         ]}
       />
       <FAQSchema faqs={faqs} />
@@ -82,16 +83,14 @@ export default function AccountingPage() {
 
           <div className="flex items-center gap-4 mb-6">
             <div className="w-14 h-14 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-xl flex items-center justify-center shadow-lg shadow-blue-200">
-              <BookOpen className="w-7 h-7 text-white" />
+              <FileText className="w-7 h-7 text-white" />
             </div>
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-800">
-              Accounting & Bookkeeping in Thailand
-            </h1>
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-800">Tax & Compliance in Thailand</h1>
           </div>
 
           <p className="text-lg md:text-xl text-slate-600 mb-12 leading-relaxed">
-            Professional accounting services for foreign-owned businesses in Thailand. We handle your monthly
-            bookkeeping, financial statements, and reconciliations with precision — all delivered in English.
+            Complete tax filing and compliance services for foreign-owned businesses in Thailand. We ensure your company
+            meets all Thai Revenue Department requirements with timely, accurate submissions.
           </p>
 
           <section className="mb-12">
@@ -124,7 +123,7 @@ export default function AccountingPage() {
           <section className="bg-gradient-to-r from-sky-500 via-blue-600 to-indigo-600 rounded-2xl p-8 text-center text-white">
             <h2 className="text-2xl font-bold mb-4">Ready to Get Started?</h2>
             <p className="mb-6 text-sky-100">
-              Schedule a free consultation to discuss your accounting needs in Thailand.
+              Schedule a free consultation to discuss your tax compliance needs in Thailand.
             </p>
             <Link
               href="/schedule"

@@ -42,7 +42,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: `${baseUrl}/faq`,
       lastModified: currentDate,
       changeFrequency: "weekly" as const,
-      priority: 0.8, // Increased priority for FAQ (important for AI search)
+      priority: 0.8,
     },
     {
       url: `${baseUrl}/case-studies`,
@@ -52,22 +52,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ]
 
-  // Service pages
-  const servicePages = [
-    "accounting",
-    "tax-planning",
-    "tax-optimization",
-    "pnd50-filing",
-    "vat-management",
-    "withholding-tax",
-    "audit-support",
-    "business-consulting",
-    "corporate-tax-planning",
-  ].map((service) => ({
+  const servicePages = ["accounting", "tax", "payroll", "corporate", "advisory", "growth"].map((service) => ({
     url: `${baseUrl}/services/${service}`,
     lastModified: currentDate,
     changeFrequency: "monthly" as const,
-    priority: 0.7,
+    priority: 0.8,
   }))
 
   // Package pages

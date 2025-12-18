@@ -1,74 +1,74 @@
 import type { Metadata } from "next"
 import Link from "next/link"
-import { ArrowRight, BookOpen, CheckCircle, ArrowLeft } from "lucide-react"
+import { ArrowRight, Lightbulb, CheckCircle, ArrowLeft } from "lucide-react"
 import { ServiceSchema, BreadcrumbSchema, FAQSchema } from "@/components/seo/structured-data"
 import { siteConfig } from "@/lib/seo-config"
 
 export const metadata: Metadata = {
-  title: "Accounting & Bookkeeping Services in Thailand | PND50",
+  title: "Business Advisory & Consulting Services in Thailand | PND50",
   description:
-    "Professional accounting and bookkeeping services in Thailand for foreign businesses. Monthly financial statements, bank reconciliations, and TR Cloud system. Full English support.",
+    "Expert business advisory and consulting for foreign companies in Thailand. Strategic guidance on accounting, compliance, and business planning for expat entrepreneurs.",
   keywords: [
-    "accounting services Thailand",
-    "bookkeeping Thailand",
-    "accounting for foreign business Thailand",
-    "monthly bookkeeping Thailand",
-    "financial statements Thailand",
-    "expat accounting Thailand",
-    "English accounting Thailand",
-    "foreign company accounting Bangkok",
+    "business advisory Thailand",
+    "consulting services Thailand",
+    "business consultant Thailand",
+    "foreign business advice Thailand",
+    "expat business consulting Thailand",
+    "compliance advisory Thailand",
+    "strategic planning Thailand",
+    "Thailand market entry",
   ],
   alternates: {
-    canonical: `${siteConfig.url}/services/accounting`,
+    canonical: `${siteConfig.url}/services/advisory`,
   },
   openGraph: {
-    title: "Accounting & Bookkeeping Services in Thailand | PND50",
-    description: "Professional accounting and bookkeeping services for foreign businesses in Thailand.",
-    url: `${siteConfig.url}/services/accounting`,
+    title: "Business Advisory & Consulting Services in Thailand | PND50",
+    description: "Expert business advisory and consulting for foreign companies in Thailand.",
+    url: `${siteConfig.url}/services/advisory`,
     type: "website",
   },
 }
 
 const features = [
-  "Monthly bookkeeping in English",
-  "Financial statements preparation",
-  "Bank reconciliations",
-  "TR Cloud accounting system",
-  "Monthly reports via email",
-  "Compliance with Thai Accounting Standards",
+  "Strategic business guidance",
+  "Compliance advisory",
+  "Business planning support",
+  "Market entry consulting",
+  "Financial analysis",
+  "Expert consultation in English",
 ]
 
 const faqs = [
   {
-    question: "Do I need an accountant for my business in Thailand?",
+    question: "What kind of business advice do you provide in Thailand?",
     answer:
-      "Yes, all companies registered in Thailand must maintain accounting records according to Thai Accounting Standards. Financial statements must be prepared in Thai Baht and audited annually.",
+      "We provide practical guidance on accounting, tax planning, compliance requirements, business structuring, and market entry strategies for foreign businesses operating in Thailand.",
   },
   {
-    question: "Can you provide accounting reports in English?",
+    question: "Can you help me understand Thai business regulations?",
     answer:
-      "Yes, we provide all reports and communication in English. Our team is fluent in English and experienced in serving foreign-owned businesses in Thailand.",
+      "Yes, we help foreign business owners navigate Thai regulations including company law, tax requirements, labor law, and industry-specific compliance requirements.",
   },
   {
-    question: "What accounting system do you use?",
+    question: "Do you offer ongoing advisory or one-time consultations?",
     answer:
-      "We use TR Cloud, a secure accounting system operated by our team. All reports are delivered directly to you via email every month with clear explanations.",
+      "Both! We offer one-time consultations for specific questions and ongoing advisory retainers for businesses that need regular strategic support in Thailand.",
   },
 ]
 
-export default function AccountingPage() {
+export default function AdvisoryPage() {
   return (
     <>
       <ServiceSchema
-        name="Accounting & Bookkeeping Services in Thailand"
-        description="Professional accounting and bookkeeping services for foreign businesses operating in Thailand."
-        url="/services/accounting"
+        name="Business Advisory & Consulting Services in Thailand"
+        description="Expert business advisory and consulting for foreign companies operating in Thailand."
+        url="/services/advisory"
       />
       <BreadcrumbSchema
         items={[
           { name: "Home", url: "/" },
           { name: "Services", url: "/services" },
-          { name: "Accounting & Bookkeeping", url: "/services/accounting" },
+          { name: "Advisory & Support", url: "/services/advisory" },
         ]}
       />
       <FAQSchema faqs={faqs} />
@@ -82,16 +82,14 @@ export default function AccountingPage() {
 
           <div className="flex items-center gap-4 mb-6">
             <div className="w-14 h-14 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-xl flex items-center justify-center shadow-lg shadow-blue-200">
-              <BookOpen className="w-7 h-7 text-white" />
+              <Lightbulb className="w-7 h-7 text-white" />
             </div>
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-800">
-              Accounting & Bookkeeping in Thailand
-            </h1>
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-800">Business Advisory in Thailand</h1>
           </div>
 
           <p className="text-lg md:text-xl text-slate-600 mb-12 leading-relaxed">
-            Professional accounting services for foreign-owned businesses in Thailand. We handle your monthly
-            bookkeeping, financial statements, and reconciliations with precision — all delivered in English.
+            Clear, practical guidance for foreign businesses in Thailand. We help expat entrepreneurs and foreign
+            investors make confident decisions with expert advice on accounting, compliance, and business strategy.
           </p>
 
           <section className="mb-12">
@@ -122,9 +120,9 @@ export default function AccountingPage() {
           </section>
 
           <section className="bg-gradient-to-r from-sky-500 via-blue-600 to-indigo-600 rounded-2xl p-8 text-center text-white">
-            <h2 className="text-2xl font-bold mb-4">Ready to Get Started?</h2>
+            <h2 className="text-2xl font-bold mb-4">Need Expert Advice?</h2>
             <p className="mb-6 text-sky-100">
-              Schedule a free consultation to discuss your accounting needs in Thailand.
+              Schedule a free consultation to discuss your business questions in Thailand.
             </p>
             <Link
               href="/schedule"

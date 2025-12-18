@@ -1,74 +1,74 @@
 import type { Metadata } from "next"
 import Link from "next/link"
-import { ArrowRight, BookOpen, CheckCircle, ArrowLeft } from "lucide-react"
+import { ArrowRight, TrendingUp, CheckCircle, ArrowLeft } from "lucide-react"
 import { ServiceSchema, BreadcrumbSchema, FAQSchema } from "@/components/seo/structured-data"
 import { siteConfig } from "@/lib/seo-config"
 
 export const metadata: Metadata = {
-  title: "Accounting & Bookkeeping Services in Thailand | PND50",
+  title: "Business Growth & Financial Planning in Thailand | PND50",
   description:
-    "Professional accounting and bookkeeping services in Thailand for foreign businesses. Monthly financial statements, bank reconciliations, and TR Cloud system. Full English support.",
+    "Strategic financial planning and business growth solutions in Thailand. Scale your foreign business with expert analysis, cost optimization, and performance insights.",
   keywords: [
-    "accounting services Thailand",
-    "bookkeeping Thailand",
-    "accounting for foreign business Thailand",
-    "monthly bookkeeping Thailand",
-    "financial statements Thailand",
-    "expat accounting Thailand",
-    "English accounting Thailand",
-    "foreign company accounting Bangkok",
+    "business growth Thailand",
+    "financial planning Thailand",
+    "scale business Thailand",
+    "foreign business expansion Thailand",
+    "cost optimization Thailand",
+    "financial analysis Thailand",
+    "business performance Thailand",
+    "expat business growth Thailand",
   ],
   alternates: {
-    canonical: `${siteConfig.url}/services/accounting`,
+    canonical: `${siteConfig.url}/services/growth`,
   },
   openGraph: {
-    title: "Accounting & Bookkeeping Services in Thailand | PND50",
-    description: "Professional accounting and bookkeeping services for foreign businesses in Thailand.",
-    url: `${siteConfig.url}/services/accounting`,
+    title: "Business Growth & Financial Planning in Thailand | PND50",
+    description: "Strategic financial planning and business growth solutions for foreign companies in Thailand.",
+    url: `${siteConfig.url}/services/growth`,
     type: "website",
   },
 }
 
 const features = [
-  "Monthly bookkeeping in English",
-  "Financial statements preparation",
-  "Bank reconciliations",
-  "TR Cloud accounting system",
-  "Monthly reports via email",
-  "Compliance with Thai Accounting Standards",
+  "Financial analysis and reporting",
+  "Growth strategy development",
+  "Cost optimization",
+  "Performance metrics tracking",
+  "Cash flow management",
+  "Profitability analysis",
 ]
 
 const faqs = [
   {
-    question: "Do I need an accountant for my business in Thailand?",
+    question: "How can you help my business grow in Thailand?",
     answer:
-      "Yes, all companies registered in Thailand must maintain accounting records according to Thai Accounting Standards. Financial statements must be prepared in Thai Baht and audited annually.",
+      "We provide financial insights, identify cost savings, and help you make data-driven decisions. Our analysis helps foreign businesses optimize operations and increase profitability in Thailand.",
   },
   {
-    question: "Can you provide accounting reports in English?",
+    question: "What financial reports will I receive?",
     answer:
-      "Yes, we provide all reports and communication in English. Our team is fluent in English and experienced in serving foreign-owned businesses in Thailand.",
+      "We provide monthly management reports, cash flow analysis, profitability breakdowns, and custom KPI tracking tailored to your business goals in Thailand.",
   },
   {
-    question: "What accounting system do you use?",
+    question: "Is this suitable for small businesses in Thailand?",
     answer:
-      "We use TR Cloud, a secure accounting system operated by our team. All reports are delivered directly to you via email every month with clear explanations.",
+      "Yes! Our growth solutions scale to businesses of all sizes. Even small foreign-owned companies benefit from proper financial planning and analysis.",
   },
 ]
 
-export default function AccountingPage() {
+export default function GrowthPage() {
   return (
     <>
       <ServiceSchema
-        name="Accounting & Bookkeeping Services in Thailand"
-        description="Professional accounting and bookkeeping services for foreign businesses operating in Thailand."
-        url="/services/accounting"
+        name="Business Growth & Financial Planning in Thailand"
+        description="Strategic financial planning and business growth solutions for foreign companies in Thailand."
+        url="/services/growth"
       />
       <BreadcrumbSchema
         items={[
           { name: "Home", url: "/" },
           { name: "Services", url: "/services" },
-          { name: "Accounting & Bookkeeping", url: "/services/accounting" },
+          { name: "Business Growth", url: "/services/growth" },
         ]}
       />
       <FAQSchema faqs={faqs} />
@@ -82,16 +82,14 @@ export default function AccountingPage() {
 
           <div className="flex items-center gap-4 mb-6">
             <div className="w-14 h-14 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-xl flex items-center justify-center shadow-lg shadow-blue-200">
-              <BookOpen className="w-7 h-7 text-white" />
+              <TrendingUp className="w-7 h-7 text-white" />
             </div>
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-800">
-              Accounting & Bookkeeping in Thailand
-            </h1>
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-800">Business Growth in Thailand</h1>
           </div>
 
           <p className="text-lg md:text-xl text-slate-600 mb-12 leading-relaxed">
-            Professional accounting services for foreign-owned businesses in Thailand. We handle your monthly
-            bookkeeping, financial statements, and reconciliations with precision — all delivered in English.
+            Strategic financial planning to help scale your foreign business in Thailand. We provide insights and
+            recommendations to optimize operations, reduce costs, and maximize profitability.
           </p>
 
           <section className="mb-12">
@@ -122,10 +120,8 @@ export default function AccountingPage() {
           </section>
 
           <section className="bg-gradient-to-r from-sky-500 via-blue-600 to-indigo-600 rounded-2xl p-8 text-center text-white">
-            <h2 className="text-2xl font-bold mb-4">Ready to Get Started?</h2>
-            <p className="mb-6 text-sky-100">
-              Schedule a free consultation to discuss your accounting needs in Thailand.
-            </p>
+            <h2 className="text-2xl font-bold mb-4">Ready to Grow Your Business?</h2>
+            <p className="mb-6 text-sky-100">Schedule a free consultation to discuss your growth goals in Thailand.</p>
             <Link
               href="/schedule"
               className="inline-flex items-center gap-2 bg-white text-blue-600 px-6 py-3 rounded-xl font-semibold hover:bg-sky-50 transition-colors group"

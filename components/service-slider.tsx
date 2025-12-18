@@ -4,6 +4,7 @@ import type React from "react"
 import { useState, useEffect, useRef } from "react"
 import { motion } from "framer-motion"
 import { ChevronLeft, ChevronRight, BookOpen, FileText, Users, Building2, Lightbulb, TrendingUp } from "lucide-react"
+import Link from "next/link"
 
 const services = [
   {
@@ -12,6 +13,7 @@ const services = [
     description:
       "We handle your monthly bookkeeping, financial statements, and reconciliations with precision. All work is processed internally using TR Cloud — a secure accounting system operated by our team. Reports are delivered directly to you via email every month.",
     features: ["Monthly bookkeeping", "Financial statements", "Bank reconciliations", "TR Cloud system"],
+    href: "/services/accounting",
   },
   {
     icon: FileText,
@@ -19,6 +21,7 @@ const services = [
     description:
       "Monthly and annual tax filings, including VAT, withholding tax, and corporate income tax. We help ensure your company remains fully compliant with Thai Revenue Department regulations.",
     features: ["VAT filing", "Withholding tax", "Corporate income tax", "Compliance support"],
+    href: "/services/tax",
   },
   {
     icon: Users,
@@ -26,12 +29,14 @@ const services = [
     description:
       "Monthly payroll and social security submissions, prepared accurately and delivered on time. Ideal for both local and foreign-owned businesses.",
     features: ["Monthly payroll", "Social security", "Accurate calculations", "Timely delivery"],
+    href: "/services/payroll",
   },
   {
     icon: Building2,
     title: "Corporate Services",
     description: "Company registration, shareholder updates, and annual DBD filings — handled efficiently by our team.",
     features: ["Company registration", "Shareholder updates", "DBD filings", "Corporate governance"],
+    href: "/services/corporate",
   },
   {
     icon: Lightbulb,
@@ -39,6 +44,7 @@ const services = [
     description:
       "Clear, practical guidance on accounting and compliance to help your business make confident decisions in Thailand.",
     features: ["Strategic guidance", "Compliance advice", "Business planning", "Expert consultation"],
+    href: "/services/advisory",
   },
   {
     icon: TrendingUp,
@@ -46,6 +52,7 @@ const services = [
     description:
       "Strategic financial planning and analysis to help scale your business in Thailand. We provide insights and recommendations to optimize your operations and maximize profitability.",
     features: ["Financial analysis", "Growth strategy", "Cost optimization", "Performance metrics"],
+    href: "/services/growth",
   },
 ]
 
@@ -102,7 +109,7 @@ const ServiceSlider: React.FC = () => {
         } else {
           setCurrentIndex((prev) => prev + direction)
         }
-      }, 5000) // Slower interval for reading
+      }, 5000)
     }
 
     startAutoPlay()
@@ -218,28 +225,30 @@ const ServiceSlider: React.FC = () => {
                 whileTap={{ scale: 0.98, cursor: "grabbing" }}
                 style={{ cursor: "grab" }}
               >
-                <div className="group border border-blue-100/60 rounded-2xl p-6 md:p-8 h-full hover:shadow-2xl hover:shadow-blue-200/40 hover:border-blue-300/70 transition-all duration-300 flex flex-col bg-gradient-to-br from-white via-sky-50/50 to-blue-50/30 backdrop-blur-sm">
-                  <div className="w-12 h-12 md:w-14 md:h-14 bg-gradient-to-br from-blue-100 to-indigo-100 rounded-xl flex items-center justify-center mb-6 group-hover:from-blue-500 group-hover:to-indigo-500 group-hover:scale-110 transition-all duration-300 flex-shrink-0 shadow-md shadow-blue-100/50">
-                    <Icon className="w-6 h-6 md:w-7 md:h-7 text-blue-600 group-hover:text-white transition-colors" />
+                <Link href={service.href} className="block h-full">
+                  <div className="group border border-blue-100/60 rounded-2xl p-6 md:p-8 h-full hover:shadow-2xl hover:shadow-blue-200/40 hover:border-blue-300/70 transition-all duration-300 flex flex-col bg-gradient-to-br from-white via-sky-50/50 to-blue-50/30 backdrop-blur-sm">
+                    <div className="w-12 h-12 md:w-14 md:h-14 bg-gradient-to-br from-blue-100 to-indigo-100 rounded-xl flex items-center justify-center mb-6 group-hover:from-blue-500 group-hover:to-indigo-500 group-hover:scale-110 transition-all duration-300 flex-shrink-0 shadow-md shadow-blue-100/50">
+                      <Icon className="w-6 h-6 md:w-7 md:h-7 text-blue-600 group-hover:text-white transition-colors" />
+                    </div>
+
+                    <h3 className="text-xl md:text-2xl font-bold text-slate-800 mb-4 group-hover:text-blue-600 transition-colors">
+                      {service.title}
+                    </h3>
+
+                    <p className="text-slate-600 leading-relaxed mb-6 text-sm md:text-base flex-grow">
+                      {service.description}
+                    </p>
+
+                    <ul className="space-y-2 mt-auto">
+                      {service.features.map((feature, featureIndex) => (
+                        <li key={featureIndex} className="flex items-center gap-2 text-sm text-slate-600">
+                          <div className="w-1.5 h-1.5 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full flex-shrink-0"></div>
+                          {feature}
+                        </li>
+                      ))}
+                    </ul>
                   </div>
-
-                  <h3 className="text-xl md:text-2xl font-bold text-slate-800 mb-4 group-hover:text-blue-600 transition-colors">
-                    {service.title}
-                  </h3>
-
-                  <p className="text-slate-600 leading-relaxed mb-6 text-sm md:text-base flex-grow">
-                    {service.description}
-                  </p>
-
-                  <ul className="space-y-2 mt-auto">
-                    {service.features.map((feature, featureIndex) => (
-                      <li key={featureIndex} className="flex items-center gap-2 text-sm text-slate-600">
-                        <div className="w-1.5 h-1.5 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full flex-shrink-0"></div>
-                        {feature}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                </Link>
               </motion.div>
             )
           })}

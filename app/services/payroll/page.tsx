@@ -1,74 +1,74 @@
 import type { Metadata } from "next"
 import Link from "next/link"
-import { ArrowRight, BookOpen, CheckCircle, ArrowLeft } from "lucide-react"
+import { ArrowRight, Users, CheckCircle, ArrowLeft } from "lucide-react"
 import { ServiceSchema, BreadcrumbSchema, FAQSchema } from "@/components/seo/structured-data"
 import { siteConfig } from "@/lib/seo-config"
 
 export const metadata: Metadata = {
-  title: "Accounting & Bookkeeping Services in Thailand | PND50",
+  title: "Payroll Services in Thailand | PND50",
   description:
-    "Professional accounting and bookkeeping services in Thailand for foreign businesses. Monthly financial statements, bank reconciliations, and TR Cloud system. Full English support.",
+    "Professional payroll services in Thailand for foreign businesses. Monthly payroll processing, social security submissions, and tax withholding. Accurate and timely for expat companies.",
   keywords: [
-    "accounting services Thailand",
-    "bookkeeping Thailand",
-    "accounting for foreign business Thailand",
-    "monthly bookkeeping Thailand",
-    "financial statements Thailand",
-    "expat accounting Thailand",
-    "English accounting Thailand",
-    "foreign company accounting Bangkok",
+    "payroll services Thailand",
+    "payroll outsourcing Thailand",
+    "social security Thailand",
+    "employee payroll Thailand",
+    "foreign business payroll Thailand",
+    "expat payroll Thailand",
+    "monthly payroll Thailand",
+    "Thai labor law payroll",
   ],
   alternates: {
-    canonical: `${siteConfig.url}/services/accounting`,
+    canonical: `${siteConfig.url}/services/payroll`,
   },
   openGraph: {
-    title: "Accounting & Bookkeeping Services in Thailand | PND50",
-    description: "Professional accounting and bookkeeping services for foreign businesses in Thailand.",
-    url: `${siteConfig.url}/services/accounting`,
+    title: "Payroll Services in Thailand | PND50",
+    description: "Professional payroll services in Thailand for foreign businesses.",
+    url: `${siteConfig.url}/services/payroll`,
     type: "website",
   },
 }
 
 const features = [
-  "Monthly bookkeeping in English",
-  "Financial statements preparation",
-  "Bank reconciliations",
-  "TR Cloud accounting system",
-  "Monthly reports via email",
-  "Compliance with Thai Accounting Standards",
+  "Monthly payroll processing",
+  "Social security submissions",
+  "Personal income tax withholding (PND1)",
+  "Payslip generation",
+  "Year-end tax certificates",
+  "Compliance with Thai labor law",
 ]
 
 const faqs = [
   {
-    question: "Do I need an accountant for my business in Thailand?",
+    question: "What is included in payroll services in Thailand?",
     answer:
-      "Yes, all companies registered in Thailand must maintain accounting records according to Thai Accounting Standards. Financial statements must be prepared in Thai Baht and audited annually.",
+      "Our payroll services include salary calculation, social security contributions, personal income tax withholding, payslip generation, and all required government submissions.",
   },
   {
-    question: "Can you provide accounting reports in English?",
+    question: "Is social security mandatory for employees in Thailand?",
     answer:
-      "Yes, we provide all reports and communication in English. Our team is fluent in English and experienced in serving foreign-owned businesses in Thailand.",
+      "Yes, employers must register employees with Social Security and contribute 5% of salary (capped at 750 THB/month), matched by the employee. We handle all submissions.",
   },
   {
-    question: "What accounting system do you use?",
+    question: "Can you handle payroll for both Thai and foreign employees?",
     answer:
-      "We use TR Cloud, a secure accounting system operated by our team. All reports are delivered directly to you via email every month with clear explanations.",
+      "Yes, we process payroll for both Thai nationals and foreign employees with work permits. We ensure proper tax treatment and compliance for each employee type.",
   },
 ]
 
-export default function AccountingPage() {
+export default function PayrollPage() {
   return (
     <>
       <ServiceSchema
-        name="Accounting & Bookkeeping Services in Thailand"
-        description="Professional accounting and bookkeeping services for foreign businesses operating in Thailand."
-        url="/services/accounting"
+        name="Payroll Services in Thailand"
+        description="Professional payroll processing and social security services for foreign businesses in Thailand."
+        url="/services/payroll"
       />
       <BreadcrumbSchema
         items={[
           { name: "Home", url: "/" },
           { name: "Services", url: "/services" },
-          { name: "Accounting & Bookkeeping", url: "/services/accounting" },
+          { name: "Payroll Services", url: "/services/payroll" },
         ]}
       />
       <FAQSchema faqs={faqs} />
@@ -82,16 +82,14 @@ export default function AccountingPage() {
 
           <div className="flex items-center gap-4 mb-6">
             <div className="w-14 h-14 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-xl flex items-center justify-center shadow-lg shadow-blue-200">
-              <BookOpen className="w-7 h-7 text-white" />
+              <Users className="w-7 h-7 text-white" />
             </div>
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-800">
-              Accounting & Bookkeeping in Thailand
-            </h1>
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-800">Payroll Services in Thailand</h1>
           </div>
 
           <p className="text-lg md:text-xl text-slate-600 mb-12 leading-relaxed">
-            Professional accounting services for foreign-owned businesses in Thailand. We handle your monthly
-            bookkeeping, financial statements, and reconciliations with precision — all delivered in English.
+            Accurate and timely payroll processing for foreign-owned businesses in Thailand. We handle salary
+            calculations, social security, and tax withholding — so you can focus on growing your team.
           </p>
 
           <section className="mb-12">
@@ -123,9 +121,7 @@ export default function AccountingPage() {
 
           <section className="bg-gradient-to-r from-sky-500 via-blue-600 to-indigo-600 rounded-2xl p-8 text-center text-white">
             <h2 className="text-2xl font-bold mb-4">Ready to Get Started?</h2>
-            <p className="mb-6 text-sky-100">
-              Schedule a free consultation to discuss your accounting needs in Thailand.
-            </p>
+            <p className="mb-6 text-sky-100">Schedule a free consultation to discuss your payroll needs in Thailand.</p>
             <Link
               href="/schedule"
               className="inline-flex items-center gap-2 bg-white text-blue-600 px-6 py-3 rounded-xl font-semibold hover:bg-sky-50 transition-colors group"
