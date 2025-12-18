@@ -249,10 +249,10 @@ const ServiceSlider: React.FC = () => {
 
                   <Link
                     href={service.href}
-                    className="mt-auto inline-flex items-center gap-2 text-sm font-medium text-blue-600 hover:text-blue-700 transition-colors"
+                    className="mt-auto inline-flex items-center gap-2 text-sm font-medium text-blue-600 hover:text-blue-700 transition-colors overline"
                     onClick={(e) => e.stopPropagation()}
                   >
-                    Explore
+                    Explore this service 
                     <ChevronRight size={16} />
                   </Link>
                 </div>
