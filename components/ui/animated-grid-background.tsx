@@ -1,7 +1,7 @@
 "use client"
 
 import type React from "react"
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useCallback } from "react"
 import { cn } from "@/lib/utils"
 
 export function AnimatedGridBackground({
@@ -14,19 +14,23 @@ export function AnimatedGridBackground({
   variant?: "dark" | "light"
 }) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
+  const animationFrameId = useRef<number>()
 
   const isDark = variant === "dark"
   const bgClass = isDark ? "bg-slate-900" : "bg-transparent"
-  const particleColor = isDark ? "59, 130, 246" : "71, 85, 105" // slate-600 for light
-  const gridColor = isDark ? "rgba(59, 130, 246, 0.1)" : "rgba(100, 116, 139, 0.06)" // slate-500 with low opacity
-  const connectionColor = isDark ? "59, 130, 246" : "71, 85, 105" // slate-600 for light
 
-  useEffect(() => {
+  const particleColor = isDark ? "59, 130, 246" : "71, 85, 105"
+  const gridColor = isDark ? "rgba(59, 130, 246, 0.1)" : "rgba(100, 116, 139, 0.06)"
+  const connectionColor = isDark ? "59, 130, 246" : "71, 85, 105"
+
+  const animate = useCallback(() => {
     const canvas = canvasRef.current
     if (!canvas) return
 
     const ctx = canvas.getContext("2d")
     if (!ctx) return
+
+    const particleCount = isDark ? 50 : 40
 
     // Set canvas size
     const resizeCanvas = () => {
@@ -36,7 +40,7 @@ export function AnimatedGridBackground({
     resizeCanvas()
     window.addEventListener("resize", resizeCanvas)
 
-    // Particle system
+    // Particle class
     class Particle {
       x: number
       y: number
@@ -49,8 +53,8 @@ export function AnimatedGridBackground({
         this.x = Math.random() * canvas.width
         this.y = Math.random() * canvas.height
         this.size = Math.random() * 2 + 0.5
-        this.speedX = Math.random() * 0.5 - 0.25
-        this.speedY = Math.random() * 0.5 - 0.25
+        this.speedX = Math.random() * 0.3 - 0.15
+        this.speedY = Math.random() * 0.3 - 0.15
         this.opacity = isDark ? Math.random() * 0.5 + 0.2 : Math.random() * 0.35 + 0.15
       }
 
@@ -73,16 +77,23 @@ export function AnimatedGridBackground({
       }
     }
 
-    // Create particles - Reduced count for cleaner look
     const particles: Particle[] = []
-    const particleCount = isDark ? 100 : 80
     for (let i = 0; i < particleCount; i++) {
       particles.push(new Particle())
     }
 
-    // Animation loop
-    let animationFrameId: number
-    const animate = () => {
+    let frameCount = 0
+    const frameSkip = 2 // Only render every 2nd frame
+
+    const render = () => {
+      frameCount++
+
+      // Skip frames for performance
+      if (frameCount % frameSkip !== 0) {
+        animationFrameId.current = requestAnimationFrame(render)
+        return
+      }
+
       ctx.clearRect(0, 0, canvas.width, canvas.height)
 
       // Draw grid
@@ -110,15 +121,17 @@ export function AnimatedGridBackground({
         particle.draw()
       })
 
-      // Draw connections between nearby particles - Reduced connection opacity
+      const connectionDistance = 100
       particles.forEach((particleA, indexA) => {
         particles.slice(indexA + 1).forEach((particleB) => {
           const dx = particleA.x - particleB.x
           const dy = particleA.y - particleB.y
           const distance = Math.sqrt(dx * dx + dy * dy)
 
-          if (distance < 150) {
-            const opacity = isDark ? 0.2 * (1 - distance / 150) : 0.1 * (1 - distance / 150)
+          if (distance < connectionDistance) {
+            const opacity = isDark
+              ? 0.15 * (1 - distance / connectionDistance)
+              : 0.08 * (1 - distance / connectionDistance)
             ctx.strokeStyle = `rgba(${connectionColor}, ${opacity})`
             ctx.lineWidth = 0.5
             ctx.beginPath()
@@ -129,16 +142,23 @@ export function AnimatedGridBackground({
         })
       })
 
-      animationFrameId = requestAnimationFrame(animate)
+      animationFrameId.current = requestAnimationFrame(render)
     }
 
-    animate()
+    render()
 
     return () => {
       window.removeEventListener("resize", resizeCanvas)
-      cancelAnimationFrame(animationFrameId)
+      if (animationFrameId.current) {
+        cancelAnimationFrame(animationFrameId.current)
+      }
     }
   }, [isDark, particleColor, gridColor, connectionColor])
+
+  useEffect(() => {
+    const cleanup = animate()
+    return cleanup
+  }, [animate])
 
   return (
     <div
@@ -149,7 +169,6 @@ export function AnimatedGridBackground({
       )}
     >
       <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" style={{ opacity: isDark ? 0.6 : 0.5 }} />
-
       <div className="relative z-10 w-full flex flex-col flex-1">{children}</div>
     </div>
   )

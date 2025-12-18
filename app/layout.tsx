@@ -1,4 +1,4 @@
-import { Suspense } from "react"
+import { Suspense, lazy } from "react"
 import type React from "react"
 import type { Metadata, Viewport } from "next"
 import { Inter } from "next/font/google"
@@ -8,10 +8,6 @@ import LayoutClientComponent from "@/components/layout/LayoutClientComponent"
 import { Toaster } from "@/components/ui/toaster"
 import { Navbar } from "@/components/ui/mini-navbar"
 import Footer from "@/components/layout/Footer"
-import { FloatingChatBot } from "@/components/FloatingChatBot"
-import { Analytics } from "@vercel/analytics/react"
-import { SpeedInsights } from "@vercel/speed-insights/next"
-import { siteConfig, pageMetadata, thaiKeywords } from "@/lib/seo-config"
 import {
   OrganizationSchema,
   LocalBusinessSchema,
@@ -22,6 +18,11 @@ import {
 import { GeoTags, ServiceAreaSchema, InternationalServiceAreaSchema } from "@/components/seo/geo-tags"
 import { AISearchContent, EntityDefinition, QAPageSchema } from "@/components/seo/ai-search-optimization"
 import { GoogleAnalytics } from "@/components/analytics/GoogleAnalytics"
+import { Analytics } from "@/components/analytics/Analytics"
+import { SpeedInsights } from "@/components/analytics/SpeedInsights"
+import siteConfig from "@/config/siteConfig"
+import thaiKeywords from "@/config/thaiKeywords"
+import pageMetadata from "@/config/pageMetadata"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -144,6 +145,10 @@ export const viewport: Viewport = {
   userScalable: true,
   colorScheme: "light dark",
 }
+
+const FloatingChatBot = lazy(() =>
+  import("@/components/FloatingChatBot").then((mod) => ({ default: mod.FloatingChatBot })),
+)
 
 export default function RootLayout({
   children,
