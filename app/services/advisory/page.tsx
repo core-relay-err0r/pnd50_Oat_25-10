@@ -7,17 +7,47 @@ import { ServicePageClient } from "@/components/services/service-page-client"
 export const metadata: Metadata = {
   title: "Business Advisory & Consulting Services in Thailand | PND50",
   description:
-    "Expert business advisory and consulting for foreign companies in Thailand. Strategic guidance on accounting, compliance, and business planning for expat entrepreneurs.",
+    "Expert business advisory and consulting for foreign companies in Thailand. Strategic guidance on accounting, compliance, and business planning for expat entrepreneurs in Thailand.",
   keywords: [
-    "business advisory Thailand",
-    "consulting services Thailand",
+    "business advisory in Thailand",
+    "business consulting in Thailand",
     "business consultant Thailand",
     "foreign business advice Thailand",
     "expat business consulting Thailand",
-    "Thailand market entry",
+    "Thailand market entry consulting",
+    "business planning Thailand",
   ],
   alternates: {
     canonical: `${siteConfig.url}/services/advisory`,
+    languages: {
+      en: `${siteConfig.url}/services/advisory`,
+      "en-US": `${siteConfig.url}/services/advisory`,
+      "en-GB": `${siteConfig.url}/services/advisory`,
+      "en-SG": `${siteConfig.url}/services/advisory`,
+      "en-AU": `${siteConfig.url}/services/advisory`,
+      "x-default": `${siteConfig.url}/services/advisory`,
+    },
+  },
+  openGraph: {
+    title: "Business Advisory in Thailand | PND50",
+    description: "Expert consulting for foreign businesses in Thailand.",
+    url: `${siteConfig.url}/services/advisory`,
+    siteName: "PND50",
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Business Advisory in Thailand | PND50",
+    description: "Expert consulting for foreign businesses in Thailand.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+    },
   },
 }
 
@@ -60,7 +90,7 @@ export default function AdvisoryPage() {
         items={[
           { name: "Home", url: "/" },
           { name: "Services", url: "/services" },
-          { name: "Advisory & Support", url: "/services/advisory" },
+          { name: "Business Advisory in Thailand", url: "/services/advisory" },
         ]}
       />
       <FAQSchema faqs={faqs} />

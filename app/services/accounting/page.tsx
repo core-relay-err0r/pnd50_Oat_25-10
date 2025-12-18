@@ -15,9 +15,43 @@ export const metadata: Metadata = {
     "monthly bookkeeping Thailand",
     "financial statements Thailand",
     "expat accounting Thailand",
+    "accounting services in Thailand",
+    "bookkeeping in Thailand",
+    "accounting for foreign business in Thailand",
+    "expat accounting Thailand",
+    "English speaking accountant Thailand",
   ],
   alternates: {
     canonical: `${siteConfig.url}/services/accounting`,
+    languages: {
+      en: `${siteConfig.url}/services/accounting`,
+      "en-US": `${siteConfig.url}/services/accounting`,
+      "en-GB": `${siteConfig.url}/services/accounting`,
+      "en-SG": `${siteConfig.url}/services/accounting`,
+      "en-AU": `${siteConfig.url}/services/accounting`,
+      "x-default": `${siteConfig.url}/services/accounting`,
+    },
+  },
+  openGraph: {
+    title: "Accounting & Bookkeeping Services in Thailand | PND50",
+    description: "Professional accounting services for foreign businesses in Thailand. Full English support.",
+    url: `${siteConfig.url}/services/accounting`,
+    siteName: "PND50",
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Accounting Services in Thailand | PND50",
+    description: "Professional accounting for foreign businesses in Thailand.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+    },
   },
 }
 
@@ -60,7 +94,7 @@ export default function AccountingPage() {
         items={[
           { name: "Home", url: "/" },
           { name: "Services", url: "/services" },
-          { name: "Accounting & Bookkeeping", url: "/services/accounting" },
+          { name: "Accounting in Thailand", url: "/services/accounting" },
         ]}
       />
       <FAQSchema faqs={faqs} />

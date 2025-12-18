@@ -15,9 +15,39 @@ export const metadata: Metadata = {
     "employee payroll Thailand",
     "foreign business payroll Thailand",
     "expat payroll Thailand",
+    "HR services Thailand",
   ],
   alternates: {
     canonical: `${siteConfig.url}/services/payroll`,
+    languages: {
+      en: `${siteConfig.url}/services/payroll`,
+      "en-US": `${siteConfig.url}/services/payroll`,
+      "en-GB": `${siteConfig.url}/services/payroll`,
+      "en-SG": `${siteConfig.url}/services/payroll`,
+      "en-AU": `${siteConfig.url}/services/payroll`,
+      "x-default": `${siteConfig.url}/services/payroll`,
+    },
+  },
+  openGraph: {
+    title: "Payroll Services in Thailand | PND50",
+    description: "Professional payroll processing for foreign businesses in Thailand.",
+    url: `${siteConfig.url}/services/payroll`,
+    siteName: "PND50",
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Payroll Services in Thailand | PND50",
+    description: "Professional payroll for foreign businesses in Thailand.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+    },
   },
 }
 
@@ -60,7 +90,7 @@ export default function PayrollPage() {
         items={[
           { name: "Home", url: "/" },
           { name: "Services", url: "/services" },
-          { name: "Payroll Services", url: "/services/payroll" },
+          { name: "Payroll in Thailand", url: "/services/payroll" },
         ]}
       />
       <FAQSchema faqs={faqs} />

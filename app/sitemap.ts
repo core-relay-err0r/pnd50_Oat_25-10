@@ -1,4 +1,3 @@
-// Dynamic sitemap generation for SEO
 import type { MetadataRoute } from "next"
 import { siteConfig } from "@/lib/seo-config"
 
@@ -11,32 +10,32 @@ export default function sitemap(): MetadataRoute.Sitemap {
     {
       url: baseUrl,
       lastModified: currentDate,
-      changeFrequency: "weekly" as const,
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/about`,
-      lastModified: currentDate,
       changeFrequency: "monthly" as const,
-      priority: 0.6,
+      priority: 0.8, // Lowered - minimal content
     },
     {
       url: `${baseUrl}/services`,
       lastModified: currentDate,
       changeFrequency: "weekly" as const,
-      priority: 1.0,
+      priority: 1.0, // Highest - main SEO hub with links to all services
     },
     {
-      url: `${baseUrl}/schedule`,
+      url: `${baseUrl}/about`,
       lastModified: currentDate,
       changeFrequency: "monthly" as const,
       priority: 0.7,
     },
     {
+      url: `${baseUrl}/schedule`,
+      lastModified: currentDate,
+      changeFrequency: "monthly" as const,
+      priority: 0.8,
+    },
+    {
       url: `${baseUrl}/contact`,
       lastModified: currentDate,
       changeFrequency: "monthly" as const,
-      priority: 0.6,
+      priority: 0.7,
     },
     {
       url: `${baseUrl}/faq`,
@@ -52,11 +51,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ]
 
-  const servicePages = ["accounting", "tax", "payroll", "corporate", "advisory", "growth"].map((service) => ({
-    url: `${baseUrl}/services/${service}`,
+  const servicePages = [
+    { slug: "accounting", priority: 0.9 },
+    { slug: "tax", priority: 0.9 },
+    { slug: "payroll", priority: 0.9 },
+    { slug: "corporate", priority: 0.95 }, // Highest sub-page - "open business in Thailand"
+    { slug: "advisory", priority: 0.85 },
+    { slug: "growth", priority: 0.85 },
+  ].map((service) => ({
+    url: `${baseUrl}/services/${service.slug}`,
     lastModified: currentDate,
-    changeFrequency: "monthly" as const,
-    priority: 0.8,
+    changeFrequency: "weekly" as const,
+    priority: service.priority,
   }))
 
   // Package pages
@@ -66,28 +72,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     changeFrequency: "monthly" as const,
     priority: 0.6,
   }))
-
-  // Geo-targeted landing pages for target countries
-  const geoPages = [
-    {
-      url: `${baseUrl}/for/singapore`,
-      lastModified: currentDate,
-      changeFrequency: "monthly" as const,
-      priority: 0.6,
-    },
-    {
-      url: `${baseUrl}/for/russia`,
-      lastModified: currentDate,
-      changeFrequency: "monthly" as const,
-      priority: 0.6,
-    },
-    {
-      url: `${baseUrl}/for/taiwan`,
-      lastModified: currentDate,
-      changeFrequency: "monthly" as const,
-      priority: 0.6,
-    },
-  ]
 
   // Legal pages (lower priority)
   const legalPages = [
@@ -105,5 +89,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ]
 
-  return [...mainPages, ...servicePages, ...packagePages, ...geoPages, ...legalPages]
+  return [...mainPages, ...servicePages, ...packagePages, ...legalPages]
 }

@@ -7,17 +7,47 @@ import { ServicePageClient } from "@/components/services/service-page-client"
 export const metadata: Metadata = {
   title: "Business Growth & Financial Planning in Thailand | PND50",
   description:
-    "Strategic financial planning and business growth solutions in Thailand. Scale your foreign business with expert analysis, cost optimization, and performance insights.",
+    "Strategic financial planning and business growth solutions in Thailand. Scale your foreign business with expert analysis, cost optimization, and performance insights in Thailand.",
   keywords: [
-    "business growth Thailand",
-    "financial planning Thailand",
-    "scale business Thailand",
+    "business growth in Thailand",
+    "financial planning in Thailand",
+    "scale business in Thailand",
     "foreign business expansion Thailand",
     "cost optimization Thailand",
     "financial analysis Thailand",
+    "grow company Thailand",
   ],
   alternates: {
     canonical: `${siteConfig.url}/services/growth`,
+    languages: {
+      en: `${siteConfig.url}/services/growth`,
+      "en-US": `${siteConfig.url}/services/growth`,
+      "en-GB": `${siteConfig.url}/services/growth`,
+      "en-SG": `${siteConfig.url}/services/growth`,
+      "en-AU": `${siteConfig.url}/services/growth`,
+      "x-default": `${siteConfig.url}/services/growth`,
+    },
+  },
+  openGraph: {
+    title: "Business Growth in Thailand | PND50",
+    description: "Scale your foreign business in Thailand with expert financial planning.",
+    url: `${siteConfig.url}/services/growth`,
+    siteName: "PND50",
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Business Growth in Thailand | PND50",
+    description: "Scale your foreign business in Thailand.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+    },
   },
 }
 
@@ -60,7 +90,7 @@ export default function GrowthPage() {
         items={[
           { name: "Home", url: "/" },
           { name: "Services", url: "/services" },
-          { name: "Business Growth", url: "/services/growth" },
+          { name: "Business Growth in Thailand", url: "/services/growth" },
         ]}
       />
       <FAQSchema faqs={faqs} />

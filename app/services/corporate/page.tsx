@@ -5,20 +5,51 @@ import { siteConfig } from "@/lib/seo-config"
 import { ServicePageClient } from "@/components/services/service-page-client"
 
 export const metadata: Metadata = {
-  title: "Corporate Services & Company Registration in Thailand | PND50",
+  title: "Open a Business in Thailand | Company Registration | PND50",
   description:
-    "Open a business in Thailand with expert corporate services. Company registration, shareholder updates, DBD filings, and corporate governance for foreign investors and expat entrepreneurs.",
+    "Open a business in Thailand with expert help. Company registration, BOI applications, and corporate services for foreign investors. Start your Thai company today with full English support.",
   keywords: [
-    "open business Thailand",
-    "company registration Thailand",
-    "start company Thailand",
-    "register business Thailand",
-    "foreign company Thailand",
+    "open business in Thailand",
+    "start company in Thailand",
+    "company registration in Thailand",
+    "register business in Thailand",
+    "foreign company in Thailand",
     "Thai company setup",
     "BOI Thailand",
+    "start business Thailand foreigner",
+    "how to open company in Thailand",
   ],
   alternates: {
     canonical: `${siteConfig.url}/services/corporate`,
+    languages: {
+      en: `${siteConfig.url}/services/corporate`,
+      "en-US": `${siteConfig.url}/services/corporate`,
+      "en-GB": `${siteConfig.url}/services/corporate`,
+      "en-SG": `${siteConfig.url}/services/corporate`,
+      "en-AU": `${siteConfig.url}/services/corporate`,
+      "x-default": `${siteConfig.url}/services/corporate`,
+    },
+  },
+  openGraph: {
+    title: "Open a Business in Thailand | PND50",
+    description: "Start your company in Thailand with expert help. Full English support for foreign investors.",
+    url: `${siteConfig.url}/services/corporate`,
+    siteName: "PND50",
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Open a Business in Thailand | PND50",
+    description: "Start your company in Thailand with expert help.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+    },
   },
 }
 
@@ -53,7 +84,7 @@ export default function CorporatePage() {
   return (
     <>
       <ServiceSchema
-        name="Corporate Services & Company Registration in Thailand"
+        name="Company Registration & Corporate Services in Thailand"
         description="Expert company registration and corporate services for foreign businesses opening in Thailand."
         url="/services/corporate"
       />
@@ -61,7 +92,7 @@ export default function CorporatePage() {
         items={[
           { name: "Home", url: "/" },
           { name: "Services", url: "/services" },
-          { name: "Corporate Services", url: "/services/corporate" },
+          { name: "Open Business in Thailand", url: "/services/corporate" },
         ]}
       />
       <FAQSchema faqs={faqs} />

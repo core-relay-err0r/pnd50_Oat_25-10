@@ -7,45 +7,32 @@ export default function robots(): MetadataRoute.Robots {
 
   return {
     rules: [
+      // Main search engines
+      {
+        userAgent: ["Googlebot", "Bingbot", "Slurp", "DuckDuckBot", "Yandex"],
+        allow: "/",
+        disallow: ["/api/", "/admin/", "/private/"],
+      },
+      // AI crawlers - allow for better AI search visibility
+      {
+        userAgent: [
+          "GPTBot",
+          "ChatGPT-User",
+          "Google-Extended",
+          "anthropic-ai",
+          "ClaudeBot",
+          "PerplexityBot",
+          "Bytespider",
+          "CCBot",
+        ],
+        allow: ["/", "/services/", "/about", "/faq", "/contact"],
+        disallow: ["/api/", "/admin/", "/private/"],
+      },
+      // Default - allow all
       {
         userAgent: "*",
         allow: "/",
         disallow: ["/api/", "/admin/", "/_next/", "/private/"],
-      },
-      {
-        userAgent: "Googlebot",
-        allow: "/",
-        disallow: ["/api/", "/admin/"],
-      },
-      {
-        userAgent: "GPTBot",
-        allow: "/",
-        disallow: ["/api/", "/admin/", "/private/"],
-      },
-      {
-        userAgent: "ChatGPT-User",
-        allow: "/",
-        disallow: ["/api/", "/admin/", "/private/"],
-      },
-      {
-        userAgent: "CCBot",
-        allow: "/",
-        disallow: ["/api/", "/admin/", "/private/"],
-      },
-      {
-        userAgent: "anthropic-ai",
-        allow: "/",
-        disallow: ["/api/", "/admin/", "/private/"],
-      },
-      {
-        userAgent: "PerplexityBot",
-        allow: "/",
-        disallow: ["/api/", "/admin/", "/private/"],
-      },
-      {
-        userAgent: "Bytespider",
-        allow: "/",
-        disallow: ["/api/", "/admin/", "/private/"],
       },
     ],
     sitemap: `${baseUrl}/sitemap.xml`,

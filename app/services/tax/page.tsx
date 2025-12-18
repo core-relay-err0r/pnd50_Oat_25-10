@@ -7,17 +7,47 @@ import { ServicePageClient } from "@/components/services/service-page-client"
 export const metadata: Metadata = {
   title: "Tax Filing & Compliance Services in Thailand | PND50",
   description:
-    "Expert tax filing and compliance services in Thailand for foreign businesses. VAT, withholding tax, corporate income tax, and Revenue Department compliance. Full English support.",
+    "Expert tax filing and compliance services in Thailand for foreign businesses. VAT, withholding tax, corporate income tax, and Revenue Department compliance. Full English support for expats.",
   keywords: [
-    "tax filing Thailand",
-    "VAT Thailand foreign business",
+    "tax filing in Thailand",
+    "VAT in Thailand",
     "corporate income tax Thailand",
-    "withholding tax Thailand",
-    "tax compliance Thailand",
-    "PND50 tax filing",
+    "withholding tax in Thailand",
+    "tax compliance in Thailand",
+    "PND50 tax filing Thailand",
+    "foreign business tax Thailand",
   ],
   alternates: {
     canonical: `${siteConfig.url}/services/tax`,
+    languages: {
+      en: `${siteConfig.url}/services/tax`,
+      "en-US": `${siteConfig.url}/services/tax`,
+      "en-GB": `${siteConfig.url}/services/tax`,
+      "en-SG": `${siteConfig.url}/services/tax`,
+      "en-AU": `${siteConfig.url}/services/tax`,
+      "x-default": `${siteConfig.url}/services/tax`,
+    },
+  },
+  openGraph: {
+    title: "Tax Filing & Compliance in Thailand | PND50",
+    description: "Expert tax services for foreign businesses in Thailand. Full English support.",
+    url: `${siteConfig.url}/services/tax`,
+    siteName: "PND50",
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Tax Services in Thailand | PND50",
+    description: "Expert tax filing for foreign businesses in Thailand.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+    },
   },
 }
 
@@ -60,7 +90,7 @@ export default function TaxPage() {
         items={[
           { name: "Home", url: "/" },
           { name: "Services", url: "/services" },
-          { name: "Tax & Compliance", url: "/services/tax" },
+          { name: "Tax Services in Thailand", url: "/services/tax" },
         ]}
       />
       <FAQSchema faqs={faqs} />
