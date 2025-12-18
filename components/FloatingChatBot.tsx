@@ -100,6 +100,9 @@ export function FloatingChatBot() {
   const PANEL_WIDTH = isMobile ? 340 : 400
   const PANEL_HEIGHT = 520
 
+  const ttsQueueRef = useRef<string[]>([])
+  const isProcessingTTSRef = useRef(false)
+
   useEffect(() => {
     const token = getSessionToken()
     setSessionToken(token)
@@ -265,46 +268,74 @@ export function FloatingChatBot() {
   const speakWithElevenLabs = useCallback(async (text: string) => {
     if (!text) return
 
-    try {
-      setIsSpeaking(true)
+    ttsQueueRef.current.push(text)
 
-      const response = await fetch("/api/text-to-speech", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.JSON.stringify({ text }),
-      })
+    // If already processing, let the queue handler deal with it
+    if (isProcessingTTSRef.current) return
 
-      if (!response.ok) {
-        throw new Error("Failed to generate speech")
-      }
+    isProcessingTTSRef.current = true
 
-      const audioBlob = await response.blob()
-      const audioUrl = URL.createObjectURL(audioBlob)
+    while (ttsQueueRef.current.length > 0) {
+      const currentText = ttsQueueRef.current.shift()
+      if (!currentText) continue
 
-      if (audioRef.current) {
-        audioRef.current.pause()
-      }
+      try {
+        setIsSpeaking(true)
 
-      const audio = new Audio(audioUrl)
-      audioRef.current = audio
+        const response = await fetch("/api/text-to-speech", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ text: currentText }),
+        })
 
-      audio.onended = () => {
+        if (!response.ok) {
+          const errorData = await response.json().catch(() => ({}))
+          if (errorData.fallback) {
+            console.log("[v0] ElevenLabs unavailable, using browser TTS")
+            speakTextFallback(currentText)
+            continue
+          }
+          throw new Error("Failed to generate speech")
+        }
+
+        const audioBlob = await response.blob()
+        const audioUrl = URL.createObjectURL(audioBlob)
+
+        if (audioRef.current) {
+          audioRef.current.pause()
+        }
+
+        const audio = new Audio(audioUrl)
+        audioRef.current = audio
+
+        await new Promise<void>((resolve) => {
+          audio.onended = () => {
+            setIsSpeaking(false)
+            URL.revokeObjectURL(audioUrl)
+            resolve()
+          }
+
+          audio.onerror = () => {
+            setIsSpeaking(false)
+            URL.revokeObjectURL(audioUrl)
+            resolve()
+          }
+
+          audio.play().catch(() => {
+            setIsSpeaking(false)
+            URL.revokeObjectURL(audioUrl)
+            resolve()
+          })
+        })
+      } catch (error) {
+        console.error("ElevenLabs TTS error:", error)
         setIsSpeaking(false)
-        URL.revokeObjectURL(audioUrl)
+        // Fallback to browser TTS
+        speakTextFallback(currentText)
       }
-
-      audio.onerror = () => {
-        setIsSpeaking(false)
-        URL.revokeObjectURL(audioUrl)
-      }
-
-      await audio.play()
-    } catch (error) {
-      console.error("ElevenLabs TTS error:", error)
-      setIsSpeaking(false)
-      // Fallback to browser TTS
-      speakTextFallback(text)
     }
+
+    isProcessingTTSRef.current = false
   }, [])
 
   const speakTextFallback = useCallback(
