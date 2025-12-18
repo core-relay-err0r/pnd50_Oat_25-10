@@ -65,14 +65,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: service.priority,
   }))
 
-  // Package pages
-  const packagePages = ["startup", "growth", "full-cycle"].map((pkg) => ({
-    url: `${baseUrl}/services/packages/${pkg}`,
-    lastModified: currentDate,
-    changeFrequency: "monthly" as const,
-    priority: 0.6,
-  }))
-
   // Legal pages (lower priority)
   const legalPages = [
     {
@@ -89,5 +81,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ]
 
-  return [...mainPages, ...servicePages, ...packagePages, ...legalPages]
+  return [...mainPages, ...servicePages, ...legalPages]
 }
