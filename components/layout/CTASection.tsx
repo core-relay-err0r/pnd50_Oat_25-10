@@ -26,14 +26,14 @@ export default function CTASection() {
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Link
             href="/schedule"
-            className="group inline-flex items-center justify-center gap-2 bg-gradient-to-r from-sky-500 to-blue-600 text-white px-8 py-4 rounded-full font-medium hover:from-sky-600 hover:to-blue-700 transition-all hover:scale-105 shadow-lg shadow-sky-500/25"
+            className="group inline-flex items-center justify-center gap-2 bg-gradient-to-r from-sky-500 to-blue-600 text-white px-8 py-4 rounded-full font-medium hover:shadow-xl hover:shadow-sky-500/30 hover:-translate-y-0.5 transition-all duration-200 shadow-lg shadow-sky-500/20"
           >
             Schedule a Call
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </Link>
           <Link
             href="/contact"
-            className="inline-flex items-center justify-center gap-2 border border-sky-200 text-sky-700 px-8 py-4 rounded-full font-medium hover:border-sky-300 hover:bg-sky-50/50 transition-all"
+            className="inline-flex items-center justify-center gap-2 border border-sky-200 text-sky-700 px-8 py-4 rounded-full font-medium hover:border-sky-400 hover:text-sky-800 hover:-translate-y-0.5 transition-all duration-200"
           >
             Contact Us
           </Link>
