@@ -188,7 +188,10 @@ export default function CalculatorSuccessPage() {
 
               {/* Action Buttons */}
               <div className="flex flex-col sm:flex-row gap-4 pt-6">
-                <Button asChild className="flex-1 bg-primary hover:bg-primary/90 text-white">
+                <Button
+                  asChild
+                  className="flex-1 bg-gradient-to-r from-sky-500 to-blue-600 text-white hover:from-sky-600 hover:to-blue-700 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-sky-500/25 transition-all duration-200"
+                >
                   <Link href="/">
                     <ArrowLeft className="mr-2 h-4 w-4" />
                     Back to Home
@@ -197,7 +200,7 @@ export default function CalculatorSuccessPage() {
                 <Button
                   asChild
                   variant="outline"
-                  className="flex-1 border-slate-300 text-slate-700 bg-white hover:border-slate-400 hover:bg-slate-50 hover:text-slate-700 hover:shadow-sm transition-all duration-200"
+                  className="flex-1 border-sky-300 text-sky-700 bg-white/80 hover:border-sky-400 hover:text-sky-800 hover:-translate-y-0.5 transition-all duration-200"
                 >
                   <Link href="/schedule">Get Another Quote</Link>
                 </Button>
