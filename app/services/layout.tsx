@@ -1,4 +1,5 @@
 import type React from "react"
+// Services layout with metadata
 import type { Metadata } from "next"
 import { pageMetadata, siteConfig } from "@/lib/seo-config"
 import { ServiceSchema, BreadcrumbSchema } from "@/components/seo/structured-data"
