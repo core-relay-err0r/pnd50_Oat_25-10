@@ -113,7 +113,7 @@ export default function Footer() {
 
           {/* About Column */}
           <div>
-            <h3 className="text-lg font-semibold text-slate-800 mb-6">PND50</h3>
+            <h3 className="text-lg font-semibold text-slate-800 mb-6">We are PND50.</h3>
             <p className="text-slate-600 text-sm mb-6 leading-relaxed">
               Helping foreign businesses succeed in Thailand since 2015. Expert accounting, tax, and compliance support.
             </p>
