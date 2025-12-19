@@ -69,8 +69,13 @@ export default function Footer() {
       </div>
 
       {/* Main Footer - Dark */}
-      <div className="bg-slate-900 text-white py-16 md:py-20">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+      <div className="bg-slate-900 text-white py-16 md:py-20 relative overflow-hidden">
+        {/* Absolute Watermark */}
+        <span className="absolute bottom-0 right-0 text-[10rem] md:text-[14rem] lg:text-[18rem] font-bold text-slate-800/30 leading-none select-none pointer-events-none translate-x-1/4 translate-y-1/4">
+          PND50
+        </span>
+
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-10">
           {/* Top Section */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-16">
             {/* Logo & Description */}
@@ -162,13 +167,6 @@ export default function Footer() {
                 )}
               </div>
             </div>
-          </div>
-
-          {/* Large Logo Watermark */}
-          <div className="relative mb-12 overflow-hidden">
-            <span className="text-[8rem] md:text-[12rem] lg:text-[16rem] font-bold text-slate-800/50 leading-none select-none">
-              PND50
-            </span>
           </div>
 
           {/* Bottom Bar */}
