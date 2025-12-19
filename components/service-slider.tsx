@@ -11,47 +11,48 @@ const services = [
     icon: BookOpen,
     title: "Accounting & Bookkeeping",
     description:
-      "We handle your monthly bookkeeping, financial statements, and reconciliations with precision. All work is processed internally using TR Cloud — a secure accounting system operated by our team. Reports are delivered directly to you via email every month.",
-    features: ["Monthly bookkeeping", "Financial statements", "Bank reconciliations", "TR Cloud system"],
+      "Monthly bookkeeping, financial statements, and bank reconciliations for foreign-owned businesses. All reports delivered in English via TR Cloud.",
+    features: ["Monthly bookkeeping", "Financial statements", "Bank reconciliations", "English reports"],
     href: "/services/accounting",
   },
   {
     icon: FileText,
     title: "Tax & Compliance",
     description:
-      "Monthly and annual tax filings, including VAT, withholding tax, and corporate income tax. We help ensure your company remains fully compliant with Thai Revenue Department regulations.",
-    features: ["VAT filing", "Withholding tax", "Corporate income tax", "Compliance support"],
+      "VAT, withholding tax, and corporate income tax filings. We ensure full compliance with Thai Revenue Department requirements.",
+    features: ["VAT filing (PP30)", "Withholding tax (PND1/3/53)", "Corporate tax (PND50/51)", "Revenue compliance"],
     href: "/services/tax",
   },
   {
     icon: Users,
     title: "Payroll Services",
     description:
-      "Monthly payroll and social security submissions, prepared accurately and delivered on time. Ideal for both local and foreign-owned businesses.",
-    features: ["Monthly payroll", "Social security", "Accurate calculations", "Timely delivery"],
+      "Monthly payroll processing, social security submissions, and tax withholding for both Thai and foreign employees.",
+    features: ["Salary calculations", "Social security", "Tax withholding", "Payslip generation"],
     href: "/services/payroll",
   },
   {
     icon: Building2,
-    title: "Corporate Services",
-    description: "Company registration, shareholder updates, and annual DBD filings — handled efficiently by our team.",
-    features: ["Company registration", "Shareholder updates", "DBD filings", "Corporate governance"],
+    title: "Company Registration",
+    description:
+      "Thai Limited Company registration, BOI applications, shareholder updates, and annual DBD filings for foreign investors.",
+    features: ["Company setup", "BOI applications", "Director changes", "Annual filings"],
     href: "/services/corporate",
   },
   {
     icon: Lightbulb,
-    title: "Advisory & Support",
+    title: "Business Advisory",
     description:
-      "Clear, practical guidance on accounting and compliance to help your business make confident decisions in Thailand.",
-    features: ["Strategic guidance", "Compliance advice", "Business planning", "Expert consultation"],
+      "Strategic guidance on Thai regulations, tax planning, and compliance for foreign entrepreneurs and investors.",
+    features: ["Compliance advisory", "Tax planning", "Business structuring", "Regulatory guidance"],
     href: "/services/advisory",
   },
   {
     icon: TrendingUp,
-    title: "Business Growth Solutions",
+    title: "Growth & Planning",
     description:
-      "Strategic financial planning and analysis to help scale your business in Thailand. We provide insights and recommendations to optimize your operations and maximize profitability.",
-    features: ["Financial analysis", "Growth strategy", "Cost optimization", "Performance metrics"],
+      "Financial analysis, cost optimization, and performance tracking to help scale your business in Thailand.",
+    features: ["Financial analysis", "Cost optimization", "Cash flow planning", "KPI tracking"],
     href: "/services/growth",
   },
 ]
@@ -252,7 +253,7 @@ const ServiceSlider: React.FC = () => {
                     className="mt-auto inline-flex items-center gap-2 text-sm font-medium text-blue-600 hover:text-blue-700 transition-colors overline"
                     onClick={(e) => e.stopPropagation()}
                   >
-                    Explore this service 
+                    Explore this service
                     <ChevronRight size={16} />
                   </Link>
                 </div>

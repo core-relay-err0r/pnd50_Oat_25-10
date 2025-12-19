@@ -54,29 +54,31 @@ export const metadata: Metadata = {
 }
 
 const features = [
-  "Company registration (Thai Limited Company)",
-  "BOI application assistance",
-  "Shareholder and director updates",
+  "Thai Limited Company registration",
+  "BOI promotion applications",
+  "Director & shareholder changes",
   "Annual DBD filings",
   "Business license applications",
-  "Corporate governance support",
+  "Work permit support",
+  "Corporate bank account guidance",
+  "Company seal & documentation",
 ]
 
 const faqs = [
   {
-    question: "How do I open a business in Thailand as a foreigner?",
+    question: "How do I register a company in Thailand?",
     answer:
-      "Foreign investors typically register a Thai Limited Company with at least 51% Thai shareholding, or apply for BOI promotion for 100% foreign ownership. We guide you through the entire registration process.",
+      "We register Thai Limited Companies with 51% Thai shareholding (standard) or 100% foreign ownership via BOI promotion. Process takes 2-4 weeks including tax registration.",
   },
   {
-    question: "How long does company registration take in Thailand?",
+    question: "What's the minimum capital required?",
     answer:
-      "Standard company registration takes 2-4 weeks, including name reservation, registration with DBD, tax registration, and opening a corporate bank account. BOI applications take 2-3 months.",
+      "No legal minimum, but 2 million THB registered capital is required per work permit for foreign employees. We advise on the right structure for your needs.",
   },
   {
-    question: "What is the minimum capital required to start a company in Thailand?",
+    question: "Can foreigners own 100% of a Thai company?",
     answer:
-      "There's no legal minimum, but 2 million THB is required per work permit for foreign employees. We can advise on the appropriate capital structure for your business needs.",
+      "Yes, through BOI promotion or a Foreign Business License. BOI offers tax incentives and takes 2-3 months. We guide you through the application process.",
   },
 ]
 

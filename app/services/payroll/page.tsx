@@ -52,29 +52,31 @@ export const metadata: Metadata = {
 }
 
 const features = [
-  "Monthly payroll processing",
+  "Monthly salary calculations",
   "Social security submissions",
-  "Personal income tax withholding (PND1)",
+  "Personal income tax (PND1)",
   "Payslip generation",
-  "Year-end tax certificates",
-  "Compliance with Thai labor law",
+  "Year-end tax certificates (50 Tawi)",
+  "Leave tracking support",
+  "Thai & foreign employee payroll",
+  "Labor law compliance",
 ]
 
 const faqs = [
   {
-    question: "What is included in payroll services in Thailand?",
+    question: "What's included in payroll services?",
     answer:
-      "Our payroll services include salary calculation, social security contributions, personal income tax withholding, payslip generation, and all required government submissions.",
+      "Salary calculations, social security contributions (5% employer + 5% employee, capped at 750 THB each), tax withholding, payslips, and all government submissions.",
   },
   {
-    question: "Is social security mandatory for employees in Thailand?",
+    question: "Can you handle foreign employee payroll?",
     answer:
-      "Yes, employers must register employees with Social Security and contribute 5% of salary (capped at 750 THB/month), matched by the employee. We handle all submissions.",
+      "Yes. We process payroll for both Thai nationals and foreign employees with work permits, ensuring correct tax treatment for each.",
   },
   {
-    question: "Can you handle payroll for both Thai and foreign employees?",
+    question: "When do you need payroll information each month?",
     answer:
-      "Yes, we process payroll for both Thai nationals and foreign employees with work permits. We ensure proper tax treatment and compliance for each employee type.",
+      "We request salary changes, overtime, and leave data by the 20th. Payslips are delivered by month-end, and government filings are submitted on time.",
   },
 ]
 

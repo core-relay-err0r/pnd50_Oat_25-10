@@ -57,28 +57,30 @@ export const metadata: Metadata = {
 
 const features = [
   "Monthly bookkeeping in English",
-  "Financial statements preparation",
+  "Profit & loss statements",
+  "Balance sheet preparation",
   "Bank reconciliations",
   "TR Cloud accounting system",
-  "Monthly reports via email",
-  "Compliance with Thai Accounting Standards",
+  "Monthly email reports",
+  "Thai Accounting Standards compliance",
+  "Dedicated accountant support",
 ]
 
 const faqs = [
   {
     question: "Do I need an accountant for my business in Thailand?",
     answer:
-      "Yes, all companies registered in Thailand must maintain accounting records according to Thai Accounting Standards. Financial statements must be prepared in Thai Baht and audited annually.",
-  },
-  {
-    question: "Can you provide accounting reports in English?",
-    answer:
-      "Yes, we provide all reports and communication in English. Our team is fluent in English and experienced in serving foreign-owned businesses in Thailand.",
+      "Yes. All Thai registered companies must maintain proper accounting records and submit audited financial statements annually. Our team handles this for you in English.",
   },
   {
     question: "What accounting system do you use?",
     answer:
-      "We use TR Cloud, a secure accounting system operated by our team. All reports are delivered directly to you via email every month with clear explanations.",
+      "We use TR Cloud, a secure system operated by our team. You receive monthly reports via email — no software installation needed on your end.",
+  },
+  {
+    question: "How often will I receive financial reports?",
+    answer:
+      "Monthly. You'll get profit & loss statements, balance sheets, and bank reconciliations delivered to your email with clear explanations in English.",
   },
 ]
 

@@ -52,29 +52,31 @@ export const metadata: Metadata = {
 }
 
 const features = [
-  "Strategic business guidance",
-  "Compliance advisory",
-  "Business planning support",
+  "Thai regulation guidance",
+  "Tax planning strategies",
+  "Business structure advice",
+  "Compliance risk assessment",
   "Market entry consulting",
-  "Financial analysis",
-  "Expert consultation in English",
+  "Contract review support",
+  "Government liaison",
+  "Ongoing advisory retainer",
 ]
 
 const faqs = [
   {
-    question: "What kind of business advice do you provide in Thailand?",
+    question: "What business advice do you provide?",
     answer:
-      "We provide practical guidance on accounting, tax planning, compliance requirements, business structuring, and market entry strategies for foreign businesses operating in Thailand.",
+      "Practical guidance on Thai company law, tax optimization, compliance requirements, and business structuring. We help you understand regulations and make informed decisions.",
   },
   {
-    question: "Can you help me understand Thai business regulations?",
+    question: "Is this a one-time consultation or ongoing?",
     answer:
-      "Yes, we help foreign business owners navigate Thai regulations including company law, tax requirements, labor law, and industry-specific compliance requirements.",
+      "Both options available. One-time consultations for specific questions, or monthly retainer for businesses needing regular strategic support in Thailand.",
   },
   {
-    question: "Do you offer ongoing advisory or one-time consultations?",
+    question: "Can you help with government matters?",
     answer:
-      "Both! We offer one-time consultations for specific questions and ongoing advisory retainers for businesses that need regular strategic support in Thailand.",
+      "Yes. We assist with Revenue Department, DBD, Social Security Office, and Immigration matters. Our team handles Thai-language documentation and submissions.",
   },
 ]
 

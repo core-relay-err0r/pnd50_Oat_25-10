@@ -53,28 +53,30 @@ export const metadata: Metadata = {
 
 const features = [
   "Monthly VAT filing (PP30)",
-  "Withholding tax submissions (PND1, PND3, PND53)",
-  "Corporate income tax (PND50, PND51)",
-  "Revenue Department compliance",
-  "Tax planning and optimization",
-  "English-language tax advisory",
+  "Withholding tax (PND1, PND3, PND53)",
+  "Half-year corporate tax (PND51)",
+  "Annual corporate tax (PND50)",
+  "Revenue Department submissions",
+  "Tax calendar management",
+  "Deadline tracking & reminders",
+  "English tax advisory",
 ]
 
 const faqs = [
   {
-    question: "What taxes does a company pay in Thailand?",
+    question: "What taxes does my company pay in Thailand?",
     answer:
-      "Companies in Thailand typically pay Corporate Income Tax (20%), VAT (7%), and Withholding Tax on certain payments. We handle all filings to ensure full compliance with Thai tax law.",
+      "Most companies pay Corporate Income Tax (20%), VAT (7% if registered), and Withholding Tax on certain payments. We handle all filings and ensure you never miss a deadline.",
   },
   {
-    question: "When is corporate tax due in Thailand?",
+    question: "When are corporate taxes due?",
     answer:
-      "Corporate income tax (PND50) is due within 150 days after the fiscal year end. Half-year tax (PND51) is due within 2 months after the first 6 months. We track all deadlines for you.",
+      "PND51 (half-year) is due within 2 months of mid-year. PND50 (annual) is due within 150 days after fiscal year end. We track all deadlines and file on time.",
   },
   {
-    question: "Can you help reduce my tax burden legally in Thailand?",
+    question: "Do I need to register for VAT?",
     answer:
-      "Yes, we provide tax planning advice to help optimize your tax position within Thai law. This includes BOI incentives, expense deductions, and proper structuring.",
+      "VAT registration is required if annual revenue exceeds 1.8 million THB. We advise on registration timing and handle all VAT filings monthly.",
   },
 ]
 

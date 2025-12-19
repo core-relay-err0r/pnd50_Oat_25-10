@@ -52,29 +52,31 @@ export const metadata: Metadata = {
 }
 
 const features = [
-  "Financial analysis and reporting",
-  "Growth strategy development",
-  "Cost optimization",
-  "Performance metrics tracking",
-  "Cash flow management",
-  "Profitability analysis",
+  "Monthly financial analysis",
+  "Cash flow forecasting",
+  "Cost reduction strategies",
+  "Profitability breakdown",
+  "KPI dashboard setup",
+  "Budget vs actual tracking",
+  "Growth opportunity identification",
+  "Management reporting",
 ]
 
 const faqs = [
   {
-    question: "How can you help my business grow in Thailand?",
+    question: "How can financial analysis help my business?",
     answer:
-      "We provide financial insights, identify cost savings, and help you make data-driven decisions. Our analysis helps foreign businesses optimize operations and increase profitability in Thailand.",
+      "We identify where your money goes, spot cost-saving opportunities, and track key metrics. Data-driven insights help you make better business decisions in Thailand.",
   },
   {
-    question: "What financial reports will I receive?",
+    question: "What reports will I receive?",
     answer:
-      "We provide monthly management reports, cash flow analysis, profitability breakdowns, and custom KPI tracking tailored to your business goals in Thailand.",
+      "Monthly management reports with cash flow analysis, profitability by service/product, expense breakdowns, and custom KPIs tailored to your business goals.",
   },
   {
-    question: "Is this suitable for small businesses in Thailand?",
+    question: "Is this suitable for small businesses?",
     answer:
-      "Yes! Our growth solutions scale to businesses of all sizes. Even small foreign-owned companies benefit from proper financial planning and analysis.",
+      "Yes. Even small foreign-owned companies benefit from proper financial tracking. We scale our analysis to match your business size and complexity.",
   },
 ]
 
