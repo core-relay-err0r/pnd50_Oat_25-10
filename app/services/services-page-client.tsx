@@ -406,25 +406,25 @@ export default function ServicesPageClient() {
                       Helping foreign businesses succeed in Thailand since 2015. Get expert accounting, tax, and
                       compliance support.
                     </p>
-                    <div className="relative">
+                    <div className="relative inline-block">
                       <button
                         onClick={() => setLangOpen(!langOpen)}
-                        className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-sky-500 to-blue-600 text-white px-6 py-3 rounded-lg font-medium text-sm hover:from-sky-600 hover:to-blue-700 transition-all hover:scale-105 shadow-md shadow-blue-500/25 w-full sm:w-auto"
+                        className="inline-flex items-center gap-2 text-slate-500 hover:text-sky-600 text-sm transition-colors"
                       >
                         <Globe className="w-4 h-4" />
-                        Select Language
-                        <ChevronUp className={`w-4 h-4 transition-transform ${langOpen ? "rotate-180" : ""}`} />
+                        <span>Language</span>
+                        <ChevronUp className={`w-3 h-3 transition-transform ${langOpen ? "rotate-180" : ""}`} />
                       </button>
                       {langOpen && (
-                        <div className="absolute bottom-full left-0 mb-2 bg-white rounded-lg shadow-xl border border-slate-200 overflow-hidden min-w-[160px] z-50">
+                        <div className="absolute bottom-full left-0 mb-2 bg-white rounded-md shadow-lg border border-slate-100 overflow-hidden min-w-[120px] z-50">
                           {languages.map((lang) => (
                             <Link
                               key={lang.code}
                               href={lang.href}
-                              className="flex items-center gap-3 px-4 py-3 hover:bg-sky-50 transition-colors text-sm text-slate-700 hover:text-sky-600"
+                              className="flex items-center gap-2 px-3 py-2 text-sm text-slate-600 hover:bg-slate-50 hover:text-sky-600 transition-colors"
                               onClick={() => setLangOpen(false)}
                             >
-                              <span className="text-lg">{lang.flag}</span>
+                              <span>{lang.flag}</span>
                               <span>{lang.name}</span>
                             </Link>
                           ))}
