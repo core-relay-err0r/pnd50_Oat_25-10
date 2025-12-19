@@ -65,7 +65,7 @@ export default function ServicesPageClient() {
   ]
 
   return (
-    <main className="min-h-screen">
+    <main className="min-h-screen flex flex-col">
       {/* JSON-LD Structured Data for Services Hub */}
       <script
         type="application/ld+json"
@@ -117,8 +117,8 @@ export default function ServicesPageClient() {
         }}
       />
 
-      <section className="relative w-full min-h-screen flex flex-col bg-gradient-to-br from-slate-50 via-white to-sky-50/80">
-        <AnimatedGridBackground className="min-h-screen flex-1" variant="light">
+      <section className="relative w-full flex-1 flex flex-col bg-gradient-to-br from-slate-50 via-white to-sky-50/80">
+        <AnimatedGridBackground className="flex-1 flex flex-col" variant="light">
           <motion.div
             className="absolute top-[15%] left-[8%] w-20 h-20 border-2 border-sky-400/30 rounded-2xl backdrop-blur-sm"
             animate={{
@@ -293,7 +293,7 @@ export default function ServicesPageClient() {
 
             {/* SEO-optimized footer section */}
             <motion.footer
-              className="py-16 md:py-24 mt-auto border-t border-slate-200/60 bg-gradient-to-b from-transparent via-white/50 to-slate-50/80"
+              className="py-12 md:py-16 lg:py-20 border-t border-slate-200/60 bg-gradient-to-b from-transparent via-white/50 to-slate-50/80"
               variants={fadeInUp}
               initial="hidden"
               whileInView="visible"
