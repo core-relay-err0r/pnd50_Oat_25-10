@@ -1,4 +1,24 @@
+import type { Metadata } from "next"
 import { Shield, Eye, Lock, Users, FileText, Clock, Globe, Mail } from "lucide-react"
+
+export const metadata: Metadata = {
+  title: "Privacy Policy",
+  description:
+    "Learn how PND50 collects, uses, and protects your personal information. Your privacy is important to us.",
+  keywords: ["privacy policy", "data protection", "PND50 privacy", "Thailand accounting privacy"],
+  openGraph: {
+    title: "Privacy Policy | PND50",
+    description: "Learn how PND50 collects, uses, and protects your personal information.",
+    type: "website",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+  alternates: {
+    canonical: "https://pnd50.com/privacy-policy",
+  },
+}
 
 const sections = [
   {

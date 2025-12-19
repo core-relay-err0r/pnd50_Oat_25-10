@@ -1,4 +1,24 @@
+import type { Metadata } from "next"
 import { FileText, Scale, AlertTriangle, ShieldCheck, Gavel } from "lucide-react"
+
+export const metadata: Metadata = {
+  title: "Terms of Service",
+  description:
+    "Read PND50's terms of service for accounting and advisory services in Thailand. Understand your rights and obligations.",
+  keywords: ["terms of service", "PND50 terms", "Thailand accounting terms", "service agreement"],
+  openGraph: {
+    title: "Terms of Service | PND50",
+    description: "Read PND50's terms of service for accounting and advisory services in Thailand.",
+    type: "website",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+  alternates: {
+    canonical: "https://pnd50.com/terms-of-service",
+  },
+}
 
 const sections = [
   {
