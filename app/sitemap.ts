@@ -4,16 +4,20 @@ import { siteConfig } from "@/lib/seo-config"
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = siteConfig.url
 
+  const now = new Date().toISOString()
+
   const lastUpdated = {
-    home: "2025-01-15",
-    services: "2025-01-18",
-    servicePages: "2025-01-18",
-    about: "2025-01-10",
-    schedule: "2025-01-15",
-    contact: "2025-01-10",
-    faq: "2025-01-18",
-    caseStudies: "2025-01-05",
-    legal: "2024-12-01",
+    home: now,
+    services: now,
+    servicePages: now,
+    about: now,
+    schedule: now,
+    contact: now,
+    faq: now,
+    caseStudies: now,
+    legal: now,
+    calculator: now,
+    regional: now,
   }
 
   const targetRegions = ["en", "en-US", "en-GB", "en-SG", "en-AU"]
@@ -41,7 +45,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: `${baseUrl}/services`,
       lastModified: lastUpdated.services,
       changeFrequency: "weekly",
-      priority: 1.0, // Main SEO hub
+      priority: 1.0,
       alternates: createAlternates("/services"),
     },
     {
@@ -79,15 +83,23 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.5,
       alternates: createAlternates("/case-studies"),
     },
+    {
+      url: `${baseUrl}/calculator`,
+      lastModified: lastUpdated.calculator,
+      changeFrequency: "monthly",
+      priority: 0.6,
+      alternates: createAlternates("/calculator"),
+    },
   ]
 
+  // Service pages
   const servicePages: MetadataRoute.Sitemap = [
-    { slug: "corporate", priority: 0.95, description: "open business in Thailand" },
-    { slug: "accounting", priority: 0.9, description: "accounting services Thailand" },
-    { slug: "tax", priority: 0.9, description: "tax services Thailand" },
-    { slug: "payroll", priority: 0.9, description: "payroll services Thailand" },
-    { slug: "advisory", priority: 0.85, description: "business advisory Thailand" },
-    { slug: "growth", priority: 0.85, description: "business growth Thailand" },
+    { slug: "corporate", priority: 0.95 },
+    { slug: "accounting", priority: 0.9 },
+    { slug: "tax", priority: 0.9 },
+    { slug: "payroll", priority: 0.9 },
+    { slug: "advisory", priority: 0.85 },
+    { slug: "growth", priority: 0.85 },
   ].map((service) => ({
     url: `${baseUrl}/services/${service.slug}`,
     lastModified: lastUpdated.servicePages,
@@ -96,7 +108,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
     alternates: createAlternates(`/services/${service.slug}`),
   }))
 
-  // Legal pages (lower priority, no alternates needed)
+  const regionalPages: MetadataRoute.Sitemap = [
+    { slug: "singapore", priority: 0.7 },
+    { slug: "taiwan", priority: 0.7 },
+    { slug: "russia", priority: 0.7 },
+  ].map((region) => ({
+    url: `${baseUrl}/for/${region.slug}`,
+    lastModified: lastUpdated.regional,
+    changeFrequency: "monthly" as const,
+    priority: region.priority,
+    alternates: createAlternates(`/for/${region.slug}`),
+  }))
+
+  // Legal pages
   const legalPages: MetadataRoute.Sitemap = [
     {
       url: `${baseUrl}/privacy-policy`,
@@ -112,5 +136,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ]
 
-  return [...mainPages, ...servicePages, ...legalPages]
+  return [...mainPages, ...servicePages, ...regionalPages, ...legalPages]
 }

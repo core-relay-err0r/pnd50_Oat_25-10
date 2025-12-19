@@ -1,4 +1,3 @@
-// Robots.txt configuration for SEO
 import type { MetadataRoute } from "next"
 import { siteConfig } from "@/lib/seo-config"
 
@@ -7,13 +6,12 @@ export default function robots(): MetadataRoute.Robots {
 
   return {
     rules: [
-      // Main search engines
+      // Main search engines - full access
       {
         userAgent: ["Googlebot", "Bingbot", "Slurp", "DuckDuckBot", "Yandex"],
         allow: "/",
-        disallow: ["/api/", "/admin/", "/private/"],
+        disallow: ["/api/", "/admin/", "/private/", "/schedule/success"],
       },
-      // AI crawlers - allow for better AI search visibility
       {
         userAgent: [
           "GPTBot",
@@ -24,15 +22,37 @@ export default function robots(): MetadataRoute.Robots {
           "PerplexityBot",
           "Bytespider",
           "CCBot",
+          "Applebot-Extended",
+          "cohere-ai",
         ],
-        allow: ["/", "/services/", "/about", "/faq", "/contact"],
+        allow: [
+          "/",
+          "/services/",
+          "/services/corporate",
+          "/services/accounting",
+          "/services/tax",
+          "/services/payroll",
+          "/services/advisory",
+          "/services/growth",
+          "/about",
+          "/faq",
+          "/contact",
+          "/case-studies",
+          "/calculator",
+          "/for/",
+        ],
+        disallow: ["/api/", "/admin/", "/private/", "/schedule/success"],
+      },
+      {
+        userAgent: ["facebookexternalhit", "Twitterbot", "LinkedInBot"],
+        allow: "/",
         disallow: ["/api/", "/admin/", "/private/"],
       },
       // Default - allow all
       {
         userAgent: "*",
         allow: "/",
-        disallow: ["/api/", "/admin/", "/_next/", "/private/"],
+        disallow: ["/api/", "/admin/", "/_next/", "/private/", "/schedule/success"],
       },
     ],
     sitemap: `${baseUrl}/sitemap.xml`,
