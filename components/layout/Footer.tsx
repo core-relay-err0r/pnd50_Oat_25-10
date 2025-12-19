@@ -22,10 +22,10 @@ const companyLinks = [
 ]
 
 const languages = [
-  { code: "en", name: "English", flag: "🇺🇸", href: "/services" },
-  { code: "th", name: "ไทย", flag: "🇹🇭", href: "/th/services" },
-  { code: "ru", name: "Русский", flag: "🇷🇺", href: "/ru/services" },
-  { code: "zh", name: "中文", flag: "🇨🇳", href: "/zh/services" },
+  { code: "en", name: "English", flag: "🇺🇸", href: "/" },
+  { code: "th", name: "ไทย", flag: "🇹🇭", href: "/th" },
+  { code: "ru", name: "Русский", flag: "🇷🇺", href: "/ru" },
+  { code: "zh", name: "中文", flag: "🇨🇳", href: "/cn" },
 ]
 
 export default function Footer() {

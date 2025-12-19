@@ -136,5 +136,51 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ]
 
-  return [...mainPages, ...servicePages, ...regionalPages, ...legalPages]
+  // Language/locale pages
+  const languagePages: MetadataRoute.Sitemap = [
+    {
+      url: `${baseUrl}/th`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.8,
+      alternates: {
+        languages: {
+          en: baseUrl,
+          th: `${baseUrl}/th`,
+          ru: `${baseUrl}/ru`,
+          "zh-CN": `${baseUrl}/cn`,
+        },
+      },
+    },
+    {
+      url: `${baseUrl}/ru`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.8,
+      alternates: {
+        languages: {
+          en: baseUrl,
+          th: `${baseUrl}/th`,
+          ru: `${baseUrl}/ru`,
+          "zh-CN": `${baseUrl}/cn`,
+        },
+      },
+    },
+    {
+      url: `${baseUrl}/cn`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.8,
+      alternates: {
+        languages: {
+          en: baseUrl,
+          th: `${baseUrl}/th`,
+          ru: `${baseUrl}/ru`,
+          "zh-CN": `${baseUrl}/cn`,
+        },
+      },
+    },
+  ]
+
+  return [...mainPages, ...servicePages, ...regionalPages, ...legalPages, ...languagePages]
 }
