@@ -65,7 +65,7 @@ export default function ServicesPageClient() {
   ]
 
   return (
-    <main className="min-h-screen flex flex-col">
+    <main>
       {/* JSON-LD Structured Data for Services Hub */}
       <script
         type="application/ld+json"
@@ -117,7 +117,7 @@ export default function ServicesPageClient() {
         }}
       />
 
-      <section className="relative w-full flex-1 flex flex-col bg-gradient-to-br from-slate-50 via-white to-sky-50/80">
+      <section className="relative w-full bg-gradient-to-br from-slate-50 via-white to-sky-50/80">
         <AnimatedGridBackground className="flex-1 flex flex-col" variant="light">
           <motion.div
             className="absolute top-[15%] left-[8%] w-20 h-20 border-2 border-sky-400/30 rounded-2xl backdrop-blur-sm"
