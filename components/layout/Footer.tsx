@@ -30,10 +30,10 @@ export default function Footer() {
   }
 
   return (
-    <footer className="py-12 md:py-16 lg:py-20 border-t border-slate-200/60 bg-gradient-to-b from-white via-slate-50/50 to-slate-100/80">
+    <footer className="py-12 md:py-16 lg:py-20 border-t border-slate-200/30 bg-transparent backdrop-blur-sm">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
         {/* CTA Section */}
-        <div className="text-center mb-16 pb-16 border-b border-slate-200/60">
+        <div className="text-center mb-16 pb-16 border-b border-slate-200/30">
           <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-sky-600 via-blue-600 to-indigo-600 bg-clip-text text-transparent mb-6 text-balance">
             Ready to Get Started?
           </h2>
@@ -50,7 +50,7 @@ export default function Footer() {
             </Link>
             <Link
               href="/contact"
-              className="inline-flex items-center justify-center gap-2 bg-white/70 backdrop-blur-md border-2 border-slate-200/80 text-slate-700 px-8 py-4 rounded-xl font-semibold hover:border-sky-400/80 hover:bg-white/90 hover:text-sky-600 transition-all hover:scale-105 shadow-lg shadow-slate-200/50 hover:shadow-xl hover:shadow-sky-200/50"
+              className="inline-flex items-center justify-center gap-2 bg-white/30 backdrop-blur-md border border-slate-200/50 text-slate-700 px-8 py-4 rounded-xl font-semibold hover:border-sky-400/60 hover:bg-white/50 hover:text-sky-600 transition-all hover:scale-105"
             >
               Contact Us
             </Link>
@@ -127,12 +127,12 @@ export default function Footer() {
                 <ChevronUp className={`w-3 h-3 transition-transform ${langOpen ? "rotate-180" : ""}`} />
               </button>
               {langOpen && (
-                <div className="absolute bottom-full left-0 mb-2 bg-white rounded-md shadow-lg border border-slate-100 overflow-hidden min-w-[120px] z-50">
+                <div className="absolute bottom-full left-0 mb-2 bg-white/70 backdrop-blur-md rounded-md shadow-lg border border-slate-200/50 overflow-hidden min-w-[120px] z-50">
                   {languages.map((lang) => (
                     <Link
                       key={lang.code}
                       href={lang.href}
-                      className="flex items-center gap-2 px-3 py-2 text-sm text-slate-600 hover:bg-slate-50 hover:text-sky-600 transition-colors"
+                      className="flex items-center gap-2 px-3 py-2 text-sm text-slate-600 hover:bg-white/50 hover:text-sky-600 transition-colors"
                     >
                       <span>{lang.flag}</span>
                       <span>{lang.name}</span>
@@ -145,7 +145,7 @@ export default function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="mt-12 pt-8 border-t border-slate-200/60 flex flex-col sm:flex-row justify-between items-center gap-4">
+        <div className="mt-12 pt-8 border-t border-slate-200/30 flex flex-col sm:flex-row justify-between items-center gap-4">
           <p className="text-slate-500 text-sm">
             © 2025 PND50. Professional accounting and business consultant for expats in Thailand.
           </p>
