@@ -101,20 +101,7 @@ export function RelatedLinks({ title = "Related Pages", links, variant = "cards"
 
   // Cards variant (default)
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-      {linksToRender.map((link) => (
-        <Link key={link.href} href={link.href} className="block bg-white rounded-lg shadow-md overflow-hidden">
-          <div className="p-4">
-            {link.icon && <span className="text-slate-400">{link.icon}</span>}
-            <h4 className="text-lg font-semibold mt-2 mb-1">{link.title}</h4>
-            <p className="text-slate-600 text-sm">{link.description}</p>
-          </div>
-          <div className="bg-sky-50 p-4 flex justify-end items-center">
-            <ArrowRight className="w-5 h-5 text-sky-600" />
-          </div>
-        </Link>
-      ))}
-    </div>
+    null
   )
 }
 
