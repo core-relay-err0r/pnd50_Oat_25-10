@@ -70,8 +70,7 @@ export default function Footer() {
 
       {/* Main Footer - Dark */}
       <div className="bg-slate-900 text-white py-16 md:py-20 relative overflow-hidden">
-        {/* Absolute Watermark */}
-        <span className="absolute bottom-0 right-0 text-[10rem] md:text-[14rem] lg:text-[18rem] font-bold text-slate-800/30 leading-none select-none pointer-events-none translate-x-1/4 translate-y-1/4">
+        <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[10rem] md:text-[14rem] lg:text-[18rem] font-bold text-slate-800/30 leading-none select-none pointer-events-none whitespace-nowrap">
           PND50
         </span>
 
