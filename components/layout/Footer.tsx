@@ -50,7 +50,7 @@ export default function Footer() {
             </Link>
             <Link
               href="/contact"
-              className="inline-flex items-center justify-center gap-2 bg-white/30 backdrop-blur-md border border-slate-200/50 text-slate-700 px-8 py-4 rounded-xl font-semibold hover:border-sky-400/60 hover:bg-white/50 hover:text-sky-600 transition-all hover:scale-105"
+              className="inline-flex items-center justify-center gap-2 bg-white/50 border border-slate-200/50 text-slate-700 px-8 py-4 rounded-xl font-semibold hover:border-sky-400/60 hover:bg-white/70 hover:text-sky-600 transition-all hover:scale-105"
             >
               Contact Us
             </Link>
@@ -127,7 +127,7 @@ export default function Footer() {
                 <ChevronUp className={`w-3 h-3 transition-transform ${langOpen ? "rotate-180" : ""}`} />
               </button>
               {langOpen && (
-                <div className="absolute bottom-full left-0 mb-2 bg-white/70 backdrop-blur-md rounded-md shadow-lg border border-slate-200/50 overflow-hidden min-w-[120px] z-50">
+                <div className="absolute bottom-full left-0 mb-2 bg-white/90 backdrop-blur-md rounded-md shadow-lg border border-slate-200/50 overflow-hidden min-w-[120px] z-50">
                   {languages.map((lang) => (
                     <Link
                       key={lang.code}
@@ -145,7 +145,7 @@ export default function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="mt-12 pt-8 border-t border-slate-200/30 flex flex-col sm:flex-row justify-between items-center gap-4">
+        <div className="mt-12 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4">
           <p className="text-slate-500 text-sm">
             © 2025 PND50. Professional accounting and business consultant for expats in Thailand.
           </p>

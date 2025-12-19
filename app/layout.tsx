@@ -183,8 +183,8 @@ export default function RootLayout({
           <main className="flex-1">
             {children}
             <AISearchContent />
+            <Footer />
           </main>
-          <Footer />
           <Suspense fallback={null}>
             <Toaster />
             <FloatingChatBot />
