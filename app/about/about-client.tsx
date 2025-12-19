@@ -490,26 +490,7 @@ const AboutClientPage = () => {
       </section>
 
       {/* Related Pages Section */}
-      <motion.section
-        className="py-12 sm:py-24 md:py-32 bg-white/50 backdrop-blur-sm relative overflow-hidden"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-100px" }}
-        variants={fadeInUp}
-        transition={{ duration: 0.6 }}
-      >
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 max-w-7xl">
-          <motion.div
-            className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8"
-            variants={staggerContainer}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-          >
-            {/* Related pages content */}
-          </motion.div>
-        </div>
-      </motion.section>
+      
 
       {/* CTA Section */}
       <CTASection />
