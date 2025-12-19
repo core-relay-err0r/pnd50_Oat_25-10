@@ -262,7 +262,7 @@ export default function ServicesPageClient() {
               </section>
 
               <motion.section
-                className="py-8 md:py-12"
+                className="py-2 md:py-4"
                 variants={fadeInUp}
                 initial="hidden"
                 whileInView="visible"
