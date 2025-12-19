@@ -1,8 +1,4 @@
-"use client"
-
-import { useState } from "react"
-import { Shield, Eye, Lock, Users, FileText, Clock, Globe, Mail, ChevronDown } from "lucide-react"
-import CTASection from "@/components/layout/CTASection"
+import { Shield, Eye, Lock, Users, FileText, Clock, Globe, Mail } from "lucide-react"
 
 const sections = [
   {
@@ -81,28 +77,21 @@ const sections = [
           {
             title: "Provide Our Services",
             desc: "Deliver accounting and advisory services, manage your account, and process your requests.",
-            color: "sky",
           },
           {
             title: "Communicate With You",
             desc: "Send important updates, respond to inquiries, and provide customer support.",
-            color: "teal",
           },
           {
             title: "Improve Our Services",
             desc: "Analyze usage patterns, fix technical issues, and develop new features.",
-            color: "blue",
           },
           {
             title: "Ensure Security",
             desc: "Protect against fraud, unauthorized access, and other security threats.",
-            color: "indigo",
           },
         ].map((item, i) => (
-          <div
-            key={i}
-            className={`p-4 rounded-xl bg-gradient-to-br from-${item.color}-50 to-white border border-${item.color}-100`}
-          >
+          <div key={i} className="p-4 rounded-xl bg-sky-50 border border-sky-100">
             <h4 className="font-semibold text-slate-800 mb-2">{item.title}</h4>
             <p className="text-sm text-slate-600">{item.desc}</p>
           </div>
@@ -185,13 +174,12 @@ const sections = [
             {
               title: "Access Your Data",
               desc: "Request a copy of the personal information we hold about you.",
-              color: "sky",
             },
-            { title: "Correct Your Data", desc: "Update or correct any inaccurate information.", color: "teal" },
-            { title: "Delete Your Data", desc: "Request deletion of your personal information.", color: "blue" },
-            { title: "Opt-Out", desc: "Unsubscribe from marketing communications at any time.", color: "indigo" },
+            { title: "Correct Your Data", desc: "Update or correct any inaccurate information." },
+            { title: "Delete Your Data", desc: "Request deletion of your personal information." },
+            { title: "Opt-Out", desc: "Unsubscribe from marketing communications at any time." },
           ].map((item, i) => (
-            <div key={i} className={`p-4 rounded-xl bg-${item.color}-50 border border-${item.color}-100`}>
+            <div key={i} className="p-4 rounded-xl bg-sky-50 border border-sky-100">
               <h4 className="font-semibold text-slate-800 mb-1">{item.title}</h4>
               <p className="text-sm text-slate-600">{item.desc}</p>
             </div>
@@ -218,12 +206,6 @@ const sections = [
 ]
 
 export default function PrivacyPolicyPage() {
-  const [openSections, setOpenSections] = useState<string[]>(["summary"])
-
-  const toggleSection = (id: string) => {
-    setOpenSections((prev) => (prev.includes(id) ? prev.filter((s) => s !== id) : [...prev, id]))
-  }
-
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
       {/* Hero Section */}
@@ -249,38 +231,27 @@ export default function PrivacyPolicyPage() {
         </div>
       </div>
 
-      {/* Content Section */}
+      {/* Content Section - All sections visible */}
       <section className="py-12 sm:py-16">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-4xl mx-auto space-y-3">
+          <div className="max-w-4xl mx-auto space-y-6">
             {sections.map((section) => {
               const Icon = section.icon
-              const isOpen = openSections.includes(section.id)
               return (
                 <div key={section.id} className="bg-white border border-slate-200 rounded-xl overflow-hidden">
-                  <button
-                    onClick={() => toggleSection(section.id)}
-                    className="w-full px-6 py-4 flex items-center justify-between text-left hover:bg-slate-50 transition-colors"
-                  >
-                    <div className="flex items-center gap-3">
-                      <div className="w-9 h-9 rounded-lg bg-sky-50 flex items-center justify-center">
-                        <Icon className="w-4 h-4 text-sky-600" />
-                      </div>
-                      <span className="font-semibold text-slate-800">{section.title}</span>
+                  <div className="px-6 py-4 flex items-center gap-3 border-b border-slate-100 bg-slate-50/50">
+                    <div className="w-9 h-9 rounded-lg bg-sky-50 flex items-center justify-center">
+                      <Icon className="w-4 h-4 text-sky-600" />
                     </div>
-                    <ChevronDown
-                      className={`w-5 h-5 text-slate-400 transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}
-                    />
-                  </button>
-                  {isOpen && <div className="px-6 pb-5 border-t border-slate-100 pt-4">{section.content}</div>}
+                    <span className="font-semibold text-slate-800">{section.title}</span>
+                  </div>
+                  <div className="px-6 py-5">{section.content}</div>
                 </div>
               )
             })}
           </div>
         </div>
       </section>
-
-      <CTASection />
     </div>
   )
 }
