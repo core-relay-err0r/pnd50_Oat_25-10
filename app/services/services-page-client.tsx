@@ -291,54 +291,9 @@ export default function ServicesPageClient() {
               </div>
             </motion.section>
 
-            <motion.section
-              className="py-16 md:py-20"
-              variants={fadeInUp}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.6 }}
-            >
-              <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl text-center">
-                <motion.h2
-                  className="text-3xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-sky-600 via-blue-600 to-indigo-600 bg-clip-text text-transparent mb-6 text-balance"
-                  variants={fadeInUp}
-                  transition={{ duration: 0.5 }}
-                >
-                  Ready to Get Started?
-                </motion.h2>
-                <motion.p
-                  className="text-slate-600 mb-8 leading-relaxed text-lg md:text-xl max-w-2xl mx-auto text-pretty"
-                  variants={fadeInUp}
-                  transition={{ duration: 0.5, delay: 0.1 }}
-                >
-                  Schedule a free consultation to discuss how we can support your business in Thailand
-                </motion.p>
-                <motion.div
-                  className="flex flex-col sm:flex-row gap-4 justify-center"
-                  variants={fadeInUp}
-                  transition={{ duration: 0.5, delay: 0.2 }}
-                >
-                  <Link
-                    href="/schedule"
-                    className="group inline-flex items-center justify-center gap-2 bg-gradient-to-r from-sky-500 via-blue-600 to-indigo-600 text-white px-8 py-4 rounded-xl font-semibold hover:from-sky-600 hover:via-blue-700 hover:to-indigo-700 transition-all hover:scale-105 shadow-lg shadow-blue-500/30 hover:shadow-xl hover:shadow-blue-600/40"
-                  >
-                    Schedule Consultation
-                    <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                  </Link>
-                  <Link
-                    href="/contact"
-                    className="inline-flex items-center justify-center gap-2 bg-white/70 backdrop-blur-md border-2 border-slate-200/80 text-slate-700 px-8 py-4 rounded-xl font-semibold hover:border-sky-400/80 hover:bg-white/90 hover:text-sky-600 transition-all hover:scale-105 shadow-lg shadow-slate-200/50 hover:shadow-xl hover:shadow-sky-200/50"
-                  >
-                    Contact Us
-                  </Link>
-                </motion.div>
-              </div>
-            </motion.section>
-
             {/* SEO-optimized footer section */}
             <motion.footer
-              className="py-16 md:py-20 mt-auto border-t border-slate-200/60 bg-gradient-to-b from-transparent to-white/50"
+              className="py-16 md:py-24 mt-auto border-t border-slate-200/60 bg-gradient-to-b from-transparent via-white/50 to-slate-50/80"
               variants={fadeInUp}
               initial="hidden"
               whileInView="visible"
@@ -346,10 +301,36 @@ export default function ServicesPageClient() {
               transition={{ duration: 0.6 }}
             >
               <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+                {/* CTA Section - now inside footer */}
+                <div className="text-center mb-16 pb-16 border-b border-slate-200/60">
+                  <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-sky-600 via-blue-600 to-indigo-600 bg-clip-text text-transparent mb-6 text-balance">
+                    Ready to Get Started?
+                  </h2>
+                  <p className="text-slate-600 mb-8 leading-relaxed text-lg max-w-2xl mx-auto text-pretty">
+                    Schedule a free consultation to discuss how we can support your business in Thailand
+                  </p>
+                  <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                    <Link
+                      href="/schedule"
+                      className="group inline-flex items-center justify-center gap-2 bg-gradient-to-r from-sky-500 via-blue-600 to-indigo-600 text-white px-8 py-4 rounded-xl font-semibold hover:from-sky-600 hover:via-blue-700 hover:to-indigo-700 transition-all hover:scale-105 shadow-lg shadow-blue-500/30 hover:shadow-xl hover:shadow-blue-600/40"
+                    >
+                      Schedule Consultation
+                      <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                    </Link>
+                    <Link
+                      href="/contact"
+                      className="inline-flex items-center justify-center gap-2 bg-white/70 backdrop-blur-md border-2 border-slate-200/80 text-slate-700 px-8 py-4 rounded-xl font-semibold hover:border-sky-400/80 hover:bg-white/90 hover:text-sky-600 transition-all hover:scale-105 shadow-lg shadow-slate-200/50 hover:shadow-xl hover:shadow-sky-200/50"
+                    >
+                      Contact Us
+                    </Link>
+                  </div>
+                </div>
+
+                {/* Footer Content */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8">
                   {/* Services Column */}
                   <div>
-                    <h3 className="text-lg font-semibold text-slate-800 mb-6">Our Services </h3>
+                    <h3 className="text-lg font-semibold text-slate-800 mb-6">Our Services</h3>
                     <ul className="space-y-3">
                       {serviceLinks.map((service, index) => (
                         <li key={index}>
@@ -399,12 +380,12 @@ export default function ServicesPageClient() {
                     </p>
                   </div>
 
-                  {/* CTA Column */}
+                  {/* About Column */}
                   <div>
-                    <h3 className="text-lg font-semibold text-slate-800 mb-6">We are PND50.</h3>
+                    <h3 className="text-lg font-semibold text-slate-800 mb-6">PND50</h3>
                     <p className="text-slate-600 text-sm mb-6 leading-relaxed">
-                      Helping foreign businesses succeed in Thailand since 2015. Get expert accounting, tax, and
-                      compliance support.
+                      Helping foreign businesses succeed in Thailand since 2015. Expert accounting, tax, and compliance
+                      support.
                     </p>
                     <div className="relative inline-block">
                       <button
@@ -422,7 +403,6 @@ export default function ServicesPageClient() {
                               key={lang.code}
                               href={lang.href}
                               className="flex items-center gap-2 px-3 py-2 text-sm text-slate-600 hover:bg-slate-50 hover:text-sky-600 transition-colors"
-                              onClick={() => setLangOpen(false)}
                             >
                               <span>{lang.flag}</span>
                               <span>{lang.name}</span>
@@ -436,19 +416,19 @@ export default function ServicesPageClient() {
 
                 {/* Bottom Bar */}
                 <div className="mt-12 pt-8 border-t border-slate-200/60 flex flex-col sm:flex-row justify-between items-center gap-4">
-                  <p className="text-slate-500 text-xs">
+                  <p className="text-slate-500 text-sm">
                     © 2025 PND50. Professional accounting and business consultant for expats in Thailand.
                   </p>
                   <div className="flex gap-6">
                     <Link
                       href="/privacy-policy"
-                      className="text-slate-500 hover:text-sky-600 text-xs transition-colors"
+                      className="text-slate-500 hover:text-sky-600 text-sm transition-colors"
                     >
                       Privacy Policy
                     </Link>
                     <Link
                       href="/terms-of-service"
-                      className="text-slate-500 hover:text-sky-600 text-xs transition-colors"
+                      className="text-slate-500 hover:text-sky-600 text-sm transition-colors"
                     >
                       Terms of Service
                     </Link>
