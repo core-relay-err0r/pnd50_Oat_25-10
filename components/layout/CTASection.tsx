@@ -15,7 +15,7 @@ export default function CTASection() {
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl text-center">
         <p className="text-sm font-medium text-sky-500 mb-3 tracking-wide uppercase">Get Started</p>
-        <h2 className="text-3xl md:text-5xl font-bold bg-gradient-to-r from-sky-600 via-blue-600 to-indigo-600 bg-clip-text text-transparent mb-6 text-balance leading-tight">
+        <h2 className="text-3xl md:text-5xl font-bold bg-gradient-to-r from-slate-800 via-slate-900 to-slate-800 bg-clip-text text-transparent mb-6 text-balance leading-tight">
           Ready to simplify your
           <br />
           business in Thailand?
