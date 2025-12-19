@@ -30,10 +30,10 @@ export default function Footer() {
   }
 
   return (
-    <footer className="py-12 md:py-16 lg:py-20 border-t border-slate-200/30 bg-transparent backdrop-blur-sm">
+    <footer className="py-12 md:py-16 lg:py-20 bg-transparent">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
         {/* CTA Section */}
-        <div className="text-center mb-16 pb-16 border-b border-slate-200/30">
+        <div className="text-center mb-16 pb-16">
           <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-sky-600 via-blue-600 to-indigo-600 bg-clip-text text-transparent mb-6 text-balance">
             Ready to Get Started?
           </h2>
