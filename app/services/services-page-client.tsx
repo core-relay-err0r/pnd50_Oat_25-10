@@ -1,5 +1,5 @@
 "use client"
-import { ArrowRight } from "lucide-react"
+import { ArrowRight, Mail, MapPin, Phone } from "lucide-react"
 import Link from "next/link"
 import ServiceSlider from "@/components/service-slider"
 import { motion } from "framer-motion"
@@ -45,6 +45,15 @@ export default function ServicesPageClient() {
     { value: "200+", label: "Clients Served" },
     { value: "10+", label: "Years Experience" },
     { value: "99%", label: "Client Satisfaction" },
+  ]
+
+  const serviceLinks = [
+    { name: "Accounting in Thailand", href: "/services/accounting" },
+    { name: "Tax Filing in Thailand", href: "/services/tax" },
+    { name: "Payroll in Thailand", href: "/services/payroll" },
+    { name: "Open Business in Thailand", href: "/services/corporate" },
+    { name: "Business Advisory", href: "/services/advisory" },
+    { name: "Growth Services", href: "/services/growth" },
   ]
 
   return (
@@ -318,6 +327,109 @@ export default function ServicesPageClient() {
                 </motion.div>
               </div>
             </motion.section>
+
+            {/* SEO-optimized footer section */}
+            <motion.footer
+              className="py-16 md:py-20 mt-auto border-t border-slate-200/60 bg-gradient-to-b from-transparent to-white/50"
+              variants={fadeInUp}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.6 }}
+            >
+              <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8">
+                  {/* Services Column */}
+                  <div>
+                    <h3 className="text-lg font-semibold text-slate-800 mb-6">Our Services </h3>
+                    <ul className="space-y-3">
+                      {serviceLinks.map((service, index) => (
+                        <li key={index}>
+                          <Link
+                            href={service.href}
+                            className="text-slate-600 hover:text-sky-600 transition-colors text-sm flex items-center gap-2 group"
+                          >
+                            <span className="w-1.5 h-1.5 rounded-full bg-sky-400 group-hover:bg-sky-600 transition-colors" />
+                            {service.name}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  {/* Contact Column */}
+                  <div>
+                    <h3 className="text-lg font-semibold text-slate-800 mb-6">Contact Us</h3>
+                    <ul className="space-y-4">
+                      <li>
+                        <a
+                          href="mailto:info@pnd50.com"
+                          className="text-slate-600 hover:text-sky-600 transition-colors text-sm flex items-center gap-3"
+                        >
+                          <Mail className="w-4 h-4 text-sky-500" />
+                          info@pnd50.com
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          href="tel:+66843563805"
+                          className="text-slate-600 hover:text-sky-600 transition-colors text-sm flex items-center gap-3"
+                        >
+                          <Phone className="w-4 h-4 text-sky-500" />
+                          +66 84 356 3805
+                        </a>
+                      </li>
+                      <li>
+                        <span className="text-slate-600 text-sm flex items-center gap-3">
+                          <MapPin className="w-4 h-4 text-sky-500" />
+                          Bangkok, Thailand
+                        </span>
+                      </li>
+                    </ul>
+                    <p className="text-slate-500 text-xs mt-6 leading-relaxed">
+                      Serving foreign businesses in Bangkok, Phuket, Chiang Mai, Pattaya, and throughout Thailand.
+                    </p>
+                  </div>
+
+                  {/* CTA Column */}
+                  <div>
+                    <h3 className="text-lg font-semibold text-slate-800 mb-6">Ready to Start?</h3>
+                    <p className="text-slate-600 text-sm mb-6 leading-relaxed">
+                      Helping foreign businesses succeed in Thailand since 2015. Get expert accounting, tax, and
+                      compliance support.
+                    </p>
+                    <Link
+                      href="/schedule"
+                      className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-sky-500 to-blue-600 text-white px-6 py-3 rounded-lg font-medium text-sm hover:from-sky-600 hover:to-blue-700 transition-all hover:scale-105 shadow-md shadow-blue-500/25"
+                    >
+                      Free Consultation
+                      <ArrowRight className="w-4 h-4" />
+                    </Link>
+                  </div>
+                </div>
+
+                {/* Bottom Bar */}
+                <div className="mt-12 pt-8 border-t border-slate-200/60 flex flex-col sm:flex-row justify-between items-center gap-4">
+                  <p className="text-slate-500 text-xs">
+                    © 2025 PND50. Professional accounting for expats in Thailand.
+                  </p>
+                  <div className="flex gap-6">
+                    <Link
+                      href="/privacy-policy"
+                      className="text-slate-500 hover:text-sky-600 text-xs transition-colors"
+                    >
+                      Privacy Policy
+                    </Link>
+                    <Link
+                      href="/terms-of-service"
+                      className="text-slate-500 hover:text-sky-600 text-xs transition-colors"
+                    >
+                      Terms of Service
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </motion.footer>
           </div>
         </AnimatedGridBackground>
       </section>
