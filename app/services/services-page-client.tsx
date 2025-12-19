@@ -117,7 +117,7 @@ export default function ServicesPageClient() {
         />
 
         <section className="relative w-full bg-gradient-to-br from-slate-50 via-white to-sky-50/80">
-          <AnimatedGridBackground className="h-fit flex flex-col" variant="light">
+          <AnimatedGridBackground className="flex-1 flex flex-col" variant="light">
             <motion.div
               className="absolute top-[15%] left-[8%] w-20 h-20 border-2 border-sky-400/30 rounded-2xl backdrop-blur-sm"
               animate={{
@@ -190,7 +190,7 @@ export default function ServicesPageClient() {
               }}
             />
 
-            <div className="w-full flex flex-col lg:scale-[0.85] lg:origin-top">
+            <div className="flex-1 w-full flex flex-col lg:scale-[0.85] lg:origin-top">
               <section className="relative py-8 md:py-16 pt-[100px] lg:pt-[140px]">
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
                   <div className="max-w-4xl mx-auto text-center">

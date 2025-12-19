@@ -177,10 +177,10 @@ export default function RootLayout({
           <GoogleAnalytics />
         </Suspense>
       </head>
-      <body className={`${inter.className} min-h-screen flex flex-col`}>
+      <body className={inter.className}>
         <ModalProvider>
           <Navbar />
-          <main className="flex-1">
+          <main>
             {children}
             <AISearchContent />
           </main>
