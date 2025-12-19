@@ -6,6 +6,7 @@ import { useEffect, useRef } from "react"
 import Link from "next/link"
 import { ArrowLeft } from "lucide-react"
 import { gsap } from "gsap"
+import CTASection from "@/components/layout/CTASection"
 
 interface FAQ {
   question: string
@@ -122,6 +123,8 @@ export function ServicePageClient({ title, description, icon, features, faqs }: 
           </div>
         </div>
       </div>
+
+      <CTASection />
     </main>
   )
 }

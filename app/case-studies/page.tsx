@@ -14,9 +14,9 @@ import {
   Quote,
   ChevronDown,
 } from "lucide-react"
-import { Button } from "@/components/ui/button"
 import { RelatedLinks } from "@/components/seo/related-links"
 import { Calculator, FileText, HelpCircle } from "lucide-react"
+import CTASection from "@/components/layout/CTASection"
 
 export const metadata: Metadata = {
   title: "Case Studies | PND50",
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
 
 export default function CaseStudiesPage() {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-sky-50/80 relative overflow-hidden">
       {/* Hero Section */}
       <div className="relative min-h-[70vh] flex items-center justify-center overflow-hidden">
         <Image
@@ -866,9 +866,7 @@ export default function CaseStudiesPage() {
         </div>
 
         {/* CTA Section */}
-        <div className="max-w-4xl mx-auto mt-24">
-          
-        </div>
+        <CTASection />
 
         {/* Related Links Section */}
         <div className="max-w-6xl mx-auto mt-16">

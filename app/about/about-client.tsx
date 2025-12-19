@@ -7,6 +7,7 @@ import { ArrowRight, Target, CheckCircle2, Heart, Award, Users, TrendingUp } fro
 import { useEffect, useState } from "react"
 import { Testimonial } from "@/components/ui/testimonial-card"
 import { motion } from "framer-motion"
+import CTASection from "@/components/layout/CTASection"
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 30 },
@@ -90,7 +91,7 @@ const AboutClientPage = () => {
   }, [hasAnimated])
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-sky-50/80 overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-sky-50/80 relative overflow-hidden">
       {/* Hero Section */}
       <section className="relative pb-24 overflow-hidden md:pb-32 md:pt-28 pt-24 px-4 sm:px-6 lg:px-8">
         {/* ... existing floating elements ... */}
@@ -487,6 +488,31 @@ const AboutClientPage = () => {
           </div>
         </div>
       </section>
+
+      {/* Related Pages Section */}
+      <motion.section
+        className="py-12 sm:py-24 md:py-32 bg-white/50 backdrop-blur-sm relative overflow-hidden"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-100px" }}
+        variants={fadeInUp}
+        transition={{ duration: 0.6 }}
+      >
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 max-w-7xl">
+          <motion.div
+            className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8"
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+          >
+            {/* Related pages content */}
+          </motion.div>
+        </div>
+      </motion.section>
+
+      {/* CTA Section */}
+      <CTASection />
     </div>
   )
 }

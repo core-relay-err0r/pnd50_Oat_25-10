@@ -5,6 +5,7 @@ import dynamic from "next/dynamic"
 import { FileText, Building2, Users, Calculator, Search, X, ChevronDown } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { motion, AnimatePresence } from "framer-motion"
+import CTASection from "@/components/layout/CTASection"
 
 const AnimatedGridBackground = dynamic(
   () => import("@/components/ui/animated-grid-background").then((mod) => mod.AnimatedGridBackground),
@@ -363,6 +364,7 @@ export default function FAQPage() {
       </motion.section>
 
       {/* Related Links Section */}
+      <CTASection />
     </div>
   )
 }
