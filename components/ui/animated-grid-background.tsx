@@ -141,10 +141,16 @@ export function AnimatedGridBackground({
   }, [isDark, particleColor, gridColor, connectionColor])
 
   return (
-    <div className={cn("relative flex flex-col items-center justify-center overflow-x-hidden", bgClass, className)}>
+    <div
+      className={cn(
+        "relative flex flex-col items-center justify-center overflow-x-hidden min-h-full",
+        bgClass,
+        className,
+      )}
+    >
       <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" style={{ opacity: isDark ? 0.6 : 0.5 }} />
 
-      <div className="relative z-10 w-full flex flex-col">{children}</div>
+      <div className="relative z-10 w-full flex flex-col flex-1">{children}</div>
     </div>
   )
 }
