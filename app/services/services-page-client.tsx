@@ -411,7 +411,7 @@ export default function ServicesPageClient() {
                 {/* Bottom Bar */}
                 <div className="mt-12 pt-8 border-t border-slate-200/60 flex flex-col sm:flex-row justify-between items-center gap-4">
                   <p className="text-slate-500 text-xs">
-                    © 2025 PND50. Professional accounting for expats in Thailand.
+                    © 2025 PND50. Professional accounting and business consultant for expats in Thailand.
                   </p>
                   <div className="flex gap-6">
                     <Link
