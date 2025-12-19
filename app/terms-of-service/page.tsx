@@ -341,7 +341,7 @@ export default function TermsOfServicePage() {
                 <div className="p-4 bg-sky-50 rounded-xl border border-sky-100">
                   <p className="font-semibold text-slate-800 mb-2">Contact for Legal Inquiries</p>
                   <p className="text-sm">PND50 Co., Ltd.</p>
-                  <p className="text-sm">Email: oat3653377@gmail.com</p>
+                  <p className="text-sm">Email: info@pnd50.com</p>
                   <p className="text-sm">Bangkok, Thailand</p>
                 </div>
               </div>
