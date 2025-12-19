@@ -25,7 +25,7 @@ export default function Footer() {
   const pathname = usePathname()
   const [langOpen, setLangOpen] = useState(false)
 
-  if (pathname === "/" || pathname === "/schedule") {
+  if (pathname === "/" || pathname === "/schedule" || pathname === "/schedule/success") {
     return null
   }
 
