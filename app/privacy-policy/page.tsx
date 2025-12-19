@@ -1,8 +1,7 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { Shield, Eye, Lock, Users, FileText, Clock, Globe, Mail, ChevronDown } from "lucide-react"
-import { motion, AnimatePresence } from "framer-motion"
 import CTASection from "@/components/layout/CTASection"
 
 const sections = [
@@ -220,142 +219,66 @@ const sections = [
 
 export default function PrivacyPolicyPage() {
   const [openSections, setOpenSections] = useState<string[]>(["summary"])
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({
-        x: (e.clientX / window.innerWidth - 0.5) * 20,
-        y: (e.clientY / window.innerHeight - 0.5) * 20,
-      })
-    }
-    window.addEventListener("mousemove", handleMouseMove)
-    return () => window.removeEventListener("mousemove", handleMouseMove)
-  }, [])
 
   const toggleSection = (id: string) => {
     setOpenSections((prev) => (prev.includes(id) ? prev.filter((s) => s !== id) : [...prev, id]))
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-sky-50/80 relative overflow-hidden">
-      {/* Floating Elements */}
-      <motion.div
-        className="absolute top-[15%] left-[8%] w-20 h-20 border-2 border-sky-300/40 rounded-2xl pointer-events-none"
-        animate={{ rotate: [0, 90, 180, 270, 360], y: [0, -15, 0, 15, 0] }}
-        transition={{ duration: 20, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
-        style={{ transform: `translate(${mousePosition.x * 0.3}px, ${mousePosition.y * 0.3}px)` }}
-      />
-      <motion.div
-        className="absolute top-[25%] right-[12%] w-16 h-16 border-2 border-teal-300/30 rounded-full pointer-events-none"
-        animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.6, 0.3] }}
-        transition={{ duration: 4, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
-      />
-      <motion.div
-        className="absolute bottom-[30%] left-[15%] w-12 h-12 bg-gradient-to-br from-sky-200/30 to-teal-200/30 rounded-lg pointer-events-none"
-        animate={{ rotate: [45, 135, 225, 315, 405] }}
-        transition={{ duration: 15, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
-      />
-
-      {/* Blur Orbs */}
-      <div
-        className="absolute top-20 left-10 w-[500px] h-[500px] bg-gradient-to-br from-sky-200/40 via-blue-200/30 to-teal-200/20 rounded-full blur-3xl pointer-events-none"
-        style={{
-          transform: `translate(${mousePosition.x}px, ${mousePosition.y}px)`,
-          transition: "transform 0.5s ease-out",
-        }}
-      />
-      <div
-        className="absolute bottom-20 right-10 w-[450px] h-[450px] bg-gradient-to-br from-teal-200/35 via-sky-200/25 to-blue-200/20 rounded-full blur-3xl pointer-events-none"
-        style={{
-          transform: `translate(${-mousePosition.x}px, ${-mousePosition.y}px)`,
-          transition: "transform 0.5s ease-out",
-        }}
-      />
-
+    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
       {/* Hero Section */}
-      <div className="pt-24 pb-12 sm:pt-32 sm:pb-16 relative z-10">
+      <div className="pt-24 pb-12 sm:pt-32 sm:pb-16">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl">
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-              <span className="inline-flex items-center gap-2 bg-gradient-to-r from-sky-50 to-blue-50 text-sky-700 px-5 py-2.5 rounded-full text-sm font-semibold mb-8 border border-sky-200/60 shadow-sm shadow-sky-100/50">
+            <div>
+              <span className="inline-flex items-center gap-2 bg-sky-50 text-sky-700 px-4 py-2 rounded-full text-sm font-medium mb-6 border border-sky-100">
                 <Shield className="w-4 h-4" />
                 Legal
               </span>
 
-              <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight mb-6">
-                <span className="bg-gradient-to-r from-blue-600 via-sky-500 to-teal-400 bg-clip-text text-transparent">
-                  Privacy
-                </span>
-                <br />
-                <span className="bg-gradient-to-r from-slate-900 via-slate-700 to-slate-500 bg-clip-text text-transparent">
-                  Policy
-                </span>
+              <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-6 text-slate-900">
+                Privacy Policy
               </h1>
-              <p className="text-lg sm:text-xl text-slate-600 max-w-2xl mb-4">
+              <p className="text-lg text-slate-600 max-w-2xl mb-4">
                 At PND50, we take your privacy seriously. This policy explains how we collect, use, and protect your
                 personal information.
               </p>
               <p className="text-sm text-slate-400">Last updated: January 2025</p>
-            </motion.div>
+            </div>
           </div>
         </div>
       </div>
 
       {/* Content Section */}
-      <motion.section
-        className="py-12 sm:py-16 relative z-10"
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.5 }}
-      >
+      <section className="py-12 sm:py-16">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-4xl mx-auto space-y-4">
+          <div className="max-w-4xl mx-auto space-y-3">
             {sections.map((section) => {
               const Icon = section.icon
               const isOpen = openSections.includes(section.id)
               return (
-                <motion.div
-                  key={section.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.3 }}
-                  className="bg-white/80 backdrop-blur-sm border border-slate-200/50 rounded-2xl overflow-hidden shadow-sm"
-                >
+                <div key={section.id} className="bg-white border border-slate-200 rounded-xl overflow-hidden">
                   <button
                     onClick={() => toggleSection(section.id)}
-                    className="w-full px-6 py-5 flex items-center justify-between text-left hover:bg-slate-50/50 transition-colors"
+                    className="w-full px-6 py-4 flex items-center justify-between text-left hover:bg-slate-50 transition-colors"
                   >
-                    <div className="flex items-center gap-4">
-                      <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-sky-100 to-blue-100 flex items-center justify-center">
-                        <Icon className="w-5 h-5 text-sky-600" />
+                    <div className="flex items-center gap-3">
+                      <div className="w-9 h-9 rounded-lg bg-sky-50 flex items-center justify-center">
+                        <Icon className="w-4 h-4 text-sky-600" />
                       </div>
-                      <span className="font-semibold text-slate-800 text-lg">{section.title}</span>
+                      <span className="font-semibold text-slate-800">{section.title}</span>
                     </div>
                     <ChevronDown
-                      className={`w-5 h-5 text-slate-400 transition-transform ${isOpen ? "rotate-180" : ""}`}
+                      className={`w-5 h-5 text-slate-400 transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}
                     />
                   </button>
-                  <AnimatePresence>
-                    {isOpen && (
-                      <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: "auto", opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.2 }}
-                      >
-                        <div className="px-6 pb-6 border-t border-slate-100 pt-4">{section.content}</div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </motion.div>
+                  {isOpen && <div className="px-6 pb-5 border-t border-slate-100 pt-4">{section.content}</div>}
+                </div>
               )
             })}
           </div>
         </div>
-      </motion.section>
+      </section>
 
       <CTASection />
     </div>
