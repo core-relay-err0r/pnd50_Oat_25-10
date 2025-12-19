@@ -3,6 +3,7 @@ import ServiceSlider from "@/components/service-slider"
 import { motion } from "framer-motion"
 import dynamic from "next/dynamic"
 import { useState, useEffect } from "react"
+import CTASection from "@/components/layout/CTASection"
 
 const AnimatedGridBackground = dynamic(
   () => import("@/components/ui/animated-grid-background").then((mod) => mod.AnimatedGridBackground),
@@ -289,6 +290,8 @@ export default function ServicesPageClient() {
                   <ServiceSlider />
                 </div>
               </motion.section>
+
+              <CTASection />
             </div>
           </AnimatedGridBackground>
         </section>
