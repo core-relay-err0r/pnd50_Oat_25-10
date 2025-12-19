@@ -1,5 +1,5 @@
 "use client"
-import { ArrowRight, Mail, MapPin, Phone, Globe, ChevronDown } from "lucide-react"
+import { ArrowRight, Mail, MapPin, Phone, Globe, ChevronUp } from "lucide-react"
 import Link from "next/link"
 import ServiceSlider from "@/components/service-slider"
 import { motion } from "framer-motion"
@@ -258,37 +258,6 @@ export default function ServicesPageClient() {
                       </motion.div>
                     ))}
                   </motion.div>
-
-                  {/* Language Selector */}
-                  <div className="mt-8">
-                    <button
-                      className="inline-flex items-center justify-center gap-2 bg-white/70 backdrop-blur-md border-2 border-slate-200/80 text-slate-700 px-8 py-4 rounded-xl font-semibold hover:border-sky-400/80 hover:bg-white/90 hover:text-sky-600 transition-all hover:scale-105 shadow-lg shadow-slate-200/50 hover:shadow-xl hover:shadow-sky-200/50"
-                      onClick={() => setLangOpen(!langOpen)}
-                    >
-                      <Globe className="w-5 h-5" />
-                      Select Language
-                      <ChevronDown
-                        className="w-5 h-5 transition-transform"
-                        style={{ transform: langOpen ? "rotate(180deg)" : "rotate(0deg)" }}
-                      />
-                    </button>
-                    {langOpen && (
-                      <div className="mt-2">
-                        <ul className="space-y-3">
-                          {languages.map((lang, index) => (
-                            <li key={index}>
-                              <Link
-                                href={lang.href}
-                                className="text-slate-600 hover:text-sky-600 transition-colors text-sm flex items-center gap-2 group"
-                              >
-                                {lang.flag} {lang.name}
-                              </Link>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
-                  </div>
                 </div>
               </div>
             </section>
@@ -357,40 +326,12 @@ export default function ServicesPageClient() {
                     Schedule Consultation
                     <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                   </Link>
-                  {/* CTA Column */}
-                  <div>
-                    <h3 className="text-lg font-semibold text-slate-800 mb-6">Ready to Start?</h3>
-                    <p className="text-slate-600 text-sm mb-6 leading-relaxed">
-                      Helping foreign businesses succeed in Thailand since 2015. Get expert accounting, tax, and
-                      compliance support.
-                    </p>
-                    {/* Language Selector Dropdown */}
-                    <div className="relative">
-                      <button
-                        onClick={() => setLangOpen(!langOpen)}
-                        className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-sky-500 to-blue-600 text-white px-6 py-3 rounded-lg font-medium text-sm hover:from-sky-600 hover:to-blue-700 transition-all hover:scale-105 shadow-md shadow-blue-500/25 w-full sm:w-auto"
-                      >
-                        <Globe className="w-4 h-4" />
-                        Select Language
-                        <ChevronDown className={`w-4 h-4 transition-transform ${langOpen ? "rotate-180" : ""}`} />
-                      </button>
-                      {langOpen && (
-                        <div className="absolute bottom-full mb-2 left-0 bg-white rounded-lg shadow-xl border border-slate-200 overflow-hidden min-w-[180px] z-50">
-                          {languages.map((lang) => (
-                            <Link
-                              key={lang.code}
-                              href={lang.href}
-                              className="flex items-center gap-3 px-4 py-3 hover:bg-sky-50 transition-colors text-sm text-slate-700 hover:text-sky-600"
-                              onClick={() => setLangOpen(false)}
-                            >
-                              <span className="text-lg">{lang.flag}</span>
-                              <span>{lang.name}</span>
-                            </Link>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                  </div>
+                  <Link
+                    href="/contact"
+                    className="inline-flex items-center justify-center gap-2 bg-white/70 backdrop-blur-md border-2 border-slate-200/80 text-slate-700 px-8 py-4 rounded-xl font-semibold hover:border-sky-400/80 hover:bg-white/90 hover:text-sky-600 transition-all hover:scale-105 shadow-lg shadow-slate-200/50 hover:shadow-xl hover:shadow-sky-200/50"
+                  >
+                    Contact Us
+                  </Link>
                 </motion.div>
               </div>
             </motion.section>
@@ -465,13 +406,31 @@ export default function ServicesPageClient() {
                       Helping foreign businesses succeed in Thailand since 2015. Get expert accounting, tax, and
                       compliance support.
                     </p>
-                    <Link
-                      href="/schedule"
-                      className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-sky-500 to-blue-600 text-white px-6 py-3 rounded-lg font-medium text-sm hover:from-sky-600 hover:to-blue-700 transition-all hover:scale-105 shadow-md shadow-blue-500/25"
-                    >
-                      Free Consultation
-                      <ArrowRight className="w-4 h-4" />
-                    </Link>
+                    <div className="relative">
+                      <button
+                        onClick={() => setLangOpen(!langOpen)}
+                        className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-sky-500 to-blue-600 text-white px-6 py-3 rounded-lg font-medium text-sm hover:from-sky-600 hover:to-blue-700 transition-all hover:scale-105 shadow-md shadow-blue-500/25 w-full sm:w-auto"
+                      >
+                        <Globe className="w-4 h-4" />
+                        Select Language
+                        <ChevronUp className={`w-4 h-4 transition-transform ${langOpen ? "rotate-180" : ""}`} />
+                      </button>
+                      {langOpen && (
+                        <div className="absolute bottom-full left-0 mb-2 bg-white rounded-lg shadow-xl border border-slate-200 overflow-hidden min-w-[160px] z-50">
+                          {languages.map((lang) => (
+                            <Link
+                              key={lang.code}
+                              href={lang.href}
+                              className="flex items-center gap-3 px-4 py-3 hover:bg-sky-50 transition-colors text-sm text-slate-700 hover:text-sky-600"
+                              onClick={() => setLangOpen(false)}
+                            >
+                              <span className="text-lg">{lang.flag}</span>
+                              <span>{lang.name}</span>
+                            </Link>
+                          ))}
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </div>
 
