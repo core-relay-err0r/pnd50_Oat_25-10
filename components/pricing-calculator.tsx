@@ -292,12 +292,12 @@ export function PricingCalculator() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-sky-50/30 relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-muted via-background to-primary/5 relative overflow-hidden">
       <BreadcrumbSchema items={breadcrumbItems} />
 
       <AnimatedGridBackground className="min-h-screen" variant="light">
         <motion.div
-          className="absolute top-[15%] left-[8%] w-20 h-20 border-2 border-sky-300/40 rounded-2xl"
+          className="absolute top-[15%] left-[8%] w-20 h-20 border-2 border-primary/40 rounded-2xl"
           animate={{
             rotate: [0, 90, 180, 270, 360],
             y: [0, -15, 0, 15, 0],
@@ -308,7 +308,7 @@ export function PricingCalculator() {
           }}
         />
         <motion.div
-          className="absolute top-[25%] right-[12%] w-16 h-16 border-2 border-teal-300/30 rounded-full"
+          className="absolute top-[25%] right-[12%] w-16 h-16 border-2 border-primary/30 rounded-full"
           animate={{
             scale: [1, 1.2, 1],
             opacity: [0.3, 0.6, 0.3],
@@ -316,14 +316,14 @@ export function PricingCalculator() {
           transition={{ duration: 4, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
         />
         <motion.div
-          className="absolute bottom-[30%] left-[15%] w-12 h-12 bg-gradient-to-br from-sky-200/30 to-teal-200/30 rounded-lg"
+          className="absolute bottom-[30%] left-[15%] w-12 h-12 bg-gradient-to-br from-primary/30 to-primary/20 rounded-lg"
           animate={{
             rotate: [45, 135, 225, 315, 405],
           }}
           transition={{ duration: 15, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
         />
         <motion.div
-          className="absolute top-[40%] right-[20%] w-8 h-8 bg-gradient-to-br from-blue-300/40 to-sky-300/40 rounded-full"
+          className="absolute top-[40%] right-[20%] w-8 h-8 bg-gradient-to-br from-primary/40 to-primary/30 rounded-full"
           animate={{
             y: [0, -20, 0],
             x: [0, 10, 0],
@@ -332,14 +332,14 @@ export function PricingCalculator() {
         />
 
         <div
-          className="absolute top-20 left-10 w-[500px] h-[500px] bg-gradient-to-br from-sky-200/40 via-blue-200/30 to-teal-200/20 rounded-full blur-3xl pointer-events-none"
+          className="absolute top-20 left-10 w-[500px] h-[500px] bg-gradient-to-br from-primary/20 via-primary/15 to-primary/10 rounded-full blur-3xl pointer-events-none"
           style={{
             transform: `translate(${mousePosition.x}px, ${mousePosition.y}px)`,
             transition: "transform 0.5s ease-out",
           }}
         />
         <div
-          className="absolute bottom-20 right-10 w-[450px] h-[450px] bg-gradient-to-br from-teal-200/35 via-sky-200/25 to-blue-200/20 rounded-full blur-3xl pointer-events-none"
+          className="absolute bottom-20 right-10 w-[450px] h-[450px] bg-gradient-to-br from-primary/15 via-primary/10 to-primary/5 rounded-full blur-3xl pointer-events-none"
           style={{
             transform: `translate(${-mousePosition.x}px, ${-mousePosition.y}px)`,
             transition: "transform 0.5s ease-out",
@@ -374,16 +374,16 @@ export function PricingCalculator() {
 
               <div className="text-center mb-12 mt-6">
                 <motion.div
-                  className="inline-flex items-center gap-2 px-4 py-2 bg-sky-100/80 rounded-full mb-6"
+                  className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 rounded-full mb-6"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.3 }}
                 >
-                  <Sparkles className="w-4 h-4 text-sky-600" />
-                  <span className="text-sm font-medium text-sky-700">Instant Quote Calculator</span>
+                  <Sparkles className="w-4 h-4 text-primary" />
+                  <span className="text-sm font-medium text-primary">Instant Quote Calculator</span>
                 </motion.div>
                 <motion.h1
-                  className="text-3xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-slate-700 via-sky-600 to-sky-500 bg-clip-text text-transparent mb-4"
+                  className="text-3xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-foreground via-primary to-primary bg-clip-text text-transparent mb-4"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.4 }}
@@ -391,7 +391,7 @@ export function PricingCalculator() {
                   Build Your Custom Quote
                 </motion.h1>
                 <motion.p
-                  className="text-lg text-slate-600 max-w-2xl mx-auto"
+                  className="text-lg text-muted-foreground max-w-2xl mx-auto"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.5 }}
@@ -400,7 +400,7 @@ export function PricingCalculator() {
                 </motion.p>
 
                 <motion.div
-                  className="mt-6 inline-flex items-center gap-3 px-5 py-3 bg-gradient-to-r from-primary/10 via-primary/5 to-sky-100/50 border border-primary/20 rounded-2xl"
+                  className="mt-6 inline-flex items-center gap-3 px-5 py-3 bg-gradient-to-r from-primary/10 via-primary/5 to-secondary/50 border border-primary/20 rounded-2xl"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.6 }}
@@ -409,8 +409,8 @@ export function PricingCalculator() {
                     <MessageCircle className="w-5 h-5 text-primary" />
                   </div>
                   <div className="text-left">
-                    <p className="text-sm font-medium text-slate-800">Not sure where to start?</p>
-                    <p className="text-xs text-slate-600">
+                    <p className="text-sm font-medium text-foreground">Not sure where to start?</p>
+                    <p className="text-xs text-muted-foreground">
                       Ask <span className="font-semibold text-primary">Panida</span> to guide you through the process
                     </p>
                   </div>
@@ -433,7 +433,7 @@ export function PricingCalculator() {
                 {/* Left Column - Service Selection */}
                 <div className="lg:col-span-2 space-y-4">
                   {/* Tab Navigation */}
-                  <div className="flex gap-1 sm:gap-2 mb-6 bg-slate-100/80 p-1 sm:p-1.5 rounded-xl overflow-x-auto">
+                  <div className="flex gap-1 sm:gap-2 mb-6 bg-muted/80 p-1 sm:p-1.5 rounded-xl overflow-x-auto">
                     {(Object.keys(servicesData) as ServiceCategory[]).map((categoryKey) => {
                       const category = servicesData[categoryKey]
                       const Icon = category.icon
@@ -446,14 +446,14 @@ export function PricingCalculator() {
                           onClick={() => setActiveTab(categoryKey)}
                           className={`flex-1 flex items-center justify-center gap-1 sm:gap-2 px-2 sm:px-4 py-2 sm:py-3 rounded-lg transition-all duration-300 min-w-0 ${
                             isActive
-                              ? "bg-white shadow-md text-slate-800"
-                              : "text-slate-500 hover:text-slate-700 hover:bg-white/50"
+                              ? "bg-card shadow-md text-foreground"
+                              : "text-muted-foreground hover:text-foreground hover:bg-card/50"
                           }`}
                         >
                           <div
                             className={`w-6 h-6 sm:w-8 sm:h-8 rounded-lg bg-gradient-to-br ${category.color} flex items-center justify-center flex-shrink-0`}
                           >
-                            <Icon className="w-3 h-3 sm:w-4 sm:h-4 text-white" />
+                            <Icon className="w-3 h-3 sm:w-4 sm:h-4 text-primary-foreground" />
                           </div>
                           <span className="font-medium text-xs sm:text-sm hidden sm:inline truncate">
                             {categoryKey === "corporate"
@@ -463,7 +463,7 @@ export function PricingCalculator() {
                                 : "Advisory"}
                           </span>
                           {selectedCount > 0 && (
-                            <span className="px-1.5 sm:px-2 py-0.5 bg-sky-100 text-sky-700 text-xs font-medium rounded-full flex-shrink-0">
+                            <span className="px-1.5 sm:px-2 py-0.5 bg-primary/10 text-primary text-xs font-medium rounded-full flex-shrink-0">
                               {selectedCount}
                             </span>
                           )}
@@ -483,13 +483,13 @@ export function PricingCalculator() {
                           exit={{ opacity: 0 }}
                           className="flex flex-col items-center justify-center h-[400px] text-center"
                         >
-                          <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center mb-4">
-                            <Sparkles className="w-8 h-8 text-slate-400" />
+                          <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-muted to-secondary flex items-center justify-center mb-4">
+                            <Sparkles className="w-8 h-8 text-muted-foreground" />
                           </div>
-                          <h3 className="text-lg font-semibold text-slate-700 mb-2">
+                          <h3 className="text-lg font-semibold text-foreground mb-2">
                             Select a category to view services
                           </h3>
-                          <p className="text-sm text-slate-500 max-w-sm">
+                          <p className="text-sm text-muted-foreground max-w-sm">
                             Choose from Corporate, Accounting, or Advisory services above to get started with your
                             quote.
                           </p>
@@ -504,8 +504,8 @@ export function PricingCalculator() {
                           className="space-y-2"
                         >
                           <div className="mb-4">
-                            <h3 className="text-lg font-semibold text-slate-800">{servicesData[activeTab].title}</h3>
-                            <p className="text-sm text-slate-500">
+                            <h3 className="text-lg font-semibold text-foreground">{servicesData[activeTab].title}</h3>
+                            <p className="text-sm text-muted-foreground">
                               {servicesData[activeTab].services.length} services available
                             </p>
                           </div>
@@ -518,8 +518,8 @@ export function PricingCalculator() {
                                 animate={{ opacity: 1, x: 0 }}
                                 className={`flex flex-col p-3 sm:p-4 rounded-xl cursor-pointer transition-all duration-200 border max-w-full ${
                                   isSelected
-                                    ? "bg-sky-50 border-sky-200"
-                                    : "bg-white hover:bg-slate-50 border-slate-200/80"
+                                    ? "bg-primary/5 border-primary/20"
+                                    : "bg-card hover:bg-muted/50 border-border"
                                 }`}
                               >
                                 <div
@@ -529,20 +529,22 @@ export function PricingCalculator() {
                                   <div className="flex items-center gap-3 min-w-0">
                                     <Checkbox
                                       checked={isSelected}
-                                      className="data-[state=checked]:bg-sky-600 data-[state=checked]:border-sky-600 flex-shrink-0"
+                                      className="data-[state=checked]:bg-primary data-[state=checked]:border-primary flex-shrink-0"
                                     />
                                     <div className="min-w-0">
-                                      <p className="font-medium text-slate-800 text-sm sm:text-base">{service.name}</p>
-                                      <p className="text-xs text-slate-500 line-clamp-2">{service.description}</p>
+                                      <p className="font-medium text-foreground text-sm sm:text-base">{service.name}</p>
+                                      <p className="text-xs text-muted-foreground line-clamp-2">
+                                        {service.description}
+                                      </p>
                                     </div>
                                   </div>
                                   <div className="flex items-center gap-2 pl-8 sm:pl-0 flex-shrink-0">
-                                    <span className="text-sm font-semibold text-slate-700">
+                                    <span className="text-sm font-semibold text-foreground">
                                       ${service.price.toLocaleString()}
                                     </span>
                                     {service.hasOptions && (
                                       <ChevronDown
-                                        className={`w-4 h-4 text-slate-400 transition-transform ${
+                                        className={`w-4 h-4 text-muted-foreground transition-transform ${
                                           isSelected ? "rotate-180" : ""
                                         }`}
                                       />
@@ -558,9 +560,9 @@ export function PricingCalculator() {
                                       animate={{ height: "auto", opacity: 1 }}
                                       exit={{ height: 0, opacity: 0 }}
                                       transition={{ duration: 0.2 }}
-                                      className="mt-3 pt-3 border-t border-slate-200"
+                                      className="mt-3 pt-3 border-t border-border"
                                     >
-                                      <p className="text-xs text-slate-500 mb-2">Select options:</p>
+                                      <p className="text-xs text-muted-foreground mb-2">Select options:</p>
                                       <div className="space-y-2">
                                         {service.options.map((option) => {
                                           const currentService = selectedServices.find((s) => s.id === service.id)
@@ -575,18 +577,18 @@ export function PricingCalculator() {
                                               }}
                                               className={`flex items-center justify-between p-2 rounded-lg cursor-pointer transition-all ${
                                                 isOptionSelected
-                                                  ? "bg-sky-100 border border-sky-200"
-                                                  : "bg-slate-50 hover:bg-slate-100 border border-transparent"
+                                                  ? "bg-primary/10 border border-primary/20"
+                                                  : "bg-muted/50 hover:bg-muted border border-transparent"
                                               }`}
                                             >
                                               <div className="flex items-center gap-2">
                                                 <Checkbox
                                                   checked={isOptionSelected}
-                                                  className="data-[state=checked]:bg-sky-600 data-[state=checked]:border-sky-600 w-4 h-4"
+                                                  className="data-[state=checked]:bg-primary data-[state=checked]:border-primary w-4 h-4"
                                                 />
-                                                <span className="text-sm text-slate-700">{option.name}</span>
+                                                <span className="text-sm text-foreground">{option.name}</span>
                                               </div>
-                                              <span className="text-xs font-medium text-slate-600">
+                                              <span className="text-xs font-medium text-muted-foreground">
                                                 +${option.price.toLocaleString()}
                                               </span>
                                             </div>
@@ -605,10 +607,10 @@ export function PricingCalculator() {
                                       animate={{ height: "auto", opacity: 1 }}
                                       exit={{ height: 0, opacity: 0 }}
                                       transition={{ duration: 0.2 }}
-                                      className="mt-3 pt-3 border-t border-slate-200"
+                                      className="mt-3 pt-3 border-t border-border"
                                     >
                                       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
-                                        <p className="text-sm text-slate-600">
+                                        <p className="text-sm text-muted-foreground">
                                           {service.variableType === "employees"
                                             ? "Number of employees:"
                                             : "Est. monthly transactions:"}
@@ -620,7 +622,7 @@ export function PricingCalculator() {
                                               const currentService = selectedServices.find((s) => s.id === service.id)
                                               updateQuantity(service.id, (currentService?.quantity || 1) - 1)
                                             }}
-                                            className="w-8 h-8 rounded-lg bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-600 transition-colors"
+                                            className="w-8 h-8 rounded-lg bg-muted hover:bg-secondary flex items-center justify-center text-muted-foreground transition-colors"
                                           >
                                             <Minus className="w-4 h-4" />
                                           </button>
@@ -633,7 +635,7 @@ export function PricingCalculator() {
                                               updateQuantity(service.id, Number.parseInt(e.target.value) || 1)
                                             }}
                                             onClick={(e) => e.stopPropagation()}
-                                            className="w-14 sm:w-16 h-8 text-center rounded-lg border border-slate-200 text-slate-800 font-medium focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent"
+                                            className="w-14 sm:w-16 h-8 text-center rounded-lg border border-border text-foreground font-medium focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent bg-background"
                                           />
                                           <button
                                             onClick={(e) => {
@@ -641,13 +643,13 @@ export function PricingCalculator() {
                                               const currentService = selectedServices.find((s) => s.id === service.id)
                                               updateQuantity(service.id, (currentService?.quantity || 1) + 1)
                                             }}
-                                            className="w-8 h-8 rounded-lg bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-600 transition-colors"
+                                            className="w-8 h-8 rounded-lg bg-muted hover:bg-secondary flex items-center justify-center text-muted-foreground transition-colors"
                                           >
                                             <Plus className="w-4 h-4" />
                                           </button>
                                         </div>
                                       </div>
-                                      <p className="text-xs text-slate-400 mt-2">
+                                      <p className="text-xs text-muted-foreground mt-2">
                                         {service.variableType === "employees"
                                           ? `$${service.price.toLocaleString()} per employee/month`
                                           : `Base price for selected volume`}
@@ -671,17 +673,17 @@ export function PricingCalculator() {
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -20 }}
                       transition={{ duration: 0.5, ease: "easeOut" }}
-                      className="bg-white/90 backdrop-blur-xl rounded-2xl overflow-hidden shadow-xl shadow-sky-100/50 border border-slate-100"
+                      className="bg-card/90 backdrop-blur-xl rounded-2xl overflow-hidden shadow-xl shadow-primary/10 border border-border"
                     >
                       {/* Panel Header */}
-                      <div className="p-4 sm:p-6 border-b border-slate-100">
+                      <div className="p-4 sm:p-6 border-b border-border">
                         <div className="flex items-center gap-3 mb-2">
-                          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-sky-500 to-cyan-500 flex items-center justify-center flex-shrink-0">
-                            <FileText className="w-5 h-5 text-white" />
+                          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-primary/70 flex items-center justify-center flex-shrink-0">
+                            <FileText className="w-5 h-5 text-primary-foreground" />
                           </div>
                           <div className="min-w-0">
-                            <h3 className="font-semibold text-slate-800">Your Quote</h3>
-                            <p className="text-xs text-slate-500">{selectedServices.length} services selected</p>
+                            <h3 className="font-semibold text-foreground">Your Quote</h3>
+                            <p className="text-xs text-muted-foreground">{selectedServices.length} services selected</p>
                           </div>
                         </div>
                       </div>
@@ -689,7 +691,7 @@ export function PricingCalculator() {
                       {/* Selected Services List */}
                       <div className="p-3 sm:p-4 max-h-[300px] overflow-y-auto space-y-2">
                         {selectedServices.length === 0 ? (
-                          <div className="text-center py-8 text-slate-400">
+                          <div className="text-center py-8 text-muted-foreground">
                             <Calculator className="w-12 h-12 mx-auto mb-3 opacity-50" />
                             <p className="text-sm">Select services to build your quote</p>
                           </div>
@@ -697,23 +699,23 @@ export function PricingCalculator() {
                           selectedServices.map((service) => (
                             <div
                               key={service.id}
-                              className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-2 sm:p-3 bg-slate-50 rounded-lg gap-1 sm:gap-2"
+                              className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-2 sm:p-3 bg-muted/50 rounded-lg gap-1 sm:gap-2"
                             >
                               <div className="flex-1 min-w-0">
-                                <p className="text-sm font-medium text-slate-800 truncate">{service.name}</p>
-                                <p className="text-xs text-slate-500">{service.type}</p>
+                                <p className="text-sm font-medium text-foreground truncate">{service.name}</p>
+                                <p className="text-xs text-muted-foreground">{service.type}</p>
                               </div>
                               <div className="flex items-center justify-between sm:justify-end gap-2 flex-shrink-0">
-                                <span className="text-sm font-semibold text-sky-600 whitespace-nowrap">
+                                <span className="text-sm font-semibold text-primary whitespace-nowrap">
                                   ${formatPrice(service.price * (service.quantity || 1))}
                                 </span>
                                 <button
                                   onClick={() =>
                                     setSelectedServices(selectedServices.filter((s) => s.id !== service.id))
                                   }
-                                  className="p-1 hover:bg-slate-200 rounded transition-colors flex-shrink-0"
+                                  className="p-1 hover:bg-secondary rounded transition-colors flex-shrink-0"
                                 >
-                                  <X className="w-4 h-4 text-slate-400" />
+                                  <X className="w-4 h-4 text-muted-foreground" />
                                 </button>
                               </div>
                             </div>
@@ -723,40 +725,40 @@ export function PricingCalculator() {
 
                       {/* Price Summary */}
                       {selectedServices.length > 0 && (
-                        <div className="p-3 sm:p-4 space-y-2 sm:space-y-3 border-t border-slate-100">
+                        <div className="p-3 sm:p-4 space-y-2 sm:space-y-3 border-t border-border">
                           {preliminaryTotal.oneTime > 0 && (
                             <div className="flex justify-between text-sm gap-2">
-                              <span className="text-slate-500">One-time Fees</span>
-                              <span className="text-slate-800 font-medium whitespace-nowrap flex-shrink-0">
+                              <span className="text-muted-foreground">One-time Fees</span>
+                              <span className="text-foreground font-medium whitespace-nowrap flex-shrink-0">
                                 ${formatPrice(preliminaryTotal.oneTime)}
                               </span>
                             </div>
                           )}
                           {preliminaryTotal.monthly > 0 && (
                             <div className="flex justify-between text-sm gap-2">
-                              <span className="text-slate-500">Monthly Fees</span>
-                              <span className="text-slate-800 font-medium whitespace-nowrap flex-shrink-0">
+                              <span className="text-muted-foreground">Monthly Fees</span>
+                              <span className="text-foreground font-medium whitespace-nowrap flex-shrink-0">
                                 ${formatPrice(preliminaryTotal.monthly)}/mo
                               </span>
                             </div>
                           )}
                           {preliminaryTotal.annual > 0 && (
                             <div className="flex justify-between text-sm gap-2">
-                              <span className="text-slate-500">Annual Fees</span>
-                              <span className="text-slate-800 font-medium whitespace-nowrap flex-shrink-0">
+                              <span className="text-muted-foreground">Annual Fees</span>
+                              <span className="text-foreground font-medium whitespace-nowrap flex-shrink-0">
                                 ${formatPrice(preliminaryTotal.annual)}/yr
                               </span>
                             </div>
                           )}
-                          <div className="pt-2 sm:pt-3 border-t border-slate-100">
+                          <div className="pt-2 sm:pt-3 border-t border-border">
                             <div className="flex justify-between items-center gap-2">
-                              <span className="text-slate-800 font-semibold">Year 1 Total</span>
-                              <span className="text-lg sm:text-xl font-bold text-sky-600 whitespace-nowrap flex-shrink-0">
+                              <span className="text-foreground font-semibold">Year 1 Total</span>
+                              <span className="text-lg sm:text-xl font-bold text-primary whitespace-nowrap flex-shrink-0">
                                 ${formatPrice(preliminaryTotal.periodTotal)}
                               </span>
                             </div>
 
-                            <p className="text-xs text-slate-500 mt-1">*Estimated based on selections</p>
+                            <p className="text-xs text-muted-foreground mt-1">*Estimated based on selections</p>
                           </div>
                         </div>
                       )}
@@ -766,7 +768,7 @@ export function PricingCalculator() {
                         <Button
                           onClick={handleCalculate}
                           disabled={selectedServices.length === 0}
-                          className="w-full h-12 bg-gradient-to-r from-sky-500 to-cyan-500 hover:from-sky-600 hover:to-cyan-600 text-white font-semibold rounded-xl disabled:opacity-50 disabled:cursor-not-allowed"
+                          className="w-full h-12 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold rounded-xl disabled:opacity-50 disabled:cursor-not-allowed"
                         >
                           Calculate Final Price
                         </Button>
@@ -789,53 +791,53 @@ export function PricingCalculator() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm"
+                className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-foreground/40 backdrop-blur-sm"
                 onClick={() => setStep("selection")}
               >
                 <motion.div
                   initial={{ scale: 0.9, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
                   exit={{ scale: 0.9, opacity: 0 }}
-                  className="bg-white rounded-2xl shadow-2xl p-6 w-full max-w-md"
+                  className="bg-card rounded-2xl shadow-2xl p-6 w-full max-w-md"
                   onClick={(e) => e.stopPropagation()}
                 >
                   <div className="text-center mb-6">
-                    <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-sky-500 to-cyan-500 flex items-center justify-center">
-                      <Check className="w-8 h-8 text-white" />
+                    <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-primary to-primary/70 flex items-center justify-center">
+                      <Check className="w-8 h-8 text-primary-foreground" />
                     </div>
-                    <h3 className="text-xl font-semibold text-slate-800">Your Final Quote</h3>
-                    <p className="text-3xl font-bold text-sky-600 mt-2">${formatPrice(preliminaryTotal.periodTotal)}</p>
-                    <p className="text-sm text-slate-500">Year 1 Total</p>
+                    <h3 className="text-xl font-semibold text-foreground">Your Final Quote</h3>
+                    <p className="text-3xl font-bold text-primary mt-2">${formatPrice(preliminaryTotal.periodTotal)}</p>
+                    <p className="text-sm text-muted-foreground">Year 1 Total</p>
                   </div>
 
                   <div className="space-y-4 mb-6">
                     <div>
-                      <Label className="text-slate-600 mb-2 block">Name / Company</Label>
+                      <Label className="text-muted-foreground mb-2 block">Name / Company</Label>
                       <Input
                         placeholder="Your name / Company"
                         value={contactInfo.name}
                         onChange={(e) => setContactInfo({ ...contactInfo, name: e.target.value })}
-                        className="bg-slate-50 border-slate-200 text-slate-800"
+                        className="bg-muted/50 border-border text-foreground"
                       />
                     </div>
                     <div>
-                      <Label className="text-slate-600 mb-2 block">Email</Label>
+                      <Label className="text-muted-foreground mb-2 block">Email</Label>
                       <Input
                         type="email"
                         placeholder="your@email.com"
                         value={contactInfo.email}
                         onChange={(e) => setContactInfo({ ...contactInfo, email: e.target.value })}
-                        className="bg-slate-50 border-slate-200 text-slate-800"
+                        className="bg-muted/50 border-border text-foreground"
                       />
                     </div>
                     <div>
-                      <Label className="text-slate-600 mb-2 block">Phone</Label>
+                      <Label className="text-muted-foreground mb-2 block">Phone</Label>
                       <Input
                         type="tel"
                         placeholder="+66 XX XXX XXXX"
                         value={contactInfo.phone}
                         onChange={(e) => setContactInfo({ ...contactInfo, phone: e.target.value })}
-                        className="bg-slate-50 border-slate-200 text-slate-800"
+                        className="bg-muted/50 border-border text-foreground"
                       />
                     </div>
                   </div>
@@ -844,14 +846,14 @@ export function PricingCalculator() {
                     <Button
                       variant="outline"
                       onClick={() => setStep("selection")}
-                      className="flex-1 border-slate-300 text-slate-600 hover:bg-slate-100"
+                      className="flex-1 border-border text-muted-foreground hover:bg-muted"
                     >
                       Back
                     </Button>
                     <Button
                       onClick={handleSubmit}
                       disabled={!contactInfo.name || !contactInfo.email || isSubmitting}
-                      className="flex-1 bg-gradient-to-r from-sky-500 to-cyan-500 hover:from-sky-600 hover:to-cyan-600 disabled:opacity-50"
+                      className="flex-1 bg-primary hover:bg-primary/90 text-primary-foreground disabled:opacity-50"
                     >
                       {isSubmitting ? (
                         <span className="flex items-center gap-2">

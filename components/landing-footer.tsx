@@ -9,7 +9,7 @@ export function LandingFooter({
   const isLight = variant === "light"
 
   return (
-    <footer className={`${absolute ? "absolute bottom-0 left-0 right-0" : "relative w-full -mt-24"} z-20`}>
+    <footer className={`${absolute ? "absolute bottom-0 left-0 right-0" : "relative w-full"} z-20`}>
       <div
         className={`absolute inset-0 pointer-events-none ${
           isLight
