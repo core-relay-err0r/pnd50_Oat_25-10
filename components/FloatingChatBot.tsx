@@ -188,13 +188,13 @@ export function FloatingChatBot() {
   // Click outside to close
   useEffect(() => {
     function clickOutsideHandler(e: MouseEvent) {
-      if (wrapperRef.current && !wrapperRef.current.contains(e.target as Node) && isOpen) {
+      if (wrapperRef.current && !wrapperRef.current.contains(e.target as Node) && isOpen && !voiceMode) {
         setIsOpen(false)
       }
     }
     document.addEventListener("mousedown", clickOutsideHandler)
     return () => document.removeEventListener("mousedown", clickOutsideHandler)
-  }, [isOpen])
+  }, [isOpen, voiceMode])
 
   const {
     messages: aiMessages,
