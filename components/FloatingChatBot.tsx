@@ -410,14 +410,21 @@ export function FloatingChatBot() {
     if (!voiceMode || aiMessages.length === 0) return
 
     const lastMessage = aiMessages[aiMessages.length - 1]
-    if (lastMessage.role === "assistant" && status !== "in_progress") {
+
+    // AI SDK v5 uses: "ready" | "submitted" | "streaming" | "error"
+    if (
+      lastMessage.role === "assistant" &&
+      status === "ready" &&
+      !lastMessage.id.startsWith("welcome-") &&
+      !spokenMessageIdsRef.current.has(lastMessage.id)
+    ) {
       const messageText = lastMessage.parts
         .filter((part) => part.type === "text")
         .map((part) => part.text)
         .join(" ")
 
-      if (messageText && messageText !== lastSpokenMessageRef.current) {
-        // Mark as spoken BEFORE triggering TTS
+      if (messageText && messageText.trim().length > 0) {
+        // Mark as spoken BEFORE triggering TTS to prevent duplicates
         spokenMessageIdsRef.current.add(lastMessage.id)
         lastSpokenMessageRef.current = messageText
         setIsProcessing(false)
