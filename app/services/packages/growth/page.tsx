@@ -64,7 +64,11 @@ export default function GrowthPackagePage() {
               <div className="w-20 h-20 md:w-24 md:h-24 rounded-3xl bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center shadow-2xl shadow-primary/30 animate-float">
                 <TrendingUp className="w-10 h-10 md:w-12 md:h-12 text-primary-foreground" />
               </div>
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 backdrop-blur-sm border border-primary/20 text-primary text-sm font-medium">
+              <div className="inline-flex items-center gap-2 bg-gradient-to-r from-sky-50 to-blue-50 text-sky-700 px-5 py-2.5 rounded-full text-sm font-semibold border border-sky-200/60 shadow-sm shadow-sky-100/50">
+                <span className="relative flex h-2.5 w-2.5">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-sky-500"></span>
+                </span>
                 <Sparkles className="w-4 h-4" />
                 For Expanding Businesses
               </div>

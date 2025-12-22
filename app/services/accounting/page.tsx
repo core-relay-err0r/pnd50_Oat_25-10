@@ -1,119 +1,113 @@
 import type { Metadata } from "next"
-import Image from "next/image"
-import { Button } from "@/components/ui/button"
-import { Section } from "@/components/ui/section"
-import { Container } from "@/components/ui/container"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { BookOpen, FileText, BarChart2, ArrowRight } from "lucide-react"
+import { BookOpen } from "lucide-react"
+import { ServiceSchema, BreadcrumbSchema, FAQSchema } from "@/components/seo/structured-data"
+import { siteConfig } from "@/lib/seo-config"
+import { ServicePageClient } from "@/components/services/service-page-client"
 
 export const metadata: Metadata = {
-  title: "Comprehensive Accounting Services | PND50",
+  title: "Accounting & Bookkeeping Services in Thailand | PND50",
   description:
-    "Accurate, reliable, and insightful accounting services to help your business thrive. From bookkeeping to financial reporting, we've got you covered.",
+    "Professional accounting and bookkeeping services in Thailand for foreign businesses. Monthly financial statements, bank reconciliations, and TR Cloud system. Full English support.",
+  keywords: [
+    "accounting services Thailand",
+    "bookkeeping Thailand",
+    "accounting for foreign business Thailand",
+    "monthly bookkeeping Thailand",
+    "financial statements Thailand",
+    "expat accounting Thailand",
+    "accounting services in Thailand",
+    "bookkeeping in Thailand",
+    "accounting for foreign business in Thailand",
+    "expat accounting Thailand",
+    "English speaking accountant Thailand",
+  ],
+  alternates: {
+    canonical: `${siteConfig.url}/services/accounting`,
+    languages: {
+      en: `${siteConfig.url}/services/accounting`,
+      "en-US": `${siteConfig.url}/services/accounting`,
+      "en-GB": `${siteConfig.url}/services/accounting`,
+      "en-SG": `${siteConfig.url}/services/accounting`,
+      "en-AU": `${siteConfig.url}/services/accounting`,
+      "x-default": `${siteConfig.url}/services/accounting`,
+    },
+  },
+  openGraph: {
+    title: "Accounting & Bookkeeping Services in Thailand | PND50",
+    description: "Professional accounting services for foreign businesses in Thailand. Full English support.",
+    url: `${siteConfig.url}/services/accounting`,
+    siteName: "PND50",
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Accounting Services in Thailand | PND50",
+    description: "Professional accounting for foreign businesses in Thailand.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+    },
+  },
 }
 
-const AccountingPage = () => {
+const features = [
+  "Monthly bookkeeping in English",
+  "Profit & loss statements",
+  "Balance sheet preparation",
+  "Bank reconciliations",
+  "TR Cloud accounting system",
+  "Monthly email reports",
+  "Thai Accounting Standards compliance",
+  "Dedicated accountant support",
+]
+
+const faqs = [
+  {
+    question: "Do I need an accountant for my business in Thailand?",
+    answer:
+      "Yes. All Thai registered companies must maintain proper accounting records and submit audited financial statements annually. Our team handles this for you in English.",
+  },
+  {
+    question: "What accounting system do you use?",
+    answer:
+      "We use TR Cloud, a secure system operated by our team. You receive monthly reports via email — no software installation needed on your end.",
+  },
+  {
+    question: "How often will I receive financial reports?",
+    answer:
+      "Monthly. You'll get profit & loss statements, balance sheets, and bank reconciliations delivered to your email with clear explanations in English.",
+  },
+]
+
+export default function AccountingPage() {
   return (
     <>
-      <Section className="bg-white pt-24 pb-16">
-        <Container>
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div>
-              <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4">
-                Precision Accounting for Business Clarity
-              </h1>
-              <p className="text-lg text-gray-600 mb-8">
-                We offer a comprehensive range of accounting services to ensure your financials are accurate, compliant,
-                and a powerful tool for decision-making.
-              </p>
-              <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-white">
-                Explore Our Services <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
-            </div>
-            <div>
-              <Image
-                src="/images/services/accounting-hero.png"
-                alt="3D illustration of a financial dashboard with charts and calculator"
-                width={600}
-                height={500}
-                className="rounded-xl shadow-2xl object-cover w-full h-full"
-              />
-            </div>
-          </div>
-        </Container>
-      </Section>
+      <ServiceSchema
+        name="Accounting & Bookkeeping Services in Thailand"
+        description="Professional accounting and bookkeeping services for foreign businesses operating in Thailand."
+        url="/services/accounting"
+      />
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", url: "/" },
+          { name: "Services", url: "/services" },
+          { name: "Accounting in Thailand", url: "/services/accounting" },
+        ]}
+      />
+      <FAQSchema faqs={faqs} />
 
-      <Section className="bg-slate-50">
-        <Container>
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900">What We Offer</h2>
-            <p className="text-lg text-gray-600 mt-3 max-w-3xl mx-auto">
-              Our core accounting services are designed to provide a complete financial picture of your business.
-            </p>
-          </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-3">
-                  <BookOpen className="h-7 w-7 text-blue-500" />
-                  Bookkeeping Services
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-gray-600">
-                  Meticulous recording of all financial transactions to maintain accurate and up-to-date books.
-                </p>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-3">
-                  <FileText className="h-7 w-7 text-blue-500" />
-                  Financial Statements
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-gray-600">
-                  Preparation of key financial statements, including balance sheets, income statements, and cash flow
-                  statements.
-                </p>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-3">
-                  <BarChart2 className="h-7 w-7 text-blue-500" />
-                  Financial Analysis
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-gray-600">
-                  In-depth analysis of your financial data to provide actionable insights for business growth and
-                  efficiency.
-                </p>
-              </CardContent>
-            </Card>
-          </div>
-        </Container>
-      </Section>
-
-      <Section className="bg-blue-600 text-white">
-        <Container className="text-center">
-          <h2 className="text-3xl md:text-4xl font-extrabold mb-4">Ready to Streamline Your Finances?</h2>
-          <p className="text-lg text-blue-200 max-w-3xl mx-auto mb-8">
-            Let us handle the numbers so you can focus on what you do best—running your business. Get in touch for a
-            free consultation.
-          </p>
-          <Button
-            size="lg"
-            className="bg-white text-blue-600 hover:bg-gray-200 px-8 py-4 text-lg font-bold rounded-lg shadow-2xl transition-transform duration-300 hover:scale-105"
-          >
-            Schedule Free Consultation
-          </Button>
-        </Container>
-      </Section>
+      <ServicePageClient
+        title="Accounting & Bookkeeping in Thailand"
+        description="Professional accounting services for foreign-owned businesses in Thailand. We handle your monthly bookkeeping, financial statements, and reconciliations with precision — all delivered in English."
+        icon={<BookOpen className="w-6 h-6 text-white" />}
+        features={features}
+        faqs={faqs}
+      />
     </>
   )
 }
-
-export default AccountingPage

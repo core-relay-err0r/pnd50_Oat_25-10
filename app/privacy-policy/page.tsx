@@ -1,434 +1,277 @@
-"use client"
+import type { Metadata } from "next"
+import { Shield, Eye, Lock, Users, FileText, Clock, Globe, Mail } from "lucide-react"
 
-import Link from "next/link"
-import { Mail, Phone, MapPin, Shield, Eye, Lock, Users, FileText, Clock, Globe } from "lucide-react"
-
-const PrivacyPolicyPage = () => {
-  return (
-    <main className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
-      <div className="bg-blue-600 text-white py-16">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center gap-3 mb-4">
-            <Shield className="w-10 h-10" />
-            <h1 className="text-4xl font-bold">Privacy Policy</h1>
-          </div>
-          <p className="text-xl text-blue-100 leading-relaxed">Last updated: January 2025</p>
-          {/* </CHANGE> */}
-          <p className="mt-4 text-lg text-blue-50 leading-relaxed max-w-3xl">
-            At PND50, we take your privacy seriously. This policy explains how we collect, use, and protect your
-            personal information when you use our services.
-          </p>
-        </div>
-      </div>
-
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="bg-blue-50 border-l-4 border-blue-600 p-6 mb-12 rounded-r-lg">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4 flex items-center gap-2">
-            <Eye className="w-6 h-6 text-blue-600" />
-            Quick Summary
-          </h2>
-          <div className="space-y-3 text-gray-700 leading-relaxed">
-            <p>Here's what you need to know about your privacy with PND50:</p>
-            <ul className="space-y-2 ml-6">
-              <li className="flex items-start gap-2">
-                <span className="text-blue-600 mt-1">•</span>
-                <span>We collect only the information necessary to provide our accounting and advisory services</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-blue-600 mt-1">•</span>
-                <span>Your data is encrypted and stored securely</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-blue-600 mt-1">•</span>
-                <span>We never sell your personal information to third parties</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-blue-600 mt-1">•</span>
-                <span>You have the right to access, update, or delete your data at any time</span>
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        <section className="mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-6 flex items-center gap-2">
-            <FileText className="w-7 h-7 text-blue-600" />
-            Key Terms Explained
-          </h2>
-          <p className="text-gray-700 mb-4 leading-relaxed">
-            To help you understand this policy better, here are some important terms we use:
-          </p>
-          <div className="grid gap-4 md:grid-cols-2">
-            <div className="bg-white p-5 rounded-lg border border-gray-200 shadow-sm">
-              <h3 className="font-semibold text-gray-900 mb-2">Personal Data</h3>
-              <p className="text-gray-600 text-sm leading-relaxed">
-                Any information that can identify you, such as your name, email, phone number, or address.
-              </p>
-            </div>
-            <div className="bg-white p-5 rounded-lg border border-gray-200 shadow-sm">
-              <h3 className="font-semibold text-gray-900 mb-2">Usage Data</h3>
-              <p className="text-gray-600 text-sm leading-relaxed">
-                Information about how you use our website, like which pages you visit and how long you stay.
-              </p>
-            </div>
-            <div className="bg-white p-5 rounded-lg border border-gray-200 shadow-sm">
-              <h3 className="font-semibold text-gray-900 mb-2">Cookies</h3>
-              <p className="text-gray-600 text-sm leading-relaxed">
-                Small files stored on your device that help us remember your preferences and improve your experience.
-              </p>
-            </div>
-            <div className="bg-white p-5 rounded-lg border border-gray-200 shadow-sm">
-              <h3 className="font-semibold text-gray-900 mb-2">Service Provider</h3>
-              <p className="text-gray-600 text-sm leading-relaxed">
-                Third-party companies we work with to help deliver our services to you.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        <section className="mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-6 flex items-center gap-2">
-            <Users className="w-7 h-7 text-blue-600" />
-            What Information We Collect
-          </h2>
-
-          <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm mb-6">
-            <h3 className="text-xl font-semibold text-gray-900 mb-4">Personal Information You Provide</h3>
-            <p className="text-gray-700 mb-4 leading-relaxed">When you use our services, we may ask you to provide:</p>
-            <ul className="space-y-2 text-gray-700">
-              <li className="flex items-start gap-3">
-                <span className="text-blue-600 font-bold mt-1">✓</span>
-                <span>
-                  <strong>Contact details:</strong> Email address, phone number, and mailing address
-                </span>
-              </li>
-              <li className="flex items-start gap-3">
-                <span className="text-blue-600 font-bold mt-1">✓</span>
-                <span>
-                  <strong>Identity information:</strong> First and last name
-                </span>
-              </li>
-              <li className="flex items-start gap-3">
-                <span className="text-blue-600 font-bold mt-1">✓</span>
-                <span>
-                  <strong>Business information:</strong> Company name, tax ID, and business address
-                </span>
-              </li>
-            </ul>
-          </div>
-
-          <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-            <h3 className="text-xl font-semibold text-gray-900 mb-4">Information We Collect Automatically</h3>
-            <p className="text-gray-700 mb-4 leading-relaxed">When you visit our website, we automatically collect:</p>
-            <ul className="space-y-2 text-gray-700">
-              <li className="flex items-start gap-3">
-                <span className="text-blue-600 font-bold mt-1">✓</span>
-                <span>
-                  <strong>Device information:</strong> IP address, browser type, and operating system
-                </span>
-              </li>
-              <li className="flex items-start gap-3">
-                <span className="text-blue-600 font-bold mt-1">✓</span>
-                <span>
-                  <strong>Usage patterns:</strong> Pages visited, time spent, and navigation paths
-                </span>
-              </li>
-              <li className="flex items-start gap-3">
-                <span className="text-blue-600 font-bold mt-1">✓</span>
-                <span>
-                  <strong>Location data:</strong> General geographic location based on IP address
-                </span>
-              </li>
-            </ul>
-          </div>
-        </section>
-
-        <section className="mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-6 flex items-center gap-2">
-            <Lock className="w-7 h-7 text-blue-600" />
-            How We Use Your Information
-          </h2>
-          <p className="text-gray-700 mb-6 leading-relaxed">
-            We use your information to provide and improve our services. Specifically, we use it to:
-          </p>
-          <div className="grid gap-4">
-            <div className="bg-white p-5 rounded-lg border-l-4 border-blue-600 shadow-sm">
-              <h3 className="font-semibold text-gray-900 mb-2">Provide Our Services</h3>
-              <p className="text-gray-600 text-sm leading-relaxed">
-                Deliver accounting and advisory services, manage your account, and process your requests.
-              </p>
-            </div>
-            <div className="bg-white p-5 rounded-lg border-l-4 border-green-600 shadow-sm">
-              <h3 className="font-semibold text-gray-900 mb-2">Communicate With You</h3>
-              <p className="text-gray-600 text-sm leading-relaxed">
-                Send important updates, respond to inquiries, and provide customer support.
-              </p>
-            </div>
-            <div className="bg-white p-5 rounded-lg border-l-4 border-purple-600 shadow-sm">
-              <h3 className="font-semibold text-gray-900 mb-2">Improve Our Services</h3>
-              <p className="text-gray-600 text-sm leading-relaxed">
-                Analyze usage patterns, fix technical issues, and develop new features.
-              </p>
-            </div>
-            <div className="bg-white p-5 rounded-lg border-l-4 border-orange-600 shadow-sm">
-              <h3 className="font-semibold text-gray-900 mb-2">Ensure Security</h3>
-              <p className="text-gray-600 text-sm leading-relaxed">
-                Protect against fraud, unauthorized access, and other security threats.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        <section className="mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-6 flex items-center gap-2">
-            <Globe className="w-7 h-7 text-blue-600" />
-            How We Share Your Information
-          </h2>
-          <p className="text-gray-700 mb-6 leading-relaxed">
-            We respect your privacy and only share your information in limited circumstances:
-          </p>
-          <div className="space-y-4">
-            <div className="bg-white p-5 rounded-lg border border-gray-200 shadow-sm">
-              <h3 className="font-semibold text-gray-900 mb-2">With Service Providers</h3>
-              <p className="text-gray-600 text-sm leading-relaxed">
-                We work with trusted third-party companies to help us provide our services (like payment processors or
-                cloud storage providers). These companies are required to protect your data and can only use it for the
-                specific services they provide to us.
-              </p>
-            </div>
-            <div className="bg-white p-5 rounded-lg border border-gray-200 shadow-sm">
-              <h3 className="font-semibold text-gray-900 mb-2">For Legal Reasons</h3>
-              <p className="text-gray-600 text-sm leading-relaxed">
-                We may disclose your information if required by law, court order, or government request, or to protect
-                our rights and safety.
-              </p>
-            </div>
-            <div className="bg-white p-5 rounded-lg border border-gray-200 shadow-sm">
-              <h3 className="font-semibold text-gray-900 mb-2">With Your Consent</h3>
-              <p className="text-gray-600 text-sm leading-relaxed">
-                We may share your information with other parties when you give us explicit permission to do so.
-              </p>
-            </div>
-          </div>
-          <div className="bg-red-50 border-l-4 border-red-600 p-5 mt-6 rounded-r-lg">
-            <p className="text-red-900 font-semibold leading-relaxed">
-              We never sell your personal information to third parties for marketing purposes.
-            </p>
-          </div>
-        </section>
-
-        <section className="mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-6 flex items-center gap-2">
-            <Clock className="w-7 h-7 text-blue-600" />
-            How Long We Keep Your Data
-          </h2>
-          <p className="text-gray-700 mb-4 leading-relaxed">
-            We only keep your personal information for as long as necessary to:
-          </p>
-          <ul className="space-y-3 text-gray-700 mb-6">
-            <li className="flex items-start gap-3">
-              <span className="text-blue-600 font-bold mt-1">1.</span>
-              <span>Provide our services to you</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <span className="text-blue-600 font-bold mt-1">2.</span>
-              <span>Comply with legal and regulatory requirements</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <span className="text-blue-600 font-bold mt-1">3.</span>
-              <span>Resolve disputes and enforce our agreements</span>
-            </li>
-          </ul>
-          <p className="text-gray-600 text-sm leading-relaxed bg-gray-50 p-4 rounded-lg">
-            After this period, we securely delete or anonymize your information so it can no longer identify you.
-          </p>
-        </section>
-
-        <section className="mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-6">Your Privacy Rights</h2>
-          <p className="text-gray-700 mb-6 leading-relaxed">
-            You have important rights regarding your personal information:
-          </p>
-          <div className="grid gap-4 md:grid-cols-2">
-            <div className="bg-blue-50 p-5 rounded-lg border border-blue-200">
-              <h3 className="font-semibold text-gray-900 mb-2">Access Your Data</h3>
-              <p className="text-gray-600 text-sm leading-relaxed">
-                Request a copy of the personal information we hold about you.
-              </p>
-            </div>
-            <div className="bg-green-50 p-5 rounded-lg border border-green-200">
-              <h3 className="font-semibold text-gray-900 mb-2">Correct Your Data</h3>
-              <p className="text-gray-600 text-sm leading-relaxed">Update or correct any inaccurate information.</p>
-            </div>
-            <div className="bg-purple-50 p-5 rounded-lg border border-purple-200">
-              <h3 className="font-semibold text-gray-900 mb-2">Delete Your Data</h3>
-              <p className="text-gray-600 text-sm leading-relaxed">
-                Request deletion of your personal information (subject to legal requirements).
-              </p>
-            </div>
-            <div className="bg-orange-50 p-5 rounded-lg border border-orange-200">
-              <h3 className="font-semibold text-gray-900 mb-2">Opt-Out</h3>
-              <p className="text-gray-600 text-sm leading-relaxed">
-                Unsubscribe from marketing communications at any time.
-              </p>
-            </div>
-          </div>
-          <p className="text-gray-600 text-sm mt-6 leading-relaxed">
-            To exercise any of these rights, please contact us using the information provided below.
-          </p>
-        </section>
-
-        <section className="mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-6">Cookies & Tracking</h2>
-          <p className="text-gray-700 mb-6 leading-relaxed">
-            We use cookies and similar technologies to improve your experience on our website. Here's what you should
-            know:
-          </p>
-          <div className="space-y-4">
-            <div className="bg-white p-5 rounded-lg border border-gray-200 shadow-sm">
-              <h3 className="font-semibold text-gray-900 mb-2">Essential Cookies</h3>
-              <p className="text-gray-600 text-sm leading-relaxed">
-                Required for the website to function properly. These cannot be disabled.
-              </p>
-            </div>
-            <div className="bg-white p-5 rounded-lg border border-gray-200 shadow-sm">
-              <h3 className="font-semibold text-gray-900 mb-2">Functional Cookies</h3>
-              <p className="text-gray-600 text-sm leading-relaxed">
-                Remember your preferences and settings to provide a personalized experience.
-              </p>
-            </div>
-            <div className="bg-white p-5 rounded-lg border border-gray-200 shadow-sm">
-              <h3 className="font-semibold text-gray-900 mb-2">Analytics Cookies</h3>
-              <p className="text-gray-600 text-sm leading-relaxed">
-                Help us understand how visitors use our website so we can improve it.
-              </p>
-            </div>
-          </div>
-          <p className="text-gray-600 text-sm mt-6 leading-relaxed bg-gray-50 p-4 rounded-lg">
-            You can control cookies through your browser settings. Note that disabling certain cookies may affect
-            website functionality.
-          </p>
-        </section>
-
-        <section className="mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-6">Data Security</h2>
-          <p className="text-gray-700 mb-6 leading-relaxed">
-            We take the security of your personal information seriously and use industry-standard measures to protect
-            it:
-          </p>
-          <ul className="space-y-3 text-gray-700">
-            <li className="flex items-start gap-3">
-              <span className="text-green-600 font-bold mt-1">✓</span>
-              <span>Encryption of data in transit and at rest</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <span className="text-green-600 font-bold mt-1">✓</span>
-              <span>Regular security audits and updates</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <span className="text-green-600 font-bold mt-1">✓</span>
-              <span>Restricted access to personal information</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <span className="text-green-600 font-bold mt-1">✓</span>
-              <span>Secure data centers with physical and digital safeguards</span>
-            </li>
-          </ul>
-          <div className="bg-yellow-50 border-l-4 border-yellow-600 p-5 mt-6 rounded-r-lg">
-            <p className="text-yellow-900 text-sm leading-relaxed">
-              <strong>Important:</strong> While we implement strong security measures, no method of transmission over
-              the internet is 100% secure. We cannot guarantee absolute security but are committed to protecting your
-              data to the best of our ability.
-            </p>
-          </div>
-        </section>
-
-        <section className="mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-6">Children's Privacy</h2>
-          <p className="text-gray-700 leading-relaxed">
-            Our services are not intended for children under 13 years of age. We do not knowingly collect personal
-            information from children. If you believe we have inadvertently collected information from a child, please
-            contact us immediately so we can delete it.
-          </p>
-        </section>
-
-        <section className="mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-6">Third-Party Links</h2>
-          <p className="text-gray-700 leading-relaxed">
-            Our website may contain links to other websites. We are not responsible for the privacy practices of these
-            external sites. We encourage you to read the privacy policies of any website you visit.
-          </p>
-        </section>
-
-        <section className="mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-6">Changes to This Policy</h2>
-          <p className="text-gray-700 mb-4 leading-relaxed">
-            We may update this Privacy Policy from time to time to reflect changes in our practices or legal
-            requirements. When we make changes:
-          </p>
-          <ul className="space-y-2 text-gray-700 mb-6">
-            <li className="flex items-start gap-3">
-              <span className="text-blue-600 font-bold mt-1">•</span>
-              <span>We'll post the updated policy on this page</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <span className="text-blue-600 font-bold mt-1">•</span>
-              <span>We'll update the "Last updated" date at the top</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <span className="text-blue-600 font-bold mt-1">•</span>
-              <span>For significant changes, we'll notify you by email or prominent notice on our website</span>
-            </li>
-          </ul>
-          <p className="text-gray-600 text-sm leading-relaxed bg-gray-50 p-4 rounded-lg">
-            We encourage you to review this policy periodically to stay informed about how we protect your information.
-          </p>
-        </section>
-
-        <section className="bg-gradient-to-r from-blue-600 to-blue-700 text-white p-8 rounded-lg shadow-lg">
-          <h2 className="text-3xl font-bold mb-6">Questions? We're Here to Help</h2>
-          <p className="text-blue-100 mb-6 leading-relaxed">
-            If you have any questions about this Privacy Policy or how we handle your data, please don't hesitate to
-            reach out:
-          </p>
-          <div className="grid gap-4 md:grid-cols-2">
-            <div className="flex items-start gap-3">
-              <Mail className="w-5 h-5 mt-1 flex-shrink-0" />
-              <div>
-                <h3 className="font-semibold mb-1">Email Us</h3>
-                <a href="mailto:oat3653377@gmail.com" className="text-blue-100 hover:text-white underline">
-                  info@pnd50.com
-                </a>
-              </div>
-            </div>
-            <div className="flex items-start gap-3">
-              <Phone className="w-5 h-5 mt-1 flex-shrink-0" />
-              <div>
-                <h3 className="font-semibold mb-1">Call Us</h3>
-                <p className="text-blue-100">Available Monday-Friday, 9am-5pm</p>
-              </div>
-            </div>
-            <div className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 mt-1 flex-shrink-0" />
-              <div>
-                <h3 className="font-semibold mb-1">Visit Us</h3>
-                <p className="text-blue-100">Bangkok, Thailand</p>
-              </div>
-            </div>
-            <div className="flex items-start gap-3">
-              <Globe className="w-5 h-5 mt-1 flex-shrink-0" />
-              <div>
-                <h3 className="font-semibold mb-1">Website</h3>
-                <Link href="/contact" className="text-blue-100 hover:text-white underline">
-                  Contact Form
-                </Link>
-              </div>
-            </div>
-          </div>
-        </section>
-      </div>
-    </main>
-  )
+export const metadata: Metadata = {
+  title: "Privacy Policy",
+  description:
+    "Learn how PND50 collects, uses, and protects your personal information. Your privacy is important to us.",
+  keywords: ["privacy policy", "data protection", "PND50 privacy", "Thailand accounting privacy"],
+  openGraph: {
+    title: "Privacy Policy | PND50",
+    description: "Learn how PND50 collects, uses, and protects your personal information.",
+    type: "website",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+  alternates: {
+    canonical: "https://pnd50.com/privacy-policy",
+  },
 }
 
-export default PrivacyPolicyPage
+const sections = [
+  {
+    id: "summary",
+    icon: Eye,
+    title: "Quick Summary",
+    content: (
+      <div className="space-y-3 text-slate-600 leading-relaxed">
+        <p>Here's what you need to know about your privacy with PND50:</p>
+        <ul className="space-y-2">
+          {[
+            "We collect only the information necessary to provide our accounting and advisory services",
+            "Your data is encrypted and stored securely",
+            "We never sell your personal information to third parties",
+            "You have the right to access, update, or delete your data at any time",
+          ].map((item, i) => (
+            <li key={i} className="flex items-start gap-3">
+              <span className="w-1.5 h-1.5 rounded-full bg-sky-500 mt-2 flex-shrink-0" />
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    ),
+  },
+  {
+    id: "collect",
+    icon: Users,
+    title: "What Information We Collect",
+    content: (
+      <div className="space-y-6">
+        <div>
+          <h4 className="font-semibold text-slate-800 mb-3">Personal Information You Provide</h4>
+          <ul className="space-y-2 text-slate-600">
+            {[
+              { label: "Contact details", desc: "Email address, phone number, and mailing address" },
+              { label: "Identity information", desc: "First and last name" },
+              { label: "Business information", desc: "Company name, tax ID, and business address" },
+            ].map((item, i) => (
+              <li key={i} className="flex items-start gap-3">
+                <span className="text-sky-500 font-bold mt-0.5">✓</span>
+                <span>
+                  <strong>{item.label}:</strong> {item.desc}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <h4 className="font-semibold text-slate-800 mb-3">Information We Collect Automatically</h4>
+          <ul className="space-y-2 text-slate-600">
+            {[
+              { label: "Device information", desc: "IP address, browser type, and operating system" },
+              { label: "Usage patterns", desc: "Pages visited, time spent, and navigation paths" },
+              { label: "Location data", desc: "General geographic location based on IP address" },
+            ].map((item, i) => (
+              <li key={i} className="flex items-start gap-3">
+                <span className="text-sky-500 font-bold mt-0.5">✓</span>
+                <span>
+                  <strong>{item.label}:</strong> {item.desc}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    ),
+  },
+  {
+    id: "use",
+    icon: Lock,
+    title: "How We Use Your Information",
+    content: (
+      <div className="grid gap-4 sm:grid-cols-2">
+        {[
+          {
+            title: "Provide Our Services",
+            desc: "Deliver accounting and advisory services, manage your account, and process your requests.",
+          },
+          {
+            title: "Communicate With You",
+            desc: "Send important updates, respond to inquiries, and provide customer support.",
+          },
+          {
+            title: "Improve Our Services",
+            desc: "Analyze usage patterns, fix technical issues, and develop new features.",
+          },
+          {
+            title: "Ensure Security",
+            desc: "Protect against fraud, unauthorized access, and other security threats.",
+          },
+        ].map((item, i) => (
+          <div key={i} className="p-4 rounded-xl bg-sky-50 border border-sky-100">
+            <h4 className="font-semibold text-slate-800 mb-2">{item.title}</h4>
+            <p className="text-sm text-slate-600">{item.desc}</p>
+          </div>
+        ))}
+      </div>
+    ),
+  },
+  {
+    id: "share",
+    icon: Globe,
+    title: "How We Share Your Information",
+    content: (
+      <div className="space-y-4">
+        <p className="text-slate-600">
+          We respect your privacy and only share your information in limited circumstances:
+        </p>
+        {[
+          {
+            title: "With Service Providers",
+            desc: "We work with trusted third-party companies to help us provide our services. These companies are required to protect your data.",
+          },
+          {
+            title: "For Legal Reasons",
+            desc: "We may disclose your information if required by law, court order, or government request.",
+          },
+          {
+            title: "With Your Consent",
+            desc: "We may share your information with other parties when you give us explicit permission.",
+          },
+        ].map((item, i) => (
+          <div key={i} className="p-4 bg-white/60 rounded-xl border border-slate-200/50">
+            <h4 className="font-semibold text-slate-800 mb-1">{item.title}</h4>
+            <p className="text-sm text-slate-600">{item.desc}</p>
+          </div>
+        ))}
+        <div className="p-4 bg-red-50 rounded-xl border border-red-200/50">
+          <p className="text-red-700 font-medium text-sm">
+            We never sell your personal information to third parties for marketing purposes.
+          </p>
+        </div>
+      </div>
+    ),
+  },
+  {
+    id: "retention",
+    icon: Clock,
+    title: "How Long We Keep Your Data",
+    content: (
+      <div className="space-y-4 text-slate-600">
+        <p>We only keep your personal information for as long as necessary to:</p>
+        <ol className="space-y-2">
+          {[
+            "Provide our services to you",
+            "Comply with legal and regulatory requirements",
+            "Resolve disputes and enforce our agreements",
+          ].map((item, i) => (
+            <li key={i} className="flex items-start gap-3">
+              <span className="w-6 h-6 rounded-full bg-sky-100 text-sky-600 flex items-center justify-center text-sm font-semibold flex-shrink-0">
+                {i + 1}
+              </span>
+              <span>{item}</span>
+            </li>
+          ))}
+        </ol>
+        <p className="text-sm bg-slate-50 p-4 rounded-xl">
+          After this period, we securely delete or anonymize your information so it can no longer identify you.
+        </p>
+      </div>
+    ),
+  },
+  {
+    id: "rights",
+    icon: FileText,
+    title: "Your Privacy Rights",
+    content: (
+      <div className="space-y-4">
+        <p className="text-slate-600">You have important rights regarding your personal information:</p>
+        <div className="grid gap-3 sm:grid-cols-2">
+          {[
+            {
+              title: "Access Your Data",
+              desc: "Request a copy of the personal information we hold about you.",
+            },
+            { title: "Correct Your Data", desc: "Update or correct any inaccurate information." },
+            { title: "Delete Your Data", desc: "Request deletion of your personal information." },
+            { title: "Opt-Out", desc: "Unsubscribe from marketing communications at any time." },
+          ].map((item, i) => (
+            <div key={i} className="p-4 rounded-xl bg-sky-50 border border-sky-100">
+              <h4 className="font-semibold text-slate-800 mb-1">{item.title}</h4>
+              <p className="text-sm text-slate-600">{item.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    ),
+  },
+  {
+    id: "contact",
+    icon: Mail,
+    title: "Contact Us",
+    content: (
+      <div className="space-y-4 text-slate-600">
+        <p>If you have any questions about this Privacy Policy, please contact us:</p>
+        <div className="p-4 bg-gradient-to-br from-sky-50 to-blue-50 rounded-xl border border-sky-200/50">
+          <p className="font-semibold text-slate-800 mb-2">PND50 Co., Ltd.</p>
+          <p className="text-sm">Email: oat3653377@gmail.com</p>
+          <p className="text-sm">Bangkok, Thailand</p>
+        </div>
+      </div>
+    ),
+  },
+]
+
+export default function PrivacyPolicyPage() {
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
+      {/* Hero Section */}
+      <div className="pt-24 pb-12 sm:pt-32 sm:pb-16">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-4xl">
+            <div>
+              <span className="inline-flex items-center gap-2 bg-sky-50 text-sky-700 px-4 py-2 rounded-full text-sm font-medium mb-6 border border-sky-100">
+                <Shield className="w-4 h-4" />
+                Legal
+              </span>
+
+              <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-6 text-slate-900">
+                Privacy Policy
+              </h1>
+              <p className="text-lg text-slate-600 max-w-2xl mb-4">
+                At PND50, we take your privacy seriously. This policy explains how we collect, use, and protect your
+                personal information.
+              </p>
+              <p className="text-sm text-slate-400">Last updated: January 2025</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Content Section - All sections visible */}
+      <section className="py-12 sm:py-16">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-4xl mx-auto space-y-6">
+            {sections.map((section) => {
+              const Icon = section.icon
+              return (
+                <div key={section.id} className="bg-white border border-slate-200 rounded-xl overflow-hidden">
+                  <div className="px-6 py-4 flex items-center gap-3 border-b border-slate-100 bg-slate-50/50">
+                    <div className="w-9 h-9 rounded-lg bg-sky-50 flex items-center justify-center">
+                      <Icon className="w-4 h-4 text-sky-600" />
+                    </div>
+                    <span className="font-semibold text-slate-800">{section.title}</span>
+                  </div>
+                  <div className="px-6 py-5">{section.content}</div>
+                </div>
+              )
+            })}
+          </div>
+        </div>
+      </section>
+    </div>
+  )
+}

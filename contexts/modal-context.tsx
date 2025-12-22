@@ -3,9 +3,6 @@
 import { createContext, useContext, useState, type ReactNode } from "react"
 
 interface ModalContextType {
-  isModalOpen: boolean
-  openModal: () => void
-  closeModal: () => void
   isHowItWorksOpen: boolean
   openHowItWorks: () => void
   closeHowItWorks: () => void
@@ -17,12 +14,8 @@ interface ModalContextType {
 const ModalContext = createContext<ModalContextType | undefined>(undefined)
 
 export function ModalProvider({ children }: { children: ReactNode }) {
-  const [isModalOpen, setIsModalOpen] = useState(false)
   const [isHowItWorksOpen, setIsHowItWorksOpen] = useState(false)
   const [isSecurityDetailsOpen, setIsSecurityDetailsOpen] = useState(false)
-
-  const openModal = () => setIsModalOpen(true)
-  const closeModal = () => setIsModalOpen(false)
 
   const openHowItWorks = () => setIsHowItWorksOpen(true)
   const closeHowItWorks = () => setIsHowItWorksOpen(false)
@@ -33,9 +26,6 @@ export function ModalProvider({ children }: { children: ReactNode }) {
   return (
     <ModalContext.Provider
       value={{
-        isModalOpen,
-        openModal,
-        closeModal,
         isHowItWorksOpen,
         openHowItWorks,
         closeHowItWorks,

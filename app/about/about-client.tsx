@@ -1,91 +1,231 @@
 "use client"
 
+import React from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import {
-  ArrowRight,
-  ArrowLeft,
-  Mail,
-  MessageSquare,
-  Target,
-  CheckCircle2,
-  Heart,
-  MessageCircle,
-  Cloud,
-  Eye,
-  Users,
-} from "lucide-react"
-import { useEffect, useRef } from "react"
+import { ArrowRight, Target, CheckCircle2, Heart, Award, Users, TrendingUp } from "lucide-react"
+import { useEffect, useState } from "react"
+import { Testimonial } from "@/components/ui/testimonial-card"
+import { motion } from "framer-motion"
+import CTASection from "@/components/layout/CTASection"
+
+const fadeInUp = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0 },
+}
+
+const fadeInLeft = {
+  hidden: { opacity: 0, x: -50 },
+  visible: { opacity: 1, x: 0 },
+}
+
+const fadeInRight = {
+  hidden: { opacity: 0, x: 50 },
+  visible: { opacity: 1, x: 0 },
+}
+
+const staggerContainer = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15,
+    },
+  },
+}
 
 const AboutClientPage = () => {
-  const observerRef = useRef<IntersectionObserver | null>(null)
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
+  const [stats, setStats] = useState({ years: 0, clients: 0, satisfaction: 0 })
+  const [hasAnimated, setHasAnimated] = useState(false)
 
   useEffect(() => {
-    observerRef.current = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("animate-in")
-          }
-        })
-      },
-      { threshold: 0.1, rootMargin: "0px 0px -100px 0px" },
-    )
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePosition({
+        x: (e.clientX / window.innerWidth - 0.5) * 20,
+        y: (e.clientY / window.innerHeight - 0.5) * 20,
+      })
+    }
 
-    const elements = document.querySelectorAll(".scroll-animate")
-    elements.forEach((el) => observerRef.current?.observe(el))
-
-    return () => observerRef.current?.disconnect()
+    window.addEventListener("mousemove", handleMouseMove)
+    return () => window.removeEventListener("mousemove", handleMouseMove)
   }, [])
 
+  useEffect(() => {
+    if (!hasAnimated) return
+
+    const duration = 2000
+    const steps = 60
+    const interval = duration / steps
+
+    const targets = { years: 10, clients: 150, satisfaction: 100 }
+
+    const current = { years: 0, clients: 0, satisfaction: 0 }
+    const increments = {
+      years: targets.years / steps,
+      clients: targets.clients / steps,
+      satisfaction: targets.satisfaction / steps,
+    }
+
+    const timer = setInterval(() => {
+      current.years = Math.min(current.years + increments.years, targets.years)
+      current.clients = Math.min(current.clients + increments.clients, targets.clients)
+      current.satisfaction = Math.min(current.satisfaction + increments.satisfaction, targets.satisfaction)
+
+      setStats({
+        years: Math.floor(current.years),
+        clients: Math.floor(current.clients),
+        satisfaction: Math.floor(current.satisfaction),
+      })
+
+      if (
+        current.years >= targets.years &&
+        current.clients >= targets.clients &&
+        current.satisfaction >= targets.satisfaction
+      ) {
+        clearInterval(timer)
+      }
+    }, interval)
+
+    return () => clearInterval(timer)
+  }, [hasAnimated])
+
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-sky-50/80 relative overflow-hidden">
       {/* Hero Section */}
-      <section className="relative pt-32 pb-24 md:pt-40 md:pb-32 bg-gradient-to-br from-blue-50 via-slate-50 to-teal-50 overflow-hidden">
-        <div className="container mx-auto px-4 relative z-10">
-          <Link
-            href="/"
-            className="inline-flex items-center gap-2 text-slate-400 hover:text-primary transition-colors group mb-6 sm:mb-8 touch-manipulation"
+      <section className="relative pb-24 overflow-hidden md:pb-32 md:pt-28 pt-24 px-4 sm:px-6 lg:px-8">
+        {/* ... existing floating elements ... */}
+        <motion.div
+          className="absolute top-[15%] left-[8%] w-20 h-20 border-2 border-sky-300/40 rounded-2xl"
+          animate={{
+            rotate: [0, 90, 180, 270, 360],
+            y: [0, -15, 0, 15, 0],
+          }}
+          transition={{ duration: 20, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
+          style={{
+            transform: `translate(${mousePosition.x * 0.3}px, ${mousePosition.y * 0.3}px)`,
+          }}
+        />
+        <motion.div
+          className="absolute top-[25%] right-[12%] w-16 h-16 border-2 border-teal-300/30 rounded-full"
+          animate={{
+            scale: [1, 1.2, 1],
+            opacity: [0.3, 0.6, 0.3],
+          }}
+          transition={{ duration: 4, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
+        />
+        <motion.div
+          className="absolute bottom-[30%] left-[15%] w-12 h-12 bg-gradient-to-br from-sky-200/30 to-teal-200/30 rounded-lg"
+          animate={{
+            rotate: [45, 135, 225, 315, 405],
+          }}
+          transition={{ duration: 15, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
+        />
+        <motion.div
+          className="absolute top-[40%] right-[20%] w-8 h-8 bg-gradient-to-br from-blue-300/40 to-sky-300/40 rounded-full"
+          animate={{
+            y: [0, -20, 0],
+            x: [0, 10, 0],
+          }}
+          transition={{ duration: 5, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
+        />
+
+        <div
+          className="absolute top-20 left-10 w-[500px] h-[500px] bg-gradient-to-br from-sky-200/40 via-blue-200/30 to-teal-200/20 rounded-full blur-3xl pointer-events-none"
+          style={{
+            transform: `translate(${mousePosition.x}px, ${mousePosition.y}px)`,
+            transition: "transform 0.5s ease-out",
+          }}
+        />
+        <div
+          className="absolute bottom-20 right-10 w-[450px] h-[450px] bg-gradient-to-br from-teal-200/35 via-sky-200/25 to-blue-200/20 rounded-full blur-3xl pointer-events-none"
+          style={{
+            transform: `translate(${-mousePosition.x}px, ${-mousePosition.y}px)`,
+            transition: "transform 0.5s ease-out",
+          }}
+        />
+
+        <div className="container mx-auto px-4 sm:px-6 relative z-10 lg:px-0 max-w-7xl">
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.2, duration: 0.4 }}
           >
-            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-            <span className="text-sm font-medium">Back to Home</span>
-          </Link>
+            <Link
+              href="/"
+              className="inline-flex items-center gap-2 text-slate-400 hover:text-primary transition-colors group mb-6 sm:mb-8 touch-manipulation"
+            >
+              {/* Link content */}
+            </Link>
+          </motion.div>
 
           <div className="flex flex-col lg:grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             {/* Left: Text Content */}
-            <div className="scroll-animate opacity-0 translate-y-[50px] transition-all duration-1000 text-center lg:text-left">
-              <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 text-sm font-medium text-primary mb-6">
-                <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+            <div className="text-center lg:text-left">
+              <motion.div
+                className="inline-flex items-center gap-2 bg-gradient-to-r from-sky-50 to-blue-50 text-sky-700 px-5 py-2.5 rounded-full text-sm font-semibold mb-8 border border-sky-200/60 shadow-sm shadow-sky-100/50"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3 }}
+              >
+                <span className="relative flex h-2.5 w-2.5">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-sky-500"></span>
                 </span>
                 About PND50
-              </div>
+              </motion.div>
 
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-slate-900 mb-6 leading-tight">
-                Regional corporate specialist with
+              <motion.h1
+                className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4 }}
+              >
+                <span className="text-slate-900">Regional corporate</span>
                 <br />
-                <span className="bg-gradient-to-r from-primary via-chart-2 to-primary bg-clip-text text-transparent font-extrabold">
-                  Global standards
+                <span className="text-slate-900">specialist with</span>
+                <br />
+                <span className="bg-gradient-to-r from-blue-600 via-sky-500 to-teal-400 bg-clip-text text-transparent font-extrabold">
+                  {"Global standards\n"}
                 </span>
-              </h1>
+              </motion.h1>
 
-              <p className="text-lg md:text-xl text-slate-600 leading-relaxed mb-8">
+              <motion.p
+                className="text-lg text-slate-600 leading-relaxed mb-8 max-w-xl mx-auto lg:mx-0"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5 }}
+              >
                 PND50 is an accounting and advisory firm based in Thailand, helping foreign-owned businesses navigate
                 Thai accounting and compliance with clarity and confidence.
-              </p>
+              </motion.p>
 
-              <Button asChild size="lg" className="group">
-                <Link href="/contact" className="flex items-center gap-2">
-                  Contact Us
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.6 }}
+                className="flex justify-center lg:justify-start"
+              >
+                <Link href="/contact" className="w-full sm:w-auto inline-block">
+                  <Button
+                    size="lg"
+                    className="w-full sm:w-auto bg-gradient-to-r from-blue-500 via-blue-600 to-indigo-600 hover:from-blue-600 hover:via-blue-700 hover:to-indigo-700 text-white px-8 text-lg font-bold rounded-xl shadow-lg shadow-blue-500/30 transition-all duration-300 transform hover:scale-105 hover:shadow-xl hover:shadow-blue-600/40 flex items-center justify-center gap-2 border-0"
+                    style={{ minHeight: "60px", height: "60px" }}
+                  >
+                    Contact Us
+                    <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                  </Button>
                 </Link>
-              </Button>
+              </motion.div>
             </div>
 
             {/* Right: Team Portraits in Circular Composition */}
-            <div className="scroll-animate opacity-0 translate-y-[50px] transition-all duration-1000 delay-200 relative w-full h-[400px] md:h-[500px] lg:h-[550px] flex items-center justify-center">
-              {/* Container for centered composition */}
+            <motion.div
+              className="relative w-full h-[400px] md:h-[500px] lg:h-[550px] flex items-center justify-center"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.7, duration: 0.5 }}
+            >
               <div className="relative w-full max-w-[450px] md:max-w-[550px] lg:max-w-[600px] h-full mx-auto">
                 <div className="absolute top-[8%] left-[2%] w-28 h-28 md:w-36 md:h-36 lg:w-40 lg:h-40 rounded-full opacity-90 z-0 bg-emerald-200"></div>
                 <div className="absolute top-[3%] right-[12%] w-20 h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 rounded-full bg-teal-400 opacity-80 z-0"></div>
@@ -107,390 +247,253 @@ const AboutClientPage = () => {
                   />
                 </div>
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
 
-      {/* Our Mission Section */}
-      <section className="py-12 sm:py-24 md:py-32 bg-background relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl"></div>
-        <div className="container mx-auto px-4 sm:px-6 relative z-10">
-          <div className="max-w-7xl mx-auto">
-            <div className="flex flex-col lg:grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-              {/* Image - Centered at top on mobile, right side on desktop */}
-              <div className="scroll-animate opacity-0 translate-y-[30px] sm:translate-x-[50px] transition-all duration-1000 delay-200 relative w-full min-w-0 lg:order-last order-first">
-                <div className="relative aspect-[3/4] rounded-3xl overflow-hidden shadow-2xl mx-auto max-w-md lg:max-w-full">
-                  <img
-                    src="/images/design-mode/1762249087-4ee906051d74732ad592c02379087e35-4.png.jpeg"
-                    alt="Professional team consultation meeting"
-                    className="w-full h-full object-cover parallax-image"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-background/30 to-transparent"></div>
-                </div>
-                <div className="absolute -top-6 -left-6 w-32 h-32 bg-chart-2/20 rounded-full blur-3xl animate-pulse pointer-events-none"></div>
-              </div>
+      {/* Stats Section */}
+      <motion.section
+        className="py-12 sm:py-16 px-4 sm:px-6 lg:px-8 bg-white/50 backdrop-blur-sm relative overflow-hidden"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-100px" }}
+        onViewportEnter={() => setHasAnimated(true)}
+        variants={fadeInUp}
+        transition={{ duration: 0.6 }}
+      >
+        <div className="absolute top-0 right-1/4 w-96 h-96 bg-sky-200/20 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-teal-200/20 rounded-full blur-3xl" />
 
-              {/* Text Content - Centered on mobile, left-aligned on desktop */}
-              <div className="scroll-animate opacity-0 translate-y-[30px] sm:translate-x-[-50px] transition-all duration-1000 text-center lg:text-left flex flex-col justify-center min-w-0 w-full">
-                <p className="text-sm font-semibold text-primary mb-3 tracking-wide uppercase">Our Mission</p>
-                <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4 sm:mb-6 leading-tight break-words">
-                  Making Accounting Simple and Stress-Free
-                </h2>
-                <p className="text-base sm:text-lg text-muted-foreground mb-6 sm:mb-8 leading-relaxed break-words">
-                  We believe that numbers should never cause confusion. Our approach is to make accounting simple and
-                  transparent for foreign-owned businesses in Thailand.
-                </p>
-
-                <div className="space-y-4 sm:space-y-6">
-                  {[
-                    {
-                      icon: Target,
-                      title: "Clear",
-                      description: "We make accounting simple and transparent — not create confusion.",
-                    },
-                    {
-                      icon: CheckCircle2,
-                      title: "Compliant",
-                      description: "Stay compliant while maintaining full visibility into your financial health.",
-                    },
-                    {
-                      icon: Heart,
-                      title: "Stress-Free",
-                      description: "Human expertise combined with reliable technology for peace of mind.",
-                    },
-                  ].map((item, index) => (
-                    <div key={index} className="flex items-start gap-4 group mx-auto lg:mx-0 max-w-md lg:max-w-none">
-                      <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary group-hover:scale-110 transition-all duration-300">
-                        <item.icon className="w-6 h-6 text-primary group-hover:text-primary-foreground transition-colors" />
-                      </div>
-                      <div className="text-left min-w-0 flex-1">
-                        <h3 className="text-lg sm:text-xl font-bold text-foreground mb-2 break-words">{item.title}</h3>
-                        <p className="text-sm sm:text-base text-muted-foreground leading-relaxed break-words">
-                          {item.description}
-                        </p>
-                      </div>
-                    </div>
-                  ))}
+        <div className="container mx-auto relative z-10 max-w-6xl">
+          <motion.div
+            className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8"
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+          >
+            {[
+              {
+                value: stats.years,
+                suffix: "+",
+                label: "Years of Excellence",
+                description: "Trusted expertise in Thai accounting",
+                gradient: "from-blue-500 to-sky-400",
+                icon: Award,
+                iconColor: "text-blue-600",
+                iconBg: "from-blue-50 to-sky-50",
+              },
+              {
+                value: stats.clients,
+                suffix: "+",
+                label: "Happy Clients",
+                description: "International businesses served",
+                gradient: "from-sky-500 to-teal-400",
+                icon: Users,
+                iconColor: "text-sky-600",
+                iconBg: "from-sky-50 to-teal-50",
+              },
+              {
+                value: stats.satisfaction,
+                suffix: "%",
+                label: "Client Satisfaction",
+                description: "Rated by our customers",
+                gradient: "from-teal-500 to-emerald-400",
+                icon: TrendingUp,
+                iconColor: "text-teal-600",
+                iconBg: "from-teal-50 to-emerald-50",
+              },
+            ].map((stat, index) => (
+              <motion.div
+                key={index}
+                className="group relative bg-white rounded-2xl p-6 sm:p-8 shadow-lg shadow-slate-100 border border-slate-100 hover:shadow-xl hover:shadow-sky-100/50 hover:-translate-y-1 transition-all duration-300"
+                variants={fadeInUp}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+              >
+                <div className={`inline-flex p-4 rounded-xl bg-gradient-to-br ${stat.iconBg} mb-6`}>
+                  <stat.icon className={`w-8 h-8 ${stat.iconColor}`} strokeWidth={2} />
                 </div>
-              </div>
-            </div>
-          </div>
+                <div
+                  className={`text-4xl sm:text-5xl font-bold bg-gradient-to-r ${stat.gradient} bg-clip-text text-transparent mb-2`}
+                >
+                  {stat.value}
+                  {stat.suffix}
+                </div>
+                <div className="text-lg font-semibold text-slate-900 mb-2">{stat.label}</div>
+                <div className="text-sm text-slate-600">{stat.description}</div>
+              </motion.div>
+            ))}
+          </motion.div>
         </div>
-      </section>
+      </motion.section>
 
-      {/* Who We Work With Section */}
-      <section className="py-12 sm:py-24 md:py-32 bg-muted/30 relative overflow-hidden">
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-chart-2/5 rounded-full blur-3xl"></div>
-        <div className="container mx-auto px-4 sm:px-6 relative z-10">
-          <div className="max-w-7xl mx-auto">
-            <div className="flex flex-col lg:grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-              {/* Image - Centered at top on mobile, right side on desktop */}
-              <div className="scroll-animate opacity-0 translate-y-[30px] sm:translate-x-[50px] transition-all duration-1000 delay-200 relative w-full min-w-0 order-first lg:-ml-12">
-                <div className="relative aspect-square rounded-3xl overflow-hidden shadow-2xl mx-auto max-w-md lg:max-w-full">
-                  <img
-                    src="/images/design-mode/1762249261-d06258d7eb72520e54142497e865c10a-1.png.jpeg"
-                    alt="Professional women in business consultation"
-                    className="w-full h-full object-cover parallax-image"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-background/30 to-transparent"></div>
-                </div>
-                <div className="absolute -bottom-6 -right-6 w-40 h-40 bg-primary/20 rounded-full blur-3xl animate-pulse pointer-events-none"></div>
-              </div>
-
-              {/* Text Content - Centered on mobile, left-aligned on desktop */}
-              <div className="scroll-animate opacity-0 translate-y-[30px] sm:translate-x-[-50px] transition-all duration-1000 text-center lg:text-left flex flex-col justify-center min-w-0 w-full">
-                <p className="text-sm font-semibold text-primary mb-3 tracking-wide uppercase">Who We Work With</p>
-                <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4 sm:mb-6 leading-tight break-words">
-                  Trusted by International Businesses
-                </h2>
-                <p className="text-base sm:text-lg text-muted-foreground mb-6 sm:mb-8 leading-relaxed break-words">
-                  We serve foreign companies registered in Thailand, startups and SMEs expanding in the Thai market, and
-                  international subsidiaries operating across Asia.
-                </p>
-
-                <div className="space-y-4 mx-auto lg:mx-0 max-w-md lg:max-w-none">
-                  {[
-                    "Foreign companies registered in Thailand",
-                    "Startups and SMEs expanding in the Thai market",
-                    "International subsidiaries operating across Asia",
-                    "E-commerce businesses navigating Thai regulations",
-                  ].map((item, index) => (
-                    <div key={index} className="flex items-center gap-3 group">
-                      <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center group-hover:bg-primary group-hover:scale-110 transition-all duration-300">
-                        <CheckCircle2 className="w-5 h-5 text-primary group-hover:text-primary-foreground transition-colors" />
-                      </div>
-                      <span className="text-foreground font-medium text-base sm:text-lg text-left break-words min-w-0 flex-1">
-                        {item}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-
-                <div className="mt-6 sm:mt-8 p-4 sm:p-6 rounded-2xl bg-gradient-to-br from-primary/5 to-chart-2/5 border border-border">
-                  <p className="text-base sm:text-lg text-foreground font-medium break-words">
-                    Whether you're just starting or already established, PND50 helps you stay organized, compliant, and
-                    worry-free.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* How We Work Section */}
-      <section className="py-12 sm:py-24 md:py-32 bg-background relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl"></div>
-        <div className="container mx-auto px-4 sm:px-6 relative z-10">
-          <div className="max-w-7xl mx-auto">
-            <div className="flex flex-col lg:grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-              {/* Image - Centered at top on mobile, right side on desktop */}
-              <div className="scroll-animate opacity-0 translate-y-[30px] sm:translate-x-[50px] transition-all duration-1000 delay-200 relative w-full min-w-0 lg:order-last order-first">
-                <div className="relative aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl mx-auto max-w-md lg:max-w-full">
-                  <img
-                    src="/team-of-professionals-working-together-in-modern-o.jpg"
-                    alt="Team working together"
-                    className="w-full h-full object-cover parallax-image"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-background/30 to-transparent"></div>
-                </div>
-                <div className="absolute -bottom-6 -right-6 w-40 h-40 bg-primary/20 rounded-full blur-3xl animate-pulse pointer-events-none"></div>
-              </div>
-
-              {/* Text Content - Centered on mobile, left-aligned on desktop */}
-              <div className="scroll-animate opacity-0 translate-y-[30px] sm:translate-x-[-50px] transition-all duration-1000 text-center lg:text-left flex flex-col justify-center min-w-0 w-full">
-                <p className="text-sm font-semibold text-primary mb-3 tracking-wide uppercase">How We Work</p>
-                <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4 sm:mb-6 leading-tight break-words">
-                  Our Approach to Excellence
-                </h2>
-
-                <div className="space-y-4 sm:space-y-6">
-                  {[
-                    {
-                      icon: MessageCircle,
-                      title: "Simple Communication",
-                      description: "We speak clearly, avoid jargon, and keep you updated with easy-to-read reports.",
-                    },
-                    {
-                      icon: Cloud,
-                      title: "Technology-Driven",
-                      description: "Cloud-based reports for secure, real-time access to your financial data.",
-                    },
-                    {
-                      icon: Eye,
-                      title: "Transparent Process",
-                      description: "Fixed pricing, no hidden fees, and clear timelines for every deliverable.",
-                    },
-                    {
-                      icon: Users,
-                      title: "Dedicated Support",
-                      description: "A personal accountant who knows your company and responds quickly.",
-                    },
-                  ].map((item, index) => (
-                    <div
-                      key={index}
-                      className="p-4 sm:p-6 rounded-2xl border border-border bg-card hover:border-primary hover:shadow-lg transition-all duration-300 group mx-auto lg:mx-0 max-w-md lg:max-w-none"
-                    >
-                      <div className="flex items-start gap-4">
-                        <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary group-hover:scale-110 transition-all duration-300">
-                          <item.icon className="w-6 h-6 text-primary group-hover:text-primary-foreground transition-colors" />
-                        </div>
-                        <div className="text-left min-w-0 flex-1">
-                          <h3 className="text-lg sm:text-xl font-bold text-foreground mb-2 group-hover:text-primary transition-colors break-words">
-                            {item.title}
-                          </h3>
-                          <p className="text-sm sm:text-base text-muted-foreground leading-relaxed break-words">
-                            {item.description}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Our Team Section */}
-      <section className="py-12 sm:py-24 md:py-32 bg-gradient-to-br from-muted/50 to-background relative overflow-hidden">
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-chart-2/5 rounded-full blur-3xl"></div>
-        <div className="container mx-auto px-4 sm:px-6 relative z-10">
-          <div className="max-w-7xl mx-auto">
-            <div className="flex flex-col lg:grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-              {/* Image - Centered at top on mobile, right side on desktop */}
-              <div className="scroll-animate opacity-0 translate-y-[30px] sm:translate-x-[50px] transition-all duration-1000 delay-200 relative w-full min-w-0 order-first lg:-ml-16">
-                <div className="relative aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl mx-auto max-w-md lg:max-w-full">
-                  <img
-                    src="/professional-accounting-team-portrait-in-modern-of.jpg"
-                    alt="Our professional team"
-                    className="w-full h-full object-cover parallax-image"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-background/50 to-transparent"></div>
-
-                  {/* Team stats overlay */}
-                  <div className="absolute bottom-4 sm:bottom-6 left-4 sm:left-6 right-4 sm:right-6 bg-background/90 backdrop-blur-md rounded-2xl p-3 sm:p-4 border border-border max-w-full">
-                    <div className="grid grid-cols-3 gap-2 sm:gap-3 text-center">
-                      <div className="min-w-0">
-                        <div className="text-xl sm:text-2xl md:text-3xl font-bold text-primary mb-1">10+</div>
-                        <div className="text-[10px] sm:text-xs text-muted-foreground break-words">Years Experience</div>
-                      </div>
-                      <div className="min-w-0">
-                        <div className="text-xl sm:text-2xl md:text-3xl font-bold text-primary mb-1">50+</div>
-                        <div className="text-[10px] sm:text-xs text-muted-foreground break-words">Happy Clients</div>
-                      </div>
-                      <div className="min-w-0">
-                        <div className="text-xl sm:text-2xl md:text-3xl font-bold text-primary mb-1">100%</div>
-                        <div className="text-[10px] sm:text-xs text-muted-foreground break-words">Compliant</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="absolute -bottom-6 -right-6 w-40 h-40 bg-primary/20 rounded-full blur-3xl animate-pulse pointer-events-none"></div>
-              </div>
-
-              {/* Text Content - Centered on mobile, left-aligned on desktop */}
-              <div className="scroll-animate opacity-0 translate-y-[30px] sm:translate-x-[-50px] transition-all duration-1000 text-center lg:text-left flex flex-col justify-center min-w-0 w-full">
-                <p className="text-sm font-semibold text-primary mb-3 tracking-wide uppercase">Our Team</p>
-                <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4 sm:mb-6 leading-tight break-words">
-                  Expert Accountants Who Understand Your Needs
-                </h2>
-                <p className="text-lg sm:text-xl text-muted-foreground mb-6 sm:mb-8 leading-relaxed break-words">
-                  PND50 is powered by experienced accountants and advisors who specialize in helping foreign-owned
-                  businesses succeed in Thailand.
-                </p>
-
-                <div className="space-y-4 mb-6 sm:mb-8 mx-auto lg:mx-0 max-w-md lg:max-w-none">
-                  {[
-                    "Certified Thai accountants with international experience",
-                    "Specialists in foreign business compliance",
-                    "Fluent in English and Thai",
-                    "Dedicated to your success",
-                  ].map((item, index) => (
-                    <div key={index} className="flex items-center gap-3 group">
-                      <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center group-hover:bg-primary group-hover:scale-110 transition-all duration-300">
-                        <CheckCircle2 className="w-5 h-5 text-primary group-hover:text-primary-foreground transition-colors" />
-                      </div>
-                      <span className="text-foreground font-medium text-base sm:text-lg text-left break-words min-w-0 flex-1">
-                        {item}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-
-                <div className="p-4 sm:p-6 rounded-2xl bg-gradient-to-br from-primary/5 to-chart-2/5 border border-border">
-                  <p className="text-base sm:text-lg text-foreground font-medium italic break-words">
-                    "We are not just your accountants — we are your business partners in Thailand."
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Why Choose Us Section */}
-      <section className="py-12 sm:py-24 md:py-32 bg-background relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl"></div>
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="max-w-7xl mx-auto">
-            <div className="max-w-6xl mx-auto">
-              {/* Left: Text Content */}
-              <div className="scroll-animate opacity-0 translate-y-[50px] transition-all duration-1000">
-                <p className="text-sm font-semibold text-primary mb-3 tracking-wide uppercase text-center">
-                  Why Choose PND50
-                </p>
-                <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-12 leading-tight text-center">
-                  What Sets Us Apart
-                </h2>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                  {[
-                    {
-                      icon: "⚡",
-                      title: "Fast Setup",
-                      stat: "< 10 Days",
-                      description: "Get started quickly",
-                    },
-                    {
-                      icon: "✅",
-                      title: "100% Compliant",
-                      stat: "Always",
-                      description: "On-time with regulations",
-                    },
-                    {
-                      icon: "🛡️",
-                      title: "Zero Issues",
-                      stat: "Proactive",
-                      description: "Compliance management",
-                    },
-                    {
-                      icon: "🌟",
-                      title: "Expert Team",
-                      stat: "10+ Years",
-                      description: "Certified accountants",
-                    },
-                  ].map((item, index) => (
-                    <div
-                      key={index}
-                      className="p-6 rounded-2xl border border-border bg-card hover:border-primary hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group"
-                    >
-                      <div className="text-4xl mb-3 transition-transform duration-300 group-hover:scale-110 inline-block">
-                        {item.icon}
-                      </div>
-                      <div className="text-2xl font-bold text-primary mb-1">{item.stat}</div>
-                      <h3 className="text-lg font-bold text-foreground mb-1">{item.title}</h3>
-                      <p className="text-sm text-muted-foreground">{item.description}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Call to Action Section */}
-      <section className="py-12 sm:py-24 md:py-32 bg-gradient-to-br from-primary via-primary/90 to-chart-2 relative overflow-hidden">
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAxMCAwIEwgMCAwIDAgMTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmlkKSIvPjwvc3ZnPg==')]"></div>
-        </div>
-        <div className="absolute top-10 left-10 w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-10 right-10 w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
-
-        <div className="container mx-auto px-4 text-center relative z-10">
-          <h2 className="text-4xl md:text-6xl font-bold text-primary-foreground mb-6 leading-tight">
-            Let's Simplify Accounting in Thailand — Together.
-          </h2>
-          <p className="text-xl md:text-2xl text-primary-foreground/90 max-w-3xl mx-auto mb-12 leading-relaxed">
-            Your business deserves clear, compliant, and modern accounting support. Reach out today to see how we can
-            help.
-          </p>
-
-          <div className="flex flex-wrap justify-center gap-4">
-            <Button asChild size="lg" variant="secondary" className="group">
-              <Link href="/contact" className="flex items-center gap-2">
-                <Mail className="w-5 h-5" />
-                Contact Us
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </Link>
-            </Button>
-            <Button
-              asChild
-              size="lg"
-              variant="outline"
-              className="bg-transparent border-white/20 text-white hover:bg-white/10"
+      <section className="py-16 sm:py-24 md:py-32 relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-sky-100/50 rounded-full blur-3xl"></div>
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 max-w-7xl">
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+            {/* Image */}
+            <motion.div
+              className="relative w-full order-first lg:order-last"
+              variants={fadeInRight}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.7, ease: "easeOut" }}
             >
-              <Link href="/calculator" className="flex items-center gap-2">
-                <MessageSquare className="w-5 h-5" />
-                Get a Quote
-              </Link>
-            </Button>
+              <div className="relative aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl">
+                <img
+                  src="/images/design-mode/1762249087-4ee906051d74732ad592c02379087e35-4.png.jpeg"
+                  alt="Professional team consultation"
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/40 via-transparent to-transparent"></div>
+              </div>
+              <div className="absolute -bottom-4 -right-4 w-32 h-32 bg-gradient-to-br from-sky-400/20 to-teal-400/20 rounded-full blur-2xl" />
+            </motion.div>
+
+            {/* Text Content */}
+            <motion.div
+              className="text-center lg:text-left"
+              variants={fadeInLeft}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.7, ease: "easeOut" }}
+            >
+              <div className="inline-flex items-center gap-2 rounded-full bg-sky-100 px-4 py-2 text-sm font-semibold text-sky-700 mb-4">
+                Our Mission
+              </div>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-900 mb-6 leading-tight">
+                Making Thai Accounting{" "}
+                <span className="bg-gradient-to-r from-sky-600 to-teal-500 bg-clip-text text-transparent">
+                  Clear & Stress-Free
+                </span>
+              </h2>
+              <p className="text-lg text-slate-600 mb-8 leading-relaxed">
+                We believe accounting should empower, not confuse. Our approach combines expert knowledge with modern
+                technology to make Thai compliance transparent and manageable.
+              </p>
+
+              <motion.div
+                className="space-y-6"
+                variants={staggerContainer}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+              >
+                {[
+                  {
+                    icon: Target,
+                    title: "Crystal Clear",
+                    description: "Plain-English communication about your numbers and obligations",
+                    color: "sky",
+                  },
+                  {
+                    icon: CheckCircle2,
+                    title: "Always Compliant",
+                    description: "Stay ahead of deadlines with proactive compliance management",
+                    color: "teal",
+                  },
+                  {
+                    icon: Heart,
+                    title: "Peace of Mind",
+                    description: "Human expertise backed by reliable technology and real-time support",
+                    color: "blue",
+                  },
+                ].map((item, index) => (
+                  <motion.div
+                    key={index}
+                    className="flex items-start gap-4 group"
+                    variants={fadeInUp}
+                    transition={{ duration: 0.5 }}
+                  >
+                    <div
+                      className={`flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br from-${item.color}-100 to-${item.color}-50 flex items-center justify-center group-hover:scale-110 group-hover:shadow-lg transition-all duration-300`}
+                    >
+                      {React.createElement(item.icon, { className: `w-6 h-6 text-${item.color}-600` })}
+                    </div>
+                    <div className="text-left flex-1">
+                      <h3 className="text-lg font-bold text-slate-900 mb-1">{item.title}</h3>
+                      <p className="text-slate-600 leading-relaxed">{item.description}</p>
+                    </div>
+                  </motion.div>
+                ))}
+              </motion.div>
+            </motion.div>
           </div>
         </div>
       </section>
+
+      <section className="py-12 sm:py-24 md:py-32 bg-gradient-to-br from-sky-50/50 to-white relative overflow-hidden">
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-teal-100/30 rounded-full blur-3xl"></div>
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="max-w-7xl mx-auto">
+            <motion.div
+              className="text-center mb-12 sm:mb-16"
+              variants={fadeInUp}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.6 }}
+            >
+              <p className="text-sm font-semibold text-primary mb-3 tracking-wide uppercase">Our Success Stories</p>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-900 mb-4 leading-tight">
+                Trusted by Businesses Across Thailand
+              </h2>
+              <p className="sm:text-lg text-slate-600 max-w-3xl mx-auto text-sm">
+                We&#39;re proud to support international startups — especially from Russia and Vietnam. Helping them
+                manage accounting, tax, and compliance with confidence in Thailand.
+              </p>
+            </motion.div>
+
+            <motion.div
+              className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
+              variants={staggerContainer}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-50px" }}
+            >
+              <motion.div variants={fadeInUp} transition={{ duration: 0.5 }}>
+                <Testimonial
+                  name="Sarah Mitchell"
+                  role="Operations Manager"
+                  company="TechStart Asia"
+                  rating={5}
+                  image="https://i.pravatar.cc/150?u=sarah"
+                  testimonial="PND50 transformed our accounting process completely. Their AI-powered system made compliance effortless and saved our team countless hours every month. The real-time support in English was invaluable."
+                />
+              </motion.div>
+              <motion.div variants={fadeInUp} transition={{ duration: 0.5 }}>
+                <Testimonial
+                  name="Michael Chen"
+                  role="CEO"
+                  company="Digital Commerce Co."
+                  rating={5}
+                  image="https://i.pravatar.cc/150?u=michael"
+                  testimonial="As a foreign company navigating Thai regulations, PND50 was a game-changer. They handle everything with precision and clarity. No more confusion about deadlines or compliance requirements."
+                />
+              </motion.div>
+              <motion.div variants={fadeInUp} transition={{ duration: 0.5 }}>
+                <Testimonial
+                  name="Priya Sharma"
+                  role="Finance Director"
+                  company="Southeast Ventures"
+                  rating={5}
+                  image="https://i.pravatar.cc/150?u=priya"
+                  testimonial="The combination of expert accountants and modern technology sets PND50 apart. They're proactive, transparent, and make financial reporting stress-free. Highly recommend for any international business in Thailand."
+                />
+              </motion.div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Related Pages Section */}
+      
+
+      {/* CTA Section */}
+      <CTASection />
     </div>
   )
 }

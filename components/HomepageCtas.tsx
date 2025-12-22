@@ -1,38 +1,27 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { useModal } from "@/contexts/modal-context"
 import Link from "next/link"
 
 export function HomepageCtas() {
-  const { openHowItWorks } = useModal()
-
   return (
-    <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-      <Link href="/calculator" className="w-full sm:w-auto">
+    <div className="flex flex-col sm:flex-row gap-4 items-center justify-start">
+      <Link href="/schedule" className="w-full sm:w-auto">
         <Button
-          className="w-full sm:w-auto bg-blue-500 hover:bg-blue-600 text-white px-8 text-lg font-bold rounded-lg shadow-lg shadow-blue-500/20 transition-all duration-300 transform hover:scale-102 flex items-center justify-center"
+          className="w-full sm:w-auto bg-gradient-to-r from-blue-500 via-blue-600 to-indigo-600 hover:from-blue-600 hover:via-blue-700 hover:to-indigo-700 text-white px-8 text-lg font-bold rounded-xl shadow-lg shadow-blue-500/30 transition-all duration-300 transform hover:scale-105 hover:shadow-xl hover:shadow-blue-600/40 flex items-center justify-center border-0"
           style={{ minHeight: "60px", height: "60px" }}
         >
           Schedule Consultation
-          <span className="ml-2 text-blue-100">→</span>
         </Button>
       </Link>
-      <div
-        onClick={openHowItWorks}
-        role="button"
-        tabIndex={0}
-        onKeyDown={(e) => {
-          if (e.key === "Enter" || e.key === " ") {
-            openHowItWorks()
-          }
-        }}
-        className="w-full sm:w-auto flex items-center justify-center gap-2 px-8 text-lg font-bold rounded-lg cursor-pointer transition-all duration-300 user-select-none border-2 border-white/30 bg-white/5 backdrop-blur-sm hover:bg-white/10 hover:border-white/50 hover:scale-102 text-white"
-        style={{ minHeight: "60px", height: "60px" }}
-      >
-        <span className="text-xl">▶️</span>
-        <span>See How It Works</span>
-      </div>
+      <Link href="/contact" className="w-full sm:w-auto">
+        <div
+          className="w-full sm:w-auto flex items-center justify-center gap-2 px-8 text-lg font-bold rounded-xl cursor-pointer transition-all duration-300 user-select-none border-2 border-slate-300/50 bg-white/60 backdrop-blur-md hover:bg-white/80 hover:border-sky-400/60 hover:scale-105 text-slate-700 hover:text-sky-600 shadow-lg shadow-slate-200/50 hover:shadow-xl hover:shadow-sky-200/50"
+          style={{ minHeight: "60px", height: "60px" }}
+        >
+          <span>Contact Us</span>
+        </div>
+      </Link>
     </div>
   )
 }

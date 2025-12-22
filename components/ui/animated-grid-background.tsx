@@ -7,11 +7,19 @@ import { cn } from "@/lib/utils"
 export function AnimatedGridBackground({
   children,
   className,
+  variant = "dark",
 }: {
   children: React.ReactNode
   className?: string
+  variant?: "dark" | "light"
 }) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
+
+  const isDark = variant === "dark"
+  const bgClass = isDark ? "bg-slate-900" : "bg-transparent"
+  const particleColor = isDark ? "59, 130, 246" : "71, 85, 105" // slate-600 for light
+  const gridColor = isDark ? "rgba(59, 130, 246, 0.1)" : "rgba(100, 116, 139, 0.06)" // slate-500 with low opacity
+  const connectionColor = isDark ? "59, 130, 246" : "71, 85, 105" // slate-600 for light
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -43,7 +51,7 @@ export function AnimatedGridBackground({
         this.size = Math.random() * 2 + 0.5
         this.speedX = Math.random() * 0.5 - 0.25
         this.speedY = Math.random() * 0.5 - 0.25
-        this.opacity = Math.random() * 0.5 + 0.2
+        this.opacity = isDark ? Math.random() * 0.5 + 0.2 : Math.random() * 0.35 + 0.15
       }
 
       update() {
@@ -58,16 +66,17 @@ export function AnimatedGridBackground({
 
       draw() {
         if (!ctx) return
-        ctx.fillStyle = `rgba(59, 130, 246, ${this.opacity})`
+        ctx.fillStyle = `rgba(${particleColor}, ${this.opacity})`
         ctx.beginPath()
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2)
         ctx.fill()
       }
     }
 
-    // Create particles
+    // Create particles - Reduced count for cleaner look
     const particles: Particle[] = []
-    for (let i = 0; i < 100; i++) {
+    const particleCount = isDark ? 100 : 80
+    for (let i = 0; i < particleCount; i++) {
       particles.push(new Particle())
     }
 
@@ -77,7 +86,7 @@ export function AnimatedGridBackground({
       ctx.clearRect(0, 0, canvas.width, canvas.height)
 
       // Draw grid
-      ctx.strokeStyle = "rgba(59, 130, 246, 0.1)"
+      ctx.strokeStyle = gridColor
       ctx.lineWidth = 1
       const gridSize = 50
 
@@ -101,7 +110,7 @@ export function AnimatedGridBackground({
         particle.draw()
       })
 
-      // Draw connections between nearby particles
+      // Draw connections between nearby particles - Reduced connection opacity
       particles.forEach((particleA, indexA) => {
         particles.slice(indexA + 1).forEach((particleB) => {
           const dx = particleA.x - particleB.x
@@ -109,7 +118,8 @@ export function AnimatedGridBackground({
           const distance = Math.sqrt(dx * dx + dy * dy)
 
           if (distance < 150) {
-            ctx.strokeStyle = `rgba(59, 130, 246, ${0.2 * (1 - distance / 150)})`
+            const opacity = isDark ? 0.2 * (1 - distance / 150) : 0.1 * (1 - distance / 150)
+            ctx.strokeStyle = `rgba(${connectionColor}, ${opacity})`
             ctx.lineWidth = 0.5
             ctx.beginPath()
             ctx.moveTo(particleA.x, particleA.y)
@@ -128,19 +138,19 @@ export function AnimatedGridBackground({
       window.removeEventListener("resize", resizeCanvas)
       cancelAnimationFrame(animationFrameId)
     }
-  }, [])
+  }, [isDark, particleColor, gridColor, connectionColor])
 
   return (
-    <div className={cn("relative flex flex-col items-center justify-center bg-slate-900 overflow-hidden", className)}>
-      <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" style={{ opacity: 0.6 }} />
+    <div
+      className={cn(
+        "relative flex flex-col items-center justify-center overflow-x-hidden min-h-full",
+        bgClass,
+        className,
+      )}
+    >
+      <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" style={{ opacity: isDark ? 0.6 : 0.5 }} />
 
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl animate-float-slow" />
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-indigo-500/20 rounded-full blur-3xl animate-float-slower" />
-        <div className="absolute top-1/2 right-1/3 w-64 h-64 bg-cyan-500/20 rounded-full blur-3xl animate-float" />
-      </div>
-
-      <div className="relative z-10">{children}</div>
+      <div className="relative z-10 w-full flex flex-col flex-1">{children}</div>
     </div>
   )
 }

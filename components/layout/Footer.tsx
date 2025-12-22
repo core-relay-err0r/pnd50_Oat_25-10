@@ -1,186 +1,244 @@
-import React, { Suspense } from "react"
-import Link from "next/link"
-import { TooltipProvider } from "@/components/ui/tooltip"
-import { Calculator, Shield, Target, FileSearch, Phone, Mail, MapPin } from "lucide-react"
-import CurrentYear from "@/components/CurrentYear"
+"use client"
 
-const services = [
-  {
-    name: "Corporate Tax Planning",
-    href: "/services/corporate-tax-planning",
-    icon: <Calculator className="h-4 w-4 text-primary" />,
-    description: "AI-driven strategies to optimize your corporate tax position.",
-  },
-  {
-    name: "VAT Management",
-    href: "/services/vat-management",
-    icon: <Shield className="h-4 w-4 text-primary" />,
-    description: "Automated VAT compliance and real-time reporting.",
-  },
-  {
-    name: "Tax Optimization",
-    href: "/services/tax-optimization",
-    icon: <Target className="h-4 w-4 text-primary" />,
-    description: "Data-driven insights to maximize tax efficiency.",
-  },
-  {
-    name: "Audit Support",
-    href: "/services/audit-support",
-    icon: <FileSearch className="h-4 w-4 text-primary" />,
-    description: "Proactive audit defense with predictive risk analysis.",
-  },
+import { useState } from "react"
+import Link from "next/link"
+import { usePathname } from "next/navigation"
+import { Globe, ChevronUp, ArrowUpRight } from "lucide-react"
+
+const serviceLinks = [
+  { name: "Accounting", href: "/services/accounting" },
+  { name: "Tax Filing", href: "/services/tax" },
+  { name: "Payroll", href: "/services/payroll" },
+  { name: "Company Registration", href: "/services/corporate" },
+  { name: "Business Advisory", href: "/services/advisory" },
+  { name: "Growth Services", href: "/services/growth" },
 ]
 
+const companyLinks = [
+  { name: "About Us", href: "/about" },
+  { name: "FAQ", href: "/faq" },
+  { name: "Contact", href: "/contact" },
+  { name: "Case Studies", href: "/case-studies" },
+]
+
+const languages = [
+  { code: "en", name: "English", flag: "🇺🇸", href: "/" },
+  { code: "th", name: "ไทย", flag: "🇹🇭", href: "/th" },
+  { code: "ru", name: "Русский", flag: "🇷🇺", href: "/ru" },
+  { code: "zh", name: "中文", flag: "🇨🇳", href: "/cn" },
+]
+
+function setLocaleCookie(locale: string) {
+  document.cookie = `NEXT_LOCALE=${locale};path=/;max-age=${60 * 60 * 24 * 365}`
+}
+
 export default function Footer() {
-  const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent("Bangkok, Thailand")}`
-  const phoneUrl = "tel:+6621234567"
-  const emailUrl = "mailto:info@pnd50.com"
-  const telegramUrl = "https://t.me/66843563805"
-  const whatsappUrl = "https://wa.me/66843563805"
+  const pathname = usePathname()
+  const [langOpen, setLangOpen] = useState(false)
+
+  const currentLocale = pathname.startsWith("/th")
+    ? "th"
+    : pathname.startsWith("/ru")
+      ? "ru"
+      : pathname.startsWith("/cn")
+        ? "cn"
+        : "en"
+
+  const getLocalizedHref = (href: string) => {
+    if (currentLocale === "en") return href
+    return `/${currentLocale}${href}`
+  }
+
+  if (
+    pathname === "/" ||
+    pathname === "/schedule" ||
+    pathname === "/schedule/success" ||
+    pathname === "/th" ||
+    pathname === "/ru" ||
+    pathname === "/cn"
+  ) {
+    return null
+  }
+
+  const handleLanguageSelect = (langCode: string) => {
+    const locale = langCode === "zh" ? "cn" : langCode
+    setLocaleCookie(locale)
+    setLangOpen(false)
+  }
 
   return (
-    <TooltipProvider delayDuration={100}>
-      <footer id="contact" className="bg-slate-900 text-slate-400 font-sans">
-        <div className="container mx-auto px-6 py-16">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
-            {/* Company Info */}
-            <div className="col-span-1 md:col-span-2 lg:col-span-1">
-              <Link href="/" className="text-2xl font-bold text-primary-foreground mb-4 inline-block">
-                PND50
-              </Link>
-              <p className="text-sm mb-4">
-                <a
-                  href="https://burakornpartners.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-primary-foreground transition-colors"
-                >
-                  Powered by Burakorn Partners
-                </a>
-              </p>
-              <p className="text-sm">
-                Tech-driven accounting for foreign-owned businesses in Thailand. A proud subsidiary of Burakorn Partners
-                Group.
-              </p>
-            </div>
+    <footer
+      className="relative bg-slate-900 text-white py-16 md:py-20 overflow-hidden"
+      itemScope
+      itemType="https://schema.org/WPFooter"
+    >
+      {/* Background Watermark */}
+      <span
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[10rem] md:text-[14rem] lg:text-[18rem] font-bold text-slate-800/30 leading-none select-none pointer-events-none whitespace-nowrap"
+        aria-hidden="true"
+      >
+        PND50
+      </span>
 
-            {/* Services */}
-            <div>
-              <h4 className="font-semibold text-primary-foreground mb-4 tracking-wider uppercase text-sm">Services</h4>
-              <ul className="space-y-3 text-sm">
-                {services.map((service) => (
-                  <li key={service.name}>
-                    <div className="flex items-center text-slate-400">
-                      <span className="w-6 h-6 mr-2 rounded-full bg-slate-800 flex items-center justify-center">
-                        {React.cloneElement(service.icon, {
-                          className: "h-4 w-4 text-primary",
-                        })}
-                      </span>
-                      {service.name}
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Company Links */}
-            <div>
-              <h4 className="font-semibold text-primary-foreground mb-4 tracking-wider uppercase text-sm">Company</h4>
-              <ul className="space-y-3 text-sm">
-                <li>
-                  <Link href="/about" className="hover:text-primary-foreground transition-colors">
-                    About Us
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/faq" className="hover:text-primary-foreground transition-colors">
-                    FAQ
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/case-studies" className="hover:text-primary-foreground transition-colors">
-                    Case Studies
-                  </Link>
-                </li>
-              </ul>
-            </div>
-
-            {/* Contact Info */}
-            <div>
-              <h4 className="font-semibold text-primary-foreground mb-4 tracking-wider uppercase text-sm">
-                Contact Us
-              </h4>
-              <ul className="space-y-3 text-sm">
-                <li className="flex items-start">
-                  <MapPin className="h-4 w-4 mr-3 mt-1 flex-shrink-0 text-slate-500" />
-                  <a
-                    href={googleMapsUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="hover:text-primary-foreground transition-colors"
-                  >
-                    Bangkok, Thailand
-                  </a>
-                </li>
-                <li className="flex items-center">
-                  <Phone className="h-4 w-4 mr-3 flex-shrink-0 text-slate-500" />
-                  <a href={phoneUrl} className="hover:text-primary-foreground transition-colors">
-                    +66 2 017 2949
-                  </a>
-                </li>
-                <li className="flex items-center">
-                  <Mail className="h-4 w-4 mr-3 flex-shrink-0 text-slate-500" />
-                  <a href={emailUrl} className="hover:text-primary-foreground transition-colors">
-                    info@pnd50.com
-                  </a>
-                </li>
-                <li className="flex items-center">
-                  <img src="/images/icons8-telegram.gif" alt="Telegram" className="h-4 w-4 mr-3 flex-shrink-0" />
-                  <a
-                    href={telegramUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="hover:text-primary-foreground transition-colors"
-                  >
-                    +66 84 356 3805
-                  </a>
-                </li>
-                <li className="flex items-center">
-                  <img src="/images/icons8-whatsapp.gif" alt="WhatsApp" className="h-4 w-4 mr-3 flex-shrink-0" />
-                  <a
-                    href={whatsappUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="hover:text-primary-foreground transition-colors"
-                  >
-                    +66 84 356 3805
-                  </a>
-                </li>
-              </ul>
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-10">
+        {/* Top Section */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-16">
+          {/* Logo & Description */}
+          <div className="lg:col-span-4">
+            <Link
+              href={currentLocale === "en" ? "/" : `/${currentLocale}`}
+              className="inline-block mb-6"
+              aria-label="PND50 Home"
+            >
+              <span className="text-3xl font-bold tracking-tight">PND50</span>
+            </Link>
+            <p className="text-slate-400 leading-relaxed mb-6 max-w-sm">
+              Professional accounting and business consulting for foreign companies operating in Thailand since 2015.
+            </p>
+            <div className="flex items-center gap-4" itemScope itemType="https://schema.org/Organization">
+              <a
+                href="mailto:info@pnd50.com"
+                className="text-slate-400 hover:text-white transition-colors text-sm"
+                itemProp="email"
+              >
+                info@pnd50.com
+              </a>
+              <span className="text-slate-700">|</span>
+              <a
+                href="tel:+66843563805"
+                className="text-slate-400 hover:text-white transition-colors text-sm"
+                itemProp="telephone"
+              >
+                +66 84 356 3805
+              </a>
             </div>
           </div>
 
-          <div className="mt-16 border-t border-slate-800 pt-8 text-sm">
-            <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
-              <p className="text-slate-500">
-                ©{" "}
-                <Suspense fallback={<span>...</span>}>
-                  <CurrentYear />
-                </Suspense>{" "}
-                PND50 CO.,LTD a Burakorn Partners Group company.
-              </p>
-              <div className="flex items-center gap-x-4 text-slate-500">
-                <Link href="/privacy-policy" className="hover:text-primary-foreground transition-colors">
-                  Privacy Policy
-                </Link>
-                <Link href="/terms-of-service" className="hover:text-primary-foreground transition-colors">
-                  Terms of Service
-                </Link>
-              </div>
+          {/* Services - with navigation schema */}
+          <nav
+            className="lg:col-span-3"
+            itemScope
+            itemType="https://schema.org/SiteNavigationElement"
+            aria-label="Services navigation"
+          >
+            <h3 className="text-sm font-semibold text-white mb-6 uppercase tracking-wide">Services</h3>
+            <ul className="space-y-3">
+              {serviceLinks.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={getLocalizedHref(link.href)}
+                    className="text-slate-400 hover:text-white transition-colors text-sm flex items-center gap-1 group"
+                    itemProp="url"
+                  >
+                    <span itemProp="name">{link.name}</span>
+                    <ArrowUpRight
+                      className="w-3 h-3 opacity-0 -translate-y-1 translate-x-1 group-hover:opacity-100 group-hover:translate-y-0 group-hover:translate-x-0 transition-all"
+                      aria-hidden="true"
+                    />
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          {/* Company - with navigation schema */}
+          <nav
+            className="lg:col-span-2"
+            itemScope
+            itemType="https://schema.org/SiteNavigationElement"
+            aria-label="Company navigation"
+          >
+            <h3 className="text-sm font-semibold text-white mb-6 uppercase tracking-wide">Company</h3>
+            <ul className="space-y-3">
+              {companyLinks.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={getLocalizedHref(link.href)}
+                    className="text-slate-400 hover:text-white transition-colors text-sm flex items-center gap-1 group"
+                    itemProp="url"
+                  >
+                    <span itemProp="name">{link.name}</span>
+                    <ArrowUpRight
+                      className="w-3 h-3 opacity-0 -translate-y-1 translate-x-1 group-hover:opacity-100 group-hover:translate-y-0 group-hover:translate-x-0 transition-all"
+                      aria-hidden="true"
+                    />
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          {/* Location & Language */}
+          <div className="lg:col-span-3" itemScope itemType="https://schema.org/PostalAddress">
+            <h3 className="text-sm font-semibold text-white mb-6 uppercase tracking-wide">Location</h3>
+            <p className="text-slate-400 text-sm mb-2" itemProp="addressLocality">
+              Bangkok, Thailand
+            </p>
+            <p className="text-slate-500 text-xs leading-relaxed mb-6" itemProp="addressRegion">
+              Serving businesses in Bangkok, Phuket, Chiang Mai, Pattaya, and throughout Thailand.
+            </p>
+
+            {/* Language Selector */}
+            <div className="relative inline-block">
+              <button
+                onClick={() => setLangOpen(!langOpen)}
+                className="inline-flex items-center gap-2 text-slate-400 hover:text-white text-sm transition-colors border border-slate-700 rounded-full px-4 py-2"
+                aria-expanded={langOpen}
+                aria-haspopup="true"
+                aria-label="Select language"
+              >
+                <Globe className="w-4 h-4" aria-hidden="true" />
+                <span>Language</span>
+                <ChevronUp
+                  className={`w-3 h-3 transition-transform ${langOpen ? "" : "rotate-180"}`}
+                  aria-hidden="true"
+                />
+              </button>
+              {langOpen && (
+                <div
+                  className="absolute bottom-full left-0 mb-2 bg-slate-800 rounded-lg shadow-xl border border-slate-700 overflow-hidden min-w-[140px] z-50"
+                  role="menu"
+                >
+                  {languages.map((lang) => (
+                    <Link
+                      key={lang.code}
+                      href={lang.href}
+                      onClick={() => handleLanguageSelect(lang.code)}
+                      className="flex items-center gap-3 px-4 py-2.5 text-sm text-slate-300 hover:bg-slate-700 hover:text-white transition-colors"
+                      hrefLang={lang.code}
+                      role="menuitem"
+                    >
+                      <span aria-hidden="true">{lang.flag}</span>
+                      <span>{lang.name}</span>
+                    </Link>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         </div>
-      </footer>
-    </TooltipProvider>
+
+        {/* Bottom Bar */}
+        <div className="flex flex-col md:flex-row justify-between items-center gap-4 pt-8 border-t border-slate-800">
+          <p className="text-slate-500 text-sm">
+            <span itemProp="copyrightYear">© 2025</span> PND50. All rights reserved.
+          </p>
+          <nav className="flex items-center gap-6" aria-label="Legal navigation">
+            <Link
+              href={getLocalizedHref("/privacy-policy")}
+              className="text-slate-500 hover:text-white text-sm transition-colors"
+            >
+              Privacy Policy
+            </Link>
+            <Link
+              href={getLocalizedHref("/terms-of-service")}
+              className="text-slate-500 hover:text-white text-sm transition-colors"
+            >
+              Terms of Service
+            </Link>
+          </nav>
+        </div>
+      </div>
+    </footer>
   )
 }

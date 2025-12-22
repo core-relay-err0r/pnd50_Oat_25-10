@@ -56,7 +56,7 @@ export default function HowItWorksModal({ isOpen, onClose }: HowItWorksModalProp
           </div>
         </div>
         <div className="pt-4 border-t border-border">
-          <Link href="/calculator" onClick={onClose}>
+          <Link href="/schedule" onClick={onClose}>
             <Button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground">
               Schedule Consultation
             </Button>
