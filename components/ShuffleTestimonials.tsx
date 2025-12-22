@@ -14,7 +14,7 @@ const testimonials = [
   {
     id: 2,
     testimonial:
-      "We're an accounting firm that understands tech companies. The real-time dashboard and expert support are game-changers for our business.",
+      "We're an accounting firm that understands tech companies. Our real-time dashboard and expert support are game-changers for many business.",
     author: "Chanika M. - Senior accountant @ PND50",
     image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-f5YmafBegD1DBf0uCVBZMQtEWyLneW.png",
   },
