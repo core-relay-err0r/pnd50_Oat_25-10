@@ -18,7 +18,7 @@ export default function ThaiLanding() {
   const [isVisible, setIsVisible] = useState(false)
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
   const [wordIndex, setWordIndex] = useState(0)
-  const words = useMemo(() => t.hero.words, [])
+  const words = useMemo(() => t?.hero?.words ?? ["บัญชี", "ที่ปรึกษา", "ถูกต้องตามกฎหมาย"], [])
 
   useEffect(() => {
     setIsVisible(true)

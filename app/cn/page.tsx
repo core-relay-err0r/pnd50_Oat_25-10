@@ -18,7 +18,7 @@ export default function ChineseLanding() {
   const [isVisible, setIsVisible] = useState(false)
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
   const [wordIndex, setWordIndex] = useState(0)
-  const words = useMemo(() => t.hero.words, [])
+  const words = useMemo(() => t?.hero?.words ?? ["会计", "咨询", "合规"], [])
 
   useEffect(() => {
     setIsVisible(true)
