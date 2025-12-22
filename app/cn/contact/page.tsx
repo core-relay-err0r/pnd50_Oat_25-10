@@ -1,25 +1,17 @@
 import type { Metadata } from "next"
 import LocalizedContactPage from "@/components/localized/contact-page"
-import { localizedPageMetadata } from "@/lib/seo-config"
 
 export const metadata: Metadata = {
-  title: localizedPageMetadata.cn.contact.title,
-  description: localizedPageMetadata.cn.contact.description,
-  keywords: localizedPageMetadata.cn.contact.keywords,
+  title: "联系我们 | PND50 - 泰国会计服务",
+  description: "联系PND50获取泰国会计、税务和商业咨询服务。我们随时为您的业务提供帮助。",
   alternates: {
     canonical: "https://pnd50.com/cn/contact",
     languages: {
       en: "https://pnd50.com/contact",
       th: "https://pnd50.com/th/contact",
       ru: "https://pnd50.com/ru/contact",
-      "zh-CN": "https://pnd50.com/cn/contact",
+      zh: "https://pnd50.com/cn/contact",
     },
-  },
-  openGraph: {
-    title: localizedPageMetadata.cn.contact.title,
-    description: localizedPageMetadata.cn.contact.description,
-    locale: "zh_CN",
-    type: "website",
   },
 }
 

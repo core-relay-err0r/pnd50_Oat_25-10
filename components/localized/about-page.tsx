@@ -403,19 +403,22 @@ export default function LocalizedAboutPage({ locale }: LocalizedAboutPageProps) 
                 {
                   testimonial:
                     "PND50 transformed our accounting process completely. Their AI-powered system made compliance effortless.",
-                  author: "Sarah M. - Expat specialist",
+                  name: "Sarah M.",
+                  role: "Expat specialist",
                   image: "/professional-woman-diverse.png",
                 },
                 {
                   testimonial:
                     "We're an accounting firm that understands tech companies. The real-time dashboard is a game-changer.",
-                  author: "Chanika M. - Senior accountant",
+                  name: "Chanika M.",
+                  role: "Senior accountant",
                   image: "/thai-businesswoman.png",
                 },
                 {
                   testimonial:
                     "As an expat entrepreneur, navigating Thai regulations was challenging. PND50 made everything clear.",
-                  author: "Eugene P. - Director",
+                  name: "Eugene P.",
+                  role: "Director",
                   image: "/diverse-businessman.png",
                 },
               ].map((item, index) => (
@@ -427,7 +430,7 @@ export default function LocalizedAboutPage({ locale }: LocalizedAboutPageProps) 
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                 >
-                  <Testimonial testimonial={item.testimonial} author={item.author} image={item.image} />
+                  <Testimonial testimonial={item.testimonial} name={item.name} role={item.role} image={item.image} />
                 </motion.div>
               ))}
             </div>

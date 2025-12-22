@@ -1,25 +1,17 @@
 import type { Metadata } from "next"
 import LocalizedFAQPage from "@/components/localized/faq-page"
-import { localizedPageMetadata } from "@/lib/seo-config"
 
 export const metadata: Metadata = {
-  title: localizedPageMetadata.ru.faq.title,
-  description: localizedPageMetadata.ru.faq.description,
-  keywords: localizedPageMetadata.ru.faq.keywords,
+  title: "FAQ | PND50 - Бухгалтерия и налоги в Таиланде",
+  description: "Чёткие ответы о бухгалтерии, налогах и регистрации бизнеса в Таиланде — объяснённые простым языком.",
   alternates: {
     canonical: "https://pnd50.com/ru/faq",
     languages: {
       en: "https://pnd50.com/faq",
       th: "https://pnd50.com/th/faq",
       ru: "https://pnd50.com/ru/faq",
-      "zh-CN": "https://pnd50.com/cn/faq",
+      zh: "https://pnd50.com/cn/faq",
     },
-  },
-  openGraph: {
-    title: localizedPageMetadata.ru.faq.title,
-    description: localizedPageMetadata.ru.faq.description,
-    locale: "ru_RU",
-    type: "website",
   },
 }
 
