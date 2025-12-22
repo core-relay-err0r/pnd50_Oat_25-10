@@ -5,6 +5,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = siteConfig.url
   const now = new Date().toISOString()
 
+  const createAlternates = (path: string) => ({
+    languages: {
+      en: `${baseUrl}${path}`,
+      th: `${baseUrl}/th${path}`,
+      ru: `${baseUrl}/ru${path}`,
+      "zh-CN": `${baseUrl}/cn${path}`,
+      "x-default": `${baseUrl}${path}`,
+    },
+  })
+
   // Thai-specific pages
   const thaiPages: MetadataRoute.Sitemap = [
     {
@@ -12,86 +22,52 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: now,
       changeFrequency: "monthly",
       priority: 1.0,
-      alternates: {
-        languages: {
-          en: baseUrl,
-          th: `${baseUrl}/th`,
-          ru: `${baseUrl}/ru`,
-          "zh-CN": `${baseUrl}/cn`,
-          "x-default": baseUrl,
-        },
-      },
+      alternates: createAlternates(""),
     },
     {
       url: `${baseUrl}/th/services`,
       lastModified: now,
       changeFrequency: "weekly",
       priority: 0.95,
-      alternates: {
-        languages: {
-          en: `${baseUrl}/services`,
-          th: `${baseUrl}/th/services`,
-          ru: `${baseUrl}/ru/services`,
-          "zh-CN": `${baseUrl}/cn/services`,
-        },
-      },
+      alternates: createAlternates("/services"),
     },
     {
       url: `${baseUrl}/th/about`,
       lastModified: now,
       changeFrequency: "monthly",
       priority: 0.8,
-      alternates: {
-        languages: {
-          en: `${baseUrl}/about`,
-          th: `${baseUrl}/th/about`,
-          ru: `${baseUrl}/ru/about`,
-          "zh-CN": `${baseUrl}/cn/about`,
-        },
-      },
+      alternates: createAlternates("/about"),
     },
     {
       url: `${baseUrl}/th/contact`,
       lastModified: now,
       changeFrequency: "monthly",
       priority: 0.8,
-      alternates: {
-        languages: {
-          en: `${baseUrl}/contact`,
-          th: `${baseUrl}/th/contact`,
-          ru: `${baseUrl}/ru/contact`,
-          "zh-CN": `${baseUrl}/cn/contact`,
-        },
-      },
+      alternates: createAlternates("/contact"),
     },
     {
       url: `${baseUrl}/th/faq`,
       lastModified: now,
       changeFrequency: "weekly",
       priority: 0.85,
-      alternates: {
-        languages: {
-          en: `${baseUrl}/faq`,
-          th: `${baseUrl}/th/faq`,
-          ru: `${baseUrl}/ru/faq`,
-          "zh-CN": `${baseUrl}/cn/faq`,
-        },
-      },
+      alternates: createAlternates("/faq"),
+    },
+    {
+      url: `${baseUrl}/th/schedule`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.9,
+      alternates: createAlternates("/schedule"),
     },
   ]
 
-  // Thai service-specific pages (if you have them)
-  const thaiServicePages = ["corporate", "accounting", "tax", "payroll", "advisory"].map((service) => ({
+  // Thai service-specific pages
+  const thaiServicePages = ["corporate", "accounting", "tax", "payroll", "advisory", "growth"].map((service) => ({
     url: `${baseUrl}/th/services/${service}`,
     lastModified: now,
     changeFrequency: "weekly" as const,
     priority: 0.9,
-    alternates: {
-      languages: {
-        en: `${baseUrl}/services/${service}`,
-        th: `${baseUrl}/th/services/${service}`,
-      },
-    },
+    alternates: createAlternates(`/services/${service}`),
   }))
 
   return [...thaiPages, ...thaiServicePages]

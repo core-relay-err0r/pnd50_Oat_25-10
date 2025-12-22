@@ -604,3 +604,310 @@ export function ServicePageSchema({
 
   return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
 }
+
+// SiteNavigationElement Schema for main nav links
+export function SiteNavigationSchema() {
+  const navItems = [
+    { name: "Services", url: "/services" },
+    { name: "About Us", url: "/about" },
+    { name: "FAQ", url: "/faq" },
+    { name: "Contact", url: "/contact" },
+    { name: "Schedule Consultation", url: "/schedule" },
+  ]
+
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "SiteNavigationElement",
+    name: "Main Navigation",
+    hasPart: navItems.map((item) => ({
+      "@type": "WebPage",
+      name: item.name,
+      url: `${siteConfig.url}${item.url}`,
+    })),
+  }
+
+  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
+}
+
+interface HowToStep {
+  name: string
+  text: string
+  image?: string
+}
+
+interface HowToSchemaProps {
+  name: string
+  description: string
+  totalTime?: string // ISO 8601 duration format, e.g., "PT5M"
+  steps: HowToStep[]
+}
+
+export function HowToSchema({ name, description, totalTime = "PT3M", steps }: HowToSchemaProps) {
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    name,
+    description,
+    totalTime,
+    step: steps.map((step, index) => ({
+      "@type": "HowToStep",
+      position: index + 1,
+      name: step.name,
+      text: step.text,
+      ...(step.image && {
+        image: {
+          "@type": "ImageObject",
+          url: step.image,
+        },
+      }),
+    })),
+    tool: {
+      "@type": "HowToTool",
+      name: "PND50 Quote Calculator",
+    },
+  }
+
+  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
+}
+
+interface ItemListSchemaProps {
+  name: string
+  items: { name: string; url: string; description?: string; position?: number }[]
+}
+
+export function ItemListSchema({ name, items }: ItemListSchemaProps) {
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name,
+    numberOfItems: items.length,
+    itemListElement: items.map((item, index) => ({
+      "@type": "ListItem",
+      position: item.position || index + 1,
+      item: {
+        "@type": "Service",
+        name: item.name,
+        url: `${siteConfig.url}${item.url}`,
+        ...(item.description && { description: item.description }),
+      },
+    })),
+  }
+
+  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
+}
+
+interface VideoSchemaProps {
+  name: string
+  description: string
+  thumbnailUrl: string
+  uploadDate: string
+  duration?: string // ISO 8601 duration
+  contentUrl?: string
+  embedUrl?: string
+}
+
+export function VideoSchema({
+  name,
+  description,
+  thumbnailUrl,
+  uploadDate,
+  duration,
+  contentUrl,
+  embedUrl,
+}: VideoSchemaProps) {
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "VideoObject",
+    name,
+    description,
+    thumbnailUrl,
+    uploadDate,
+    ...(duration && { duration }),
+    ...(contentUrl && { contentUrl }),
+    ...(embedUrl && { embedUrl }),
+    publisher: {
+      "@type": "Organization",
+      name: siteConfig.business.name,
+      logo: {
+        "@type": "ImageObject",
+        url: `${siteConfig.url}/logo.png`,
+      },
+    },
+  }
+
+  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
+}
+
+export function ContactPointSchema() {
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: siteConfig.business.name,
+    url: siteConfig.url,
+    contactPoint: [
+      {
+        "@type": "ContactPoint",
+        telephone: siteConfig.business.phone,
+        contactType: "customer service",
+        areaServed: "TH",
+        availableLanguage: ["English", "Thai", "Russian", "Chinese"],
+        hoursAvailable: {
+          "@type": "OpeningHoursSpecification",
+          dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+          opens: "09:00",
+          closes: "18:00",
+        },
+      },
+      {
+        "@type": "ContactPoint",
+        email: siteConfig.business.email,
+        contactType: "sales",
+        areaServed: ["TH", "SG", "TW", "RU", "CN"],
+        availableLanguage: ["English", "Thai", "Russian", "Chinese"],
+      },
+    ],
+  }
+
+  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
+}
+
+// DetailedServiceSchema with full E-E-A-T signals
+interface DetailedServiceSchemaProps {
+  name: string
+  description: string
+  url: string
+  serviceType: string
+  datePublished: string
+  dateModified: string
+  priceRange?: string
+  aggregateRating?: {
+    ratingValue: string
+    reviewCount: string
+  }
+  breadcrumb: { name: string; url: string }[]
+}
+
+export function DetailedServiceSchema({
+  name,
+  description,
+  url,
+  serviceType,
+  datePublished,
+  dateModified,
+  priceRange = "฿฿",
+  aggregateRating,
+  breadcrumb,
+}: DetailedServiceSchemaProps) {
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name,
+    description,
+    url: `${siteConfig.url}${url}`,
+    serviceType,
+    provider: {
+      "@type": "AccountingService",
+      name: siteConfig.business.name,
+      url: siteConfig.url,
+      telephone: siteConfig.business.phone,
+      email: siteConfig.business.email,
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: siteConfig.business.address.streetAddress,
+        addressLocality: siteConfig.business.address.addressLocality,
+        addressRegion: siteConfig.business.address.addressRegion,
+        postalCode: siteConfig.business.address.postalCode,
+        addressCountry: siteConfig.business.address.addressCountry,
+      },
+      geo: {
+        "@type": "GeoCoordinates",
+        latitude: siteConfig.business.geo.latitude,
+        longitude: siteConfig.business.geo.longitude,
+      },
+    },
+    areaServed: [
+      {
+        "@type": "Country",
+        name: "Thailand",
+      },
+      {
+        "@type": "City",
+        name: "Bangkok",
+      },
+    ],
+    availableChannel: {
+      "@type": "ServiceChannel",
+      serviceUrl: `${siteConfig.url}/schedule`,
+      servicePhone: siteConfig.business.phone,
+      serviceSmsNumber: siteConfig.business.phone,
+      availableLanguage: [
+        { "@type": "Language", name: "English" },
+        { "@type": "Language", name: "Thai" },
+        { "@type": "Language", name: "Chinese" },
+        { "@type": "Language", name: "Russian" },
+      ],
+    },
+    termsOfService: `${siteConfig.url}/terms`,
+    priceRange,
+    ...(aggregateRating && {
+      aggregateRating: {
+        "@type": "AggregateRating",
+        ratingValue: aggregateRating.ratingValue,
+        reviewCount: aggregateRating.reviewCount,
+        bestRating: "5",
+        worstRating: "1",
+      },
+    }),
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": `${siteConfig.url}${url}`,
+      datePublished,
+      dateModified,
+      breadcrumb: {
+        "@type": "BreadcrumbList",
+        itemListElement: breadcrumb.map((item, index) => ({
+          "@type": "ListItem",
+          position: index + 1,
+          name: item.name,
+          item: `${siteConfig.url}${item.url}`,
+        })),
+      },
+    },
+  }
+
+  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
+}
+
+interface ServiceHowToSchemaProps {
+  serviceName: string
+  steps: { name: string; text: string }[]
+  totalTime?: string
+}
+
+export function ServiceHowToSchema({ serviceName, steps, totalTime = "P7D" }: ServiceHowToSchemaProps) {
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    name: `How ${serviceName} Works at PND50`,
+    description: `Step-by-step process for ${serviceName} service at PND50 Thailand`,
+    totalTime,
+    estimatedCost: {
+      "@type": "MonetaryAmount",
+      currency: "THB",
+      value: "Contact for quote",
+    },
+    step: steps.map((step, index) => ({
+      "@type": "HowToStep",
+      position: index + 1,
+      name: step.name,
+      text: step.text,
+    })),
+    performer: {
+      "@type": "Organization",
+      name: siteConfig.business.name,
+      url: siteConfig.url,
+    },
+  }
+
+  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
+}

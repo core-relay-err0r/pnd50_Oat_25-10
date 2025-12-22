@@ -1,6 +1,12 @@
 import type { Metadata } from "next"
 import { Lightbulb } from "lucide-react"
-import { ServiceSchema, BreadcrumbSchema, FAQSchema } from "@/components/seo/structured-data"
+import {
+  DetailedServiceSchema,
+  BreadcrumbSchema,
+  FAQSchema,
+  AuthorSchema,
+  ServiceHowToSchema,
+} from "@/components/seo/structured-data"
 import { siteConfig } from "@/lib/seo-config"
 import { ServicePageClient } from "@/components/services/service-page-client"
 
@@ -80,6 +86,25 @@ const faqs = [
   },
 ]
 
+const howToSteps = [
+  {
+    name: "Initial Assessment",
+    text: "We review your current business situation, challenges, and goals through a discovery call.",
+  },
+  {
+    name: "Analysis & Research",
+    text: "Our team researches relevant Thai regulations, market conditions, and options specific to your case.",
+  },
+  {
+    name: "Strategic Recommendations",
+    text: "We present actionable recommendations with clear pros, cons, and cost implications.",
+  },
+  {
+    name: "Implementation Support",
+    text: "We assist with executing the agreed strategy, coordinating with relevant government agencies as needed.",
+  },
+]
+
 const breadcrumbItems = [
   { name: "Home", url: "/" },
   { name: "Services", url: "/services" },
@@ -89,13 +114,26 @@ const breadcrumbItems = [
 export default function AdvisoryPage() {
   return (
     <>
-      <ServiceSchema
+      <DetailedServiceSchema
         name="Business Advisory & Consulting Services in Thailand"
         description="Expert business advisory and consulting for foreign companies operating in Thailand."
         url="/services/advisory"
+        serviceType="Business Consulting Service"
+        datePublished="2024-01-15"
+        dateModified="2025-06-20"
+        priceRange="฿฿฿"
+        aggregateRating={{ ratingValue: "5.0", reviewCount: "38" }}
+        breadcrumb={breadcrumbItems}
       />
       <BreadcrumbSchema items={breadcrumbItems} />
       <FAQSchema faqs={faqs} />
+      <ServiceHowToSchema serviceName="Business Advisory" steps={howToSteps} totalTime="P7D" />
+      <AuthorSchema
+        name="PND50 Advisory Team"
+        jobTitle="Business Consultants"
+        description="Senior consultants with deep expertise in Thai business regulations and market entry strategies"
+        credentials={["MBA", "Certified Management Consultant"]}
+      />
 
       <ServicePageClient
         title="Business Advisory in Thailand"

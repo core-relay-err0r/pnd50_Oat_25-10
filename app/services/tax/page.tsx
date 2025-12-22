@@ -1,6 +1,12 @@
 import type { Metadata } from "next"
 import { FileText } from "lucide-react"
-import { ServiceSchema, BreadcrumbSchema, FAQSchema } from "@/components/seo/structured-data"
+import {
+  DetailedServiceSchema,
+  BreadcrumbSchema,
+  FAQSchema,
+  AuthorSchema,
+  ServiceHowToSchema,
+} from "@/components/seo/structured-data"
 import { siteConfig } from "@/lib/seo-config"
 import { ServicePageClient } from "@/components/services/service-page-client"
 
@@ -80,6 +86,25 @@ const faqs = [
   },
 ]
 
+const howToSteps = [
+  {
+    name: "Tax Calendar Setup",
+    text: "We create a customized tax calendar with all your company's filing deadlines and send reminders in advance.",
+  },
+  {
+    name: "Monthly VAT Filing",
+    text: "We prepare and submit PP30 VAT returns by the 15th of each month, including input/output reconciliation.",
+  },
+  {
+    name: "Withholding Tax Management",
+    text: "We calculate, file, and pay withholding taxes (PND1, PND3, PND53) for all applicable payments.",
+  },
+  {
+    name: "Corporate Tax Filing",
+    text: "We prepare and submit PND51 (half-year) and PND50 (annual) corporate income tax returns with optimized calculations.",
+  },
+]
+
 export default function TaxPage() {
   const breadcrumbItems = [
     { name: "Home", url: "/" },
@@ -89,13 +114,26 @@ export default function TaxPage() {
 
   return (
     <>
-      <ServiceSchema
+      <DetailedServiceSchema
         name="Tax Filing & Compliance Services in Thailand"
         description="Expert tax filing and compliance services for foreign businesses operating in Thailand."
         url="/services/tax"
+        serviceType="Tax Preparation Service"
+        datePublished="2024-01-15"
+        dateModified="2025-06-20"
+        priceRange="฿฿"
+        aggregateRating={{ ratingValue: "4.9", reviewCount: "127" }}
+        breadcrumb={breadcrumbItems}
       />
       <BreadcrumbSchema items={breadcrumbItems} />
       <FAQSchema faqs={faqs} />
+      <ServiceHowToSchema serviceName="Tax Filing & Compliance" steps={howToSteps} totalTime="P365D" />
+      <AuthorSchema
+        name="PND50 Tax Team"
+        jobTitle="Tax Specialists"
+        description="Certified tax auditors with expertise in Thai corporate taxation and Revenue Department compliance"
+        credentials={["Tax Auditor Certificate", "Revenue Department Licensed"]}
+      />
 
       <ServicePageClient
         title="Tax & Compliance in Thailand"

@@ -1,6 +1,12 @@
 import type { Metadata } from "next"
 import { BookOpen } from "lucide-react"
-import { ServicePageSchema, BreadcrumbSchema, FAQSchema, AuthorSchema } from "@/components/seo/structured-data"
+import {
+  DetailedServiceSchema,
+  BreadcrumbSchema,
+  FAQSchema,
+  AuthorSchema,
+  ServiceHowToSchema,
+} from "@/components/seo/structured-data"
 import { siteConfig } from "@/lib/seo-config"
 import { ServicePageClient } from "@/components/services/service-page-client"
 
@@ -84,6 +90,25 @@ const faqs = [
   },
 ]
 
+const howToSteps = [
+  {
+    name: "Initial Setup",
+    text: "We set up your TR Cloud account and import your chart of accounts based on Thai Accounting Standards.",
+  },
+  {
+    name: "Monthly Data Collection",
+    text: "Send us your bank statements, invoices, and receipts by the 5th of each month.",
+  },
+  {
+    name: "Bookkeeping Processing",
+    text: "Our team records all transactions, reconciles bank accounts, and prepares financial statements.",
+  },
+  {
+    name: "Review & Delivery",
+    text: "Receive your profit & loss statement, balance sheet, and summary report via email by month-end.",
+  },
+]
+
 const breadcrumbItems = [
   { name: "Home", url: "/" },
   { name: "Services", url: "/services" },
@@ -93,16 +118,20 @@ const breadcrumbItems = [
 export default function AccountingPage() {
   return (
     <>
-      <ServicePageSchema
+      <DetailedServiceSchema
         name="Accounting & Bookkeeping Services in Thailand"
         description="Professional accounting and bookkeeping services for foreign businesses operating in Thailand."
         url="/services/accounting"
+        serviceType="Accounting Service"
         datePublished="2024-01-15"
         dateModified="2025-06-20"
+        priceRange="฿฿"
+        aggregateRating={{ ratingValue: "4.9", reviewCount: "89" }}
         breadcrumb={breadcrumbItems}
       />
       <BreadcrumbSchema items={breadcrumbItems} />
       <FAQSchema faqs={faqs} />
+      <ServiceHowToSchema serviceName="Accounting & Bookkeeping" steps={howToSteps} totalTime="P30D" />
       <AuthorSchema
         name="PND50 Accounting Team"
         jobTitle="Certified Accountants"

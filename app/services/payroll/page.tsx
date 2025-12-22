@@ -1,6 +1,12 @@
 import type { Metadata } from "next"
 import { Users } from "lucide-react"
-import { ServiceSchema, BreadcrumbSchema, FAQSchema } from "@/components/seo/structured-data"
+import {
+  DetailedServiceSchema,
+  BreadcrumbSchema,
+  FAQSchema,
+  AuthorSchema,
+  ServiceHowToSchema,
+} from "@/components/seo/structured-data"
 import { siteConfig } from "@/lib/seo-config"
 import { ServicePageClient } from "@/components/services/service-page-client"
 
@@ -80,6 +86,26 @@ const faqs = [
   },
 ]
 
+const howToSteps = [
+  {
+    name: "Employee Setup",
+    text: "We set up your employee database with salary details, tax IDs, and social security numbers.",
+  },
+  {
+    name: "Monthly Data Collection",
+    text: "Submit attendance, overtime, leave, and any salary changes by the 20th of each month.",
+  },
+  {
+    name: "Payroll Processing",
+    text: "We calculate net salaries, tax withholdings, and social security contributions for all employees.",
+  },
+  { name: "Payslip Delivery", text: "Receive individual payslips and summary reports by month-end for your records." },
+  {
+    name: "Government Submissions",
+    text: "We file PND1 withholding tax and social security contributions to respective government agencies.",
+  },
+]
+
 const breadcrumbItems = [
   { name: "Home", url: "/" },
   { name: "Services", url: "/services" },
@@ -89,13 +115,26 @@ const breadcrumbItems = [
 export default function PayrollPage() {
   return (
     <>
-      <ServiceSchema
+      <DetailedServiceSchema
         name="Payroll Services in Thailand"
         description="Professional payroll processing and social security services for foreign businesses in Thailand."
         url="/services/payroll"
+        serviceType="Payroll Service"
+        datePublished="2024-01-15"
+        dateModified="2025-06-20"
+        priceRange="฿฿"
+        aggregateRating={{ ratingValue: "4.9", reviewCount: "52" }}
+        breadcrumb={breadcrumbItems}
       />
       <BreadcrumbSchema items={breadcrumbItems} />
       <FAQSchema faqs={faqs} />
+      <ServiceHowToSchema serviceName="Payroll Processing" steps={howToSteps} totalTime="P30D" />
+      <AuthorSchema
+        name="PND50 Payroll Team"
+        jobTitle="Payroll Specialists"
+        description="HR and payroll experts ensuring accurate salary processing and labor law compliance"
+        credentials={["HR Management Certificate", "Social Security Specialist"]}
+      />
 
       <ServicePageClient
         title="Payroll Services in Thailand"

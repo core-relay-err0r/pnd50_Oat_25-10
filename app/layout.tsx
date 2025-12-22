@@ -18,6 +18,8 @@ import {
   WebsiteSchema,
   ProfessionalServiceSchema,
   SpeakableSchema,
+  SiteNavigationSchema,
+  ContactPointSchema,
 } from "@/components/seo/structured-data"
 import { GeoTags, ServiceAreaSchema, InternationalServiceAreaSchema } from "@/components/seo/geo-tags"
 import { AISearchContent, EntityDefinition, QAPageSchema } from "@/components/seo/ai-search-optimization"
@@ -163,6 +165,8 @@ export default function RootLayout({
         <SpeakableSchema />
         <EntityDefinition />
         <QAPageSchema />
+        <SiteNavigationSchema />
+        <ContactPointSchema />
 
         {/* Geo/Local SEO Tags */}
         <GeoTags city="Bangkok" region="Bangkok" />
