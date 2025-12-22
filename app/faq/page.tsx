@@ -6,11 +6,18 @@ import { FileText, Building2, Users, Calculator, Search, X, ChevronDown } from "
 import { Input } from "@/components/ui/input"
 import { motion, AnimatePresence } from "framer-motion"
 import CTASection from "@/components/layout/CTASection"
+import { BreadcrumbNav } from "@/components/seo/breadcrumb-nav"
+import { BreadcrumbSchema } from "@/components/seo/structured-data"
 
 const AnimatedGridBackground = dynamic(
   () => import("@/components/ui/animated-grid-background").then((mod) => mod.AnimatedGridBackground),
   { ssr: false },
 )
+
+const breadcrumbItems = [
+  { name: "Home", url: "/" },
+  { name: "FAQ", url: "/faq" },
+]
 
 const faqCategories = [
   {
@@ -149,6 +156,8 @@ export default function FAQPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-sky-50/80 relative overflow-hidden">
+      <BreadcrumbSchema items={breadcrumbItems} />
+
       <motion.div
         className="absolute top-[15%] left-[8%] w-20 h-20 border-2 border-sky-300/40 rounded-2xl pointer-events-none"
         animate={{
@@ -202,6 +211,8 @@ export default function FAQPage() {
       {/* Hero Section - Updated to match landing page style */}
       <div className="pt-24 pb-12 sm:pt-32 sm:pb-16 relative z-10">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <BreadcrumbNav items={breadcrumbItems} className="mb-8" />
+
           <div className="max-w-4xl">
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
               <span className="inline-flex items-center gap-2 bg-gradient-to-r from-sky-50 to-blue-50 text-sky-700 px-5 py-2.5 rounded-full text-sm font-semibold mb-8 border border-sky-200/60 shadow-sm shadow-sky-100/50">

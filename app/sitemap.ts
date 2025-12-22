@@ -6,17 +6,17 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date().toISOString()
 
   const lastUpdated = {
-    home: now,
-    services: now,
-    servicePages: now,
-    about: now,
-    schedule: now,
-    contact: now,
-    faq: now,
-    caseStudies: now,
-    legal: now,
-    calculator: now,
-    regional: now,
+    home: "2025-06-15T00:00:00.000Z",
+    services: "2025-06-20T00:00:00.000Z",
+    servicePages: "2025-06-20T00:00:00.000Z",
+    about: "2025-05-01T00:00:00.000Z",
+    schedule: "2025-06-01T00:00:00.000Z",
+    contact: "2025-04-15T00:00:00.000Z",
+    faq: "2025-06-18T00:00:00.000Z",
+    caseStudies: "2025-06-10T00:00:00.000Z",
+    legal: "2025-01-01T00:00:00.000Z",
+    calculator: "2025-06-01T00:00:00.000Z",
+    regional: "2025-05-15T00:00:00.000Z",
   }
 
   const targetRegions = ["en", "en-US", "en-GB", "en-SG", "en-AU"]

@@ -80,6 +80,12 @@ const faqs = [
   },
 ]
 
+const breadcrumbItems = [
+  { name: "Home", url: "/" },
+  { name: "Services", url: "/services" },
+  { name: "Payroll Services", url: "/services/payroll" },
+]
+
 export default function PayrollPage() {
   return (
     <>
@@ -88,13 +94,7 @@ export default function PayrollPage() {
         description="Professional payroll processing and social security services for foreign businesses in Thailand."
         url="/services/payroll"
       />
-      <BreadcrumbSchema
-        items={[
-          { name: "Home", url: "/" },
-          { name: "Services", url: "/services" },
-          { name: "Payroll in Thailand", url: "/services/payroll" },
-        ]}
-      />
+      <BreadcrumbSchema items={breadcrumbItems} />
       <FAQSchema faqs={faqs} />
 
       <ServicePageClient
@@ -103,6 +103,7 @@ export default function PayrollPage() {
         icon={<Users className="w-6 h-6 text-white" />}
         features={features}
         faqs={faqs}
+        breadcrumbItems={breadcrumbItems}
       />
     </>
   )

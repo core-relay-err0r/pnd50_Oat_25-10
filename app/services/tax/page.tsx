@@ -81,6 +81,12 @@ const faqs = [
 ]
 
 export default function TaxPage() {
+  const breadcrumbItems = [
+    { name: "Home", url: "/" },
+    { name: "Services", url: "/services" },
+    { name: "Tax & Compliance", url: "/services/tax" },
+  ]
+
   return (
     <>
       <ServiceSchema
@@ -88,13 +94,7 @@ export default function TaxPage() {
         description="Expert tax filing and compliance services for foreign businesses operating in Thailand."
         url="/services/tax"
       />
-      <BreadcrumbSchema
-        items={[
-          { name: "Home", url: "/" },
-          { name: "Services", url: "/services" },
-          { name: "Tax Services in Thailand", url: "/services/tax" },
-        ]}
-      />
+      <BreadcrumbSchema items={breadcrumbItems} />
       <FAQSchema faqs={faqs} />
 
       <ServicePageClient
@@ -103,6 +103,7 @@ export default function TaxPage() {
         icon={<FileText className="w-6 h-6 text-white" />}
         features={features}
         faqs={faqs}
+        breadcrumbItems={breadcrumbItems}
       />
     </>
   )

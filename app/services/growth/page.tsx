@@ -80,6 +80,12 @@ const faqs = [
   },
 ]
 
+const breadcrumbItems = [
+  { name: "Home", url: "/" },
+  { name: "Services", url: "/services" },
+  { name: "Business Growth", url: "/services/growth" },
+]
+
 export default function GrowthPage() {
   return (
     <>
@@ -88,13 +94,7 @@ export default function GrowthPage() {
         description="Strategic financial planning and business growth solutions for foreign companies in Thailand."
         url="/services/growth"
       />
-      <BreadcrumbSchema
-        items={[
-          { name: "Home", url: "/" },
-          { name: "Services", url: "/services" },
-          { name: "Business Growth in Thailand", url: "/services/growth" },
-        ]}
-      />
+      <BreadcrumbSchema items={breadcrumbItems} />
       <FAQSchema faqs={faqs} />
 
       <ServicePageClient
@@ -104,6 +104,7 @@ export default function GrowthPage() {
         features={features}
         faqs={faqs}
         ctaText="Ready to Grow Your Business?"
+        breadcrumbItems={breadcrumbItems}
       />
     </>
   )

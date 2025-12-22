@@ -1,6 +1,6 @@
 import type { Metadata } from "next"
 import { BookOpen } from "lucide-react"
-import { ServiceSchema, BreadcrumbSchema, FAQSchema } from "@/components/seo/structured-data"
+import { ServicePageSchema, BreadcrumbSchema, FAQSchema, AuthorSchema } from "@/components/seo/structured-data"
 import { siteConfig } from "@/lib/seo-config"
 import { ServicePageClient } from "@/components/services/service-page-client"
 
@@ -84,22 +84,31 @@ const faqs = [
   },
 ]
 
+const breadcrumbItems = [
+  { name: "Home", url: "/" },
+  { name: "Services", url: "/services" },
+  { name: "Accounting", url: "/services/accounting" },
+]
+
 export default function AccountingPage() {
   return (
     <>
-      <ServiceSchema
+      <ServicePageSchema
         name="Accounting & Bookkeeping Services in Thailand"
         description="Professional accounting and bookkeeping services for foreign businesses operating in Thailand."
         url="/services/accounting"
+        datePublished="2024-01-15"
+        dateModified="2025-06-20"
+        breadcrumb={breadcrumbItems}
       />
-      <BreadcrumbSchema
-        items={[
-          { name: "Home", url: "/" },
-          { name: "Services", url: "/services" },
-          { name: "Accounting in Thailand", url: "/services/accounting" },
-        ]}
-      />
+      <BreadcrumbSchema items={breadcrumbItems} />
       <FAQSchema faqs={faqs} />
+      <AuthorSchema
+        name="PND50 Accounting Team"
+        jobTitle="Certified Accountants"
+        description="Team of certified accountants with 10+ years experience serving foreign businesses in Thailand"
+        credentials={["Certified Public Accountant", "Tax Auditor Certificate"]}
+      />
 
       <ServicePageClient
         title="Accounting & Bookkeeping in Thailand"
@@ -107,6 +116,7 @@ export default function AccountingPage() {
         icon={<BookOpen className="w-6 h-6 text-white" />}
         features={features}
         faqs={faqs}
+        breadcrumbItems={breadcrumbItems}
       />
     </>
   )

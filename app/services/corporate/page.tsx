@@ -82,6 +82,12 @@ const faqs = [
   },
 ]
 
+const breadcrumbItems = [
+  { name: "Home", url: "/" },
+  { name: "Services", url: "/services" },
+  { name: "Open Business", url: "/services/corporate" },
+]
+
 export default function CorporatePage() {
   return (
     <>
@@ -90,13 +96,7 @@ export default function CorporatePage() {
         description="Expert company registration and corporate services for foreign businesses opening in Thailand."
         url="/services/corporate"
       />
-      <BreadcrumbSchema
-        items={[
-          { name: "Home", url: "/" },
-          { name: "Services", url: "/services" },
-          { name: "Open Business in Thailand", url: "/services/corporate" },
-        ]}
-      />
+      <BreadcrumbSchema items={breadcrumbItems} />
       <FAQSchema faqs={faqs} />
 
       <ServicePageClient
@@ -106,6 +106,7 @@ export default function CorporatePage() {
         features={features}
         faqs={faqs}
         ctaText="Ready to Start Your Business?"
+        breadcrumbItems={breadcrumbItems}
       />
     </>
   )

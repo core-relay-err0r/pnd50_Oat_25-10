@@ -153,8 +153,70 @@ export const pageMetadata = {
     title: "Terms of Service | PND50 Thailand",
     description: "PND50's terms of service for accounting and consulting.",
   },
+  "services/accounting": {
+    title: "Accounting Services | PND50 Thailand",
+    description: "Professional accounting services for foreign businesses in Thailand.",
+  },
+  "services/tax": {
+    title: "Tax Services | PND50 Thailand",
+    description: "Expert tax filing and compliance services for foreign businesses in Thailand.",
+  },
+  "services/payroll": {
+    title: "Payroll Services | PND50 Thailand",
+    description: "Accurate payroll processing for foreign businesses in Thailand.",
+  },
+  "services/corporate": {
+    title: "Corporate Services | PND50 Thailand",
+    description: "Complete corporate services for foreign businesses in Thailand.",
+  },
+  "services/advisory": {
+    title: "Business Advisory Services | PND50 Thailand",
+    description: "Guidance and advice for foreign businesses in Thailand.",
+  },
+  "services/growth": {
+    title: "Business Growth Services | PND50 Thailand",
+    description: "Support for business growth and expansion in Thailand.",
+  },
+  schedule: {
+    title: "Schedule a Consultation | PND50 Thailand",
+    description: "Schedule a consultation with our expert accountants in Thailand.",
+  },
 }
 
+export const pageDates = {
+  home: { published: "2024-01-01", modified: "2025-06-15" },
+  services: { published: "2024-01-01", modified: "2025-06-20" },
+  "services/accounting": { published: "2024-01-15", modified: "2025-06-20" },
+  "services/tax": { published: "2024-01-15", modified: "2025-06-20" },
+  "services/payroll": { published: "2024-01-15", modified: "2025-06-20" },
+  "services/corporate": { published: "2024-01-15", modified: "2025-06-20" },
+  "services/advisory": { published: "2024-02-01", modified: "2025-06-18" },
+  "services/growth": { published: "2024-03-01", modified: "2025-06-15" },
+  about: { published: "2024-01-01", modified: "2025-05-01" },
+  contact: { published: "2024-01-01", modified: "2025-04-15" },
+  faq: { published: "2024-01-01", modified: "2025-06-18" },
+  caseStudies: { published: "2024-02-01", modified: "2025-06-10" },
+  calculator: { published: "2024-03-01", modified: "2025-06-01" },
+  schedule: { published: "2024-01-15", modified: "2025-06-01" },
+}
+
+export const authors = {
+  team: {
+    name: "PND50 Accounting Team",
+    jobTitle: "Certified Accountants",
+    description: "Team of certified accountants with 10+ years experience serving foreign businesses in Thailand",
+    credentials: ["Certified Public Accountant", "Tax Auditor Certificate"],
+  },
+  founder: {
+    name: "PND50 Founder",
+    jobTitle: "Managing Director & CPA",
+    description: "Founder of PND50 with extensive experience in Thai accounting and tax for foreign businesses",
+    credentials: ["Certified Public Accountant", "Master of Accounting"],
+    sameAs: ["https://linkedin.com/company/pnd50"],
+  },
+}
+
+// Thai keywords for SEO
 export const thaiKeywords = {
   general: ["บริษัทบัญชี", "ที่ปรึกษาภาษี", "รับทำบัญชี"],
   services: ["ภงด.50", "ภาษีนิติบุคคล", "จดทะเบียนบริษัท"],
@@ -170,6 +232,7 @@ export const serviceAreas = [
   { name: "Chonburi", nameTh: "ชลบุรี" },
 ]
 
+// Industry-specific keywords
 export const industryKeywords = {
   foreignBusiness: ["foreign company Thailand", "expat business Thailand", "open business in Thailand"],
   startup: ["startup accounting Thailand", "SME accounting Bangkok"],
