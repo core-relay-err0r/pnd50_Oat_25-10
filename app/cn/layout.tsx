@@ -1,5 +1,6 @@
 import type React from "react"
 import type { Metadata } from "next"
+import { LocaleSetter } from "@/components/locale-setter"
 
 export const metadata: Metadata = {
   title: "PND50 - 泰国会计和税务服务 | AI Boutique Accounting",
@@ -24,5 +25,10 @@ export const metadata: Metadata = {
 }
 
 export default function ChineseLayout({ children }: { children: React.ReactNode }) {
-  return <>{children}</>
+  return (
+    <>
+      <LocaleSetter locale="cn" />
+      {children}
+    </>
+  )
 }

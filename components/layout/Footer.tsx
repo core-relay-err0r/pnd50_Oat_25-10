@@ -28,12 +28,42 @@ const languages = [
   { code: "zh", name: "中文", flag: "🇨🇳", href: "/cn" },
 ]
 
+function setLocaleCookie(locale: string) {
+  document.cookie = `NEXT_LOCALE=${locale};path=/;max-age=${60 * 60 * 24 * 365}`
+}
+
 export default function Footer() {
   const pathname = usePathname()
   const [langOpen, setLangOpen] = useState(false)
 
-  if (pathname === "/" || pathname === "/schedule" || pathname === "/schedule/success") {
+  const currentLocale = pathname.startsWith("/th")
+    ? "th"
+    : pathname.startsWith("/ru")
+      ? "ru"
+      : pathname.startsWith("/cn")
+        ? "cn"
+        : "en"
+
+  const getLocalizedHref = (href: string) => {
+    if (currentLocale === "en") return href
+    return `/${currentLocale}${href}`
+  }
+
+  if (
+    pathname === "/" ||
+    pathname === "/schedule" ||
+    pathname === "/schedule/success" ||
+    pathname === "/th" ||
+    pathname === "/ru" ||
+    pathname === "/cn"
+  ) {
     return null
+  }
+
+  const handleLanguageSelect = (langCode: string) => {
+    const locale = langCode === "zh" ? "cn" : langCode
+    setLocaleCookie(locale)
+    setLangOpen(false)
   }
 
   return (
@@ -55,7 +85,11 @@ export default function Footer() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-16">
           {/* Logo & Description */}
           <div className="lg:col-span-4">
-            <Link href="/" className="inline-block mb-6" aria-label="PND50 Home">
+            <Link
+              href={currentLocale === "en" ? "/" : `/${currentLocale}`}
+              className="inline-block mb-6"
+              aria-label="PND50 Home"
+            >
               <span className="text-3xl font-bold tracking-tight">PND50</span>
             </Link>
             <p className="text-slate-400 leading-relaxed mb-6 max-w-sm">
@@ -92,7 +126,7 @@ export default function Footer() {
               {serviceLinks.map((link) => (
                 <li key={link.href}>
                   <Link
-                    href={link.href}
+                    href={getLocalizedHref(link.href)}
                     className="text-slate-400 hover:text-white transition-colors text-sm flex items-center gap-1 group"
                     itemProp="url"
                   >
@@ -119,7 +153,7 @@ export default function Footer() {
               {companyLinks.map((link) => (
                 <li key={link.href}>
                   <Link
-                    href={link.href}
+                    href={getLocalizedHref(link.href)}
                     className="text-slate-400 hover:text-white transition-colors text-sm flex items-center gap-1 group"
                     itemProp="url"
                   >
@@ -169,6 +203,7 @@ export default function Footer() {
                     <Link
                       key={lang.code}
                       href={lang.href}
+                      onClick={() => handleLanguageSelect(lang.code)}
                       className="flex items-center gap-3 px-4 py-2.5 text-sm text-slate-300 hover:bg-slate-700 hover:text-white transition-colors"
                       hrefLang={lang.code}
                       role="menuitem"
@@ -189,10 +224,16 @@ export default function Footer() {
             <span itemProp="copyrightYear">© 2025</span> PND50. All rights reserved.
           </p>
           <nav className="flex items-center gap-6" aria-label="Legal navigation">
-            <Link href="/privacy-policy" className="text-slate-500 hover:text-white text-sm transition-colors">
+            <Link
+              href={getLocalizedHref("/privacy-policy")}
+              className="text-slate-500 hover:text-white text-sm transition-colors"
+            >
               Privacy Policy
             </Link>
-            <Link href="/terms-of-service" className="text-slate-500 hover:text-white text-sm transition-colors">
+            <Link
+              href={getLocalizedHref("/terms-of-service")}
+              className="text-slate-500 hover:text-white text-sm transition-colors"
+            >
               Terms of Service
             </Link>
           </nav>

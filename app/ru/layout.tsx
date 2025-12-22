@@ -1,5 +1,6 @@
 import type React from "react"
 import type { Metadata } from "next"
+import { LocaleSetter } from "@/components/locale-setter"
 
 export const metadata: Metadata = {
   title: "PND50 - Бухгалтерские и налоговые услуги в Таиланде | AI Boutique Accounting",
@@ -31,5 +32,10 @@ export const metadata: Metadata = {
 }
 
 export default function RussianLayout({ children }: { children: React.ReactNode }) {
-  return <>{children}</>
+  return (
+    <>
+      <LocaleSetter locale="ru" />
+      {children}
+    </>
+  )
 }
