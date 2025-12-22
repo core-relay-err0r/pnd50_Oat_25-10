@@ -3,7 +3,6 @@ import { siteConfig } from "@/lib/seo-config"
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = siteConfig.url
-
   const now = new Date().toISOString()
 
   const lastUpdated = {
@@ -32,6 +31,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ),
   })
 
+  const createMultilingualAlternates = (path: string) => ({
+    languages: {
+      en: `${baseUrl}${path}`,
+      th: `${baseUrl}/th${path}`,
+      ru: `${baseUrl}/ru${path}`,
+      "zh-CN": `${baseUrl}/cn${path}`,
+    },
+  })
+
   // Main pages
   const mainPages: MetadataRoute.Sitemap = [
     {
@@ -39,21 +47,21 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: lastUpdated.home,
       changeFrequency: "monthly",
       priority: 0.8,
-      alternates: createAlternates(""),
+      alternates: createMultilingualAlternates(""),
     },
     {
       url: `${baseUrl}/services`,
       lastModified: lastUpdated.services,
       changeFrequency: "weekly",
       priority: 1.0,
-      alternates: createAlternates("/services"),
+      alternates: createMultilingualAlternates("/services"),
     },
     {
       url: `${baseUrl}/about`,
       lastModified: lastUpdated.about,
       changeFrequency: "monthly",
       priority: 0.7,
-      alternates: createAlternates("/about"),
+      alternates: createMultilingualAlternates("/about"),
     },
     {
       url: `${baseUrl}/schedule`,
@@ -67,14 +75,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: lastUpdated.contact,
       changeFrequency: "monthly",
       priority: 0.7,
-      alternates: createAlternates("/contact"),
+      alternates: createMultilingualAlternates("/contact"),
     },
     {
       url: `${baseUrl}/faq`,
       lastModified: lastUpdated.faq,
       changeFrequency: "weekly",
       priority: 0.8,
-      alternates: createAlternates("/faq"),
+      alternates: createMultilingualAlternates("/faq"),
     },
     {
       url: `${baseUrl}/case-studies`,
@@ -136,51 +144,42 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ]
 
-  // Language/locale pages
   const languagePages: MetadataRoute.Sitemap = [
     {
       url: `${baseUrl}/th`,
       lastModified: now,
       changeFrequency: "monthly",
       priority: 0.8,
-      alternates: {
-        languages: {
-          en: baseUrl,
-          th: `${baseUrl}/th`,
-          ru: `${baseUrl}/ru`,
-          "zh-CN": `${baseUrl}/cn`,
-        },
-      },
+      alternates: createMultilingualAlternates(""),
     },
     {
       url: `${baseUrl}/ru`,
       lastModified: now,
       changeFrequency: "monthly",
       priority: 0.8,
-      alternates: {
-        languages: {
-          en: baseUrl,
-          th: `${baseUrl}/th`,
-          ru: `${baseUrl}/ru`,
-          "zh-CN": `${baseUrl}/cn`,
-        },
-      },
+      alternates: createMultilingualAlternates(""),
     },
     {
       url: `${baseUrl}/cn`,
       lastModified: now,
       changeFrequency: "monthly",
       priority: 0.8,
-      alternates: {
-        languages: {
-          en: baseUrl,
-          th: `${baseUrl}/th`,
-          ru: `${baseUrl}/ru`,
-          "zh-CN": `${baseUrl}/cn`,
-        },
-      },
+      alternates: createMultilingualAlternates(""),
     },
   ]
 
-  return [...mainPages, ...servicePages, ...regionalPages, ...legalPages, ...languagePages]
+  const locales = ["th", "ru", "cn"]
+  const localizedPages = ["services", "about", "faq", "contact"]
+
+  const localizedSubPages: MetadataRoute.Sitemap = locales.flatMap((locale) =>
+    localizedPages.map((page) => ({
+      url: `${baseUrl}/${locale}/${page}`,
+      lastModified: now,
+      changeFrequency: "monthly" as const,
+      priority: page === "services" ? 0.9 : 0.7,
+      alternates: createMultilingualAlternates(`/${page}`),
+    })),
+  )
+
+  return [...mainPages, ...servicePages, ...regionalPages, ...legalPages, ...languagePages, ...localizedSubPages]
 }
