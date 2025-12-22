@@ -23,8 +23,10 @@ const AnimatedNavLink = ({
     <Link href={href} className={`group relative inline-flex flex-col items-center justify-center ${textSizeClass}`}>
       <div className="relative overflow-hidden h-5 w-full">
         <div className="flex flex-col transition-transform duration-400 ease-out transform group-hover:-translate-y-1/2">
-          <span className={`${defaultTextColor} h-5 flex items-center justify-center`}>{children}</span>
-          <span className={`${hoverTextColor} h-5 flex items-center justify-center`}>{children}</span>
+          <span className={`${defaultTextColor} h-5 flex items-center justify-center whitespace-nowrap`}>
+            {children}
+          </span>
+          <span className={`${hoverTextColor} h-5 flex items-center justify-center whitespace-nowrap`}>{children}</span>
         </div>
       </div>
       {isActive && (
