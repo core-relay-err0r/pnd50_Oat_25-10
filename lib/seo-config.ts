@@ -192,9 +192,9 @@ export const pageDates = {
   "services/corporate": { published: "2024-01-15", modified: "2025-06-20" },
   "services/advisory": { published: "2024-02-01", modified: "2025-06-18" },
   "services/growth": { published: "2024-03-01", modified: "2025-06-15" },
-  about: { published: "2024-01-01", modified: "2025-05-01" },
+  about: { published: "2024-01-01", modified: "2025-06-22" },
   contact: { published: "2024-01-01", modified: "2025-04-15" },
-  faq: { published: "2024-01-01", modified: "2025-06-18" },
+  faq: { published: "2024-01-01", modified: "2025-06-22" },
   caseStudies: { published: "2024-02-01", modified: "2025-06-10" },
   calculator: { published: "2024-03-01", modified: "2025-06-01" },
   schedule: { published: "2024-01-15", modified: "2025-06-01" },
@@ -218,9 +218,10 @@ export const authors = {
 
 // Thai keywords for SEO
 export const thaiKeywords = {
-  general: ["บริษัทบัญชี", "ที่ปรึกษาภาษี", "รับทำบัญชี"],
-  services: ["ภงด.50", "ภาษีนิติบุคคล", "จดทะเบียนบริษัท"],
-  location: ["บัญชี กรุงเทพ", "accounting Bangkok"],
+  general: ["บริษัทบัญชี", "ที่ปรึกษาภาษี", "รับทำบัญชี", "สำนักงานบัญชี"],
+  services: ["ภ.ง.ด.50", "ภ.ง.ด.51", "ภงด.50", "ภงด50", "P.N.D.50", "PND50", "ภาษีนิติบุคคล", "จดทะเบียนบริษัท", "ยื่นภาษี"],
+  location: ["บัญชี กรุงเทพ", "accounting Bangkok", "ที่ปรึกษาภาษี กรุงเทพ"],
+  brand: ["PND50", "ภ.ง.ด.50", "P.N.D.50", "พีเอ็นดี50"],
 }
 
 // Local business areas served

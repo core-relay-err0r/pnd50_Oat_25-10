@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import dynamic from "next/dynamic"
-import { FileText, Building2, Users, Calculator, Search, X, ChevronDown } from "lucide-react"
+import { FileText, Building2, Users, Calculator, Search, X, ChevronDown, Info } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { motion, AnimatePresence } from "framer-motion"
 import CTASection from "@/components/layout/CTASection"
@@ -20,6 +20,33 @@ const breadcrumbItems = [
 ]
 
 const faqCategories = [
+  {
+    id: "about-pnd50",
+    title: "About PND50",
+    icon: Info,
+    questions: [
+      {
+        id: "about-1",
+        question: "What does PND50 mean? Why is your company named this way?",
+        answer:
+          "PND50 (P.N.D.50) comes from ภ.ง.ด.50 in Thai, which stands for 'แบบแสดงรายการภาษีเงินได้บริษัทหรือห้างหุ้นส่วนนิติบุคคล' — Thailand's Annual Corporate Income Tax Return form. Every Thai company must file this form within 150 days after their fiscal year ends. We named our company after this essential tax form because it represents the core of what we do: helping foreign-owned businesses navigate Thai corporate tax compliance with confidence and clarity.",
+        reference: "Revenue Code of Thailand, Section 68; Form ภ.ง.ด.50 (P.N.D.50)",
+      },
+      {
+        id: "about-2",
+        question: "What is the difference between PND50 and PND51?",
+        answer:
+          "PND50 (ภ.ง.ด.50) is the Annual Corporate Income Tax Return filed once a year within 150 days after fiscal year end. PND51 (ภ.ง.ด.51) is the Half-Year Corporate Income Tax Return filed within 2 months after the first 6 months of the fiscal year. Both are mandatory for all registered companies in Thailand. Our team handles both filings as part of our tax compliance services.",
+        reference: "Revenue Code of Thailand, Sections 67 bis and 68",
+      },
+      {
+        id: "about-3",
+        question: "Who is PND50 designed for?",
+        answer:
+          "PND50 specializes in serving foreign-owned businesses operating in Thailand. Whether you're a startup, SME, or established company with international ownership, we provide accounting, tax, payroll, and corporate services in English (and Thai, Chinese, Russian) with a focus on making Thai compliance simple and stress-free.",
+      },
+    ],
+  },
   {
     id: "accounting",
     title: "Accounting Questions",

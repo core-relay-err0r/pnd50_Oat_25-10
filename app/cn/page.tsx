@@ -1,6 +1,6 @@
 "use client"
 import dynamic from "next/dynamic"
-import { useEffect, useState, useMemo } from "react"
+import { useEffect, useState } from "react"
 import { motion } from "framer-motion"
 import { translations } from "@/lib/translations"
 import { LocalizedHomepageCtas } from "@/components/localized-homepage-ctas"
@@ -12,13 +12,12 @@ const AnimatedGridBackground = dynamic(
   { ssr: false },
 )
 
-const t = translations.cn
-
 export default function ChineseLanding() {
+  const t = translations.cn
   const [isVisible, setIsVisible] = useState(false)
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
   const [wordIndex, setWordIndex] = useState(0)
-  const words = useMemo(() => t?.hero?.words ?? ["会计", "咨询", "合规"], [])
+  const words = ["会计", "咨询", "合规"]
 
   useEffect(() => {
     setIsVisible(true)
