@@ -87,6 +87,7 @@ export function FloatingChatBot() {
   const synthRef = useRef<SpeechSynthesis | null>(null)
   const lastSpokenMessageRef = useRef<string | null>(null)
   const spokenMessageIdsRef = useRef<Set<string>>(new Set())
+  const wasSpeakingRef = useRef(false)
 
   const [inputValue, setInputValue] = useState("")
 
@@ -618,6 +619,23 @@ export function FloatingChatBot() {
     if (diffDays < 7) return `${diffDays} days ago`
     return date.toLocaleDateString()
   }
+
+  useEffect(() => {
+    // When Panida finishes speaking (isSpeaking goes from true to false)
+    if (wasSpeakingRef.current && !isSpeaking && voiceMode && !isListening && !isProcessing && status === "ready") {
+      // Small delay before listening again for natural conversation flow
+      const timer = setTimeout(() => {
+        if (voiceMode && !isSpeaking && !isListening) {
+          startVoiceModeListening()
+        }
+      }, 500)
+
+      return () => clearTimeout(timer)
+    }
+
+    // Track previous speaking state
+    wasSpeakingRef.current = isSpeaking
+  }, [isSpeaking, voiceMode, isListening, isProcessing, status, startVoiceModeListening])
 
   return (
     <div className="fixed bottom-4 md:bottom-6 right-4 md:right-6 z-50 flex items-end justify-end">
