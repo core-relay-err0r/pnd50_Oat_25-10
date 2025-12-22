@@ -1,12 +1,16 @@
 import type React from "react"
 import type { Metadata } from "next"
 import { LocaleSetter } from "@/components/locale-setter"
+import { localizedKeywords, localizedPageMetadata } from "@/lib/seo-config"
 
 export const metadata: Metadata = {
-  title: "PND50 - บริการบัญชีและภาษีในประเทศไทย | AI Boutique Accounting",
-  description:
-    "บริการบัญชี ภาษี และที่ปรึกษาธุรกิจสำหรับชาวต่างชาติในประเทศไทย ทีมผู้เชี่ยวชาญที่พูดภาษาของคุณ พร้อมระบบ AI ที่ทำให้งานเร็วขึ้น 5 เท่าและไม่มีข้อผิดพลาด",
-  keywords: ["บริการบัญชีไทย", "ภาษีสำหรับชาวต่างชาติ", "ที่ปรึกษาธุรกิจไทย", "PND50", "บัญชี AI", "จดทะเบียนบริษัท"],
+  title: localizedPageMetadata.th.home.title,
+  description: localizedPageMetadata.th.home.description,
+  keywords: [
+    ...localizedKeywords.th.primary,
+    ...localizedKeywords.th.secondary,
+    ...localizedKeywords.th.longTail.slice(0, 5),
+  ],
   alternates: {
     canonical: "https://pnd50.com/th",
     languages: {
@@ -17,10 +21,28 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: "PND50 - บริการบัญชีและภาษีในประเทศไทย",
-    description: "บริการบัญชี ภาษี และที่ปรึกษาธุรกิจสำหรับชาวต่างชาติในประเทศไทย",
+    title: localizedPageMetadata.th.home.title,
+    description: localizedPageMetadata.th.home.description,
     locale: "th_TH",
     type: "website",
+    siteName: "PND50",
+    url: "https://pnd50.com/th",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: localizedPageMetadata.th.home.title,
+    description: localizedPageMetadata.th.home.description,
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
   },
 }
 
