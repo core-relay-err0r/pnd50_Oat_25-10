@@ -11,41 +11,51 @@ import { siteConfig } from "@/lib/seo-config"
 import { ServicePageClient } from "@/components/services/service-page-client"
 
 export const metadata: Metadata = {
-  title: "Payroll Services in Thailand | PND50",
+  title: "Payroll Services in Thailand | Salary & Social Security | PND50",
   description:
-    "Professional payroll services in Thailand for foreign businesses. Monthly payroll processing, social security submissions, and tax withholding. Accurate and timely for expat companies.",
+    "Professional payroll services in Thailand for foreign businesses. Monthly salary processing, social security submissions, PND1 tax withholding, and payslip generation. Full English support.",
   keywords: [
+    "payroll Thailand",
     "payroll services Thailand",
-    "payroll outsourcing Thailand",
+    "salary processing Thailand",
     "social security Thailand",
-    "employee payroll Thailand",
-    "foreign business payroll Thailand",
-    "expat payroll Thailand",
-    "HR services Thailand",
+    "outsource payroll Thailand",
+    // Thai keywords
+    "เงินเดือน",
+    "ทำเงินเดือน",
+    "ประกันสังคม",
+    "บริการเงินเดือน",
+    "จ่ายเงินเดือน",
   ],
   alternates: {
     canonical: `${siteConfig.url}/services/payroll`,
     languages: {
       en: `${siteConfig.url}/services/payroll`,
-      "en-US": `${siteConfig.url}/services/payroll`,
-      "en-GB": `${siteConfig.url}/services/payroll`,
-      "en-SG": `${siteConfig.url}/services/payroll`,
-      "en-AU": `${siteConfig.url}/services/payroll`,
       "x-default": `${siteConfig.url}/services/payroll`,
     },
   },
   openGraph: {
     title: "Payroll Services in Thailand | PND50",
-    description: "Professional payroll processing for foreign businesses in Thailand.",
+    description:
+      "Professional payroll processing for foreign businesses in Thailand. Social security and tax compliance included.",
     url: `${siteConfig.url}/services/payroll`,
     siteName: "PND50",
     locale: "en_US",
     type: "website",
+    images: [
+      {
+        url: `${siteConfig.url}/og-services.png`,
+        width: 1200,
+        height: 630,
+        alt: "PND50 Payroll Services in Thailand",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Payroll Services in Thailand | PND50",
     description: "Professional payroll for foreign businesses in Thailand.",
+    images: [`${siteConfig.url}/og-services.png`],
   },
   robots: {
     index: true,

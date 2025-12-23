@@ -11,45 +11,53 @@ import { siteConfig } from "@/lib/seo-config"
 import { ServicePageClient } from "@/components/services/service-page-client"
 
 export const metadata: Metadata = {
-  title: "Accounting & Bookkeeping Services in Thailand | PND50",
+  title: "Accounting in Thailand | Bookkeeping Services for Foreign Business | PND50",
   description:
-    "Professional accounting and bookkeeping services in Thailand for foreign businesses. Monthly financial statements, bank reconciliations, and TR Cloud system. Full English support.",
+    "Professional accounting in Thailand for foreign businesses. Monthly bookkeeping, financial statements, bank reconciliations with TR Cloud system. Full English support by certified accountants.",
   keywords: [
-    "accounting services Thailand",
+    // Primary focus keywords
+    "accounting in Thailand",
     "bookkeeping Thailand",
+    // Secondary keywords
     "accounting for foreign business Thailand",
-    "monthly bookkeeping Thailand",
-    "financial statements Thailand",
-    "expat accounting Thailand",
-    "accounting services in Thailand",
-    "bookkeeping in Thailand",
-    "accounting for foreign business in Thailand",
-    "expat accounting Thailand",
     "English speaking accountant Thailand",
+    "monthly bookkeeping services Thailand",
+    "financial statements Thailand",
+    // Thai keywords
+    "บัญชี",
+    "ทำบัญชี",
+    "บริการบัญชี",
+    "รับทำบัญชี",
   ],
   alternates: {
     canonical: `${siteConfig.url}/services/accounting`,
     languages: {
       en: `${siteConfig.url}/services/accounting`,
-      "en-US": `${siteConfig.url}/services/accounting`,
-      "en-GB": `${siteConfig.url}/services/accounting`,
-      "en-SG": `${siteConfig.url}/services/accounting`,
-      "en-AU": `${siteConfig.url}/services/accounting`,
       "x-default": `${siteConfig.url}/services/accounting`,
     },
   },
   openGraph: {
-    title: "Accounting & Bookkeeping Services in Thailand | PND50",
-    description: "Professional accounting services for foreign businesses in Thailand. Full English support.",
+    title: "Accounting in Thailand | PND50",
+    description:
+      "Professional accounting services for foreign businesses in Thailand. Full English support by certified accountants.",
     url: `${siteConfig.url}/services/accounting`,
     siteName: "PND50",
     locale: "en_US",
     type: "website",
+    images: [
+      {
+        url: `${siteConfig.url}/og-image.jpg`,
+        width: 1200,
+        height: 630,
+        alt: "PND50 Accounting Services in Thailand",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Accounting Services in Thailand | PND50",
+    title: "Accounting in Thailand | PND50",
     description: "Professional accounting for foreign businesses in Thailand.",
+    images: [`${siteConfig.url}/og-image.jpg`],
   },
   robots: {
     index: true,

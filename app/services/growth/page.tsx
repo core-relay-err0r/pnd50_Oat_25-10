@@ -11,41 +11,49 @@ import { siteConfig } from "@/lib/seo-config"
 import { ServicePageClient } from "@/components/services/service-page-client"
 
 export const metadata: Metadata = {
-  title: "Business Growth & Financial Planning in Thailand | PND50",
+  title: "Grow Your Business in Thailand | Financial Planning | PND50",
   description:
-    "Strategic financial planning and business growth solutions in Thailand. Scale your foreign business with expert analysis, cost optimization, and performance insights in Thailand.",
+    "Strategic financial planning and business growth solutions in Thailand. Scale your foreign business with expert analysis, cost optimization, and performance insights. Full English support.",
   keywords: [
-    "business growth in Thailand",
-    "financial planning in Thailand",
-    "scale business in Thailand",
-    "foreign business expansion Thailand",
-    "cost optimization Thailand",
-    "financial analysis Thailand",
-    "grow company Thailand",
+    "grow business Thailand",
+    "business growth Thailand",
+    "expand business Thailand",
+    "financial planning Thailand",
+    "scale business Thailand",
+    // Thai keywords
+    "ขยายธุรกิจ",
+    "เติบโตธุรกิจ",
+    "วางแผนการเงิน",
+    "พัฒนาธุรกิจ",
   ],
   alternates: {
     canonical: `${siteConfig.url}/services/growth`,
     languages: {
       en: `${siteConfig.url}/services/growth`,
-      "en-US": `${siteConfig.url}/services/growth`,
-      "en-GB": `${siteConfig.url}/services/growth`,
-      "en-SG": `${siteConfig.url}/services/growth`,
-      "en-AU": `${siteConfig.url}/services/growth`,
       "x-default": `${siteConfig.url}/services/growth`,
     },
   },
   openGraph: {
-    title: "Business Growth in Thailand | PND50",
-    description: "Scale your foreign business in Thailand with expert financial planning.",
+    title: "Grow Your Business in Thailand | PND50",
+    description: "Scale your foreign business in Thailand with expert financial planning and growth strategies.",
     url: `${siteConfig.url}/services/growth`,
     siteName: "PND50",
     locale: "en_US",
     type: "website",
+    images: [
+      {
+        url: `${siteConfig.url}/og-services.png`,
+        width: 1200,
+        height: 630,
+        alt: "PND50 Business Growth in Thailand",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Business Growth in Thailand | PND50",
+    title: "Grow Your Business in Thailand | PND50",
     description: "Scale your foreign business in Thailand.",
+    images: [`${siteConfig.url}/og-services.png`],
   },
   robots: {
     index: true,

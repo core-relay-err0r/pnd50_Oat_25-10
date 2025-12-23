@@ -11,41 +11,53 @@ import { siteConfig } from "@/lib/seo-config"
 import { ServicePageClient } from "@/components/services/service-page-client"
 
 export const metadata: Metadata = {
-  title: "Tax Filing & Compliance Services in Thailand | PND50",
+  title: "Tax Filing in Thailand | Corporate Tax & VAT Services | PND50",
   description:
-    "Expert tax filing and compliance services in Thailand for foreign businesses. VAT, withholding tax, corporate income tax, and Revenue Department compliance. Full English support for expats.",
+    "Expert tax filing services in Thailand for foreign businesses. VAT, withholding tax, corporate income tax (PND50, PND51), and Revenue Department compliance. Full English support.",
   keywords: [
+    "tax filing Thailand",
     "tax filing in Thailand",
-    "VAT in Thailand",
-    "corporate income tax Thailand",
-    "withholding tax in Thailand",
-    "tax compliance in Thailand",
-    "PND50 tax filing Thailand",
-    "foreign business tax Thailand",
+    "corporate tax Thailand",
+    "VAT Thailand",
+    "withholding tax Thailand",
+    "PND50",
+    "PND51",
+    // Thai keywords
+    "ยื่นภาษี",
+    "ภาษีนิติบุคคล",
+    "ภาษีมูลค่าเพิ่ม",
+    "ภ.ง.ด.50",
+    "ภ.ง.ด.51",
   ],
   alternates: {
     canonical: `${siteConfig.url}/services/tax`,
     languages: {
       en: `${siteConfig.url}/services/tax`,
-      "en-US": `${siteConfig.url}/services/tax`,
-      "en-GB": `${siteConfig.url}/services/tax`,
-      "en-SG": `${siteConfig.url}/services/tax`,
-      "en-AU": `${siteConfig.url}/services/tax`,
       "x-default": `${siteConfig.url}/services/tax`,
     },
   },
   openGraph: {
-    title: "Tax Filing & Compliance in Thailand | PND50",
-    description: "Expert tax services for foreign businesses in Thailand. Full English support.",
+    title: "Tax Filing in Thailand | PND50",
+    description:
+      "Expert tax filing for foreign businesses in Thailand. VAT, corporate tax, and full compliance support.",
     url: `${siteConfig.url}/services/tax`,
     siteName: "PND50",
     locale: "en_US",
     type: "website",
+    images: [
+      {
+        url: `${siteConfig.url}/og-services.png`,
+        width: 1200,
+        height: 630,
+        alt: "PND50 Tax Filing Services in Thailand",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Tax Services in Thailand | PND50",
+    title: "Tax Filing in Thailand | PND50",
     description: "Expert tax filing for foreign businesses in Thailand.",
+    images: [`${siteConfig.url}/og-services.png`],
   },
   robots: {
     index: true,

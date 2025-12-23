@@ -4,73 +4,55 @@ import { siteConfig, pageDates } from "@/lib/seo-config"
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = siteConfig.url
 
-  const createMultilingualAlternates = (path: string) => ({
-    languages: {
-      en: `${baseUrl}${path}`,
-      th: `${baseUrl}/th${path}`,
-      ru: `${baseUrl}/ru${path}`,
-      "zh-CN": `${baseUrl}/cn${path}`,
-      "x-default": `${baseUrl}${path}`, // Added x-default for search engines
-    },
-  })
-
   // Main pages with dates from pageDates
   const mainPages: MetadataRoute.Sitemap = [
     {
       url: baseUrl,
       lastModified: pageDates.home.modified,
       changeFrequency: "monthly",
-      priority: 1.0, // Homepage should be highest priority
-      alternates: createMultilingualAlternates(""),
+      priority: 1.0,
     },
     {
       url: `${baseUrl}/services`,
       lastModified: pageDates.services.modified,
       changeFrequency: "weekly",
       priority: 0.95,
-      alternates: createMultilingualAlternates("/services"),
     },
     {
       url: `${baseUrl}/about`,
       lastModified: pageDates.about.modified,
       changeFrequency: "monthly",
       priority: 0.8,
-      alternates: createMultilingualAlternates("/about"),
     },
     {
       url: `${baseUrl}/schedule`,
       lastModified: pageDates.schedule.modified,
       changeFrequency: "monthly",
-      priority: 0.9, // Increased priority for conversion page
-      alternates: createMultilingualAlternates("/schedule"),
+      priority: 0.9,
     },
     {
       url: `${baseUrl}/contact`,
       lastModified: pageDates.contact.modified,
       changeFrequency: "monthly",
       priority: 0.8,
-      alternates: createMultilingualAlternates("/contact"),
     },
     {
       url: `${baseUrl}/faq`,
       lastModified: pageDates.faq.modified,
       changeFrequency: "weekly",
       priority: 0.85,
-      alternates: createMultilingualAlternates("/faq"),
     },
     {
       url: `${baseUrl}/case-studies`,
       lastModified: pageDates.caseStudies.modified,
       changeFrequency: "monthly",
       priority: 0.7,
-      alternates: createMultilingualAlternates("/case-studies"),
     },
     {
       url: `${baseUrl}/calculator`,
       lastModified: pageDates.calculator.modified,
       changeFrequency: "monthly",
       priority: 0.75,
-      alternates: createMultilingualAlternates("/calculator"),
     },
   ]
 
@@ -87,10 +69,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     lastModified: pageDates[service.dateKey]?.modified || pageDates.services.modified,
     changeFrequency: "weekly" as const,
     priority: service.priority,
-    alternates: createMultilingualAlternates(`/services/${service.slug}`),
   }))
 
-  // Regional pages
+  // Regional pages for geographic SEO (kept)
   const regionalPages: MetadataRoute.Sitemap = [
     { slug: "singapore", priority: 0.7 },
     { slug: "taiwan", priority: 0.7 },
@@ -100,7 +81,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     lastModified: "2025-06-15",
     changeFrequency: "monthly" as const,
     priority: region.priority,
-    alternates: createMultilingualAlternates(`/for/${region.slug}`),
   }))
 
   // Legal pages

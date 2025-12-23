@@ -40,9 +40,6 @@ export default function robots(): MetadataRoute.Robots {
           "/case-studies",
           "/calculator",
           "/for/",
-          "/th/",
-          "/ru/",
-          "/cn/",
         ],
         disallow: ["/api/", "/admin/", "/private/", "/schedule/success"],
       },
@@ -58,12 +55,7 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ["/api/", "/admin/", "/_next/", "/private/", "/schedule/success"],
       },
     ],
-    sitemap: [
-      `${baseUrl}/sitemap.xml`,
-      `${baseUrl}/th/sitemap.xml`,
-      `${baseUrl}/ru/sitemap.xml`,
-      `${baseUrl}/cn/sitemap.xml`,
-    ],
+    sitemap: `${baseUrl}/sitemap.xml`,
     host: baseUrl,
   }
 }

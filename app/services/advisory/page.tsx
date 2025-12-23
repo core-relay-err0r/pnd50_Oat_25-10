@@ -11,41 +11,49 @@ import { siteConfig } from "@/lib/seo-config"
 import { ServicePageClient } from "@/components/services/service-page-client"
 
 export const metadata: Metadata = {
-  title: "Business Advisory & Consulting Services in Thailand | PND50",
+  title: "Business Consulting in Thailand | Advisory Services | PND50",
   description:
-    "Expert business advisory and consulting for foreign companies in Thailand. Strategic guidance on accounting, compliance, and business planning for expat entrepreneurs in Thailand.",
+    "Expert business consulting and advisory services in Thailand for foreign companies. Strategic guidance on accounting, compliance, tax planning, and market entry. Full English support.",
   keywords: [
-    "business advisory in Thailand",
-    "business consulting in Thailand",
+    "business consulting Thailand",
     "business consultant Thailand",
+    "business advisory Thailand",
+    "consulting services Thailand",
     "foreign business advice Thailand",
-    "expat business consulting Thailand",
-    "Thailand market entry consulting",
-    "business planning Thailand",
+    // Thai keywords
+    "ที่ปรึกษาธุรกิจ",
+    "ที่ปรึกษาบริษัท",
+    "บริการที่ปรึกษา",
+    "ปรึกษาธุรกิจ",
   ],
   alternates: {
     canonical: `${siteConfig.url}/services/advisory`,
     languages: {
       en: `${siteConfig.url}/services/advisory`,
-      "en-US": `${siteConfig.url}/services/advisory`,
-      "en-GB": `${siteConfig.url}/services/advisory`,
-      "en-SG": `${siteConfig.url}/services/advisory`,
-      "en-AU": `${siteConfig.url}/services/advisory`,
       "x-default": `${siteConfig.url}/services/advisory`,
     },
   },
   openGraph: {
-    title: "Business Advisory in Thailand | PND50",
-    description: "Expert consulting for foreign businesses in Thailand.",
+    title: "Business Consulting in Thailand | PND50",
+    description: "Expert consulting for foreign businesses in Thailand. Strategic guidance and compliance support.",
     url: `${siteConfig.url}/services/advisory`,
     siteName: "PND50",
     locale: "en_US",
     type: "website",
+    images: [
+      {
+        url: `${siteConfig.url}/og-services.png`,
+        width: 1200,
+        height: 630,
+        alt: "PND50 Business Consulting in Thailand",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Business Advisory in Thailand | PND50",
+    title: "Business Consulting in Thailand | PND50",
     description: "Expert consulting for foreign businesses in Thailand.",
+    images: [`${siteConfig.url}/og-services.png`],
   },
   robots: {
     index: true,
@@ -116,7 +124,7 @@ export default function AdvisoryPage() {
     <>
       <DetailedServiceSchema
         name="Business Advisory & Consulting Services in Thailand"
-        description="Expert business advisory and consulting for foreign companies operating in Thailand."
+        description="Expert business consulting and advisory services in Thailand for foreign companies. Strategic guidance on accounting, compliance, tax planning, and market entry. Full English support."
         url="/services/advisory"
         serviceType="Business Consulting Service"
         datePublished="2024-01-15"

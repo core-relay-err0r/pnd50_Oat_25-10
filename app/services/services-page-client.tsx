@@ -34,7 +34,6 @@ export default function ServicesPageClient() {
   ]
 
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
-  const [langOpen, setLangOpen] = useState(false)
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -63,13 +62,6 @@ export default function ServicesPageClient() {
     { name: "Growth Services", href: "/services/growth" },
   ]
 
-  const languages = [
-    { code: "en", name: "English", flag: "🇬🇧", href: "/services" },
-    { code: "th", name: "ไทย", flag: "🇹🇭", href: "/th/services" },
-    { code: "ru", name: "Русский", flag: "🇷🇺", href: "/ru/services" },
-    { code: "zh", name: "中文", flag: "🇨🇳", href: "/zh/services" },
-  ]
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-sky-50/80 relative overflow-hidden">
       <BreadcrumbSchema items={breadcrumbItems} />
@@ -91,7 +83,6 @@ export default function ServicesPageClient() {
             className="absolute top-[25%] right-[12%] w-16 h-16 border-2 border-blue-400/25 rounded-full backdrop-blur-sm"
             animate={{
               scale: [1, 1.2, 1],
-              opacity: [0.3, 0.6, 0.3],
             }}
             transition={{ duration: 4, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
           />
