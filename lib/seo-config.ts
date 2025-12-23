@@ -188,6 +188,11 @@ export const pageMetadata = {
     title: "Schedule a Consultation | PND50 Thailand",
     description: "Schedule a consultation with our expert accountants in Thailand.",
   },
+  blog: {
+    title: "PND50 Blog | ภ.ง.ด.50 Thailand Tax Guide & Accounting Tips",
+    description:
+      "Learn everything about PND50 (ภ.ง.ด.50) - Thailand's corporate income tax return. Expert guides on tax filing, accounting, and business compliance for foreign companies in Thailand.",
+  },
 }
 
 export const pageDates = {
@@ -205,6 +210,7 @@ export const pageDates = {
   caseStudies: { published: "2024-02-01", modified: "2025-06-10" },
   calculator: { published: "2024-03-01", modified: "2025-06-01" },
   schedule: { published: "2024-01-15", modified: "2025-06-01" },
+  blog: { published: "2025-06-23", modified: "2025-06-23" },
 }
 
 export const authors = {

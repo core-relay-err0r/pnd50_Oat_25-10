@@ -17,7 +17,7 @@ const companyLinks = [
   { name: "About Us", href: "/about" },
   { name: "FAQ", href: "/faq" },
   { name: "Contact", href: "/contact" },
-  { name: "Case Studies", href: "/case-studies" },
+  { name: "Blog", href: "/blog" },
 ]
 
 export default function Footer() {

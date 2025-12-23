@@ -43,10 +43,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.85,
     },
     {
-      url: `${baseUrl}/case-studies`,
-      lastModified: pageDates.caseStudies.modified,
-      changeFrequency: "monthly",
-      priority: 0.7,
+      url: `${baseUrl}/blog`,
+      lastModified: new Date().toISOString().split("T")[0],
+      changeFrequency: "weekly",
+      priority: 0.9,
     },
     {
       url: `${baseUrl}/calculator`,
@@ -71,6 +71,27 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: service.priority,
   }))
 
+  const blogPosts: MetadataRoute.Sitemap = [
+    {
+      url: `${baseUrl}/blog/what-is-pnd50`,
+      lastModified: "2025-06-22",
+      changeFrequency: "monthly",
+      priority: 0.95, // High priority for main PND50 keyword article
+    },
+    {
+      url: `${baseUrl}/blog/pnd50-vs-pnd51`,
+      lastModified: "2025-06-22",
+      changeFrequency: "monthly",
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/blog/thailand-tax-guide`,
+      lastModified: "2025-06-22",
+      changeFrequency: "monthly",
+      priority: 0.85,
+    },
+  ]
+
   // Legal pages
   const legalPages: MetadataRoute.Sitemap = [
     {
@@ -87,5 +108,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ]
 
-  return [...mainPages, ...servicePages, ...legalPages]
+  return [...mainPages, ...servicePages, ...blogPosts, ...legalPages]
 }
