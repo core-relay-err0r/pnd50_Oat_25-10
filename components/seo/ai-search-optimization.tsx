@@ -118,35 +118,20 @@ export function EntityDefinition() {
   return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(entitySchema) }} />
 }
 
-// Question-Answer pairs for AI search (QAPage schema)
+// Question-Answer pairs for AI search (FAQPage schema)
 export function QAPageSchema() {
-  const qaSchema = {
+  const faqSchema = {
     "@context": "https://schema.org",
-    "@type": "QAPage",
+    "@type": "FAQPage",
     mainEntity: siteConfig.aiSearchContent.frequentlyAskedQuestions.map((faq, index) => ({
       "@type": "Question",
       name: faq.question,
-      answerCount: 1,
-      datePublished: "2024-01-15T00:00:00+07:00",
-      author: {
-        "@type": "Organization",
-        name: siteConfig.business.name,
-        url: siteConfig.url,
-      },
       acceptedAnswer: {
         "@type": "Answer",
         text: faq.answer,
-        dateCreated: "2024-01-15T00:00:00+07:00",
-        upvoteCount: 42,
-        url: `${siteConfig.url}/faq#question-${index + 1}`,
-        author: {
-          "@type": "Organization",
-          name: siteConfig.business.name,
-          url: siteConfig.url,
-        },
       },
     })),
   }
 
-  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(qaSchema) }} />
+  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
 }
