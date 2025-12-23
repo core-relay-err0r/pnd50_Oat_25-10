@@ -13,7 +13,6 @@ import { Analytics } from "@vercel/analytics/react"
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import { siteConfig } from "@/lib/seo-config"
 import { OrganizationSchema, LocalBusinessSchema, WebsiteSchema } from "@/components/seo/structured-data"
-import { GeoTags } from "@/components/seo/geo-tags"
 import { GoogleAnalytics } from "@/components/analytics/GoogleAnalytics"
 
 const inter = Inter({ subsets: ["latin"] })
@@ -140,7 +139,6 @@ export default function RootLayout({
         <WebsiteSchema />
 
         {/* Geo/Local SEO Tags */}
-        <GeoTags city="Bangkok" region="Bangkok" />
 
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />

@@ -232,45 +232,8 @@ export const thaiKeywords = {
   location: ["บัญชี กรุงเทพ", "ที่ปรึกษาภาษี กรุงเทพ"],
 }
 
-// Local business areas served
-export const serviceAreas = [
-  { name: "Bangkok", nameTh: "กรุงเทพมหานคร" },
-  { name: "Nonthaburi", nameTh: "นนทบุรี" },
-  { name: "Samut Prakan", nameTh: "สมุทรปราการ" },
-  { name: "Pathum Thani", nameTh: "ปทุมธานี" },
-  { name: "Chonburi", nameTh: "ชลบุรี" },
-]
-
 // Industry-specific keywords
 export const industryKeywords = {
   foreignBusiness: ["foreign company Thailand", "expat business Thailand", "open business in Thailand"],
   startup: ["startup accounting Thailand", "SME accounting Bangkok"],
 }
-
-// Target countries for international SEO
-export const targetCountries = [
-  {
-    code: "SG",
-    name: "Singapore",
-    language: "en-SG",
-    description: "Accounting services for Singapore companies expanding to Thailand",
-  },
-  {
-    code: "RU",
-    name: "Russia",
-    language: "ru-RU",
-    description: "Accounting services for Russian businesses in Thailand",
-  },
-  {
-    code: "TW",
-    name: "Taiwan",
-    language: "zh-TW",
-    description: "Accounting services for Taiwanese companies in Thailand",
-  },
-  {
-    code: "TH",
-    name: "Thailand",
-    language: "th-TH",
-    description: "Local accounting services in Thailand",
-  },
-]

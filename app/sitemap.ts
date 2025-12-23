@@ -71,18 +71,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: service.priority,
   }))
 
-  // Regional pages for geographic SEO (kept)
-  const regionalPages: MetadataRoute.Sitemap = [
-    { slug: "singapore", priority: 0.7 },
-    { slug: "taiwan", priority: 0.7 },
-    { slug: "russia", priority: 0.7 },
-  ].map((region) => ({
-    url: `${baseUrl}/for/${region.slug}`,
-    lastModified: "2025-06-15",
-    changeFrequency: "monthly" as const,
-    priority: region.priority,
-  }))
-
   // Legal pages
   const legalPages: MetadataRoute.Sitemap = [
     {
@@ -99,5 +87,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ]
 
-  return [...mainPages, ...servicePages, ...regionalPages, ...legalPages]
+  return [...mainPages, ...servicePages, ...legalPages]
 }
