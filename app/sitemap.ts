@@ -44,7 +44,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     {
       url: `${baseUrl}/blog`,
-      lastModified: new Date().toISOString().split("T")[0],
+      lastModified: "2024-12-23",
       changeFrequency: "weekly",
       priority: 0.9,
     },
@@ -74,19 +74,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const blogPosts: MetadataRoute.Sitemap = [
     {
       url: `${baseUrl}/blog/what-is-pnd50`,
-      lastModified: "2025-06-22",
+      lastModified: "2024-12-23",
       changeFrequency: "monthly",
-      priority: 0.95, // High priority for main PND50 keyword article
+      priority: 0.95,
     },
     {
       url: `${baseUrl}/blog/pnd50-vs-pnd51`,
-      lastModified: "2025-06-22",
+      lastModified: "2024-12-23",
       changeFrequency: "monthly",
       priority: 0.9,
     },
     {
       url: `${baseUrl}/blog/thailand-tax-guide`,
-      lastModified: "2025-06-22",
+      lastModified: "2024-12-23",
       changeFrequency: "monthly",
       priority: 0.85,
     },
