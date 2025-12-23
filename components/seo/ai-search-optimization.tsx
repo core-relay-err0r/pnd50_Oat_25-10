@@ -123,17 +123,26 @@ export function QAPageSchema() {
   const qaSchema = {
     "@context": "https://schema.org",
     "@type": "QAPage",
-    mainEntity: siteConfig.aiSearchContent.frequentlyAskedQuestions.map((faq) => ({
+    mainEntity: siteConfig.aiSearchContent.frequentlyAskedQuestions.map((faq, index) => ({
       "@type": "Question",
       name: faq.question,
+      answerCount: 1,
+      datePublished: "2024-01-15T00:00:00+07:00",
+      author: {
+        "@type": "Organization",
+        name: siteConfig.business.name,
+        url: siteConfig.url,
+      },
       acceptedAnswer: {
         "@type": "Answer",
         text: faq.answer,
+        dateCreated: "2024-01-15T00:00:00+07:00",
         upvoteCount: 42,
-        dateCreated: "2024-01-15",
+        url: `${siteConfig.url}/faq#question-${index + 1}`,
         author: {
           "@type": "Organization",
           name: siteConfig.business.name,
+          url: siteConfig.url,
         },
       },
     })),
