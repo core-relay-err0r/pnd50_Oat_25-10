@@ -119,7 +119,7 @@ export const siteConfig = {
 // Page-specific metadata configurations
 export const pageMetadata = {
   home: {
-    title: "PND50 (ภ.ง.ด.50) | Accounting & Tax Services for Foreign Businesses in Thailand",
+    title: "PND50 | Accounting & Tax Services for Foreign Businesses in Thailand",
     description:
       "PND50 — named after Thailand's corporate tax form ภ.ง.ด.50 (P.N.D.50). Expert accounting, tax filing, and business setup services for foreign-owned companies in Thailand.",
   },

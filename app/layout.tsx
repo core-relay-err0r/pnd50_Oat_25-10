@@ -38,7 +38,7 @@ const focusedKeywords = [
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
-    default: "PND50 (ภ.ง.ด.50) | Accounting & Tax Services for Foreign Businesses in Thailand",
+    default: "PND50 | Accounting & Tax Services for Foreign Businesses in Thailand",
     template: `%s | PND50`,
   },
   description:
@@ -64,7 +64,7 @@ export const metadata: Metadata = {
     alternateLocale: siteConfig.alternateLocale,
     url: siteConfig.url,
     siteName: "PND50",
-    title: "PND50 (ภ.ง.ด.50) | Accounting & Tax Services Thailand",
+    title: "PND50 | Accounting & Tax Services Thailand",
     description:
       "PND50 — named after Thailand's corporate tax form ภ.ง.ด.50. Expert accounting, tax filing, and business setup for foreign-owned companies.",
     images: [
@@ -80,7 +80,7 @@ export const metadata: Metadata = {
   // Twitter Card
   twitter: {
     card: "summary_large_image",
-    title: "PND50 (ภ.ง.ด.50) | Accounting & Tax Services Thailand",
+    title: "PND50 | Accounting & Tax Services Thailand",
     description:
       "PND50 — named after Thailand's corporate tax form ภ.ง.ด.50. Expert accounting for foreign-owned companies.",
     images: [siteConfig.ogImage],
