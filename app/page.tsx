@@ -117,14 +117,7 @@ export default function PND50Landing() {
               </div>
 
               {/* Right side - Testimonial cards */}
-              <motion.div
-                className="hidden lg:flex items-center justify-center"
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.6, duration: 0.5 }}
-              >
-                <ShuffleTestimonials />
-              </motion.div>
+              
             </div>
           </div>
         </div>
