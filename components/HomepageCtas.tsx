@@ -8,7 +8,7 @@ export function HomepageCtas() {
     <div className="flex flex-col sm:flex-row gap-4 items-center justify-start">
       <Link href="/schedule" className="w-full sm:w-auto">
         <Button
-          className="w-full sm:w-auto bg-gradient-to-r from-blue-500 via-blue-600 to-indigo-600 hover:from-blue-600 hover:via-blue-700 hover:to-indigo-700 text-white px-8 text-lg font-bold rounded-xl shadow-lg shadow-blue-500/30 transition-all duration-300 transform hover:scale-105 hover:shadow-xl hover:shadow-blue-600/40 flex items-center justify-center border-0"
+          className="w-full sm:w-auto bg-gradient-to-r from-teal-500 via-cyan-500 to-teal-400 hover:from-teal-400 hover:via-cyan-400 hover:to-teal-300 text-white px-8 text-lg font-bold rounded-xl shadow-lg shadow-teal-500/40 transition-all duration-300 transform hover:scale-105 hover:shadow-xl hover:shadow-cyan-400/50 flex items-center justify-center border-0"
           style={{ minHeight: "60px", height: "60px" }}
         >
           Schedule Consultation
@@ -16,7 +16,7 @@ export function HomepageCtas() {
       </Link>
       <Link href="/contact" className="w-full sm:w-auto">
         <div
-          className="w-full sm:w-auto flex items-center justify-center gap-2 px-8 text-lg font-bold rounded-xl cursor-pointer transition-all duration-300 user-select-none border-2 border-slate-300/50 bg-white/60 backdrop-blur-md hover:bg-white/80 hover:border-sky-400/60 hover:scale-105 text-slate-700 hover:text-sky-600 shadow-lg shadow-slate-200/50 hover:shadow-xl hover:shadow-sky-200/50"
+          className="w-full sm:w-auto flex items-center justify-center gap-2 px-8 text-lg font-bold rounded-xl cursor-pointer transition-all duration-300 user-select-none border-2 border-pink-300/60 bg-white/70 backdrop-blur-md hover:bg-pink-50/80 hover:border-pink-400/80 hover:scale-105 text-pink-700 hover:text-pink-600 shadow-lg shadow-pink-200/40 hover:shadow-xl hover:shadow-pink-300/50"
           style={{ minHeight: "60px", height: "60px" }}
         >
           <span>Contact Us</span>
