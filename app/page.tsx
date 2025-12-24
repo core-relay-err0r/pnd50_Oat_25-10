@@ -46,14 +46,19 @@ export default function PND50Landing() {
 
   return (
     <main id="main-content" className="min-h-screen">
-      <section
-        className="relative w-full min-h-screen flex flex-col bg-gradient-to-br from-slate-50 via-white to-sky-50/80"
-        aria-label="Hero section"
-      >
-        <AnimatedGridBackground className="min-h-screen flex-1" variant="light">
+      <section className="relative w-full min-h-screen flex flex-col" aria-label="Hero section">
+        <div
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: "url('/images/hero-bg.png')" }}
+          aria-hidden="true"
+        />
+        {/* Dark overlay for better text readability */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70" aria-hidden="true" />
+
+        <AnimatedGridBackground className="min-h-screen flex-1 relative z-10" variant="dark">
           {/* Floating shapes - decorative elements */}
           <motion.div
-            className="absolute top-[15%] left-[8%] w-20 h-20 border-2 border-sky-300/40 rounded-2xl"
+            className="absolute top-[15%] left-[8%] w-20 h-20 border-2 border-teal-400/40 rounded-2xl"
             animate={{
               rotate: [0, 90, 180, 270, 360],
               y: [0, -15, 0, 15, 0],
@@ -65,7 +70,7 @@ export default function PND50Landing() {
             aria-hidden="true"
           />
           <motion.div
-            className="absolute top-[25%] right-[12%] w-16 h-16 border-2 border-teal-300/30 rounded-full"
+            className="absolute top-[25%] right-[12%] w-16 h-16 border-2 border-pink-400/30 rounded-full"
             animate={{
               scale: [1, 1.2, 1],
               opacity: [0.3, 0.6, 0.3],
@@ -74,7 +79,7 @@ export default function PND50Landing() {
             aria-hidden="true"
           />
           <motion.div
-            className="absolute bottom-[30%] left-[15%] w-12 h-12 bg-gradient-to-br from-sky-200/30 to-teal-200/30 rounded-lg"
+            className="absolute bottom-[30%] left-[15%] w-12 h-12 bg-gradient-to-br from-teal-400/30 to-cyan-400/30 rounded-lg"
             animate={{
               rotate: [45, 135, 225, 315, 405],
             }}
@@ -82,7 +87,7 @@ export default function PND50Landing() {
             aria-hidden="true"
           />
           <motion.div
-            className="absolute top-[40%] right-[20%] w-8 h-8 bg-gradient-to-br from-blue-300/40 to-sky-300/40 rounded-full"
+            className="absolute top-[40%] right-[20%] w-8 h-8 bg-gradient-to-br from-pink-400/40 to-rose-400/40 rounded-full"
             animate={{
               y: [0, -20, 0],
               x: [0, 10, 0],
@@ -91,7 +96,7 @@ export default function PND50Landing() {
             aria-hidden="true"
           />
           <motion.div
-            className="absolute bottom-[20%] right-[8%] w-24 h-24 border border-blue-200/30 rounded-full"
+            className="absolute bottom-[20%] right-[8%] w-24 h-24 border border-teal-300/30 rounded-full"
             animate={{
               scale: [1, 1.1, 1],
             }}
@@ -99,7 +104,7 @@ export default function PND50Landing() {
             aria-hidden="true"
           />
           <motion.div
-            className="absolute top-[60%] left-[5%] w-6 h-6 bg-teal-400/30 rounded-full"
+            className="absolute top-[60%] left-[5%] w-6 h-6 bg-cyan-400/30 rounded-full"
             animate={{
               y: [0, -30, 0],
               opacity: [0.3, 0.7, 0.3],
@@ -108,9 +113,9 @@ export default function PND50Landing() {
             aria-hidden="true"
           />
 
-          {/* Background blurs - decorative */}
+          {/* Background blurs - decorative (updated colors to match image) */}
           <div
-            className="absolute top-20 left-10 w-[30vw] max-w-[500px] h-[30vw] max-h-[500px] bg-gradient-to-br from-sky-200/40 via-blue-200/30 to-teal-200/20 rounded-full blur-3xl pointer-events-none"
+            className="absolute top-20 left-10 w-[30vw] max-w-[500px] h-[30vw] max-h-[500px] bg-gradient-to-br from-teal-500/20 via-cyan-500/15 to-pink-500/10 rounded-full blur-3xl pointer-events-none"
             style={{
               transform: `translate(${mousePosition.x}px, ${mousePosition.y}px)`,
               transition: "transform 0.5s ease-out",
@@ -118,7 +123,7 @@ export default function PND50Landing() {
             aria-hidden="true"
           />
           <div
-            className="absolute bottom-20 right-10 w-[28vw] max-w-[450px] h-[28vw] max-h-[450px] bg-gradient-to-br from-teal-200/35 via-sky-200/25 to-blue-200/20 rounded-full blur-3xl pointer-events-none"
+            className="absolute bottom-20 right-10 w-[28vw] max-w-[450px] h-[28vw] max-h-[450px] bg-gradient-to-br from-pink-500/20 via-rose-500/15 to-teal-500/10 rounded-full blur-3xl pointer-events-none"
             style={{
               transform: `translate(${-mousePosition.x}px, ${-mousePosition.y}px)`,
               transition: "transform 0.5s ease-out",
@@ -126,18 +131,10 @@ export default function PND50Landing() {
             aria-hidden="true"
           />
           <div
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[40vw] max-w-[700px] h-[40vw] max-h-[700px] bg-gradient-to-br from-blue-100/35 via-sky-100/25 to-teal-100/30 rounded-full blur-3xl pointer-events-none"
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[40vw] max-w-[700px] h-[40vw] max-h-[700px] bg-gradient-to-br from-cyan-400/15 via-teal-400/10 to-pink-400/15 rounded-full blur-3xl pointer-events-none"
             style={{
               transform: `translate(calc(-50% + ${mousePosition.x * 0.5}px), calc(-50% + ${mousePosition.y * 0.5}px))`,
               transition: "transform 0.5s ease-out",
-            }}
-            aria-hidden="true"
-          />
-          <div
-            className="absolute top-[10%] right-[30%] w-[20vw] max-w-[300px] h-[20vw] max-h-[300px] bg-gradient-to-br from-emerald-100/25 to-teal-100/20 rounded-full blur-3xl pointer-events-none"
-            style={{
-              transform: `translate(${mousePosition.x * 0.7}px, ${mousePosition.y * 0.7}px)`,
-              transition: "transform 0.6s ease-out",
             }}
             aria-hidden="true"
           />
@@ -153,7 +150,7 @@ export default function PND50Landing() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.3, duration: 0.5 }}
                   >
-                    <span className="bg-gradient-to-r from-blue-600 via-sky-500 to-teal-400 bg-clip-text text-transparent animate-gradient-shift inline-block pb-2 leading-[1.15]">
+                    <span className="bg-gradient-to-r from-teal-300 via-cyan-200 to-pink-300 bg-clip-text text-transparent animate-gradient-shift inline-block pb-2 leading-[1.15] drop-shadow-lg">
                       AI Boutique
                     </span>
                     <br />
@@ -164,7 +161,7 @@ export default function PND50Landing() {
                       {words.map((word, index) => (
                         <motion.span
                           key={index}
-                          className="absolute left-1/2 lg:left-0 -translate-x-1/2 lg:translate-x-0 font-bold whitespace-nowrap bg-gradient-to-r from-slate-900 via-slate-700 to-slate-500 bg-clip-text text-transparent"
+                          className="absolute left-1/2 lg:left-0 -translate-x-1/2 lg:translate-x-0 font-bold whitespace-nowrap text-white drop-shadow-lg"
                           initial={{ opacity: 0, y: 100 }}
                           transition={{ type: "spring", stiffness: 50 }}
                           animate={
@@ -191,14 +188,14 @@ export default function PND50Landing() {
                   </div>
 
                   <motion.p
-                    className="text-base md:text-lg lg:text-lg xl:text-xl 2xl:text-2xl max-w-2xl mx-auto lg:mx-0 leading-relaxed text-slate-600"
+                    className="text-base md:text-lg lg:text-lg xl:text-xl 2xl:text-2xl max-w-2xl mx-auto lg:mx-0 leading-relaxed text-white/90"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.4, duration: 0.5 }}
                   >
                     You Talk to an Expert, Not a Robot. We connect you with a dedicated human advisor who speaks your
-                    native language. Our AI makes them <span className="text-blue-600 font-semibold">5x faster</span>{" "}
-                    and <span className="text-emerald-600 font-semibold">totally error-free</span>.
+                    native language. Our AI makes them <span className="text-teal-300 font-semibold">5x faster</span>{" "}
+                    and <span className="text-pink-300 font-semibold">totally error-free</span>.
                   </motion.p>
 
                   <motion.div
@@ -224,7 +221,7 @@ export default function PND50Landing() {
             </div>
           </div>
 
-          <LandingFooter variant="light" />
+          <LandingFooter variant="dark" />
         </AnimatedGridBackground>
       </section>
     </main>
