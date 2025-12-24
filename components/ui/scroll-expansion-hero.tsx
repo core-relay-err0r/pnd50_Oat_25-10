@@ -193,6 +193,7 @@ const ScrollExpandMedia = ({
                         allowFullScreen
                       />
                       <div className="absolute inset-0 z-10" style={{ pointerEvents: "none" }}></div>
+
                       <motion.div
                         className="absolute inset-0 bg-black/30 rounded-xl"
                         initial={{ opacity: 0.7 }}
@@ -216,6 +217,7 @@ const ScrollExpandMedia = ({
                         disableRemotePlayback
                       />
                       <div className="absolute inset-0 z-10" style={{ pointerEvents: "none" }}></div>
+
                       <motion.div
                         className="absolute inset-0 bg-black/30 rounded-xl"
                         initial={{ opacity: 0.7 }}
@@ -233,6 +235,7 @@ const ScrollExpandMedia = ({
                       height={720}
                       className="w-full h-full object-cover rounded-xl"
                     />
+
                     <motion.div
                       className="absolute inset-0 bg-black/50 rounded-xl"
                       initial={{ opacity: 0.7 }}
