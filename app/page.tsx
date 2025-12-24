@@ -51,7 +51,7 @@ export default function PND50Landing() {
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-16 max-w-screen-2xl relative z-10 flex-1 flex items-center py-12 sm:py-16 lg:py-20 pt-[100px] lg:pt-24 xl:pt-28 pb-32 lg:pb-20">
             <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 xl:gap-20 2xl:gap-24 items-center w-full">
               {/* Left side - Hero content */}
-              <div className="text-center lg:text-left space-y-6 md:space-y-8 bg-black/40 backdrop-blur-sm rounded-2xl p-6 md:p-8 lg:p-10">
+              <div className="text-center lg:text-left space-y-6 md:space-y-8 bg-black/40 backdrop-blur-sm rounded-2xl p-6 md:p-8 lg:p-10 -mx-4 sm:-mx-6 lg:-mx-8 px-8 sm:px-12 lg:px-16">
                 <motion.h1
                   className="text-5xl sm:text-6xl md:text-7xl lg:text-6xl xl:text-7xl 2xl:text-8xl font-bold mb-4 leading-tight tracking-tight"
                   initial={{ opacity: 0, y: 20 }}
