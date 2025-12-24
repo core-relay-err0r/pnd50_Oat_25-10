@@ -44,21 +44,21 @@ export default function PND50Landing() {
       className="min-h-screen bg-cover bg-center bg-no-repeat bg-fixed"
       style={{ backgroundImage: "url('/images/hero-bg.png')" }}
     >
-      <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 via-40% to-transparent" />
 
       <section className="relative w-full min-h-screen flex flex-col" aria-label="Hero section">
         <div className="flex-1 w-full flex flex-col">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-16 max-w-screen-2xl relative z-10 flex-1 flex items-center py-12 sm:py-16 lg:py-20 pt-[100px] lg:pt-24 xl:pt-28 pb-32 lg:pb-20">
             <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 xl:gap-20 2xl:gap-24 items-center w-full">
               {/* Left side - Hero content */}
-              <div className="text-center lg:text-left space-y-6 md:space-y-8 bg-black/40 backdrop-blur-sm rounded-2xl p-6 md:p-8 lg:p-10 -mx-4 sm:-mx-6 lg:-mx-8 px-8 sm:px-12 lg:px-16">
+              <div className="text-center lg:text-left space-y-6 md:space-y-8">
                 <motion.h1
                   className="text-5xl sm:text-6xl md:text-7xl lg:text-6xl xl:text-7xl 2xl:text-8xl font-bold mb-4 leading-tight tracking-tight"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.3, duration: 0.5 }}
                 >
-                  <span className="bg-gradient-to-r from-teal-300 via-cyan-200 to-pink-300 bg-clip-text text-transparent animate-gradient-shift inline-block pb-2 leading-[1.15] [text-shadow:_0_2px_20px_rgb(0_0_0_/_40%)]">
+                  <span className="bg-gradient-to-r from-white via-teal-200 to-pink-200 bg-clip-text text-transparent inline-block pb-2 leading-[1.15] drop-shadow-[0_4px_20px_rgba(0,0,0,0.8)]">
                     AI Boutique
                   </span>
                   <br />
@@ -69,7 +69,7 @@ export default function PND50Landing() {
                     {words.map((word, index) => (
                       <motion.span
                         key={index}
-                        className="absolute left-1/2 lg:left-0 -translate-x-1/2 lg:translate-x-0 font-bold whitespace-nowrap text-white [text-shadow:_0_2px_10px_rgb(0_0_0_/_60%)]"
+                        className="absolute left-1/2 lg:left-0 -translate-x-1/2 lg:translate-x-0 font-bold whitespace-nowrap text-white drop-shadow-[0_4px_20px_rgba(0,0,0,0.9)]"
                         initial={{ opacity: 0, y: 100 }}
                         transition={{ type: "spring", stiffness: 50 }}
                         animate={
@@ -96,14 +96,21 @@ export default function PND50Landing() {
                 </div>
 
                 <motion.p
-                  className="text-base md:text-lg lg:text-lg xl:text-xl 2xl:text-2xl max-w-2xl mx-auto lg:mx-0 leading-relaxed text-white [text-shadow:_0_1px_8px_rgb(0_0_0_/_50%)]"
+                  className="text-base md:text-lg lg:text-lg xl:text-xl 2xl:text-2xl max-w-2xl mx-auto lg:mx-0 leading-relaxed text-white/95 drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)]"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.4, duration: 0.5 }}
                 >
                   You Talk to an Expert, Not a Robot. We connect you with a dedicated human advisor who speaks your
-                  native language. Our AI makes them <span className="text-teal-300 font-semibold">5x faster</span> and{" "}
-                  <span className="text-pink-300 font-semibold">totally error-free</span>.
+                  native language. Our AI makes them{" "}
+                  <span className="text-teal-300 font-semibold drop-shadow-[0_0_10px_rgba(45,212,191,0.5)]">
+                    5x faster
+                  </span>{" "}
+                  and{" "}
+                  <span className="text-pink-300 font-semibold drop-shadow-[0_0_10px_rgba(249,168,212,0.5)]">
+                    totally error-free
+                  </span>
+                  .
                 </motion.p>
 
                 <motion.div
@@ -117,7 +124,6 @@ export default function PND50Landing() {
               </div>
 
               {/* Right side - Testimonial cards */}
-              
             </div>
           </div>
         </div>
