@@ -140,24 +140,12 @@ const ScrollExpandMedia = ({
       <section className="relative flex flex-col items-center justify-start min-h-[100dvh]">
         <div className="relative w-full flex flex-col items-center min-h-[100dvh]">
           <motion.div
-            className="absolute inset-0 z-0 h-full"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 - scrollProgress }}
+            className="absolute inset-0 z-0 h-full bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900"
+            initial={{ opacity: 1 }}
+            animate={{ opacity: 1 }}
             transition={{ duration: 0.1 }}
           >
-            <Image
-              src={bgImageSrc || "/placeholder.svg"}
-              alt="Background"
-              width={1920}
-              height={1080}
-              className="w-screen h-screen"
-              style={{
-                objectFit: "cover",
-                objectPosition: "center",
-              }}
-              priority
-            />
-            <div className="absolute inset-0 bg-black/10" />
+            <div className="absolute inset-0 bg-black/20" />
           </motion.div>
 
           <div className="container mx-auto flex flex-col items-center justify-start relative z-10">
