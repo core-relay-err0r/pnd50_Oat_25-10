@@ -27,6 +27,7 @@ export default function robots(): MetadataRoute.Robots {
         ],
         allow: [
           "/",
+          "/services",
           "/services/",
           "/services/corporate",
           "/services/accounting",
@@ -37,6 +38,7 @@ export default function robots(): MetadataRoute.Robots {
           "/about",
           "/faq",
           "/contact",
+          "/schedule",
           "/blog",
           "/blog/what-is-pnd50",
           "/blog/pnd50-vs-pnd51",
