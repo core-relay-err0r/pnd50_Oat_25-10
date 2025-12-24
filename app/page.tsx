@@ -22,7 +22,7 @@ export default function PND50Landing() {
   }, [wordIndex, words])
 
   return (
-    <main id="main-content" className="min-h-screen bg-slate-950">
+    <main id="main-content" className="min-h-screen bg-white">
       <ScrollExpandMedia
         mediaType="image"
         mediaSrc="/images/hero-bg.png"
@@ -43,7 +43,7 @@ export default function PND50Landing() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3, duration: 0.5 }}
               >
-                <span className="bg-gradient-to-r from-teal-300 via-cyan-200 to-pink-300 bg-clip-text text-transparent inline-block pb-2 leading-[1.15]">
+                <span className="bg-gradient-to-r from-teal-600 via-cyan-500 to-pink-500 bg-clip-text text-transparent inline-block pb-2 leading-[1.15]">
                   AI Boutique
                 </span>
                 <br />
@@ -54,7 +54,7 @@ export default function PND50Landing() {
                   {words.map((word, index) => (
                     <motion.span
                       key={index}
-                      className="absolute left-1/2 lg:left-0 -translate-x-1/2 lg:translate-x-0 font-bold whitespace-nowrap text-white"
+                      className="absolute left-1/2 lg:left-0 -translate-x-1/2 lg:translate-x-0 font-bold whitespace-nowrap text-slate-800"
                       initial={{ opacity: 0, y: 100 }}
                       transition={{ type: "spring", stiffness: 50 }}
                       animate={
@@ -69,14 +69,14 @@ export default function PND50Landing() {
               </motion.h1>
 
               <motion.p
-                className="text-base md:text-lg lg:text-lg xl:text-xl max-w-2xl mx-auto lg:mx-0 leading-relaxed text-slate-300"
+                className="text-base md:text-lg lg:text-lg xl:text-xl max-w-2xl mx-auto lg:mx-0 leading-relaxed text-slate-600"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4, duration: 0.5 }}
               >
                 You Talk to an Expert, Not a Robot. We connect you with a dedicated human advisor who speaks your native
-                language. Our AI makes them <span className="text-teal-300 font-semibold">5x faster</span> and{" "}
-                <span className="text-pink-300 font-semibold">totally error-free</span>.
+                language. Our AI makes them <span className="text-teal-600 font-semibold">5x faster</span> and{" "}
+                <span className="text-pink-500 font-semibold">totally error-free</span>.
               </motion.p>
 
               <motion.div
@@ -102,7 +102,7 @@ export default function PND50Landing() {
         </div>
 
         <div className="mt-20">
-          <LandingFooter variant="dark" />
+          <LandingFooter variant="light" />
         </div>
       </ScrollExpandMedia>
     </main>
