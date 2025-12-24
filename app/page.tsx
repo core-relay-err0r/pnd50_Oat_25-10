@@ -33,8 +33,8 @@ export default function PND50Landing() {
         mediaSrc={mediaConfig.src}
         posterSrc={mediaConfig.poster}
         bgImageSrc={mediaConfig.background}
-        title="AI Boutique"
-        date="PND50"
+        title="PND50"
+        date=""
         scrollToExpand="Scroll to explore"
         textBlend
       >
@@ -49,7 +49,7 @@ export default function PND50Landing() {
               transition={{ delay: 0.3, duration: 0.5 }}
             >
               <span className="bg-gradient-to-r from-teal-300 via-cyan-200 to-pink-300 bg-clip-text text-transparent inline-block pb-2 leading-[1.15]">
-                AI Boutique
+                PND50
               </span>
               <br />
               <span className="relative inline-block w-full overflow-visible" style={{ height: "1.15em" }}>
