@@ -4,28 +4,11 @@ import { useEffect, useState, useMemo } from "react"
 import { ShuffleTestimonials } from "@/components/ShuffleTestimonials"
 import { motion } from "framer-motion"
 import { LandingFooter } from "@/components/landing-footer"
+import ScrollExpandMedia from "@/components/ui/scroll-expansion-hero"
 
 export default function PND50Landing() {
-  const [isVisible, setIsVisible] = useState(false)
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
   const [wordIndex, setWordIndex] = useState(0)
   const words = useMemo(() => ["Accounting", "Consultant", "Compliant"], [])
-
-  useEffect(() => {
-    setIsVisible(true)
-  }, [])
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({
-        x: (e.clientX / window.innerWidth - 0.5) * 20,
-        y: (e.clientY / window.innerHeight - 0.5) * 20,
-      })
-    }
-
-    window.addEventListener("mousemove", handleMouseMove)
-    return () => window.removeEventListener("mousemove", handleMouseMove)
-  }, [])
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -39,16 +22,19 @@ export default function PND50Landing() {
   }, [wordIndex, words])
 
   return (
-    <main
-      id="main-content"
-      className="min-h-screen bg-cover bg-center bg-no-repeat bg-fixed"
-      style={{ backgroundImage: "url('/images/hero-bg.png')" }}
+    <ScrollExpandMedia
+      mediaType="image"
+      mediaSrc="/images/hero-bg.png"
+      bgImageSrc="/images/hero-bg.png"
+      title="AI Boutique"
+      date="PND50"
+      scrollToExpand="Scroll to explore"
+      textBlend
     >
-      <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 via-40% to-transparent" />
-
-      <section className="relative w-full min-h-screen flex flex-col" aria-label="Hero section">
-        <div className="flex-1 w-full flex flex-col">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-16 max-w-screen-2xl relative z-10 flex-1 flex items-center py-12 sm:py-16 lg:py-20 pt-[100px] lg:pt-24 xl:pt-28 pb-32 lg:pb-20">
+      {/* Content revealed after scroll expansion */}
+      <main id="main-content" className="min-h-screen bg-slate-950">
+        <section className="relative w-full py-20" aria-label="Hero section">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-16 max-w-screen-2xl">
             <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 xl:gap-20 2xl:gap-24 items-center w-full">
               {/* Left side - Hero content */}
               <div className="text-center lg:text-left space-y-6 md:space-y-8">
@@ -58,7 +44,7 @@ export default function PND50Landing() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.3, duration: 0.5 }}
                 >
-                  <span className="bg-gradient-to-r from-white via-teal-200 to-pink-200 bg-clip-text text-transparent inline-block pb-2 leading-[1.15] drop-shadow-[0_4px_20px_rgba(0,0,0,0.8)]">
+                  <span className="bg-gradient-to-r from-teal-400 via-cyan-300 to-pink-400 bg-clip-text text-transparent animate-gradient-shift inline-block pb-2 leading-[1.15]">
                     AI Boutique
                   </span>
                   <br />
@@ -69,7 +55,7 @@ export default function PND50Landing() {
                     {words.map((word, index) => (
                       <motion.span
                         key={index}
-                        className="absolute left-1/2 lg:left-0 -translate-x-1/2 lg:translate-x-0 font-bold whitespace-nowrap text-white drop-shadow-[0_4px_20px_rgba(0,0,0,0.9)]"
+                        className="absolute left-1/2 lg:left-0 -translate-x-1/2 lg:translate-x-0 font-bold whitespace-nowrap text-white"
                         initial={{ opacity: 0, y: 100 }}
                         transition={{ type: "spring", stiffness: 50 }}
                         animate={
@@ -96,21 +82,14 @@ export default function PND50Landing() {
                 </div>
 
                 <motion.p
-                  className="text-base md:text-lg lg:text-lg xl:text-xl 2xl:text-2xl max-w-2xl mx-auto lg:mx-0 leading-relaxed text-white/95 drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)]"
+                  className="text-base md:text-lg lg:text-lg xl:text-xl 2xl:text-2xl max-w-2xl mx-auto lg:mx-0 leading-relaxed text-slate-300"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.4, duration: 0.5 }}
                 >
                   You Talk to an Expert, Not a Robot. We connect you with a dedicated human advisor who speaks your
-                  native language. Our AI makes them{" "}
-                  <span className="text-teal-300 font-semibold drop-shadow-[0_0_10px_rgba(45,212,191,0.5)]">
-                    5x faster
-                  </span>{" "}
-                  and{" "}
-                  <span className="text-pink-300 font-semibold drop-shadow-[0_0_10px_rgba(249,168,212,0.5)]">
-                    totally error-free
-                  </span>
-                  .
+                  native language. Our AI makes them <span className="text-teal-400 font-semibold">5x faster</span> and{" "}
+                  <span className="text-pink-400 font-semibold">totally error-free</span>.
                 </motion.p>
 
                 <motion.div
@@ -124,12 +103,20 @@ export default function PND50Landing() {
               </div>
 
               {/* Right side - Testimonial cards */}
+              <motion.div
+                className="hidden lg:flex items-center justify-center"
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.6, duration: 0.5 }}
+              >
+                <ShuffleTestimonials />
+              </motion.div>
             </div>
           </div>
-        </div>
+        </section>
 
         <LandingFooter variant="dark" />
-      </section>
-    </main>
+      </main>
+    </ScrollExpandMedia>
   )
 }
