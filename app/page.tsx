@@ -28,10 +28,9 @@ export default function PND50Landing() {
   return (
     <main id="main-content" className="min-h-screen bg-slate-950">
       <ScrollExpandMedia
-        mediaType="video"
-        mediaSrc="https://me7aitdbxq.ufs.sh/f/2wsMIGDMQRdYuZ5R8ahEEZ4aQK56LizRdfBSqeDMsmUIrJN1"
-        posterSrc="https://images.pexels.com/videos/5752729/space-earth-universe-cosmos-5752729.jpeg"
-        bgImageSrc="https://me7aitdbxq.ufs.sh/f/2wsMIGDMQRdYMNjMlBUYHaeYpxduXPVNwf8mnFA61L7rkcoS"
+        mediaType="image"
+        mediaSrc="/images/burakorntea-httpss.jpeg"
+        bgImageSrc="/images/burakorntea-httpss.jpeg"
         title="PND50"
         scrollToExpand="Scroll to Explore"
         textBlend
