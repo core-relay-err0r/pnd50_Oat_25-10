@@ -56,12 +56,7 @@ export default function ServicesPageClient() {
     { name: "Growth Services", href: "/services/growth" },
   ]
 
-  const languages = [
-    { code: "en", name: "English", flag: "🇬🇧", href: "/services" },
-    { code: "th", name: "ไทย", flag: "🇹🇭", href: "/th/services" },
-    { code: "ru", name: "Русский", flag: "🇷🇺", href: "/ru/services" },
-    { code: "zh", name: "中文", flag: "🇨🇳", href: "/zh/services" },
-  ]
+  const languages = [{ code: "en", name: "English", flag: "🇬🇧", href: "/services" }]
 
   return (
     <>
