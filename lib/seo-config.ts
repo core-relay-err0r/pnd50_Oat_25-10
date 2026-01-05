@@ -5,7 +5,7 @@ export const siteConfig = {
   name: "PND50",
   tagline: "AI Boutique Accounting & Consultant",
   description:
-    "Tech-driven accounting and consulting services in Thailand for foreign-owned businesses. Expert tax filing, bookkeeping, and business setup assistance.",
+    "Tech-driven accounting and consulting services in Thailand for foreign-owned businesses. Expert PND50 tax filing, bookkeeping, and business setup assistance for companies from Singapore, Russia, Taiwan, and worldwide.",
   url: "https://pnd50.com",
   ogImage: "/og-image.jpg",
   locale: "en_US",
@@ -202,3 +202,41 @@ export const targetCountries = [
     description: "Local accounting services in Thailand",
   },
 ]
+
+// International keywords for geo SEO
+export const internationalKeywords = {
+  singapore: [
+    "PND50 tax filing Singapore companies",
+    "Thailand accounting for Singapore business",
+    "Singapore company Thailand subsidiary tax",
+    "Thai corporate tax Singapore entrepreneurs",
+    "PND50 filing Singapore-Thailand business",
+  ],
+  russia: [
+    "PND50 tax filing Russian business Thailand",
+    "Thailand accounting Russian entrepreneurs",
+    "Russian company Thailand tax compliance",
+    "Thai corporate tax Russian business owners",
+    "PND50 filing Russian digital nomads Thailand",
+  ],
+  taiwan: [
+    "PND50 tax filing Taiwan companies Thailand",
+    "Thailand accounting Taiwanese business",
+    "Taiwan company Thailand subsidiary tax",
+    "Thai corporate tax Taiwan manufacturers",
+    "PND50 filing Taiwan-Thailand trading",
+  ],
+  china: [
+    "PND50 tax filing Chinese companies Thailand",
+    "Thailand accounting Chinese business",
+    "China company Thailand subsidiary tax",
+    "Thai corporate tax Chinese investors",
+  ],
+  general: [
+    "PND50 foreign company Thailand",
+    "Thai tax filing international business",
+    "Expat accounting Thailand",
+    "Foreign business tax Thailand",
+    "International company Thailand accounting",
+  ],
+}

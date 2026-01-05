@@ -6,6 +6,15 @@ import { FAQSchema, BreadcrumbSchema } from "@/components/seo/structured-data"
 export const metadata: Metadata = {
   title: pageMetadata.faq.title,
   description: pageMetadata.faq.description,
+  keywords: [
+    "PND50 FAQ",
+    "Thailand tax questions",
+    "Singapore company Thailand tax",
+    "Russian business Thailand accounting",
+    "Taiwan company PND50 filing",
+    "foreign company Thailand FAQ",
+    "expat business Thailand questions",
+  ],
   openGraph: {
     title: pageMetadata.faq.title,
     description: pageMetadata.faq.description,
@@ -45,6 +54,40 @@ const faqItems = [
     question: "After registering for VAT, do I still need to file form PP.30 if there's no income?",
     answer:
       "Yes. Once VAT-registered, you must file Form PP.30 every month — by the 15th of the following month — even if you have no income. Missing the deadline may lead to surcharges and penalties. Reference: Section 83 and Section 90, Revenue Code of Thailand",
+  },
+  // International Business Questions - Singapore
+  {
+    question: "I'm from Singapore. Can my Singapore company file PND50 in Thailand?",
+    answer:
+      "If your Singapore company has a registered branch or subsidiary in Thailand, yes - you must file PND50 (ภ.ง.ด.50) annually. Many Singapore businesses expanding to Thailand use our services for seamless tax compliance. We handle all Thai tax filings while you focus on growing your ASEAN business. Reference: Revenue Code of Thailand, Section 66; Double Tax Agreement Thailand-Singapore",
+  },
+  // International Business Questions - Russia
+  {
+    question: "As a Russian entrepreneur, how do I handle Thai corporate taxes?",
+    answer:
+      "Russian business owners with Thai companies must file PND50 corporate tax returns annually, plus monthly VAT (PP30) and withholding tax forms. We specialize in helping Russian entrepreneurs navigate Thai tax regulations, with clear English communication and transparent processes. Reference: Revenue Code of Thailand; Thai-Russia Tax Treaty",
+  },
+  // International Business Questions - Taiwan
+  {
+    question: "Can Taiwanese companies get PND50 filing support in Thailand?",
+    answer:
+      "Yes! Many Taiwanese manufacturers and trading companies use our PND50 filing services. We understand the unique needs of Taiwan-Thailand business operations, including transfer pricing, withholding tax on royalties, and proper documentation for cross-border transactions. Reference: Revenue Code of Thailand, Section 70; Transfer Pricing regulations",
+  },
+  // International Business Questions - General
+  {
+    question: "What is PND50 and why do foreign companies need to file it?",
+    answer:
+      "PND50 (ภ.ง.ด.50 or P.N.D.50) is Thailand's annual corporate income tax return. ALL companies registered in Thailand - including foreign-owned subsidiaries from Singapore, Russia, Taiwan, China, or anywhere else - must file PND50 within 150 days after their fiscal year ends. Late filing results in penalties and surcharges. Reference: Section 68, Revenue Code of Thailand",
+  },
+  {
+    question: "Do I need a Thai accountant if my business transactions are mostly overseas?",
+    answer:
+      "Yes. Even if your Thai company's transactions occur overseas (common for Singapore, Russian, and Taiwanese parent companies), Thai law requires proper accounting records in Thai Baht and annual PND50 filing. A qualified Thai accountant ensures compliance and helps you avoid penalties. Reference: Accounting Act B.E. 2543; Section 65, Revenue Code of Thailand",
+  },
+  {
+    question: "How can foreign companies benefit from Thailand's tax treaties?",
+    answer:
+      "Thailand has Double Tax Agreements (DTAs) with over 60 countries including Singapore, Russia, Taiwan (via special arrangement), and China. These treaties can reduce withholding taxes on dividends, royalties, and service fees. We help foreign companies structure their Thai operations to maximize treaty benefits while staying compliant. Reference: Thai Revenue Department; Bilateral Tax Treaties",
   },
   // General Questions
   {

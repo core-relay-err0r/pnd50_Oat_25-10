@@ -71,6 +71,55 @@ const faqCategories = [
     ],
   },
   {
+    id: "international",
+    title: "International Business",
+    icon: Building2,
+    questions: [
+      {
+        id: "intl-1",
+        question: "I'm from Singapore. Can my Singapore company file PND50 in Thailand?",
+        answer:
+          "If your Singapore company has a registered branch or subsidiary in Thailand, yes - you must file PND50 (ภ.ง.ด.50) annually. Many Singapore businesses expanding to Thailand use our services for seamless tax compliance. We handle all Thai tax filings while you focus on growing your ASEAN business.",
+        reference: "Revenue Code of Thailand, Section 66; Double Tax Agreement Thailand-Singapore",
+      },
+      {
+        id: "intl-2",
+        question: "As a Russian entrepreneur, how do I handle Thai corporate taxes?",
+        answer:
+          "Russian business owners with Thai companies must file PND50 corporate tax returns annually, plus monthly VAT (PP30) and withholding tax forms. We specialize in helping Russian entrepreneurs navigate Thai tax regulations, with clear English communication and transparent processes.",
+        reference: "Revenue Code of Thailand; Thai-Russia Tax Treaty",
+      },
+      {
+        id: "intl-3",
+        question: "Can Taiwanese companies get PND50 filing support in Thailand?",
+        answer:
+          "Yes! Many Taiwanese manufacturers and trading companies use our PND50 filing services. We understand the unique needs of Taiwan-Thailand business operations, including transfer pricing, withholding tax on royalties, and proper documentation for cross-border transactions.",
+        reference: "Revenue Code of Thailand, Section 70; Transfer Pricing regulations",
+      },
+      {
+        id: "intl-4",
+        question: "What is PND50 and why do foreign companies need to file it?",
+        answer:
+          "PND50 (ภ.ง.ด.50 or P.N.D.50) is Thailand's annual corporate income tax return. ALL companies registered in Thailand - including foreign-owned subsidiaries from Singapore, Russia, Taiwan, China, or anywhere else - must file PND50 within 150 days after their fiscal year ends. Late filing results in penalties and surcharges.",
+        reference: "Section 68, Revenue Code of Thailand",
+      },
+      {
+        id: "intl-5",
+        question: "Do I need a Thai accountant if my business transactions are mostly overseas?",
+        answer:
+          "Yes. Even if your Thai company's transactions occur overseas (common for Singapore, Russian, and Taiwanese parent companies), Thai law requires proper accounting records in Thai Baht and annual PND50 filing. A qualified Thai accountant ensures compliance and helps you avoid penalties.",
+        reference: "Accounting Act B.E. 2543; Section 65, Revenue Code of Thailand",
+      },
+      {
+        id: "intl-6",
+        question: "How can foreign companies benefit from Thailand's tax treaties?",
+        answer:
+          "Thailand has Double Tax Agreements (DTAs) with over 60 countries including Singapore, Russia, Taiwan (via special arrangement), and China. These treaties can reduce withholding taxes on dividends, royalties, and service fees. We help foreign companies structure their Thai operations to maximize treaty benefits while staying compliant.",
+        reference: "Thai Revenue Department; Bilateral Tax Treaties",
+      },
+    ],
+  },
+  {
     id: "general",
     title: "General Questions",
     icon: Users,

@@ -77,7 +77,8 @@ export function InternationalServiceAreaSchema() {
     "@type": "ProfessionalService",
     name: siteConfig.business.name,
     url: siteConfig.url,
-    description: siteConfig.description,
+    description:
+      "PND50 (ภ.ง.ด.50) tax filing, accounting, and business compliance services for foreign companies operating in Thailand",
     address: {
       "@type": "PostalAddress",
       streetAddress: siteConfig.business.address.streetAddress,
@@ -90,24 +91,80 @@ export function InternationalServiceAreaSchema() {
       {
         "@type": "Country",
         name: "Thailand",
-        description: "Primary market - Full accounting and tax services",
+        description:
+          "Primary market - PND50 tax filing, corporate accounting, VAT registration, and full business compliance services",
       },
       {
         "@type": "Country",
         name: "Singapore",
-        description: "Singapore companies expanding to Thailand",
+        description:
+          "PND50 tax filing and Thai accounting services for Singapore companies expanding to Thailand. Corporate tax compliance for Singapore-Thailand business operations.",
       },
       {
         "@type": "Country",
         name: "Russia",
-        description: "Russian entrepreneurs and businesses in Thailand",
+        description:
+          "PND50 tax filing and accounting services for Russian entrepreneurs and digital nomads in Thailand. Thai corporate tax support for Russian business owners.",
       },
       {
         "@type": "Country",
         name: "Taiwan",
-        description: "Taiwanese companies with operations in Thailand",
+        description:
+          "PND50 tax filing and accounting services for Taiwanese manufacturers and trading companies in Thailand. Thai tax compliance for Taiwan-Thailand business.",
+      },
+      {
+        "@type": "Country",
+        name: "China",
+        description:
+          "PND50 tax filing and accounting services for Chinese companies with Thailand subsidiaries. Thai corporate tax support for China-Thailand business.",
+      },
+      {
+        "@type": "Country",
+        name: "Vietnam",
+        description:
+          "PND50 tax filing and accounting services for Vietnamese businesses expanding to Thailand. Thai tax compliance support.",
       },
     ],
+    hasOfferCatalog: {
+      "@type": "OfferCatalog",
+      name: "Thailand Business Services for Foreign Companies",
+      itemListElement: [
+        {
+          "@type": "Offer",
+          itemOffered: {
+            "@type": "Service",
+            name: "PND50 Tax Filing",
+            description:
+              "Annual corporate income tax return (ภ.ง.ด.50/P.N.D.50) filing for foreign-owned companies in Thailand",
+          },
+        },
+        {
+          "@type": "Offer",
+          itemOffered: {
+            "@type": "Service",
+            name: "Monthly Accounting",
+            description: "Thai GAAP compliant bookkeeping and financial reporting for international businesses",
+          },
+        },
+        {
+          "@type": "Offer",
+          itemOffered: {
+            "@type": "Service",
+            name: "VAT Registration & Filing",
+            description: "PP30 VAT filing and compliance for foreign companies in Thailand",
+          },
+        },
+        {
+          "@type": "Offer",
+          itemOffered: {
+            "@type": "Service",
+            name: "Company Registration",
+            description:
+              "Thai Limited Company setup for foreign entrepreneurs from Singapore, Russia, Taiwan, and worldwide",
+          },
+        },
+      ],
+    },
     availableLanguage: [
       {
         "@type": "Language",
@@ -119,6 +176,16 @@ export function InternationalServiceAreaSchema() {
         name: "Thai",
         alternateName: "th",
       },
+    ],
+    knowsAbout: [
+      "PND50 tax filing Thailand",
+      "Thai corporate income tax for foreigners",
+      "Singapore company Thailand subsidiary",
+      "Russian business Thailand accounting",
+      "Taiwan company Thailand tax",
+      "Foreign company registration Thailand",
+      "Thai VAT for international businesses",
+      "Withholding tax Thailand expats",
     ],
   }
 
