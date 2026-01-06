@@ -37,6 +37,7 @@ export function HorizontalScrollContainer({ children, onSectionChange }: Horizon
   const [isMobile, setIsMobile] = useState(false)
   const [isReady, setIsReady] = useState(false)
   const isScrollingRef = useRef(false)
+  const hasInitializedRef = useRef(false)
 
   // Handle mobile detection
   useEffect(() => {
@@ -73,9 +74,19 @@ export function HorizontalScrollContainer({ children, onSectionChange }: Horizon
       gsap.set(wrapper, { width: totalWidth })
       document.body.style.height = `${totalWidth}px`
 
-      const snapValues = sections.map((_, i) => i / (sections.length - 1))
+      const numSections = sections.length
+      const snapValues = Array.from({ length: numSections }, (_, i) => i / (numSections - 1))
 
-      gsap.to(wrapper, {
+      let initialSectionIndex = 0
+      if (!hasInitializedRef.current) {
+        const path = window.location.pathname
+        const foundIndex = SECTIONS.findIndex((s) => s.path === path)
+        if (foundIndex !== -1) {
+          initialSectionIndex = foundIndex
+        }
+      }
+
+      const tween = gsap.to(wrapper, {
         x: () => -(totalWidth - window.innerWidth),
         ease: "none",
         scrollTrigger: {
@@ -84,12 +95,13 @@ export function HorizontalScrollContainer({ children, onSectionChange }: Horizon
           start: "top top",
           end: () => `+=${totalWidth - window.innerWidth}`,
           pin: true,
-          scrub: 0.5, // Faster scrub for snappier feel
+          scrub: 0.3,
           snap: {
             snapTo: snapValues,
-            duration: { min: 0.3, max: 0.6 }, // Smooth snap duration
-            ease: "power2.inOut",
-            inertia: false, // Disable inertia for instant snap feel
+            duration: { min: 0.2, max: 0.5 },
+            ease: "power3.out",
+            inertia: false,
+            delay: 0.1,
           },
           invalidateOnRefresh: true,
           anticipatePin: 1,
@@ -97,11 +109,12 @@ export function HorizontalScrollContainer({ children, onSectionChange }: Horizon
             if (isScrollingRef.current) return
 
             const progress = self.progress
-            const sectionIndex = Math.min(Math.floor(progress * sections.length + 0.5), sections.length - 1)
+            const sectionIndex = Math.round(progress * (numSections - 1))
+            const clampedIndex = Math.max(0, Math.min(sectionIndex, numSections - 1))
 
-            if (sectionIndex !== currentSection) {
-              setCurrentSection(sectionIndex)
-              const section = SECTIONS[sectionIndex]
+            if (clampedIndex !== currentSection) {
+              setCurrentSection(clampedIndex)
+              const section = SECTIONS[clampedIndex]
               if (section) {
                 if (onSectionChange) onSectionChange(section.id)
                 if (section.path !== window.location.pathname) {
@@ -114,6 +127,21 @@ export function HorizontalScrollContainer({ children, onSectionChange }: Horizon
       })
 
       setIsReady(true)
+
+      if (!hasInitializedRef.current && initialSectionIndex > 0) {
+        hasInitializedRef.current = true
+        setTimeout(() => {
+          const trigger = ScrollTrigger.getById("horizontal-scroll")
+          if (trigger) {
+            const targetProgress = initialSectionIndex / (numSections - 1)
+            const targetScroll = trigger.start + targetProgress * (trigger.end - trigger.start)
+            window.scrollTo(0, targetScroll)
+            setCurrentSection(initialSectionIndex)
+          }
+        }, 100)
+      } else {
+        hasInitializedRef.current = true
+      }
     }
 
     const timeout = setTimeout(initScroll, 50)
@@ -141,19 +169,17 @@ export function HorizontalScrollContainer({ children, onSectionChange }: Horizon
       const sections = gsap.utils.toArray<HTMLElement>(".horizontal-section")
       if (sections.length === 0) return
 
-      const totalWidth = sections.length * window.innerWidth
-      const maxScroll = totalWidth - window.innerWidth
-      const targetX = sectionIndex * window.innerWidth
-      const scrollRatio = targetX / maxScroll
-
+      const numSections = sections.length
       const trigger = ScrollTrigger.getById("horizontal-scroll")
+
       if (trigger) {
-        const targetScroll = trigger.start + scrollRatio * (trigger.end - trigger.start)
+        const targetProgress = sectionIndex / (numSections - 1)
+        const targetScroll = trigger.start + targetProgress * (trigger.end - trigger.start)
 
         gsap.to(window, {
           scrollTo: { y: targetScroll },
-          duration: 0.8, // Faster transition
-          ease: "power2.inOut", // Smoother easing
+          duration: 0.6,
+          ease: "power3.out",
           onComplete: () => {
             isScrollingRef.current = false
             setCurrentSection(sectionIndex)
