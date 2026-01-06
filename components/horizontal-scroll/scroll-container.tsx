@@ -3,9 +3,12 @@
 import { useRef, useEffect, type ReactNode, useState, useCallback } from "react"
 import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
-import { usePathname, useRouter } from "next/navigation"
+import { ScrollToPlugin } from "gsap/ScrollToPlugin"
+import { usePathname } from "next/navigation"
 
-gsap.registerPlugin(ScrollTrigger)
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger, ScrollToPlugin)
+}
 
 export interface Section {
   id: string
@@ -20,7 +23,7 @@ export const SECTIONS: Section[] = [
   { id: "about", path: "/about", label: "About us", showInNav: true },
   { id: "faq", path: "/faq", label: "FAQ", showInNav: true },
   { id: "contact", path: "/contact", label: "Contact", showInNav: true },
-  { id: "cta", path: "/cta", label: "CTA", showInNav: false }, // Hidden from navbar
+  { id: "cta", path: "/cta", label: "CTA", showInNav: false },
 ]
 
 interface HorizontalScrollContainerProps {
@@ -33,14 +36,17 @@ export function HorizontalScrollContainer({ children, onSectionChange }: Horizon
   const wrapperRef = useRef<HTMLDivElement>(null)
   const [currentSection, setCurrentSection] = useState(0)
   const [isMobile, setIsMobile] = useState(false)
-  const router = useRouter()
+  const [isReady, setIsReady] = useState(false)
   const pathname = usePathname()
   const isScrollingRef = useRef(false)
+  const scrollTriggerRef = useRef<ScrollTrigger | null>(null)
 
   // Handle mobile detection
   useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768)
+      const mobile = window.innerWidth < 768
+      setIsMobile(mobile)
+      console.log("[v0] Mobile check:", mobile)
     }
     checkMobile()
     window.addEventListener("resize", checkMobile)
@@ -49,114 +55,117 @@ export function HorizontalScrollContainer({ children, onSectionChange }: Horizon
 
   // Initialize horizontal scroll
   useEffect(() => {
-    if (isMobile || !containerRef.current || !wrapperRef.current) return
+    if (isMobile || !containerRef.current || !wrapperRef.current) {
+      console.log("[v0] Skipping scroll setup - isMobile:", isMobile)
+      return
+    }
 
-    const container = containerRef.current
-    const wrapper = wrapperRef.current
-    const sections = gsap.utils.toArray<HTMLElement>(".horizontal-section")
+    // Wait for DOM to be ready
+    const initScroll = () => {
+      const container = containerRef.current
+      const wrapper = wrapperRef.current
+      if (!container || !wrapper) return
 
-    if (sections.length === 0) return
+      const sections = gsap.utils.toArray<HTMLElement>(".horizontal-section")
+      console.log("[v0] Found sections:", sections.length)
 
-    // Calculate total width
-    const totalWidth = sections.reduce((acc, section) => acc + section.offsetWidth, 0)
+      if (sections.length === 0) {
+        console.log("[v0] No sections found, retrying...")
+        setTimeout(initScroll, 100)
+        return
+      }
 
-    // Set wrapper width
-    gsap.set(wrapper, { width: totalWidth })
+      // Kill existing ScrollTriggers
+      ScrollTrigger.getAll().forEach((t) => t.kill())
 
-    // Create horizontal scroll animation
-    const scrollTween = gsap.to(wrapper, {
-      x: () => -(totalWidth - window.innerWidth),
-      ease: "none",
-      scrollTrigger: {
-        trigger: container,
-        pin: true,
-        scrub: 1,
-        end: () => `+=${totalWidth}`,
-        invalidateOnRefresh: true,
-        onUpdate: (self) => {
-          if (isScrollingRef.current) return
+      // Calculate total width based on actual section widths
+      const totalWidth = sections.length * window.innerWidth
+      console.log("[v0] Total width:", totalWidth, "Window width:", window.innerWidth)
 
-          // Calculate current section based on progress
-          const progress = self.progress
-          const sectionIndex = Math.min(Math.floor(progress * sections.length), sections.length - 1)
+      // Set wrapper width
+      gsap.set(wrapper, { width: totalWidth })
 
-          if (sectionIndex !== currentSection) {
-            setCurrentSection(sectionIndex)
-            const section = SECTIONS[sectionIndex]
-            if (section && onSectionChange) {
-              onSectionChange(section.id)
+      document.body.style.height = `${totalWidth}px`
+
+      // Create horizontal scroll animation
+      const scrollTween = gsap.to(wrapper, {
+        x: () => -(totalWidth - window.innerWidth),
+        ease: "none",
+        scrollTrigger: {
+          id: "horizontal-scroll",
+          trigger: container,
+          start: "top top",
+          end: () => `+=${totalWidth - window.innerWidth}`,
+          pin: true,
+          scrub: 1,
+          invalidateOnRefresh: true,
+          anticipatePin: 1,
+          onUpdate: (self) => {
+            if (isScrollingRef.current) return
+
+            const progress = self.progress
+            const sectionIndex = Math.min(Math.floor(progress * sections.length), sections.length - 1)
+
+            if (sectionIndex !== currentSection) {
+              setCurrentSection(sectionIndex)
+              const section = SECTIONS[sectionIndex]
+              if (section) {
+                if (onSectionChange) onSectionChange(section.id)
+                // Update URL without navigation
+                if (section.path !== window.location.pathname) {
+                  window.history.replaceState(null, "", section.path)
+                }
+              }
             }
-            // Update URL without navigation
-            if (section && section.path !== pathname) {
-              window.history.pushState(null, "", section.path)
-            }
-          }
+          },
         },
-      },
-    })
+      })
 
-    // Refresh ScrollTrigger on resize
+      scrollTriggerRef.current = ScrollTrigger.getById("horizontal-scroll") || null
+      setIsReady(true)
+      console.log("[v0] ScrollTrigger initialized successfully")
+
+      return () => {
+        scrollTween.kill()
+        ScrollTrigger.getAll().forEach((t) => t.kill())
+        document.body.style.height = ""
+      }
+    }
+
+    // Small delay to ensure DOM is ready
+    const timeout = setTimeout(initScroll, 50)
+
     const handleResize = () => {
       ScrollTrigger.refresh()
     }
     window.addEventListener("resize", handleResize)
 
     return () => {
-      scrollTween.kill()
+      clearTimeout(timeout)
       ScrollTrigger.getAll().forEach((t) => t.kill())
+      document.body.style.height = ""
       window.removeEventListener("resize", handleResize)
     }
-  }, [isMobile, currentSection, onSectionChange, pathname])
+  }, [isMobile, onSectionChange, currentSection])
 
-  // Handle initial URL routing - scroll to correct section on page load
-  useEffect(() => {
-    if (isMobile) return
-
-    const sectionIndex = SECTIONS.findIndex((s) => s.path === pathname)
-    if (sectionIndex > 0 && containerRef.current) {
-      // Calculate scroll position for this section
-      const sections = gsap.utils.toArray<HTMLElement>(".horizontal-section")
-      if (sections.length > 0) {
-        let targetX = 0
-        for (let i = 0; i < sectionIndex; i++) {
-          targetX += sections[i]?.offsetWidth || window.innerWidth
-        }
-
-        // Scroll to position after a short delay to ensure ScrollTrigger is ready
-        setTimeout(() => {
-          const trigger = ScrollTrigger.getById("horizontal-scroll")
-          if (trigger) {
-            const scrollPos =
-              (targetX / (sections.length * window.innerWidth - window.innerWidth)) * (trigger.end - trigger.start)
-            window.scrollTo(0, scrollPos)
-          }
-        }, 100)
-      }
-    }
-  }, [pathname, isMobile])
-
-  // Expose scrollToSection function
+  // Scroll to section function
   const scrollToSection = useCallback(
     (sectionId: string) => {
       const sectionIndex = SECTIONS.findIndex((s) => s.id === sectionId)
       if (sectionIndex === -1) return
 
+      console.log("[v0] Scrolling to section:", sectionId, "index:", sectionIndex)
       isScrollingRef.current = true
 
       const sections = gsap.utils.toArray<HTMLElement>(".horizontal-section")
       if (sections.length === 0) return
 
-      let targetX = 0
-      for (let i = 0; i < sectionIndex; i++) {
-        targetX += sections[i]?.offsetWidth || window.innerWidth
-      }
-
-      const totalWidth = sections.reduce((acc, section) => acc + section.offsetWidth, 0)
+      const totalWidth = sections.length * window.innerWidth
       const maxScroll = totalWidth - window.innerWidth
+      const targetX = sectionIndex * window.innerWidth
       const scrollRatio = targetX / maxScroll
 
-      // Get ScrollTrigger instance
-      const trigger = ScrollTrigger.getAll()[0]
+      const trigger = ScrollTrigger.getById("horizontal-scroll")
       if (trigger) {
         const targetScroll = trigger.start + scrollRatio * (trigger.end - trigger.start)
 
@@ -169,7 +178,7 @@ export function HorizontalScrollContainer({ children, onSectionChange }: Horizon
             setCurrentSection(sectionIndex)
             const section = SECTIONS[sectionIndex]
             if (section) {
-              window.history.pushState(null, "", section.path)
+              window.history.replaceState(null, "", section.path)
               if (onSectionChange) onSectionChange(section.id)
             }
           },
@@ -181,13 +190,14 @@ export function HorizontalScrollContainer({ children, onSectionChange }: Horizon
 
   // Expose scrollToSection to window for navbar access
   useEffect(() => {
-    if (!isMobile) {
+    if (!isMobile && isReady) {
       ;(window as any).scrollToSection = scrollToSection
+      console.log("[v0] scrollToSection exposed to window")
     }
     return () => {
       delete (window as any).scrollToSection
     }
-  }, [scrollToSection, isMobile])
+  }, [scrollToSection, isMobile, isReady])
 
   // Mobile: render children normally without horizontal scroll
   if (isMobile) {
@@ -195,8 +205,8 @@ export function HorizontalScrollContainer({ children, onSectionChange }: Horizon
   }
 
   return (
-    <div ref={containerRef} className="horizontal-scroll-container relative overflow-hidden">
-      <div ref={wrapperRef} className="horizontal-wrapper flex flex-nowrap h-screen">
+    <div ref={containerRef} className="horizontal-scroll-container relative" style={{ overflow: "hidden" }}>
+      <div ref={wrapperRef} className="horizontal-wrapper flex flex-nowrap" style={{ height: "100vh" }}>
         {children}
       </div>
     </div>

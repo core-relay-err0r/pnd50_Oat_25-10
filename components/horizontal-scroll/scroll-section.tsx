@@ -15,7 +15,12 @@ export const ScrollSection = forwardRef<HTMLDivElement, ScrollSectionProps>(({ i
       ref={ref}
       id={id}
       data-section={id}
-      className={cn("horizontal-section w-screen h-screen flex-shrink-0 overflow-y-auto overflow-x-hidden", className)}
+      className={cn("horizontal-section flex-shrink-0 overflow-y-auto overflow-x-hidden", className)}
+      style={{
+        width: "100vw",
+        height: "100vh",
+        minWidth: "100vw",
+      }}
     >
       {children}
     </section>
