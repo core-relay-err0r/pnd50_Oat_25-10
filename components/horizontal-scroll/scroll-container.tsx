@@ -4,7 +4,6 @@ import { useRef, useEffect, type ReactNode, useState, useCallback } from "react"
 import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { ScrollToPlugin } from "gsap/ScrollToPlugin"
-import { usePathname } from "next/navigation"
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger, ScrollToPlugin)
@@ -37,40 +36,32 @@ export function HorizontalScrollContainer({ children, onSectionChange }: Horizon
   const [currentSection, setCurrentSection] = useState(0)
   const [isMobile, setIsMobile] = useState(false)
   const [isReady, setIsReady] = useState(false)
-  const pathname = usePathname()
   const isScrollingRef = useRef(false)
-  const scrollTriggerRef = useRef<ScrollTrigger | null>(null)
 
   // Handle mobile detection
   useEffect(() => {
     const checkMobile = () => {
       const mobile = window.innerWidth < 768
       setIsMobile(mobile)
-      console.log("[v0] Mobile check:", mobile)
     }
     checkMobile()
     window.addEventListener("resize", checkMobile)
     return () => window.removeEventListener("resize", checkMobile)
   }, [])
 
-  // Initialize horizontal scroll
+  // Initialize horizontal scroll with snap
   useEffect(() => {
     if (isMobile || !containerRef.current || !wrapperRef.current) {
-      console.log("[v0] Skipping scroll setup - isMobile:", isMobile)
       return
     }
 
-    // Wait for DOM to be ready
     const initScroll = () => {
       const container = containerRef.current
       const wrapper = wrapperRef.current
       if (!container || !wrapper) return
 
       const sections = gsap.utils.toArray<HTMLElement>(".horizontal-section")
-      console.log("[v0] Found sections:", sections.length)
-
       if (sections.length === 0) {
-        console.log("[v0] No sections found, retrying...")
         setTimeout(initScroll, 100)
         return
       }
@@ -78,17 +69,13 @@ export function HorizontalScrollContainer({ children, onSectionChange }: Horizon
       // Kill existing ScrollTriggers
       ScrollTrigger.getAll().forEach((t) => t.kill())
 
-      // Calculate total width based on actual section widths
       const totalWidth = sections.length * window.innerWidth
-      console.log("[v0] Total width:", totalWidth, "Window width:", window.innerWidth)
-
-      // Set wrapper width
       gsap.set(wrapper, { width: totalWidth })
-
       document.body.style.height = `${totalWidth}px`
 
-      // Create horizontal scroll animation
-      const scrollTween = gsap.to(wrapper, {
+      const snapValues = sections.map((_, i) => i / (sections.length - 1))
+
+      gsap.to(wrapper, {
         x: () => -(totalWidth - window.innerWidth),
         ease: "none",
         scrollTrigger: {
@@ -97,21 +84,26 @@ export function HorizontalScrollContainer({ children, onSectionChange }: Horizon
           start: "top top",
           end: () => `+=${totalWidth - window.innerWidth}`,
           pin: true,
-          scrub: 1,
+          scrub: 0.5, // Faster scrub for snappier feel
+          snap: {
+            snapTo: snapValues,
+            duration: { min: 0.3, max: 0.6 }, // Smooth snap duration
+            ease: "power2.inOut",
+            inertia: false, // Disable inertia for instant snap feel
+          },
           invalidateOnRefresh: true,
           anticipatePin: 1,
           onUpdate: (self) => {
             if (isScrollingRef.current) return
 
             const progress = self.progress
-            const sectionIndex = Math.min(Math.floor(progress * sections.length), sections.length - 1)
+            const sectionIndex = Math.min(Math.floor(progress * sections.length + 0.5), sections.length - 1)
 
             if (sectionIndex !== currentSection) {
               setCurrentSection(sectionIndex)
               const section = SECTIONS[sectionIndex]
               if (section) {
                 if (onSectionChange) onSectionChange(section.id)
-                // Update URL without navigation
                 if (section.path !== window.location.pathname) {
                   window.history.replaceState(null, "", section.path)
                 }
@@ -121,18 +113,9 @@ export function HorizontalScrollContainer({ children, onSectionChange }: Horizon
         },
       })
 
-      scrollTriggerRef.current = ScrollTrigger.getById("horizontal-scroll") || null
       setIsReady(true)
-      console.log("[v0] ScrollTrigger initialized successfully")
-
-      return () => {
-        scrollTween.kill()
-        ScrollTrigger.getAll().forEach((t) => t.kill())
-        document.body.style.height = ""
-      }
     }
 
-    // Small delay to ensure DOM is ready
     const timeout = setTimeout(initScroll, 50)
 
     const handleResize = () => {
@@ -148,13 +131,11 @@ export function HorizontalScrollContainer({ children, onSectionChange }: Horizon
     }
   }, [isMobile, onSectionChange, currentSection])
 
-  // Scroll to section function
   const scrollToSection = useCallback(
     (sectionId: string) => {
       const sectionIndex = SECTIONS.findIndex((s) => s.id === sectionId)
       if (sectionIndex === -1) return
 
-      console.log("[v0] Scrolling to section:", sectionId, "index:", sectionIndex)
       isScrollingRef.current = true
 
       const sections = gsap.utils.toArray<HTMLElement>(".horizontal-section")
@@ -171,8 +152,8 @@ export function HorizontalScrollContainer({ children, onSectionChange }: Horizon
 
         gsap.to(window, {
           scrollTo: { y: targetScroll },
-          duration: 1.2,
-          ease: "power3.inOut",
+          duration: 0.8, // Faster transition
+          ease: "power2.inOut", // Smoother easing
           onComplete: () => {
             isScrollingRef.current = false
             setCurrentSection(sectionIndex)
@@ -188,18 +169,16 @@ export function HorizontalScrollContainer({ children, onSectionChange }: Horizon
     [onSectionChange],
   )
 
-  // Expose scrollToSection to window for navbar access
+  // Expose scrollToSection to window
   useEffect(() => {
     if (!isMobile && isReady) {
       ;(window as any).scrollToSection = scrollToSection
-      console.log("[v0] scrollToSection exposed to window")
     }
     return () => {
       delete (window as any).scrollToSection
     }
   }, [scrollToSection, isMobile, isReady])
 
-  // Mobile: render children normally without horizontal scroll
   if (isMobile) {
     return <div className="min-h-screen">{children}</div>
   }
