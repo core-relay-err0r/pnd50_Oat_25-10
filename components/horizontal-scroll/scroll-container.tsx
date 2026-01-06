@@ -38,6 +38,13 @@ export function HorizontalScrollContainer({ children, onSectionChange }: Horizon
   const [isReady, setIsReady] = useState(false)
   const isScrollingRef = useRef(false)
   const hasInitializedRef = useRef(false)
+  const currentSectionRef = useRef(0)
+  const onSectionChangeRef = useRef(onSectionChange)
+
+  // Keep ref updated
+  useEffect(() => {
+    onSectionChangeRef.current = onSectionChange
+  }, [onSectionChange])
 
   // Handle mobile detection
   useEffect(() => {
@@ -50,7 +57,6 @@ export function HorizontalScrollContainer({ children, onSectionChange }: Horizon
     return () => window.removeEventListener("resize", checkMobile)
   }, [])
 
-  // Initialize horizontal scroll with snap
   useEffect(() => {
     if (isMobile || !containerRef.current || !wrapperRef.current) {
       return
@@ -86,7 +92,7 @@ export function HorizontalScrollContainer({ children, onSectionChange }: Horizon
         }
       }
 
-      const tween = gsap.to(wrapper, {
+      gsap.to(wrapper, {
         x: () => -(totalWidth - window.innerWidth),
         ease: "none",
         scrollTrigger: {
@@ -112,11 +118,12 @@ export function HorizontalScrollContainer({ children, onSectionChange }: Horizon
             const sectionIndex = Math.round(progress * (numSections - 1))
             const clampedIndex = Math.max(0, Math.min(sectionIndex, numSections - 1))
 
-            if (clampedIndex !== currentSection) {
+            if (clampedIndex !== currentSectionRef.current) {
+              currentSectionRef.current = clampedIndex
               setCurrentSection(clampedIndex)
               const section = SECTIONS[clampedIndex]
               if (section) {
-                if (onSectionChange) onSectionChange(section.id)
+                if (onSectionChangeRef.current) onSectionChangeRef.current(section.id)
                 if (section.path !== window.location.pathname) {
                   window.history.replaceState(null, "", section.path)
                 }
@@ -136,6 +143,7 @@ export function HorizontalScrollContainer({ children, onSectionChange }: Horizon
             const targetProgress = initialSectionIndex / (numSections - 1)
             const targetScroll = trigger.start + targetProgress * (trigger.end - trigger.start)
             window.scrollTo(0, targetScroll)
+            currentSectionRef.current = initialSectionIndex
             setCurrentSection(initialSectionIndex)
           }
         }, 100)
@@ -157,43 +165,41 @@ export function HorizontalScrollContainer({ children, onSectionChange }: Horizon
       document.body.style.height = ""
       window.removeEventListener("resize", handleResize)
     }
-  }, [isMobile, onSectionChange, currentSection])
+  }, [isMobile]) // Only isMobile in dependencies
 
-  const scrollToSection = useCallback(
-    (sectionId: string) => {
-      const sectionIndex = SECTIONS.findIndex((s) => s.id === sectionId)
-      if (sectionIndex === -1) return
+  const scrollToSection = useCallback((sectionId: string) => {
+    const sectionIndex = SECTIONS.findIndex((s) => s.id === sectionId)
+    if (sectionIndex === -1) return
 
-      isScrollingRef.current = true
+    isScrollingRef.current = true
 
-      const sections = gsap.utils.toArray<HTMLElement>(".horizontal-section")
-      if (sections.length === 0) return
+    const sections = gsap.utils.toArray<HTMLElement>(".horizontal-section")
+    if (sections.length === 0) return
 
-      const numSections = sections.length
-      const trigger = ScrollTrigger.getById("horizontal-scroll")
+    const numSections = sections.length
+    const trigger = ScrollTrigger.getById("horizontal-scroll")
 
-      if (trigger) {
-        const targetProgress = sectionIndex / (numSections - 1)
-        const targetScroll = trigger.start + targetProgress * (trigger.end - trigger.start)
+    if (trigger) {
+      const targetProgress = sectionIndex / (numSections - 1)
+      const targetScroll = trigger.start + targetProgress * (trigger.end - trigger.start)
 
-        gsap.to(window, {
-          scrollTo: { y: targetScroll },
-          duration: 0.6,
-          ease: "power3.out",
-          onComplete: () => {
-            isScrollingRef.current = false
-            setCurrentSection(sectionIndex)
-            const section = SECTIONS[sectionIndex]
-            if (section) {
-              window.history.replaceState(null, "", section.path)
-              if (onSectionChange) onSectionChange(section.id)
-            }
-          },
-        })
-      }
-    },
-    [onSectionChange],
-  )
+      gsap.to(window, {
+        scrollTo: { y: targetScroll },
+        duration: 0.6,
+        ease: "power3.out",
+        onComplete: () => {
+          isScrollingRef.current = false
+          currentSectionRef.current = sectionIndex
+          setCurrentSection(sectionIndex)
+          const section = SECTIONS[sectionIndex]
+          if (section) {
+            window.history.replaceState(null, "", section.path)
+            if (onSectionChangeRef.current) onSectionChangeRef.current(section.id)
+          }
+        },
+      })
+    }
+  }, [])
 
   // Expose scrollToSection to window
   useEffect(() => {
