@@ -1,21 +1,20 @@
 import type React from "react"
-// Contact layout with metadata
+// Case Studies layout with metadata
 import type { Metadata } from "next"
 import { pageMetadata, siteConfig } from "@/lib/seo-config"
 import { BreadcrumbSchema } from "@/components/seo/structured-data"
 
 export const metadata: Metadata = {
-  title: pageMetadata.contact.title,
-  description: pageMetadata.contact.description,
-  keywords: siteConfig.keywords.contact,
+  title: pageMetadata.caseStudies.title,
+  description: pageMetadata.caseStudies.description,
   openGraph: {
-    title: pageMetadata.contact.title,
-    description: pageMetadata.contact.description,
-    url: `${siteConfig.url}/contact`,
+    title: pageMetadata.caseStudies.title,
+    description: pageMetadata.caseStudies.description,
+    url: `${siteConfig.url}/case-studies`,
   },
 }
 
-export default function ContactLayout({
+export default function CaseStudiesLayout({
   children,
 }: {
   children: React.ReactNode
@@ -25,7 +24,7 @@ export default function ContactLayout({
       <BreadcrumbSchema
         items={[
           { name: "Home", url: "/" },
-          { name: "Contact", url: "/contact" },
+          { name: "Case Studies", url: "/case-studies" },
         ]}
       />
       {children}

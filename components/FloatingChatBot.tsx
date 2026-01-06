@@ -86,8 +86,6 @@ export function FloatingChatBot() {
   const recognitionRef = useRef<SpeechRecognition | null>(null)
   const synthRef = useRef<SpeechSynthesis | null>(null)
   const lastSpokenMessageRef = useRef<string | null>(null)
-  const spokenMessageIdsRef = useRef<Set<string>>(new Set())
-  const wasSpeakingRef = useRef(false)
 
   const [inputValue, setInputValue] = useState("")
 
@@ -189,13 +187,13 @@ export function FloatingChatBot() {
   // Click outside to close
   useEffect(() => {
     function clickOutsideHandler(e: MouseEvent) {
-      if (wrapperRef.current && !wrapperRef.current.contains(e.target as Node) && isOpen && !voiceMode) {
+      if (wrapperRef.current && !wrapperRef.current.contains(e.target as Node) && isOpen) {
         setIsOpen(false)
       }
     }
     document.addEventListener("mousedown", clickOutsideHandler)
     return () => document.removeEventListener("mousedown", clickOutsideHandler)
-  }, [isOpen, voiceMode])
+  }, [isOpen])
 
   const {
     messages: aiMessages,
@@ -224,12 +222,8 @@ export function FloatingChatBot() {
     const lastMessage = aiMessages[aiMessages.length - 1]
     if (!lastMessage) return
 
-    if (lastMessage.id.startsWith("welcome-")) return
-
     // Skip if already saved
     if (savedMessageIds.current.has(lastMessage.id)) return
-
-    if (status === "in_progress" && lastMessage.role === "assistant") return
 
     // Extract text content from message parts
     const content = lastMessage.parts
@@ -244,15 +238,16 @@ export function FloatingChatBot() {
       clearTimeout(saveTimerRef.current)
     }
 
-    // Set new debounced timer - saves after 500ms of no updates
+    // Set new debounced timer - saves after 2 seconds of no updates
     saveTimerRef.current = setTimeout(() => {
+      // Mark as saved to prevent duplicates
+      savedMessageIds.current.add(lastMessage.id)
+
       // Save message to database
       saveMessage(currentSessionId, lastMessage.role as "user" | "assistant", content, {
         page: pathname,
         voiceMode,
       })
-
-      savedMessageIds.current.add(lastMessage.id)
 
       // Auto-generate title from first user message
       if (!hasSetTitle && lastMessage.role === "user") {
@@ -260,7 +255,7 @@ export function FloatingChatBot() {
         updateSessionTitle(currentSessionId, title)
         setHasSetTitle(true)
       }
-    }, 500)
+    }, 2000)
 
     // Cleanup timer on unmount
     return () => {
@@ -268,7 +263,7 @@ export function FloatingChatBot() {
         clearTimeout(saveTimerRef.current)
       }
     }
-  }, [aiMessages, currentSessionId, pathname, voiceMode, hasSetTitle, status])
+  }, [aiMessages, currentSessionId, pathname, voiceMode, hasSetTitle])
 
   const speakWithElevenLabs = useCallback(async (text: string) => {
     if (!text) return
@@ -411,22 +406,13 @@ export function FloatingChatBot() {
     if (!voiceMode || aiMessages.length === 0) return
 
     const lastMessage = aiMessages[aiMessages.length - 1]
-
-    // AI SDK v5 uses: "ready" | "submitted" | "streaming" | "error"
-    if (
-      lastMessage.role === "assistant" &&
-      status === "ready" &&
-      !lastMessage.id.startsWith("welcome-") &&
-      !spokenMessageIdsRef.current.has(lastMessage.id)
-    ) {
+    if (lastMessage.role === "assistant" && status !== "in_progress") {
       const messageText = lastMessage.parts
         .filter((part) => part.type === "text")
         .map((part) => part.text)
         .join(" ")
 
-      if (messageText && messageText.trim().length > 0) {
-        // Mark as spoken BEFORE triggering TTS to prevent duplicates
-        spokenMessageIdsRef.current.add(lastMessage.id)
+      if (messageText && messageText !== lastSpokenMessageRef.current) {
         lastSpokenMessageRef.current = messageText
         setIsProcessing(false)
         speakText(messageText)
@@ -619,23 +605,6 @@ export function FloatingChatBot() {
     if (diffDays < 7) return `${diffDays} days ago`
     return date.toLocaleDateString()
   }
-
-  useEffect(() => {
-    // When Panida finishes speaking (isSpeaking goes from true to false)
-    if (wasSpeakingRef.current && !isSpeaking && voiceMode && !isListening && !isProcessing && status === "ready") {
-      // Small delay before listening again for natural conversation flow
-      const timer = setTimeout(() => {
-        if (voiceMode && !isSpeaking && !isListening) {
-          startVoiceModeListening()
-        }
-      }, 500)
-
-      return () => clearTimeout(timer)
-    }
-
-    // Track previous speaking state
-    wasSpeakingRef.current = isSpeaking
-  }, [isSpeaking, voiceMode, isListening, isProcessing, status, startVoiceModeListening])
 
   return (
     <div className="fixed bottom-4 md:bottom-6 right-4 md:right-6 z-50 flex items-end justify-end">

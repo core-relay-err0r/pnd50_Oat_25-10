@@ -1,59 +1,45 @@
 import type { Metadata } from "next"
 import { Lightbulb } from "lucide-react"
-import {
-  DetailedServiceSchema,
-  BreadcrumbSchema,
-  FAQSchema,
-  AuthorSchema,
-  ServiceHowToSchema,
-} from "@/components/seo/structured-data"
+import { ServiceSchema, BreadcrumbSchema, FAQSchema } from "@/components/seo/structured-data"
 import { siteConfig } from "@/lib/seo-config"
 import { ServicePageClient } from "@/components/services/service-page-client"
 
 export const metadata: Metadata = {
-  title: "Business Consulting in Thailand | Advisory Services | PND50",
+  title: "Business Advisory & Consulting Services in Thailand | PND50",
   description:
-    "Expert business consulting and advisory services in Thailand for foreign companies. Strategic guidance on accounting, compliance, tax planning, and market entry. Full English support.",
+    "Expert business advisory and consulting for foreign companies in Thailand. Strategic guidance on accounting, compliance, and business planning for expat entrepreneurs in Thailand.",
   keywords: [
-    "business consulting Thailand",
+    "business advisory in Thailand",
+    "business consulting in Thailand",
     "business consultant Thailand",
-    "business advisory Thailand",
-    "consulting services Thailand",
     "foreign business advice Thailand",
-    // Thai keywords
-    "ที่ปรึกษาธุรกิจ",
-    "ที่ปรึกษาบริษัท",
-    "บริการที่ปรึกษา",
-    "ปรึกษาธุรกิจ",
+    "expat business consulting Thailand",
+    "Thailand market entry consulting",
+    "business planning Thailand",
   ],
   alternates: {
     canonical: `${siteConfig.url}/services/advisory`,
     languages: {
       en: `${siteConfig.url}/services/advisory`,
+      "en-US": `${siteConfig.url}/services/advisory`,
+      "en-GB": `${siteConfig.url}/services/advisory`,
+      "en-SG": `${siteConfig.url}/services/advisory`,
+      "en-AU": `${siteConfig.url}/services/advisory`,
       "x-default": `${siteConfig.url}/services/advisory`,
     },
   },
   openGraph: {
-    title: "Business Consulting in Thailand | PND50",
-    description: "Expert consulting for foreign businesses in Thailand. Strategic guidance and compliance support.",
+    title: "Business Advisory in Thailand | PND50",
+    description: "Expert consulting for foreign businesses in Thailand.",
     url: `${siteConfig.url}/services/advisory`,
     siteName: "PND50",
     locale: "en_US",
     type: "website",
-    images: [
-      {
-        url: `${siteConfig.url}/og-services.png`,
-        width: 1200,
-        height: 630,
-        alt: "PND50 Business Consulting in Thailand",
-      },
-    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Business Consulting in Thailand | PND50",
+    title: "Business Advisory in Thailand | PND50",
     description: "Expert consulting for foreign businesses in Thailand.",
-    images: [`${siteConfig.url}/og-services.png`],
   },
   robots: {
     index: true,
@@ -94,54 +80,22 @@ const faqs = [
   },
 ]
 
-const howToSteps = [
-  {
-    name: "Initial Assessment",
-    text: "We review your current business situation, challenges, and goals through a discovery call.",
-  },
-  {
-    name: "Analysis & Research",
-    text: "Our team researches relevant Thai regulations, market conditions, and options specific to your case.",
-  },
-  {
-    name: "Strategic Recommendations",
-    text: "We present actionable recommendations with clear pros, cons, and cost implications.",
-  },
-  {
-    name: "Implementation Support",
-    text: "We assist with executing the agreed strategy, coordinating with relevant government agencies as needed.",
-  },
-]
-
-const breadcrumbItems = [
-  { name: "Home", url: "/" },
-  { name: "Services", url: "/services" },
-  { name: "Business Advisory", url: "/services/advisory" },
-]
-
 export default function AdvisoryPage() {
   return (
     <>
-      <DetailedServiceSchema
+      <ServiceSchema
         name="Business Advisory & Consulting Services in Thailand"
-        description="Expert business consulting and advisory services in Thailand for foreign companies. Strategic guidance on accounting, compliance, tax planning, and market entry. Full English support."
+        description="Expert business advisory and consulting for foreign companies operating in Thailand."
         url="/services/advisory"
-        serviceType="Business Consulting Service"
-        datePublished="2024-01-15"
-        dateModified="2025-06-20"
-        priceRange="฿฿฿"
-        aggregateRating={{ ratingValue: "5.0", reviewCount: "38" }}
-        breadcrumb={breadcrumbItems}
       />
-      <BreadcrumbSchema items={breadcrumbItems} />
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", url: "/" },
+          { name: "Services", url: "/services" },
+          { name: "Business Advisory in Thailand", url: "/services/advisory" },
+        ]}
+      />
       <FAQSchema faqs={faqs} />
-      <ServiceHowToSchema serviceName="Business Advisory" steps={howToSteps} totalTime="P7D" />
-      <AuthorSchema
-        name="PND50 Advisory Team"
-        jobTitle="Business Consultants"
-        description="Senior consultants with deep expertise in Thai business regulations and market entry strategies"
-        credentials={["MBA", "Certified Management Consultant"]}
-      />
 
       <ServicePageClient
         title="Business Advisory in Thailand"
@@ -150,7 +104,6 @@ export default function AdvisoryPage() {
         features={features}
         faqs={faqs}
         ctaText="Need Expert Advice?"
-        breadcrumbItems={breadcrumbItems}
       />
     </>
   )
