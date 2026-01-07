@@ -172,12 +172,10 @@ export default function PND50Landing() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.4, duration: 0.5 }}
                   >
-                    We provide expert-led accounting services for growing and established businesses. Every client works
-                    with a dedicated accounting professional who understands their business, regulations, and reporting
-                    needs. Our processes are designed to minimize errors, improve consistency, and deliver reliable
-                    financial outcomes—supported by modern systems that enhance{" "}
-                    <span className="text-blue-600 font-semibold">speed and accuracy</span> without replacing{" "}
-                    <span className="text-emerald-600 font-semibold">human judgment</span>.
+                    We provide expert-led accounting services with dedicated professionals for each client. Our
+                    structured processes reduce errors, ensure consistency, and deliver reliable financial
+                    results—supported by <span className="text-blue-600 font-semibold">modern systems</span>, guided by{" "}
+                    <span className="text-emerald-600 font-semibold">human expertise</span>.
                   </motion.p>
 
                   <motion.div
