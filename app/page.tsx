@@ -148,17 +148,41 @@ export default function PND50Landing() {
                 {/* Left side - Hero content */}
                 <div className="text-center lg:text-left space-y-6 md:space-y-8">
                   <motion.h1
-                    className="text-4xl sm:text-5xl md:text-6xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-bold mb-4 leading-tight tracking-tight"
+                    className="text-5xl sm:text-6xl md:text-7xl lg:text-6xl xl:text-7xl 2xl:text-8xl font-bold mb-4 leading-tight tracking-tight"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.3, duration: 0.5 }}
                   >
-                    <span className="bg-gradient-to-r from-slate-900 via-slate-700 to-sky-600 bg-clip-text text-transparent inline-block pb-1 leading-[1.1]">
-                      Modern Accounting
+                    <span className="bg-gradient-to-r from-blue-600 via-sky-500 to-teal-400 bg-clip-text text-transparent animate-gradient-shift inline-block pb-2 leading-[1.15]">
+                      AI Boutique
                     </span>
                     <br />
-                    <span className="bg-gradient-to-r from-sky-500 to-teal-400 bg-clip-text text-transparent inline-block leading-[1.1]">
-                      Led by Real Experts
+                    <span className="relative inline-block w-full overflow-visible" style={{ height: "1.15em" }}>
+                      <span className="sr-only" aria-live="polite">
+                        {words[wordIndex]}
+                      </span>
+                      {words.map((word, index) => (
+                        <motion.span
+                          key={index}
+                          className="absolute left-1/2 lg:left-0 -translate-x-1/2 lg:translate-x-0 font-bold whitespace-nowrap bg-gradient-to-r from-slate-900 via-slate-700 to-slate-500 bg-clip-text text-transparent"
+                          initial={{ opacity: 0, y: 100 }}
+                          transition={{ type: "spring", stiffness: 50 }}
+                          animate={
+                            wordIndex === index
+                              ? {
+                                  y: 0,
+                                  opacity: 1,
+                                }
+                              : {
+                                  y: wordIndex > index ? -150 : 150,
+                                  opacity: 0,
+                                }
+                          }
+                          aria-hidden="true"
+                        >
+                          {word}
+                        </motion.span>
+                      ))}
                     </span>
                   </motion.h1>
 
