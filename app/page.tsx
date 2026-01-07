@@ -148,16 +148,16 @@ export default function PND50Landing() {
                 {/* Left side - Hero content */}
                 <div className="text-center lg:text-left space-y-6 md:space-y-8">
                   <motion.h1
-                    className="text-5xl sm:text-6xl md:text-7xl lg:text-6xl xl:text-7xl 2xl:text-8xl font-bold mb-4 leading-tight tracking-tight"
+                    className="text-4xl sm:text-5xl md:text-6xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-bold mb-4 leading-tight tracking-tight"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.3, duration: 0.5 }}
                   >
-                    <span className="bg-gradient-to-r from-slate-900 via-slate-700 to-sky-600 bg-clip-text text-transparent inline-block pb-2 leading-[1.15]">
+                    <span className="bg-gradient-to-r from-slate-900 via-slate-700 to-sky-600 bg-clip-text text-transparent inline-block pb-1 leading-[1.1]">
                       Modern Accounting
                     </span>
                     <br />
-                    <span className="bg-gradient-to-r from-sky-500 to-teal-400 bg-clip-text text-transparent inline-block leading-[1.15]">
+                    <span className="bg-gradient-to-r from-sky-500 to-teal-400 bg-clip-text text-transparent inline-block leading-[1.1]">
                       Led by Real Experts
                     </span>
                   </motion.h1>
