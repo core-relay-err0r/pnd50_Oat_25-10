@@ -153,36 +153,12 @@ export default function PND50Landing() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.3, duration: 0.5 }}
                   >
-                    <span className="bg-gradient-to-r from-blue-600 via-sky-500 to-teal-400 bg-clip-text text-transparent animate-gradient-shift inline-block pb-2 leading-[1.15]">
-                      AI Boutique
+                    <span className="bg-gradient-to-r from-slate-900 via-slate-700 to-sky-600 bg-clip-text text-transparent inline-block pb-2 leading-[1.15]">
+                      Modern Accounting
                     </span>
                     <br />
-                    <span className="relative inline-block w-full overflow-visible" style={{ height: "1.15em" }}>
-                      <span className="sr-only" aria-live="polite">
-                        {words[wordIndex]}
-                      </span>
-                      {words.map((word, index) => (
-                        <motion.span
-                          key={index}
-                          className="absolute left-1/2 lg:left-0 -translate-x-1/2 lg:translate-x-0 font-bold whitespace-nowrap bg-gradient-to-r from-slate-900 via-slate-700 to-slate-500 bg-clip-text text-transparent"
-                          initial={{ opacity: 0, y: 100 }}
-                          transition={{ type: "spring", stiffness: 50 }}
-                          animate={
-                            wordIndex === index
-                              ? {
-                                  y: 0,
-                                  opacity: 1,
-                                }
-                              : {
-                                  y: wordIndex > index ? -150 : 150,
-                                  opacity: 0,
-                                }
-                          }
-                          aria-hidden="true"
-                        >
-                          {word}
-                        </motion.span>
-                      ))}
+                    <span className="bg-gradient-to-r from-sky-500 to-teal-400 bg-clip-text text-transparent inline-block leading-[1.15]">
+                      Led by Real Experts
                     </span>
                   </motion.h1>
 
