@@ -401,42 +401,57 @@ export function FloatingChatBot() {
     // Skip if already spoken
     if (lastMessage.id === lastSpokenMessageIdRef.current) return
 
-    // Extract final complete text
-    let messageText = ""
+    console.log("[v0] TTS: Streaming completed, waiting for final text...")
 
-    // Method 1: Try parts array (AI SDK format)
-    if (lastMessage.parts && Array.isArray(lastMessage.parts)) {
-      messageText = lastMessage.parts
-        .filter((part: { type: string; text?: string }) => part.type === "text" && part.text)
-        .map((part: { type: string; text?: string }) => part.text || "")
-        .join(" ")
-        .trim()
-    }
+    // Use a small delay and polling to ensure message is fully populated
+    const attemptTTS = (attempts = 0) => {
+      const currentLastMessage = aiMessages[aiMessages.length - 1]
 
-    // Method 2: Try content property (standard format)
-    if (!messageText && (lastMessage as { content?: string }).content) {
-      messageText = (lastMessage as { content?: string }).content || ""
-    }
+      // Extract text from the message
+      let messageText = ""
 
-    console.log("[v0] TTS Debug - Message object:", JSON.stringify(lastMessage, null, 2))
-    console.log("[v0] TTS Debug - Extracted text:", messageText)
-    console.log("[v0] TTS Debug - Text length:", messageText.length)
-
-    if (messageText && messageText.length > 0) {
-      if (messageText !== lastAssistantContentRef.current) {
-        console.log("[v0] TTS: Speaking final text:", messageText.substring(0, 100) + "...")
-        lastSpokenMessageIdRef.current = lastMessage.id
-        lastSpokenMessageRef.current = messageText
-        lastAssistantContentRef.current = messageText
-        setIsProcessing(false)
-
-        // Clear any queued audio and speak the final message
-        ttsQueueRef.current = []
-        speakText(messageText)
+      // Method 1: Try parts array (AI SDK format)
+      if (currentLastMessage.parts && Array.isArray(currentLastMessage.parts)) {
+        for (const part of currentLastMessage.parts) {
+          if (part.type === "text" && part.text) {
+            messageText += part.text
+          }
+        }
+        messageText = messageText.trim()
       }
-    } else {
-      console.log("[v0] TTS Debug - No text found in message")
+
+      // Method 2: Try content property (standard format)
+      if (!messageText && (currentLastMessage as { content?: string }).content) {
+        messageText = (currentLastMessage as { content?: string }).content || ""
+      }
+
+      console.log(`[v0] TTS Attempt ${attempts + 1}: Text length = ${messageText.length}`)
+      console.log("[v0] TTS: Message parts:", JSON.stringify(currentLastMessage.parts, null, 2))
+
+      // If we have text and it's different from last spoken, speak it
+      if (messageText && messageText.length > 10) {
+        if (messageText !== lastAssistantContentRef.current) {
+          console.log("[v0] TTS: Speaking text:", messageText.substring(0, 100) + "...")
+          lastSpokenMessageIdRef.current = currentLastMessage.id
+          lastSpokenMessageRef.current = messageText
+          lastAssistantContentRef.current = messageText
+          setIsProcessing(false)
+
+          // Clear any queued audio and speak the final message
+          ttsQueueRef.current = []
+          speakText(messageText)
+        }
+      } else if (attempts < 5) {
+        // Retry after a short delay (up to 5 attempts, 200ms each = 1 second max)
+        console.log("[v0] TTS: Text too short or empty, retrying...")
+        setTimeout(() => attemptTTS(attempts + 1), 200)
+      } else {
+        console.log("[v0] TTS: Failed to get text after 5 attempts")
+      }
     }
+
+    // Start with a small initial delay to let React update
+    setTimeout(() => attemptTTS(0), 100)
   }, [aiMessages, status, voiceMode, speakText])
 
   useEffect(() => {
