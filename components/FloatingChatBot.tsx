@@ -84,6 +84,7 @@ export function FloatingChatBot() {
   const synthRef = useRef<SpeechSynthesis | null>(null)
   const lastSpokenMessageRef = useRef<string | null>(null)
   const previousStatusRef = useRef<string | null>(null)
+  const lastAssistantContentRef = useRef<string>("")
 
   const [inputValue, setInputValue] = useState("")
 
@@ -401,21 +402,40 @@ export function FloatingChatBot() {
     if (lastMessage.id === lastSpokenMessageIdRef.current) return
 
     // Extract final complete text
-    const messageText = lastMessage.parts
-      .filter((part) => part.type === "text")
-      .map((part) => part.text)
-      .join(" ")
-      .trim()
+    let messageText = ""
 
-    if (messageText) {
-      console.log("[v0] TTS: Streaming complete, speaking final text:", messageText.substring(0, 50) + "...")
-      lastSpokenMessageIdRef.current = lastMessage.id
-      lastSpokenMessageRef.current = messageText
-      setIsProcessing(false)
+    // Method 1: Try parts array (AI SDK format)
+    if (lastMessage.parts && Array.isArray(lastMessage.parts)) {
+      messageText = lastMessage.parts
+        .filter((part: { type: string; text?: string }) => part.type === "text" && part.text)
+        .map((part: { type: string; text?: string }) => part.text || "")
+        .join(" ")
+        .trim()
+    }
 
-      // Clear any queued audio and speak the final message
-      ttsQueueRef.current = []
-      speakText(messageText)
+    // Method 2: Try content property (standard format)
+    if (!messageText && (lastMessage as { content?: string }).content) {
+      messageText = (lastMessage as { content?: string }).content || ""
+    }
+
+    console.log("[v0] TTS Debug - Message object:", JSON.stringify(lastMessage, null, 2))
+    console.log("[v0] TTS Debug - Extracted text:", messageText)
+    console.log("[v0] TTS Debug - Text length:", messageText.length)
+
+    if (messageText && messageText.length > 0) {
+      if (messageText !== lastAssistantContentRef.current) {
+        console.log("[v0] TTS: Speaking final text:", messageText.substring(0, 100) + "...")
+        lastSpokenMessageIdRef.current = lastMessage.id
+        lastSpokenMessageRef.current = messageText
+        lastAssistantContentRef.current = messageText
+        setIsProcessing(false)
+
+        // Clear any queued audio and speak the final message
+        ttsQueueRef.current = []
+        speakText(messageText)
+      }
+    } else {
+      console.log("[v0] TTS Debug - No text found in message")
     }
   }, [aiMessages, status, voiceMode, speakText])
 
