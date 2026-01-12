@@ -102,6 +102,7 @@ export function FloatingChatBot() {
 
   const ttsQueueRef = useRef<string[]>([])
   const isProcessingTTSRef = useRef(false)
+  const lastSpokenMessageIdRef = useRef<string | null>(null)
 
   useEffect(() => {
     const token = getSessionToken()
@@ -392,6 +393,9 @@ export function FloatingChatBot() {
   )
 
   const stopSpeaking = useCallback(() => {
+    ttsQueueRef.current = []
+    isProcessingTTSRef.current = false
+
     if (audioRef.current) {
       audioRef.current.pause()
       audioRef.current = null
@@ -405,18 +409,26 @@ export function FloatingChatBot() {
   useEffect(() => {
     if (!voiceMode || aiMessages.length === 0) return
 
-    const lastMessage = aiMessages[aiMessages.length - 1]
-    if (lastMessage.role === "assistant" && status !== "in_progress") {
-      const messageText = lastMessage.parts
-        .filter((part) => part.type === "text")
-        .map((part) => part.text)
-        .join(" ")
+    // Only proceed when status is NOT in_progress (streaming complete)
+    if (status === "in_progress") return
 
-      if (messageText && messageText !== lastSpokenMessageRef.current) {
-        lastSpokenMessageRef.current = messageText
-        setIsProcessing(false)
-        speakText(messageText)
-      }
+    const lastMessage = aiMessages[aiMessages.length - 1]
+    if (!lastMessage || lastMessage.role !== "assistant") return
+
+    if (lastMessage.id === lastSpokenMessageIdRef.current) return
+
+    const messageText = lastMessage.parts
+      .filter((part) => part.type === "text")
+      .map((part) => part.text)
+      .join(" ")
+
+    if (messageText) {
+      lastSpokenMessageIdRef.current = lastMessage.id
+      lastSpokenMessageRef.current = messageText
+      setIsProcessing(false)
+
+      ttsQueueRef.current = []
+      speakText(messageText)
     }
   }, [aiMessages, status, voiceMode, speakText])
 
