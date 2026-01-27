@@ -196,9 +196,10 @@ export default function PND50Landing() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.4, duration: 0.5 }}
                   >
-                    You Talk to an Expert, Not a Robot. We connect you with a dedicated human advisor who speaks your
-                    native language. Our AI makes them <span className="text-blue-600 font-semibold">5x faster</span>{" "}
-                    and <span className="text-emerald-600 font-semibold">totally error-free</span>.
+                    We provide expert-led accounting services with dedicated professionals for each client. Our
+                    structured processes reduce errors, ensure consistency, and deliver reliable financial
+                    results—supported by <span className="text-blue-600 font-semibold">modern systems</span>, guided by{" "}
+                    <span className="text-emerald-600 font-semibold">human expertise</span>.
                   </motion.p>
 
                   <motion.div

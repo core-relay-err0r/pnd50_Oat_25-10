@@ -2,51 +2,17 @@
 
 import { useState, useEffect } from "react"
 import dynamic from "next/dynamic"
-import { FileText, Building2, Users, Calculator, Search, X, ChevronDown, Info } from "lucide-react"
+import { FileText, Building2, Users, Calculator, Search, X, ChevronDown } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { motion, AnimatePresence } from "framer-motion"
 import CTASection from "@/components/layout/CTASection"
-import { BreadcrumbNav } from "@/components/seo/breadcrumb-nav"
-import { BreadcrumbSchema } from "@/components/seo/structured-data"
 
 const AnimatedGridBackground = dynamic(
   () => import("@/components/ui/animated-grid-background").then((mod) => mod.AnimatedGridBackground),
   { ssr: false },
 )
 
-const breadcrumbItems = [
-  { name: "Home", url: "/" },
-  { name: "FAQ", url: "/faq" },
-]
-
 const faqCategories = [
-  {
-    id: "about-pnd50",
-    title: "About PND50",
-    icon: Info,
-    questions: [
-      {
-        id: "about-1",
-        question: "What does PND50 mean? Why is your company named this way?",
-        answer:
-          "PND50 (P.N.D.50) comes from ภ.ง.ด.50 in Thai, which stands for 'แบบแสดงรายการภาษีเงินได้บริษัทหรือห้างหุ้นส่วนนิติบุคคล' — Thailand's Annual Corporate Income Tax Return form. Every Thai company must file this form within 150 days after their fiscal year ends. We named our company after this essential tax form because it represents the core of what we do: helping foreign-owned businesses navigate Thai corporate tax compliance with confidence and clarity.",
-        reference: "Revenue Code of Thailand, Section 68; Form ภ.ง.ด.50 (P.N.D.50)",
-      },
-      {
-        id: "about-2",
-        question: "What is the difference between PND50 and PND51?",
-        answer:
-          "PND50 (ภ.ง.ด.50) is the Annual Corporate Income Tax Return filed once a year within 150 days after fiscal year end. PND51 (ภ.ง.ด.51) is the Half-Year Corporate Income Tax Return filed within 2 months after the first 6 months of the fiscal year. Both are mandatory for all registered companies in Thailand. Our team handles both filings as part of our tax compliance services.",
-        reference: "Revenue Code of Thailand, Sections 67 bis and 68",
-      },
-      {
-        id: "about-3",
-        question: "Who is PND50 designed for?",
-        answer:
-          "PND50 specializes in serving foreign-owned businesses operating in Thailand. Whether you're a startup, SME, or established company with international ownership, we provide accounting, tax, payroll, and corporate services in English (and Thai, Chinese, Russian) with a focus on making Thai compliance simple and stress-free.",
-      },
-    ],
-  },
   {
     id: "accounting",
     title: "Accounting Questions",
@@ -101,6 +67,55 @@ const faqCategories = [
         answer:
           "Yes. Once VAT-registered, you must file Form PP.30 every month — by the 15th of the following month — even if you have no income. Missing the deadline may lead to surcharges and penalties.",
         reference: "Section 83 and Section 90, Revenue Code of Thailand",
+      },
+    ],
+  },
+  {
+    id: "international",
+    title: "International Business",
+    icon: Building2,
+    questions: [
+      {
+        id: "intl-1",
+        question: "I'm from Singapore. Can my Singapore company file PND50 in Thailand?",
+        answer:
+          "If your Singapore company has a registered branch or subsidiary in Thailand, yes - you must file PND50 (ภ.ง.ด.50) annually. Many Singapore businesses expanding to Thailand use our services for seamless tax compliance. We handle all Thai tax filings while you focus on growing your ASEAN business.",
+        reference: "Revenue Code of Thailand, Section 66; Double Tax Agreement Thailand-Singapore",
+      },
+      {
+        id: "intl-2",
+        question: "As a Russian entrepreneur, how do I handle Thai corporate taxes?",
+        answer:
+          "Russian business owners with Thai companies must file PND50 corporate tax returns annually, plus monthly VAT (PP30) and withholding tax forms. We specialize in helping Russian entrepreneurs navigate Thai tax regulations, with clear English communication and transparent processes.",
+        reference: "Revenue Code of Thailand; Thai-Russia Tax Treaty",
+      },
+      {
+        id: "intl-3",
+        question: "Can Taiwanese companies get PND50 filing support in Thailand?",
+        answer:
+          "Yes! Many Taiwanese manufacturers and trading companies use our PND50 filing services. We understand the unique needs of Taiwan-Thailand business operations, including transfer pricing, withholding tax on royalties, and proper documentation for cross-border transactions.",
+        reference: "Revenue Code of Thailand, Section 70; Transfer Pricing regulations",
+      },
+      {
+        id: "intl-4",
+        question: "What is PND50 and why do foreign companies need to file it?",
+        answer:
+          "PND50 (ภ.ง.ด.50 or P.N.D.50) is Thailand's annual corporate income tax return. ALL companies registered in Thailand - including foreign-owned subsidiaries from Singapore, Russia, Taiwan, China, or anywhere else - must file PND50 within 150 days after their fiscal year ends. Late filing results in penalties and surcharges.",
+        reference: "Section 68, Revenue Code of Thailand",
+      },
+      {
+        id: "intl-5",
+        question: "Do I need a Thai accountant if my business transactions are mostly overseas?",
+        answer:
+          "Yes. Even if your Thai company's transactions occur overseas (common for Singapore, Russian, and Taiwanese parent companies), Thai law requires proper accounting records in Thai Baht and annual PND50 filing. A qualified Thai accountant ensures compliance and helps you avoid penalties.",
+        reference: "Accounting Act B.E. 2543; Section 65, Revenue Code of Thailand",
+      },
+      {
+        id: "intl-6",
+        question: "How can foreign companies benefit from Thailand's tax treaties?",
+        answer:
+          "Thailand has Double Tax Agreements (DTAs) with over 60 countries including Singapore, Russia, Taiwan (via special arrangement), and China. These treaties can reduce withholding taxes on dividends, royalties, and service fees. We help foreign companies structure their Thai operations to maximize treaty benefits while staying compliant.",
+        reference: "Thai Revenue Department; Bilateral Tax Treaties",
       },
     ],
   },
@@ -183,8 +198,6 @@ export default function FAQPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-sky-50/80 relative overflow-hidden">
-      <BreadcrumbSchema items={breadcrumbItems} />
-
       <motion.div
         className="absolute top-[15%] left-[8%] w-20 h-20 border-2 border-sky-300/40 rounded-2xl pointer-events-none"
         animate={{
@@ -238,8 +251,6 @@ export default function FAQPage() {
       {/* Hero Section - Updated to match landing page style */}
       <div className="pt-24 pb-12 sm:pt-32 sm:pb-16 relative z-10">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <BreadcrumbNav items={breadcrumbItems} className="mb-8" />
-
           <div className="max-w-4xl">
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
               <span className="inline-flex items-center gap-2 bg-gradient-to-r from-sky-50 to-blue-50 text-sky-700 px-5 py-2.5 rounded-full text-sm font-semibold mb-8 border border-sky-200/60 shadow-sm shadow-sky-100/50">

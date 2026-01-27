@@ -253,7 +253,7 @@ const sections = [
         <div className="p-4 bg-gradient-to-br from-sky-50 to-blue-50 rounded-xl border border-sky-200/50">
           <p className="font-semibold text-slate-800 mb-2">Contact for Legal Inquiries</p>
           <p className="text-sm">PND50 Co., Ltd.</p>
-          <p className="text-sm">Email: info@pnd50.com</p>
+          <p className="text-sm">Email: oat3653377@gmail.com</p>
           <p className="text-sm">Bangkok, Thailand</p>
         </div>
       </div>
@@ -280,7 +280,7 @@ export default function TermsOfServicePage() {
               <p className="text-lg text-slate-600 max-w-2xl mb-4">
                 Please read these terms carefully before using our accounting and advisory services.
               </p>
-              <p className="text-sm text-slate-400">Last updated: December 2025</p>
+              <p className="text-sm text-slate-400">Last updated: January 2025</p>
             </div>
           </div>
         </div>
