@@ -377,7 +377,38 @@ export function SpeakableSchema() {
   return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
 }
 
-// Article Schema with support for Person or Organization author type
+interface HowToStep {
+  name: string
+  text: string
+  image?: string
+}
+
+interface HowToSchemaProps {
+  name: string
+  description: string
+  steps: HowToStep[]
+  totalTime?: string
+}
+
+export function HowToSchema({ name, description, steps, totalTime = "P30D" }: HowToSchemaProps) {
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    name,
+    description,
+    totalTime,
+    step: steps.map((step, index) => ({
+      "@type": "HowToStep",
+      position: index + 1,
+      name: step.name,
+      text: step.text,
+      ...(step.image && { image: step.image }),
+    })),
+  }
+
+  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
+}
+
 interface ArticleSchemaProps {
   headline: string
   description: string
@@ -385,9 +416,6 @@ interface ArticleSchemaProps {
   datePublished: string
   dateModified: string
   author?: string
-  authorType?: "Person" | "Organization"
-  authorUrl?: string
-  authorJobTitle?: string
 }
 
 export function ArticleSchema({
@@ -397,28 +425,7 @@ export function ArticleSchema({
   datePublished,
   dateModified,
   author = "PND50 Team",
-  authorType = "Organization",
-  authorUrl,
-  authorJobTitle,
 }: ArticleSchemaProps) {
-  const authorSchema =
-    authorType === "Person"
-      ? {
-          "@type": "Person",
-          name: author,
-          url: authorUrl || siteConfig.url,
-          jobTitle: authorJobTitle || "Accounting Expert",
-          worksFor: {
-            "@type": "Organization",
-            name: siteConfig.business.name,
-          },
-        }
-      : {
-          "@type": "Organization",
-          name: author,
-          url: authorUrl || siteConfig.url,
-        }
-
   const schema = {
     "@context": "https://schema.org",
     "@type": "Article",
@@ -427,7 +434,11 @@ export function ArticleSchema({
     image,
     datePublished,
     dateModified,
-    author: authorSchema,
+    author: {
+      "@type": "Organization",
+      name: author,
+      url: siteConfig.url,
+    },
     publisher: {
       "@type": "Organization",
       name: siteConfig.business.name,
@@ -439,473 +450,6 @@ export function ArticleSchema({
     mainEntityOfPage: {
       "@type": "WebPage",
       "@id": siteConfig.url,
-    },
-  }
-
-  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
-}
-
-// WebPage Schema with datePublished/dateModified for E-E-A-T
-interface WebPageSchemaProps {
-  name: string
-  description: string
-  url: string
-  datePublished: string
-  dateModified: string
-  breadcrumb?: { name: string; url: string }[]
-}
-
-export function WebPageSchema({ name, description, url, datePublished, dateModified, breadcrumb }: WebPageSchemaProps) {
-  const schema = {
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    name,
-    description,
-    url: `${siteConfig.url}${url}`,
-    datePublished,
-    dateModified,
-    isPartOf: {
-      "@type": "WebSite",
-      name: siteConfig.name,
-      url: siteConfig.url,
-    },
-    publisher: {
-      "@type": "Organization",
-      name: siteConfig.business.name,
-      logo: {
-        "@type": "ImageObject",
-        url: `${siteConfig.url}/logo.png`,
-      },
-    },
-    ...(breadcrumb && {
-      breadcrumb: {
-        "@type": "BreadcrumbList",
-        itemListElement: breadcrumb.map((item, index) => ({
-          "@type": "ListItem",
-          position: index + 1,
-          name: item.name,
-          item: `${siteConfig.url}${item.url}`,
-        })),
-      },
-    }),
-  }
-
-  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
-}
-
-// Author Schema for E-E-A-T signals
-interface AuthorSchemaProps {
-  name: string
-  jobTitle: string
-  description?: string
-  image?: string
-  credentials?: string[]
-  sameAs?: string[]
-}
-
-export function AuthorSchema({ name, jobTitle, description, image, credentials = [], sameAs = [] }: AuthorSchemaProps) {
-  const schema = {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    name,
-    jobTitle,
-    description,
-    image: image || `${siteConfig.url}/team/${name.toLowerCase().replace(/\s+/g, "-")}.jpg`,
-    worksFor: {
-      "@type": "Organization",
-      name: siteConfig.business.name,
-      url: siteConfig.url,
-    },
-    ...(credentials.length > 0 && {
-      hasCredential: credentials.map((cred) => ({
-        "@type": "EducationalOccupationalCredential",
-        credentialCategory: cred,
-        recognizedBy: {
-          "@type": "Organization",
-          name: "Federation of Accounting Professions Thailand",
-        },
-      })),
-    }),
-    ...(sameAs.length > 0 && { sameAs }),
-  }
-
-  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
-}
-
-// ServicePage Schema combining Service + WebPage with dates
-interface ServicePageSchemaProps {
-  name: string
-  description: string
-  url: string
-  datePublished: string
-  dateModified: string
-  price?: string
-  breadcrumb: { name: string; url: string }[]
-}
-
-export function ServicePageSchema({
-  name,
-  description,
-  url,
-  datePublished,
-  dateModified,
-  price,
-  breadcrumb,
-}: ServicePageSchemaProps) {
-  const schema = {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    name,
-    description,
-    url: `${siteConfig.url}${url}`,
-    provider: {
-      "@type": "Organization",
-      name: siteConfig.business.name,
-      url: siteConfig.url,
-      address: {
-        "@type": "PostalAddress",
-        streetAddress: siteConfig.business.address.streetAddress,
-        addressLocality: siteConfig.business.address.addressLocality,
-        addressRegion: siteConfig.business.address.addressRegion,
-        postalCode: siteConfig.business.address.postalCode,
-        addressCountry: siteConfig.business.address.addressCountry,
-      },
-    },
-    areaServed: {
-      "@type": "Country",
-      name: "Thailand",
-    },
-    serviceType: "Accounting Service",
-    ...(price && {
-      offers: {
-        "@type": "Offer",
-        price,
-        priceCurrency: "THB",
-        availability: "https://schema.org/InStock",
-      },
-    }),
-    // WebPage metadata for E-E-A-T
-    mainEntityOfPage: {
-      "@type": "WebPage",
-      "@id": `${siteConfig.url}${url}`,
-      datePublished,
-      dateModified,
-      breadcrumb: {
-        "@type": "BreadcrumbList",
-        itemListElement: breadcrumb.map((item, index) => ({
-          "@type": "ListItem",
-          position: index + 1,
-          name: item.name,
-          item: `${siteConfig.url}${item.url}`,
-        })),
-      },
-    },
-  }
-
-  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
-}
-
-// SiteNavigationElement Schema for main nav links
-export function SiteNavigationSchema() {
-  const navItems = [
-    { name: "Services", url: "/services" },
-    { name: "About Us", url: "/about" },
-    { name: "FAQ", url: "/faq" },
-    { name: "Contact", url: "/contact" },
-    { name: "Schedule Consultation", url: "/schedule" },
-  ]
-
-  const schema = {
-    "@context": "https://schema.org",
-    "@type": "SiteNavigationElement",
-    name: "Main Navigation",
-    hasPart: navItems.map((item) => ({
-      "@type": "WebPage",
-      name: item.name,
-      url: `${siteConfig.url}${item.url}`,
-    })),
-  }
-
-  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
-}
-
-interface HowToStep {
-  name: string
-  text: string
-  image?: string
-}
-
-interface HowToSchemaProps {
-  name: string
-  description: string
-  totalTime?: string // ISO 8601 duration format, e.g., "PT5M"
-  steps: HowToStep[]
-}
-
-export function HowToSchema({ name, description, totalTime = "PT3M", steps }: HowToSchemaProps) {
-  const schema = {
-    "@context": "https://schema.org",
-    "@type": "HowTo",
-    name,
-    description,
-    totalTime,
-    step: steps.map((step, index) => ({
-      "@type": "HowToStep",
-      position: index + 1,
-      name: step.name,
-      text: step.text,
-      ...(step.image && {
-        image: {
-          "@type": "ImageObject",
-          url: step.image,
-        },
-      }),
-    })),
-    tool: {
-      "@type": "HowToTool",
-      name: "PND50 Quote Calculator",
-    },
-  }
-
-  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
-}
-
-interface ItemListSchemaProps {
-  name: string
-  items: { name: string; url: string; description?: string; position?: number }[]
-}
-
-export function ItemListSchema({ name, items }: ItemListSchemaProps) {
-  const schema = {
-    "@context": "https://schema.org",
-    "@type": "ItemList",
-    name,
-    numberOfItems: items.length,
-    itemListElement: items.map((item, index) => ({
-      "@type": "ListItem",
-      position: item.position || index + 1,
-      item: {
-        "@type": "Service",
-        name: item.name,
-        url: `${siteConfig.url}${item.url}`,
-        ...(item.description && { description: item.description }),
-      },
-    })),
-  }
-
-  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
-}
-
-interface VideoSchemaProps {
-  name: string
-  description: string
-  thumbnailUrl: string
-  uploadDate: string
-  duration?: string // ISO 8601 duration
-  contentUrl?: string
-  embedUrl?: string
-}
-
-export function VideoSchema({
-  name,
-  description,
-  thumbnailUrl,
-  uploadDate,
-  duration,
-  contentUrl,
-  embedUrl,
-}: VideoSchemaProps) {
-  const schema = {
-    "@context": "https://schema.org",
-    "@type": "VideoObject",
-    name,
-    description,
-    thumbnailUrl,
-    uploadDate,
-    ...(duration && { duration }),
-    ...(contentUrl && { contentUrl }),
-    ...(embedUrl && { embedUrl }),
-    publisher: {
-      "@type": "Organization",
-      name: siteConfig.business.name,
-      logo: {
-        "@type": "ImageObject",
-        url: `${siteConfig.url}/logo.png`,
-      },
-    },
-  }
-
-  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
-}
-
-export function ContactPointSchema() {
-  const schema = {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    name: siteConfig.business.name,
-    url: siteConfig.url,
-    contactPoint: [
-      {
-        "@type": "ContactPoint",
-        telephone: siteConfig.business.phone,
-        contactType: "customer service",
-        areaServed: "TH",
-        availableLanguage: ["English", "Thai", "Russian", "Chinese"],
-        hoursAvailable: {
-          "@type": "OpeningHoursSpecification",
-          dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-          opens: "09:00",
-          closes: "18:00",
-        },
-      },
-      {
-        "@type": "ContactPoint",
-        email: siteConfig.business.email,
-        contactType: "sales",
-        areaServed: ["TH", "SG", "TW", "RU", "CN"],
-        availableLanguage: ["English", "Thai", "Russian", "Chinese"],
-      },
-    ],
-  }
-
-  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
-}
-
-// DetailedServiceSchema with full E-E-A-T signals
-interface DetailedServiceSchemaProps {
-  name: string
-  description: string
-  url: string
-  serviceType: string
-  datePublished: string
-  dateModified: string
-  priceRange?: string
-  aggregateRating?: {
-    ratingValue: string
-    reviewCount: string
-  }
-  breadcrumb: { name: string; url: string }[]
-}
-
-export function DetailedServiceSchema({
-  name,
-  description,
-  url,
-  serviceType,
-  datePublished,
-  dateModified,
-  priceRange = "฿฿",
-  aggregateRating,
-  breadcrumb,
-}: DetailedServiceSchemaProps) {
-  const schema = {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    name,
-    description,
-    url: `${siteConfig.url}${url}`,
-    serviceType,
-    provider: {
-      "@type": "AccountingService",
-      name: siteConfig.business.name,
-      url: siteConfig.url,
-      telephone: siteConfig.business.phone,
-      email: siteConfig.business.email,
-      address: {
-        "@type": "PostalAddress",
-        streetAddress: siteConfig.business.address.streetAddress,
-        addressLocality: siteConfig.business.address.addressLocality,
-        addressRegion: siteConfig.business.address.addressRegion,
-        postalCode: siteConfig.business.address.postalCode,
-        addressCountry: siteConfig.business.address.addressCountry,
-      },
-      geo: {
-        "@type": "GeoCoordinates",
-        latitude: siteConfig.business.geo.latitude,
-        longitude: siteConfig.business.geo.longitude,
-      },
-    },
-    areaServed: [
-      {
-        "@type": "Country",
-        name: "Thailand",
-      },
-      {
-        "@type": "City",
-        name: "Bangkok",
-      },
-    ],
-    availableChannel: {
-      "@type": "ServiceChannel",
-      serviceUrl: `${siteConfig.url}/schedule`,
-      servicePhone: siteConfig.business.phone,
-      serviceSmsNumber: siteConfig.business.phone,
-      availableLanguage: [
-        { "@type": "Language", name: "English" },
-        { "@type": "Language", name: "Thai" },
-        { "@type": "Language", name: "Chinese" },
-        { "@type": "Language", name: "Russian" },
-      ],
-    },
-    termsOfService: `${siteConfig.url}/terms`,
-    priceRange,
-    ...(aggregateRating && {
-      aggregateRating: {
-        "@type": "AggregateRating",
-        ratingValue: aggregateRating.ratingValue,
-        reviewCount: aggregateRating.reviewCount,
-        bestRating: "5",
-        worstRating: "1",
-      },
-    }),
-    mainEntityOfPage: {
-      "@type": "WebPage",
-      "@id": `${siteConfig.url}${url}`,
-      datePublished,
-      dateModified,
-      breadcrumb: {
-        "@type": "BreadcrumbList",
-        itemListElement: breadcrumb.map((item, index) => ({
-          "@type": "ListItem",
-          position: index + 1,
-          name: item.name,
-          item: `${siteConfig.url}${item.url}`,
-        })),
-      },
-    },
-  }
-
-  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
-}
-
-interface ServiceHowToSchemaProps {
-  serviceName: string
-  steps: { name: string; text: string }[]
-  totalTime?: string
-}
-
-export function ServiceHowToSchema({ serviceName, steps, totalTime = "P7D" }: ServiceHowToSchemaProps) {
-  const schema = {
-    "@context": "https://schema.org",
-    "@type": "HowTo",
-    name: `How ${serviceName} Works at PND50`,
-    description: `Step-by-step process for ${serviceName} service at PND50 Thailand`,
-    totalTime,
-    estimatedCost: {
-      "@type": "MonetaryAmount",
-      currency: "THB",
-      value: "Contact for quote",
-    },
-    step: steps.map((step, index) => ({
-      "@type": "HowToStep",
-      position: index + 1,
-      name: step.name,
-      text: step.text,
-    })),
-    performer: {
-      "@type": "Organization",
-      name: siteConfig.business.name,
-      url: siteConfig.url,
     },
   }
 
