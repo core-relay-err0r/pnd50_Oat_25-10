@@ -167,6 +167,7 @@ export default function RootLayout({
         {/* Geo/Local SEO Tags */}
         <GeoTags city="Bangkok" region="Bangkok" />
 
+        <link rel="manifest" href="/manifest.json" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
 

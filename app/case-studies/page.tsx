@@ -17,6 +17,45 @@ import {
 import { RelatedLinks } from "@/components/seo/related-links"
 import { Calculator, FileText, HelpCircle } from "lucide-react"
 import CTASection from "@/components/layout/CTASection"
+import { CaseStudySchema, ReviewSchema } from "@/components/seo/structured-data"
+
+// Case study data for structured data
+const caseStudies = [
+  {
+    name: "Russian Tech Startup Expansion",
+    description: "E-commerce platform establishing operations in Bangkok with full accounting and tax compliance",
+    client: "Russian E-commerce Startup",
+    industry: "Technology / E-commerce",
+    result: "Company registration in 10 days, 100% tax compliance achieved",
+    datePublished: "2023-06-15",
+  },
+  {
+    name: "Vietnamese Software Company Thailand Entry",
+    description: "Software development company setting up Thai subsidiary with cross-border tax planning",
+    client: "Vietnamese Software Company",
+    industry: "Software Development",
+    result: "Successful subsidiary setup with optimized tax structure",
+    datePublished: "2024-03-20",
+  },
+]
+
+// Testimonial reviews for schema
+const testimonialReviews = [
+  {
+    author: "Dmitry K.",
+    reviewBody:
+      "PND50 took care of everything from registration to monthly reports. They always reply fast, explain things in clear English, and send updates on time.",
+    ratingValue: 5,
+    datePublished: "2023-12-01",
+  },
+  {
+    author: "Nguyen T.",
+    reviewBody:
+      "Very professional team. They helped us understand Thai tax regulations and set up our company smoothly.",
+    ratingValue: 5,
+    datePublished: "2024-05-15",
+  },
+]
 
 export const metadata: Metadata = {
   title: "Case Studies | PND50",
@@ -26,8 +65,15 @@ export const metadata: Metadata = {
 
 export default function CaseStudiesPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-sky-50/80 relative overflow-hidden">
-      {/* Hero Section */}
+    <>
+      {/* Structured Data for Case Studies */}
+      {caseStudies.map((cs) => (
+        <CaseStudySchema key={cs.client} {...cs} />
+      ))}
+      <ReviewSchema reviews={testimonialReviews} />
+
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-sky-50/80 relative overflow-hidden">
+        {/* Hero Section */}
       <div className="relative min-h-[70vh] flex items-center justify-center overflow-hidden">
         <Image
           src="/professional-business-handshake-partnership-meeting.jpg"
@@ -895,6 +941,7 @@ export default function CaseStudiesPage() {
           />
         </div>
       </div>
-    </div>
+      </div>
+    </>
   )
 }

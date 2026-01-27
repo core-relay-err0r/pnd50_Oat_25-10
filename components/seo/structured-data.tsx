@@ -455,3 +455,100 @@ export function ArticleSchema({
 
   return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
 }
+
+// Review Schema for testimonials
+interface Review {
+  author: string
+  reviewBody: string
+  ratingValue: number
+  datePublished?: string
+}
+
+interface ReviewSchemaProps {
+  reviews: Review[]
+  itemReviewed?: {
+    name: string
+    type?: string
+  }
+}
+
+export function ReviewSchema({
+  reviews,
+  itemReviewed = { name: siteConfig.business.name, type: "AccountingService" },
+}: ReviewSchemaProps) {
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "AccountingService",
+    name: itemReviewed.name,
+    url: siteConfig.url,
+    review: reviews.map((review) => ({
+      "@type": "Review",
+      author: {
+        "@type": "Person",
+        name: review.author,
+      },
+      reviewBody: review.reviewBody,
+      reviewRating: {
+        "@type": "Rating",
+        ratingValue: review.ratingValue,
+        bestRating: 5,
+        worstRating: 1,
+      },
+      ...(review.datePublished && { datePublished: review.datePublished }),
+    })),
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: (reviews.reduce((sum, r) => sum + r.ratingValue, 0) / reviews.length).toFixed(1),
+      reviewCount: reviews.length,
+      bestRating: 5,
+      worstRating: 1,
+    },
+  }
+
+  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
+}
+
+// Case Study Schema
+interface CaseStudySchemaProps {
+  name: string
+  description: string
+  client: string
+  industry: string
+  result: string
+  datePublished: string
+}
+
+export function CaseStudySchema({ name, description, client, industry, result, datePublished }: CaseStudySchemaProps) {
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "@id": `${siteConfig.url}/case-studies#${client.toLowerCase().replace(/\s+/g, "-")}`,
+    headline: name,
+    description,
+    articleSection: "Case Study",
+    datePublished,
+    author: {
+      "@type": "Organization",
+      name: siteConfig.business.name,
+    },
+    publisher: {
+      "@type": "Organization",
+      name: siteConfig.business.name,
+      logo: {
+        "@type": "ImageObject",
+        url: `${siteConfig.url}/logo.png`,
+      },
+    },
+    about: {
+      "@type": "Organization",
+      name: client,
+      industry,
+    },
+    mentions: {
+      "@type": "Thing",
+      name: result,
+    },
+  }
+
+  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
+}
