@@ -1,19 +1,7 @@
-import { Suspense } from "react"
 import type React from "react"
-import type { Metadata, Viewport } from "next"
-import { Inter } from "next/font/google"
-import "../globals.css"
-import { ModalProvider } from "@/contexts/modal-context"
-import LayoutClientComponent from "@/components/layout/LayoutClientComponent"
-import { Toaster } from "@/components/ui/toaster"
-import { FloatingChatBot } from "@/components/FloatingChatBot"
-import { Analytics } from "@vercel/analytics/react"
-import { SpeedInsights } from "@vercel/speed-insights/next"
+import type { Metadata } from "next"
 import { siteConfig } from "@/lib/seo-config"
 import { OrganizationSchema, LocalBusinessSchema, WebsiteSchema } from "@/components/seo/structured-data"
-import { GoogleAnalytics } from "@/components/analytics/GoogleAnalytics"
-
-const inter = Inter({ subsets: ["latin"] })
 
 const focusedKeywords = [
   "PND50",
@@ -43,11 +31,6 @@ export const metadata: Metadata = {
   publisher: siteConfig.name,
   applicationName: "PND50 Thailand",
   referrer: "origin-when-cross-origin",
-  icons: {
-    icon: "/fav-50.png",
-    shortcut: "/fav-50.png",
-    apple: "/apple-touch-icon.png",
-  },
   openGraph: {
     type: "website",
     locale: siteConfig.locale,
@@ -86,26 +69,10 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
-  verification: {
-    google: "iGGUkvE04EL6uchGN6JnXOw63Y57BsCZBmCXO0WSlcM",
-  },
   alternates: {
     canonical: siteConfig.url,
   },
   category: "business",
-  generator: 'v0.app'
-}
-
-export const viewport: Viewport = {
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
-    { media: "(prefers-color-scheme: dark)", color: "#0f172a" },
-  ],
-  width: "device-width",
-  initialScale: 1,
-  maximumScale: 5,
-  userScalable: true,
-  colorScheme: "light dark",
 }
 
 export default function HomeLayout({
@@ -114,32 +81,11 @@ export default function HomeLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <head>
-        <OrganizationSchema />
-        <LocalBusinessSchema />
-        <WebsiteSchema />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link rel="dns-prefetch" href="https://www.google-analytics.com" />
-        <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
-        <Suspense fallback={null}>
-          <GoogleAnalytics />
-        </Suspense>
-      </head>
-      <body className={`${inter.className} min-h-screen`}>
-        <ModalProvider>
-          {/* No default Navbar/Footer - page handles its own */}
-          {children}
-          <Suspense fallback={null}>
-            <Toaster />
-            <FloatingChatBot />
-          </Suspense>
-          <LayoutClientComponent />
-        </ModalProvider>
-        <Analytics />
-        <SpeedInsights />
-      </body>
-    </html>
+    <>
+      <OrganizationSchema />
+      <LocalBusinessSchema />
+      <WebsiteSchema />
+      {children}
+    </>
   )
 }

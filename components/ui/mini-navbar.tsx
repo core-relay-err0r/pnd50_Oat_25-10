@@ -46,6 +46,11 @@ export function Navbar() {
   const [headerShapeClass, setHeaderShapeClass] = useState("rounded-full")
   const shapeTimeoutRef = useRef<NodeJS.Timeout | null>(null)
 
+  // Hide default navbar on homepage (uses custom scroll-spy navbar)
+  if (pathname === "/") {
+    return null
+  }
+
   const toggleMenu = () => {
     setIsOpen(!isOpen)
   }

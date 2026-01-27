@@ -15,7 +15,7 @@ export default function PND50Landing() {
       {/* Scroll-spy Navbar */}
       <ScrollSpyNavbar />
 
-      <main id="main-content" className="min-h-screen bg-background">
+      <div id="main-content" className="min-h-screen bg-background">
         {/* Hero Section */}
         <section id="hero">
           <HeroSection />
@@ -38,7 +38,7 @@ export default function PND50Landing() {
         <footer className="py-6 bg-slate-900 border-t border-slate-800">
           <LandingFooter variant="dark" absolute={false} />
         </footer>
-      </main>
+      </div>
     </>
   )
 }
