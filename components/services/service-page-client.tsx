@@ -3,10 +3,9 @@
 import type React from "react"
 
 import { useEffect, useRef } from "react"
-import Link from "next/link"
-import { ArrowLeft } from "lucide-react"
 import { gsap } from "gsap"
 import CTASection from "@/components/layout/CTASection"
+import { BreadcrumbNav, type BreadcrumbItem } from "@/components/seo/breadcrumb-nav"
 
 interface FAQ {
   question: string
@@ -19,9 +18,20 @@ interface ServicePageClientProps {
   icon: React.ReactNode
   features: string[]
   faqs: FAQ[]
+  breadcrumbItems?: BreadcrumbItem[]
 }
 
-export function ServicePageClient({ title, description, icon, features, faqs }: ServicePageClientProps) {
+export function ServicePageClient({
+  title,
+  description,
+  icon,
+  features,
+  faqs,
+  breadcrumbItems = [
+    { name: "Home", url: "/" },
+    { name: "Services", url: "/services" },
+  ],
+}: ServicePageClientProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const heroRef = useRef<HTMLDivElement>(null)
   const featuresRef = useRef<HTMLDivElement>(null)
@@ -71,14 +81,7 @@ export function ServicePageClient({ title, description, icon, features, faqs }: 
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-gradient-to-br from-blue-100/20 via-sky-100/15 to-teal-100/20 rounded-full blur-3xl pointer-events-none" />
 
       <div className="container mx-auto px-6 max-w-3xl py-20 pt-32 relative z-10">
-        {/* Back Link */}
-        <Link
-          href="/services"
-          className="inline-flex items-center gap-2 text-slate-400 hover:text-slate-600 transition-colors mb-16 text-sm"
-        >
-          <ArrowLeft className="w-4 h-4" />
-          Services
-        </Link>
+        <BreadcrumbNav items={breadcrumbItems} className="mb-16" />
 
         {/* Hero */}
         <div ref={heroRef} className="mb-20">

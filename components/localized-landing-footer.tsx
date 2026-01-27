@@ -1,15 +1,18 @@
 import Link from "next/link"
+import { translations, type Locale } from "@/lib/translations"
 
 const CURRENT_YEAR = 2025
 
-export function LandingFooter({
+export function LocalizedLandingFooter({
+  locale,
   variant = "dark",
   absolute = true,
-}: { variant?: "dark" | "light"; absolute?: boolean }) {
+}: { locale: Locale; variant?: "dark" | "light"; absolute?: boolean }) {
+  const t = translations[locale]
   const isLight = variant === "light"
 
   return (
-    <footer className={`${absolute ? "absolute bottom-0 left-0 right-0" : "relative w-full"} z-20`}>
+    <footer className={`${absolute ? "absolute bottom-0 left-0 right-0" : "relative w-full -mt-24"} z-20`}>
       <div
         className={`absolute inset-0 pointer-events-none ${
           isLight
@@ -39,7 +42,7 @@ export function LandingFooter({
       <div className="container mx-auto relative z-10 pt-8 pb-6 px-4">
         <div className="text-center">
           <p className={`text-xs md:text-sm font-medium ${isLight ? "text-slate-600" : "text-slate-400"}`}>
-            Powered by{" "}
+            {t.footer.poweredBy}{" "}
             <Link
               href="https://burakornpartners.com/"
               target="_blank"
@@ -54,7 +57,7 @@ export function LandingFooter({
             </Link>
           </p>
           <p className={`text-[10px] mt-2 ${isLight ? "text-slate-500" : "text-slate-600"}`}>
-            © {CURRENT_YEAR} PND50. All rights reserved.
+            © {CURRENT_YEAR} PND50. {t.footer.rights}
           </p>
         </div>
       </div>

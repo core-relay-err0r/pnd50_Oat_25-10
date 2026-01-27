@@ -1,47 +1,62 @@
 import type { Metadata } from "next"
 import { Building2 } from "lucide-react"
-import { ServiceSchema, BreadcrumbSchema, FAQSchema } from "@/components/seo/structured-data"
+import {
+  DetailedServiceSchema,
+  BreadcrumbSchema,
+  FAQSchema,
+  AuthorSchema,
+  ServiceHowToSchema,
+} from "@/components/seo/structured-data"
 import { siteConfig } from "@/lib/seo-config"
 import { ServicePageClient } from "@/components/services/service-page-client"
 
 export const metadata: Metadata = {
-  title: "Open a Business in Thailand | Company Registration | PND50",
+  title: "Open a Company in Thailand | Company Registration | PND50",
   description:
-    "Open a business in Thailand with expert help. Company registration, BOI applications, and corporate services for foreign investors. Start your Thai company today with full English support.",
+    "Open a company in Thailand with expert help. Company registration, BOI applications, and corporate services for foreign investors. Start your Thai business today with full English support.",
   keywords: [
-    "open business in Thailand",
-    "start company in Thailand",
-    "company registration in Thailand",
-    "register business in Thailand",
-    "foreign company in Thailand",
-    "Thai company setup",
+    "open company Thailand",
+    "open company in Thailand",
+    "company registration Thailand",
+    "register company Thailand",
+    "start business Thailand",
+    "foreign company Thailand",
     "BOI Thailand",
-    "start business Thailand foreigner",
-    "how to open company in Thailand",
+    // Thai keywords
+    "จดทะเบียนบริษัท",
+    "เปิดบริษัท",
+    "ตั้งบริษัท",
+    "จดทะเบียนนิติบุคคล",
+    "เปิดบริษัทในไทย",
   ],
   alternates: {
     canonical: `${siteConfig.url}/services/corporate`,
     languages: {
       en: `${siteConfig.url}/services/corporate`,
-      "en-US": `${siteConfig.url}/services/corporate`,
-      "en-GB": `${siteConfig.url}/services/corporate`,
-      "en-SG": `${siteConfig.url}/services/corporate`,
-      "en-AU": `${siteConfig.url}/services/corporate`,
       "x-default": `${siteConfig.url}/services/corporate`,
     },
   },
   openGraph: {
-    title: "Open a Business in Thailand | PND50",
+    title: "Open a Company in Thailand | PND50",
     description: "Start your company in Thailand with expert help. Full English support for foreign investors.",
     url: `${siteConfig.url}/services/corporate`,
     siteName: "PND50",
     locale: "en_US",
     type: "website",
+    images: [
+      {
+        url: `${siteConfig.url}/og-services.png`,
+        width: 1200,
+        height: 630,
+        alt: "PND50 Company Registration in Thailand",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Open a Business in Thailand | PND50",
+    title: "Open a Company in Thailand | PND50",
     description: "Start your company in Thailand with expert help.",
+    images: [`${siteConfig.url}/og-services.png`],
   },
   robots: {
     index: true,
@@ -82,22 +97,58 @@ const faqs = [
   },
 ]
 
+const howToSteps = [
+  {
+    name: "Initial Consultation",
+    text: "We discuss your business goals, recommend the optimal company structure, and explain Thai ownership requirements.",
+  },
+  {
+    name: "Name Reservation",
+    text: "We reserve your company name with the Department of Business Development (DBD) - takes 1-2 business days.",
+  },
+  {
+    name: "Document Preparation",
+    text: "We prepare Memorandum of Association, Articles of Association, and all required forms for registration.",
+  },
+  {
+    name: "Company Registration",
+    text: "We submit documents to DBD and obtain your company registration certificate within 1-2 weeks.",
+  },
+  {
+    name: "Tax Registration",
+    text: "We register your company for corporate income tax and VAT (if applicable) with the Revenue Department.",
+  },
+]
+
+const breadcrumbItems = [
+  { name: "Home", url: "/" },
+  { name: "Services", url: "/services" },
+  { name: "Open Business", url: "/services/corporate" },
+]
+
 export default function CorporatePage() {
   return (
     <>
-      <ServiceSchema
+      <DetailedServiceSchema
         name="Company Registration & Corporate Services in Thailand"
         description="Expert company registration and corporate services for foreign businesses opening in Thailand."
         url="/services/corporate"
+        serviceType="Business Formation Service"
+        datePublished="2024-01-15"
+        dateModified="2025-06-20"
+        priceRange="฿฿฿"
+        aggregateRating={{ ratingValue: "4.8", reviewCount: "64" }}
+        breadcrumb={breadcrumbItems}
       />
-      <BreadcrumbSchema
-        items={[
-          { name: "Home", url: "/" },
-          { name: "Services", url: "/services" },
-          { name: "Open Business in Thailand", url: "/services/corporate" },
-        ]}
-      />
+      <BreadcrumbSchema items={breadcrumbItems} />
       <FAQSchema faqs={faqs} />
+      <ServiceHowToSchema serviceName="Company Registration" steps={howToSteps} totalTime="P21D" />
+      <AuthorSchema
+        name="PND50 Corporate Team"
+        jobTitle="Corporate Services Specialists"
+        description="Experts in Thai company formation, BOI promotion, and foreign business licensing"
+        credentials={["DBD Licensed Agent", "BOI Consultant"]}
+      />
 
       <ServicePageClient
         title="Open a Business in Thailand"
@@ -106,6 +157,7 @@ export default function CorporatePage() {
         features={features}
         faqs={faqs}
         ctaText="Ready to Start Your Business?"
+        breadcrumbItems={breadcrumbItems}
       />
     </>
   )

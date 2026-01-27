@@ -1,5 +1,0 @@
-# PND50 Security Policy
-Contact: mailto:oat3653377@gmail.com
-Preferred-Languages: en, th
-Canonical: https://pnd50.com/.well-known/security.txt
-Expires: 2027-01-27T00:00:00.000Z

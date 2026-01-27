@@ -43,6 +43,8 @@ interface QuoteRequest {
 
 const formatPrice = (price: number) => `$${price.toLocaleString("en-US")}`
 
+const EMPLOYEE_BASED_SERVICES = ["Payroll Management", "Social Security Registration"]
+
 export async function POST(request: NextRequest) {
   if (!resend) {
     return NextResponse.json({ error: "Email service not configured" }, { status: 500 })
@@ -61,11 +63,13 @@ export async function POST(request: NextRequest) {
             </div>`
             : ""
 
+        const showEmployeeCount = service.quantity && EMPLOYEE_BASED_SERVICES.includes(service.name)
+
         return `
           <tr>
             <td style="padding: 12px; border-bottom: 1px solid #e0e0e0;">
               <strong>${service.name}</strong>
-              ${service.quantity ? ` <span style="color: #666;">(${service.quantity} employees)</span>` : ""}
+              ${showEmployeeCount ? ` <span style="color: #666;">(${service.quantity} employees)</span>` : ""}
               <br/>
               <span style="font-size: 12px; color: #888;">Category: ${service.category} | Type: ${service.type}</span>
               ${optionsHtml}
@@ -77,6 +81,23 @@ export async function POST(request: NextRequest) {
             </td>
           </tr>
         `
+      })
+      .join("")
+
+    const clientServicesHtml = selectedServices
+      .map((service) => {
+        const showEmployeeCount = service.quantity && EMPLOYEE_BASED_SERVICES.includes(service.name)
+        return `
+        <tr>
+          <td style="padding: 10px 12px; border-bottom: 1px solid #e5e7eb;">
+            ${service.name}
+            ${showEmployeeCount ? ` <span style="color: #6b7280;">(${service.quantity} employees)</span>` : ""}
+          </td>
+          <td style="padding: 10px 12px; border-bottom: 1px solid #e5e7eb; text-align: right; color: #0284c7; font-weight: 600;">
+            ${formatPrice(service.totalPrice)}${service.type === "Monthly" ? "/mo" : service.type === "Annual" ? "/yr" : ""}
+          </td>
+        </tr>
+      `
       })
       .join("")
 
@@ -165,14 +186,116 @@ export async function POST(request: NextRequest) {
       </html>
     `
 
-    const companyResult = await resend.emails.send({
-      from: "PND50 Quote System <onboarding@resend.dev>",
-      to: COMPANY_EMAIL,
-      subject: `New Quote Request: ${formatPrice(totalPrice)} (Year 1) - ${contactInfo.name}`,
-      html: companyEmailHtml,
-    })
+    const clientEmailHtml = `
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <meta charset="utf-8">
+          <title>Thank You for Your Inquiry - PND50</title>
+        </head>
+        <body style="font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6; color: #1f2937; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f9fafb;">
+          <div style="background: linear-gradient(135deg, #0284c7 0%, #06b6d4 100%); color: white; padding: 40px 30px; text-align: center; border-radius: 12px 12px 0 0;">
+            <h1 style="margin: 0; font-size: 26px; font-weight: 600;">Thank You, ${contactInfo.name.split(" ")[0]}!</h1>
+            <p style="margin: 12px 0 0 0; font-size: 15px; opacity: 0.9;">We've received your consultation request</p>
+          </div>
+          
+          <div style="background: white; padding: 32px; border: 1px solid #e5e7eb; border-top: none; border-radius: 0 0 12px 12px;">
+            <p style="margin: 0 0 24px 0; color: #4b5563;">
+              Thank you for your interest in PND50's accounting and tax services. Our team will review your request and contact you within <strong>24 hours</strong>.
+            </p>
 
-    return NextResponse.json({ success: true, companyResult })
+            <div style="background: #f0f9ff; border-left: 4px solid #0284c7; padding: 16px 20px; border-radius: 0 8px 8px 0; margin: 24px 0;">
+              <h3 style="margin: 0 0 12px 0; color: #0284c7; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px;">Your Selected Services</h3>
+              <table style="width: 100%; border-collapse: collapse;">
+                ${clientServicesHtml}
+              </table>
+            </div>
+
+            <!-- Added price breakdown section for client email -->
+            <div style="background: #f8fafc; padding: 20px; border-radius: 8px; margin: 24px 0;">
+              <h3 style="margin: 0 0 16px 0; color: #1f2937; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px;">Price Breakdown</h3>
+              <table style="width: 100%; font-size: 14px;">
+                <tr>
+                  <td style="padding: 8px 0; color: #64748b;">One-Time Fees</td>
+                  <td style="padding: 8px 0; text-align: right; font-weight: 600; color: #1f2937;">${formatPrice(priceBreakdown.oneTime)}</td>
+                </tr>
+                <tr>
+                  <td style="padding: 8px 0; color: #64748b;">Monthly Fees (×12 months)</td>
+                  <td style="padding: 8px 0; text-align: right; font-weight: 600; color: #1f2937;">${formatPrice(priceBreakdown.monthly)} × 12 = ${formatPrice(priceBreakdown.monthly * 12)}</td>
+                </tr>
+                <tr>
+                  <td style="padding: 8px 0; color: #64748b;">Annual Fees</td>
+                  <td style="padding: 8px 0; text-align: right; font-weight: 600; color: #1f2937;">${formatPrice(priceBreakdown.annual)}</td>
+                </tr>
+              </table>
+            </div>
+
+            <div style="background: linear-gradient(135deg, #0284c7 0%, #06b6d4 100%); padding: 20px; border-radius: 8px; margin: 24px 0; text-align: center;">
+              <p style="margin: 0 0 4px 0; color: rgba(255,255,255,0.8); font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px;">Estimated Year 1 Total</p>
+              <p style="margin: 0; font-size: 32px; font-weight: 700; color: white;">${formatPrice(totalPrice)}</p>
+              <p style="margin: 8px 0 0 0; font-size: 12px; color: rgba(255,255,255,0.7);">*Final pricing will be confirmed during consultation</p>
+            </div>
+
+            <hr style="border: none; border-top: 1px solid #e5e7eb; margin: 28px 0;" />
+
+            <h3 style="margin: 0 0 16px 0; color: #1f2937; font-size: 16px;">What Happens Next?</h3>
+            <table style="width: 100%;">
+              <tr>
+                <td style="padding: 8px 12px 8px 0; vertical-align: top; width: 24px;">
+                  <div style="width: 24px; height: 24px; background: #0284c7; color: white; border-radius: 50%; text-align: center; line-height: 24px; font-size: 12px; font-weight: 600;">1</div>
+                </td>
+                <td style="padding: 8px 0; color: #4b5563;">Our team reviews your requirements</td>
+              </tr>
+              <tr>
+                <td style="padding: 8px 12px 8px 0; vertical-align: top;">
+                  <div style="width: 24px; height: 24px; background: #0284c7; color: white; border-radius: 50%; text-align: center; line-height: 24px; font-size: 12px; font-weight: 600;">2</div>
+                </td>
+                <td style="padding: 8px 0; color: #4b5563;">We'll contact you within 24 hours to schedule a consultation</td>
+              </tr>
+              <tr>
+                <td style="padding: 8px 12px 8px 0; vertical-align: top;">
+                  <div style="width: 24px; height: 24px; background: #0284c7; color: white; border-radius: 50%; text-align: center; line-height: 24px; font-size: 12px; font-weight: 600;">3</div>
+                </td>
+                <td style="padding: 8px 0; color: #4b5563;">Receive your customized quote and service plan</td>
+              </tr>
+            </table>
+
+            <hr style="border: none; border-top: 1px solid #e5e7eb; margin: 28px 0;" />
+
+            <div style="text-align: center;">
+              <p style="margin: 0 0 8px 0; color: #64748b; font-size: 13px;">Have questions? Contact us anytime</p>
+              <a href="mailto:info@pnd50.com" style="color: #0284c7; text-decoration: none; font-weight: 600;">info@pnd50.com</a>
+              <span style="color: #cbd5e1; margin: 0 8px;">|</span>
+              <a href="https://www.pnd50.com" style="color: #0284c7; text-decoration: none; font-weight: 600;">www.pnd50.com</a>
+            </div>
+          </div>
+
+          <div style="text-align: center; padding: 24px 20px; color: #9ca3af; font-size: 12px;">
+            <p style="margin: 0;">© ${new Date().getFullYear()} PND50 Co., Ltd. All rights reserved.</p>
+            <p style="margin: 8px 0 0 0;">Your trusted partner for accounting and tax services in Thailand</p>
+          </div>
+        </body>
+      </html>
+    `
+
+    const [companyResult, clientResult] = await Promise.all([
+      // Email 1: Admin notification to info@pnd50.com
+      resend.emails.send({
+        from: "PND50 Quote System <noreply@pnd50.com>",
+        to: COMPANY_EMAIL,
+        subject: `New Quote Request: ${formatPrice(totalPrice)} (Year 1) - ${contactInfo.name}`,
+        html: companyEmailHtml,
+      }),
+      // Email 2: Client confirmation to their email
+      resend.emails.send({
+        from: "PND50 <noreply@pnd50.com>",
+        to: contactInfo.email,
+        subject: `Thank You for Your Inquiry - PND50`,
+        html: clientEmailHtml,
+      }),
+    ])
+
+    return NextResponse.json({ success: true, companyResult, clientResult })
   } catch (error: unknown) {
     const errorMessage = error instanceof Error ? error.message : "Unknown error"
     console.error("Error sending quote emails:", error)

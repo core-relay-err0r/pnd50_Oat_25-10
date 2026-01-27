@@ -3,44 +3,45 @@ import { siteConfig } from "@/lib/seo-config"
 import ServicesPageClient from "./services-page-client"
 
 export const metadata: Metadata = {
-  title: "Business Services in Thailand | Accounting, Tax, Payroll, Company Setup | PND50",
+  title: "Accounting in Thailand | Open Company in Thailand | PND50",
   description:
-    "Complete business services for foreign companies in Thailand. Accounting, tax filing, payroll management, company registration, and business advisory. Trusted by 200+ expat businesses.",
+    "Professional accounting in Thailand and company registration services. Open your company in Thailand with expert guidance. Tax filing, payroll, and business setup for foreign entrepreneurs.",
   keywords: [
-    "business services Thailand",
-    "accounting services Thailand",
-    "tax services Thailand",
-    "payroll Thailand",
+    "accounting in Thailand",
+    "open company in Thailand",
     "company registration Thailand",
-    "open business Thailand",
-    "foreign company Thailand",
-    "expat business Thailand",
+    "start business Thailand",
+    "accounting services Bangkok",
+    "foreign company registration Thailand",
+    "Thailand business setup",
+    "expat accounting Thailand",
   ],
   alternates: {
     canonical: `${siteConfig.url}/services`,
-    languages: {
-      en: `${siteConfig.url}/services`,
-      "en-US": `${siteConfig.url}/services`,
-      "en-GB": `${siteConfig.url}/services`,
-      "en-SG": `${siteConfig.url}/services`,
-      "en-AU": `${siteConfig.url}/services`,
-      "x-default": `${siteConfig.url}/services`,
-    },
   },
   openGraph: {
-    title: "Business Services in Thailand | PND50",
+    title: "Accounting in Thailand | Open Company in Thailand | PND50",
     description:
-      "Complete business services for foreign companies in Thailand. Accounting, tax, payroll, company setup and more.",
+      "Professional accounting and company registration in Thailand. Start your business with expert support.",
     url: `${siteConfig.url}/services`,
     siteName: siteConfig.name,
     locale: "en_US",
     type: "website",
+    images: [
+      {
+        url: `${siteConfig.url}${siteConfig.ogImage}`,
+        width: 1200,
+        height: 630,
+        alt: "Accounting in Thailand - PND50 Services",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Business Services in Thailand | PND50",
+    title: "Accounting in Thailand | Open Company in Thailand | PND50",
     description:
-      "Complete business services for foreign companies in Thailand. Accounting, tax, payroll, company setup and more.",
+      "Professional accounting and company registration in Thailand. Start your business with expert support.",
+    images: [`${siteConfig.url}${siteConfig.ogImage}`],
   },
   robots: {
     index: true,

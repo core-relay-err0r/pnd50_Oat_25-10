@@ -23,13 +23,17 @@ const COUNTRY_LOCALE_MAP: Record<string, string> = {
 // Supported locales
 const SUPPORTED_LOCALES = ["en", "th", "ru", "cn"]
 
-// Paths that should not be redirected
+// Paths that should not be processed
 const EXCLUDED_PATHS = ["/api", "/_next", "/static", "/favicon.ico", "/robots.txt", "/sitemap.xml", "/schedule/success"]
 
-// Cookie name for storing user's preferred locale
-const LOCALE_COOKIE = "NEXT_LOCALE"
-
 export function proxy(request: NextRequest) {
+  const { pathname } = request.nextUrl
+
+  // Skip excluded paths
+  if (EXCLUDED_PATHS.some((path) => pathname.startsWith(path))) {
+    return NextResponse.next()
+  }
+
   return NextResponse.next()
 }
 

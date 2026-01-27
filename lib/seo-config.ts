@@ -3,9 +3,9 @@
 
 export const siteConfig = {
   name: "PND50",
-  tagline: "AI Boutique Accounting & Consultant",
+  tagline: "ภ.ง.ด.50 - AI Boutique Accounting & Consultant",
   description:
-    "Tech-driven accounting and consulting services in Thailand for foreign-owned businesses. Expert PND50 tax filing, bookkeeping, and business setup assistance for companies from Singapore, Russia, Taiwan, and worldwide.",
+    "PND50 — named after Thailand's corporate tax form ภ.ง.ด.50 (P.N.D.50). Expert accounting, tax filing, and business setup services for foreign-owned companies in Thailand.",
   url: "https://pnd50.com",
   ogImage: "/og-image.jpg",
   locale: "en_US",
@@ -43,10 +43,17 @@ export const siteConfig = {
 
   keywords: {
     home: [
-      "accounting Thailand",
+      // Brand keywords (highest priority)
+      "PND50",
+      "ภ.ง.ด.50",
+      "P.N.D.50",
+      "ภงด50",
+      // Brand + service
+      "PND50 accounting",
+      "PND50 tax services Thailand",
+      // Context keywords
+      "accounting Thailand foreign business",
       "tax consultant Bangkok",
-      "foreign company accounting Thailand",
-      "open business in Thailand",
     ],
     services: [
       "accounting services Thailand",
@@ -56,8 +63,8 @@ export const siteConfig = {
     ],
     calculator: ["accounting fee calculator", "business cost estimate Thailand"],
     contact: ["contact accountant Bangkok", "accounting consultation Thailand"],
-    about: ["about PND50", "accounting firm Bangkok"],
-    faq: ["accounting questions Thailand", "tax questions Thailand"],
+    about: ["about PND50", "accounting firm Bangkok", "ภ.ง.ด.50 company"],
+    faq: ["PND50 FAQ", "ภ.ง.ด.50 questions", "accounting questions Thailand"],
     caseStudies: ["client success stories"],
     portfolio: ["our portfolio"],
     privacyPolicy: ["privacy policy"],
@@ -114,7 +121,7 @@ export const pageMetadata = {
   home: {
     title: "PND50 | Accounting & Tax Services for Foreign Businesses in Thailand",
     description:
-      "Expert accounting, tax filing, and business setup services for foreign-owned companies in Thailand. English support, transparent pricing.",
+      "PND50 — named after Thailand's corporate tax form ภ.ง.ด.50 (P.N.D.50). Expert accounting, tax filing, and business setup services for foreign-owned companies in Thailand.",
   },
   services: {
     title: "Business Services in Thailand | PND50",
@@ -153,90 +160,86 @@ export const pageMetadata = {
     title: "Terms of Service | PND50 Thailand",
     description: "PND50's terms of service for accounting and consulting.",
   },
+  "services/accounting": {
+    title: "Accounting Services | PND50 Thailand",
+    description: "Professional accounting services for foreign businesses in Thailand.",
+  },
+  "services/tax": {
+    title: "Tax Services | PND50 Thailand",
+    description: "Expert tax filing and compliance services for foreign businesses in Thailand.",
+  },
+  "services/payroll": {
+    title: "Payroll Services | PND50 Thailand",
+    description: "Accurate payroll processing for foreign businesses in Thailand.",
+  },
+  "services/corporate": {
+    title: "Corporate Services | PND50 Thailand",
+    description: "Complete corporate services for foreign businesses in Thailand.",
+  },
+  "services/advisory": {
+    title: "Business Advisory Services | PND50 Thailand",
+    description: "Guidance and advice for foreign businesses in Thailand.",
+  },
+  "services/growth": {
+    title: "Business Growth Services | PND50 Thailand",
+    description: "Support for business growth and expansion in Thailand.",
+  },
+  schedule: {
+    title: "Schedule a Consultation | PND50 Thailand",
+    description: "Schedule a consultation with our expert accountants in Thailand.",
+  },
+  blog: {
+    title: "PND50 Blog | ภ.ง.ด.50 Thailand Tax Guide & Accounting Tips",
+    description:
+      "Learn everything about PND50 (ภ.ง.ด.50) - Thailand's corporate income tax return. Expert guides on tax filing, accounting, and business compliance for foreign companies in Thailand.",
+  },
 }
 
+export const pageDates = {
+  home: { published: "2024-01-01", modified: "2025-06-15" },
+  services: { published: "2024-01-01", modified: "2025-06-20" },
+  "services/accounting": { published: "2024-01-15", modified: "2025-06-20" },
+  "services/tax": { published: "2024-01-15", modified: "2025-06-20" },
+  "services/payroll": { published: "2024-01-15", modified: "2025-06-20" },
+  "services/corporate": { published: "2024-01-15", modified: "2025-06-20" },
+  "services/advisory": { published: "2024-02-01", modified: "2025-06-18" },
+  "services/growth": { published: "2024-03-01", modified: "2025-06-15" },
+  about: { published: "2024-01-01", modified: "2025-06-22" },
+  contact: { published: "2024-01-01", modified: "2025-04-15" },
+  faq: { published: "2024-01-01", modified: "2025-06-22" },
+  caseStudies: { published: "2024-02-01", modified: "2025-06-10" },
+  calculator: { published: "2024-03-01", modified: "2025-06-01" },
+  schedule: { published: "2024-01-15", modified: "2025-06-01" },
+  blog: { published: "2025-06-23", modified: "2025-06-23" },
+}
+
+export const authors = {
+  team: {
+    name: "PND50 Accounting Team",
+    jobTitle: "Certified Accountants",
+    description: "Team of certified accountants with 10+ years experience serving foreign businesses in Thailand",
+    credentials: ["Certified Public Accountant", "Tax Auditor Certificate"],
+  },
+  founder: {
+    name: "PND50 Founder",
+    jobTitle: "Managing Director & CPA",
+    description: "Founder of PND50 with extensive experience in Thai accounting and tax for foreign businesses",
+    credentials: ["Certified Public Accountant", "Master of Accounting"],
+    sameAs: ["https://linkedin.com/company/pnd50"],
+  },
+}
+
+// Thai keywords for SEO
 export const thaiKeywords = {
-  general: ["บริษัทบัญชี", "ที่ปรึกษาภาษี", "รับทำบัญชี"],
-  services: ["ภงด.50", "ภาษีนิติบุคคล", "จดทะเบียนบริษัท"],
-  location: ["บัญชี กรุงเทพ", "accounting Bangkok"],
+  // Brand keywords first (highest SEO priority)
+  brand: ["PND50", "ภ.ง.ด.50", "P.N.D.50", "ภงด50", "ภงด.50", "พีเอ็นดี50", "PND 50"],
+  general: ["บริษัทบัญชี", "ที่ปรึกษาภาษี", "รับทำบัญชี", "สำนักงานบัญชี"],
+  services: ["ภาษีนิติบุคคล", "จดทะเบียนบริษัท", "ยื่นภาษี", "ภ.ง.ด.51", "ภงด.51"],
+  location: ["บัญชี กรุงเทพ", "ที่ปรึกษาภาษี กรุงเทพ"],
 }
 
-// Local business areas served
-export const serviceAreas = [
-  { name: "Bangkok", nameTh: "กรุงเทพมหานคร" },
-  { name: "Nonthaburi", nameTh: "นนทบุรี" },
-  { name: "Samut Prakan", nameTh: "สมุทรปราการ" },
-  { name: "Pathum Thani", nameTh: "ปทุมธานี" },
-  { name: "Chonburi", nameTh: "ชลบุรี" },
-]
-
+// Industry-specific keywords
 export const industryKeywords = {
   foreignBusiness: ["foreign company Thailand", "expat business Thailand", "open business in Thailand"],
   startup: ["startup accounting Thailand", "SME accounting Bangkok"],
-}
-
-// Target countries for international SEO
-export const targetCountries = [
-  {
-    code: "SG",
-    name: "Singapore",
-    language: "en-SG",
-    description: "Accounting services for Singapore companies expanding to Thailand",
-  },
-  {
-    code: "RU",
-    name: "Russia",
-    language: "ru-RU",
-    description: "Accounting services for Russian businesses in Thailand",
-  },
-  {
-    code: "TW",
-    name: "Taiwan",
-    language: "zh-TW",
-    description: "Accounting services for Taiwanese companies in Thailand",
-  },
-  {
-    code: "TH",
-    name: "Thailand",
-    language: "th-TH",
-    description: "Local accounting services in Thailand",
-  },
-]
-
-// International keywords for geo SEO
-export const internationalKeywords = {
-  singapore: [
-    "PND50 tax filing Singapore companies",
-    "Thailand accounting for Singapore business",
-    "Singapore company Thailand subsidiary tax",
-    "Thai corporate tax Singapore entrepreneurs",
-    "PND50 filing Singapore-Thailand business",
-  ],
-  russia: [
-    "PND50 tax filing Russian business Thailand",
-    "Thailand accounting Russian entrepreneurs",
-    "Russian company Thailand tax compliance",
-    "Thai corporate tax Russian business owners",
-    "PND50 filing Russian digital nomads Thailand",
-  ],
-  taiwan: [
-    "PND50 tax filing Taiwan companies Thailand",
-    "Thailand accounting Taiwanese business",
-    "Taiwan company Thailand subsidiary tax",
-    "Thai corporate tax Taiwan manufacturers",
-    "PND50 filing Taiwan-Thailand trading",
-  ],
-  china: [
-    "PND50 tax filing Chinese companies Thailand",
-    "Thailand accounting Chinese business",
-    "China company Thailand subsidiary tax",
-    "Thai corporate tax Chinese investors",
-  ],
-  general: [
-    "PND50 foreign company Thailand",
-    "Thai tax filing international business",
-    "Expat accounting Thailand",
-    "Foreign business tax Thailand",
-    "International company Thailand accounting",
-  ],
 }

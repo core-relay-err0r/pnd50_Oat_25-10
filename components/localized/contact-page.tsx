@@ -1,48 +1,44 @@
 "use client"
 
 import React from "react"
-
 import dynamic from "next/dynamic"
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
-import { Mail, Phone, MapPin, Send, CheckCircle2, MessageSquare, Building2, Clock, ArrowRight } from "lucide-react"
+import { Mail, Phone, Send, CheckCircle2, MessageSquare, Building2, Clock, ArrowRight } from "lucide-react"
 import { motion } from "framer-motion"
-import { BreadcrumbNav } from "@/components/seo/breadcrumb-nav"
-import { BreadcrumbSchema } from "@/components/seo/structured-data"
+import { translations, type Locale } from "@/lib/translations"
 
 const AnimatedGridBackground = dynamic(
   () => import("@/components/ui/animated-grid-background").then((mod) => mod.AnimatedGridBackground),
   { ssr: false },
 )
 
-const breadcrumbItems = [
-  { name: "Home", url: "/" },
-  { name: "Contact", url: "/contact" },
-]
-
 const fadeInUp = {
   hidden: { opacity: 0, y: 30 },
   visible: { opacity: 1, y: 0 },
 }
 
-export default function ContactPage() {
+interface LocalizedContactPageProps {
+  locale: Locale
+}
+
+export default function LocalizedContactPage({ locale }: LocalizedContactPageProps) {
+  const t = translations[locale]
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     phone: "",
     whatsapp: "",
     companyName: "",
-    serviceType: "",
     message: "",
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle")
-  const [copiedItem, setCopiedItem] = useState<string | null>(null)
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
     setSubmitStatus("idle")
@@ -50,15 +46,12 @@ export default function ContactPage() {
     try {
       const response = await fetch("/api/send-contact", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           email: formData.email,
           telephone: formData.phone,
           whatsappId: formData.whatsapp,
           companyName: formData.companyName,
-          serviceType: formData.serviceType,
           message: formData.message,
           name: formData.name,
         }),
@@ -66,15 +59,7 @@ export default function ContactPage() {
 
       if (response.ok) {
         setSubmitStatus("success")
-        setFormData({
-          name: "",
-          email: "",
-          phone: "",
-          whatsapp: "",
-          companyName: "",
-          serviceType: "",
-          message: "",
-        })
+        setFormData({ name: "", email: "", phone: "", whatsapp: "", companyName: "", message: "" })
       } else {
         setSubmitStatus("error")
       }
@@ -86,48 +71,17 @@ export default function ContactPage() {
     }
   }
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    })
-  }
-
-  const copyToClipboard = async (text, itemId) => {
-    try {
-      await navigator.clipboard.writeText(text)
-      setCopiedItem(itemId)
-      setTimeout(() => setCopiedItem(null), 2000)
-    } catch (err) {
-      console.error("Failed to copy:", err)
-    }
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value })
   }
 
   const contactMethods = [
-    {
-      icon: Phone,
-      label: "Call Us",
-      value: "+66 2 017 2949",
-      href: "tel:020172949",
-      copyValue: "020172949",
-      id: "phone",
-      color: "bg-sky-500",
-    },
-    {
-      icon: Mail,
-      label: "Email Us",
-      value: "info@pnd50.com",
-      href: "mailto:info@pnd50.com",
-      copyValue: "info@pnd50.com",
-      id: "email",
-      color: "bg-blue-500",
-    },
+    { icon: Phone, label: "Call Us", value: "+66 2 017 2949", href: "tel:020172949" },
+    { icon: Mail, label: "Email Us", value: "info@pnd50.com", href: "mailto:info@pnd50.com" },
   ]
 
   return (
     <div className="min-h-screen bg-slate-50">
-      <BreadcrumbSchema items={breadcrumbItems} />
-
       <AnimatedGridBackground className="min-h-screen" variant="light">
         {/* Decorative Elements */}
         <div className="absolute top-20 left-10 w-[500px] h-[500px] bg-gradient-to-br from-sky-200/40 via-blue-200/30 to-teal-200/20 rounded-full blur-3xl pointer-events-none" />
@@ -135,8 +89,6 @@ export default function ContactPage() {
 
         <section className="relative pt-24 pb-8 md:pt-32 md:pb-12 overflow-hidden">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 max-w-7xl">
-            <BreadcrumbNav items={breadcrumbItems} className="mb-8" />
-
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               {/* Left: Headline */}
               <motion.div
@@ -145,21 +97,19 @@ export default function ContactPage() {
                 transition={{ duration: 0.6 }}
               >
                 <span className="inline-block text-sky-600 font-semibold text-sm uppercase tracking-wider mb-4">
-                  Located in Thailand
+                  {t.contact.badge}
                 </span>
                 <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-slate-900 leading-tight mb-6">
-                  Let's talk about
+                  {t.contact.title1}
                   <br />
-                  <span className="text-sky-600">your business</span>
+                  <span className="text-sky-600">{t.contact.title2}</span>
                 </h1>
-                <p className="text-lg text-slate-600 leading-relaxed max-w-md">
-                  Have questions about Thai accounting or compliance? We're here to help you navigate with confidence.
-                </p>
+                <p className="text-lg text-slate-600 leading-relaxed max-w-md">{t.contact.description}</p>
 
                 {/* Quick Contact Methods */}
                 <div className="mt-8 flex flex-wrap items-center gap-6 text-slate-600">
                   {contactMethods.map((method, index) => (
-                    <React.Fragment key={method.id}>
+                    <React.Fragment key={index}>
                       <a
                         href={method.href}
                         className="inline-flex items-center gap-2 hover:text-sky-600 transition-colors"
@@ -186,18 +136,18 @@ export default function ContactPage() {
                       <Clock className="w-7 h-7 text-sky-600" />
                     </div>
                     <div>
-                      <h3 className="text-xl font-bold text-slate-800">Quick Response</h3>
-                      <p className="text-slate-500">We reply within 24 hours</p>
+                      <h3 className="text-xl font-bold text-slate-800">{t.contact.quickResponse.title}</h3>
+                      <p className="text-slate-500">{t.contact.quickResponse.subtitle}</p>
                     </div>
                   </div>
                   <div className="grid grid-cols-2 gap-4">
                     <div className="bg-slate-50 rounded-xl p-4">
                       <p className="text-3xl font-bold text-sky-600">24h</p>
-                      <p className="text-sm text-slate-600">Email Response</p>
+                      <p className="text-sm text-slate-600">{t.contact.quickResponse.email}</p>
                     </div>
                     <div className="bg-slate-50 rounded-xl p-4">
                       <p className="text-3xl font-bold text-sky-600">1h</p>
-                      <p className="text-sm text-slate-600">WhatsApp Reply</p>
+                      <p className="text-sm text-slate-600">{t.contact.quickResponse.whatsapp}</p>
                     </div>
                   </div>
                 </div>
@@ -210,7 +160,7 @@ export default function ContactPage() {
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-7xl mx-auto">
               <div className="grid lg:grid-cols-5 gap-8">
-                {/* Contact Form - Takes 3 columns */}
+                {/* Contact Form */}
                 <motion.div
                   className="lg:col-span-3"
                   variants={fadeInUp}
@@ -225,8 +175,8 @@ export default function ContactPage() {
                         <MessageSquare className="w-5 h-5 text-sky-600" />
                       </div>
                       <div>
-                        <h2 className="text-xl font-bold text-slate-800">Send a Message</h2>
-                        <p className="text-sm text-slate-500">Fill out the form and we'll be in touch</p>
+                        <h2 className="text-xl font-bold text-slate-800">{t.contact.form.title}</h2>
+                        <p className="text-sm text-slate-500">{t.contact.form.subtitle}</p>
                       </div>
                     </div>
 
@@ -234,7 +184,7 @@ export default function ContactPage() {
                       <div className="grid md:grid-cols-2 gap-5">
                         <div className="space-y-2">
                           <Label htmlFor="name" className="text-slate-700 font-medium">
-                            Full Name *
+                            {t.contact.form.fullName} *
                           </Label>
                           <Input
                             id="name"
@@ -249,7 +199,7 @@ export default function ContactPage() {
                         </div>
                         <div className="space-y-2">
                           <Label htmlFor="email" className="text-slate-700 font-medium">
-                            Email *
+                            {t.contact.form.email} *
                           </Label>
                           <Input
                             id="email"
@@ -267,7 +217,7 @@ export default function ContactPage() {
                       <div className="grid md:grid-cols-2 gap-5">
                         <div className="space-y-2">
                           <Label htmlFor="phone" className="text-slate-700 font-medium">
-                            Phone
+                            {t.contact.form.phone}
                           </Label>
                           <Input
                             id="phone"
@@ -281,7 +231,7 @@ export default function ContactPage() {
                         </div>
                         <div className="space-y-2">
                           <Label htmlFor="whatsapp" className="text-slate-700 font-medium">
-                            WhatsApp
+                            {t.contact.form.whatsapp}
                           </Label>
                           <Input
                             id="whatsapp"
@@ -297,7 +247,7 @@ export default function ContactPage() {
 
                       <div className="space-y-2">
                         <Label htmlFor="companyName" className="text-slate-700 font-medium">
-                          Company Name
+                          {t.contact.form.companyName}
                         </Label>
                         <Input
                           id="companyName"
@@ -312,12 +262,12 @@ export default function ContactPage() {
 
                       <div className="space-y-2">
                         <Label htmlFor="message" className="text-slate-700 font-medium">
-                          Message *
+                          {t.contact.form.message} *
                         </Label>
                         <Textarea
                           id="message"
                           name="message"
-                          placeholder="Tell us about your needs..."
+                          placeholder={t.contact.form.messagePlaceholder}
                           value={formData.message}
                           onChange={handleChange}
                           required
@@ -329,13 +279,13 @@ export default function ContactPage() {
                       {submitStatus === "success" && (
                         <div className="bg-emerald-50 border border-emerald-200 text-emerald-700 px-4 py-3 rounded-lg flex items-center gap-2">
                           <CheckCircle2 className="w-5 h-5 flex-shrink-0" />
-                          <span>Thank you! We'll get back to you soon.</span>
+                          <span>{t.contact.form.success}</span>
                         </div>
                       )}
 
                       {submitStatus === "error" && (
                         <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
-                          Something went wrong. Please try again.
+                          {t.contact.form.error}
                         </div>
                       )}
 
@@ -345,13 +295,10 @@ export default function ContactPage() {
                         className="w-full h-12 text-base font-semibold bg-sky-600 hover:bg-sky-700 transition-colors"
                       >
                         {isSubmitting ? (
-                          <span className="flex items-center gap-2">
-                            <span className="animate-spin">⏳</span>
-                            Sending...
-                          </span>
+                          <span className="flex items-center gap-2">{t.contact.form.sending}</span>
                         ) : (
                           <span className="flex items-center gap-2">
-                            Send Message
+                            {t.contact.form.submit}
                             <Send className="w-4 h-4" />
                           </span>
                         )}
@@ -374,13 +321,14 @@ export default function ContactPage() {
                       <div className="w-10 h-10 bg-sky-100 rounded-lg flex items-center justify-center">
                         <Building2 className="w-5 h-5 text-sky-600" />
                       </div>
-                      <h3 className="text-lg font-bold text-slate-800">Office</h3>
+                      <h3 className="text-lg font-bold text-slate-800">{t.contact.office.title}</h3>
                     </div>
                     <div className="text-slate-600 text-sm leading-relaxed">
-                      <p className="font-semibold text-slate-800">Suite 3065, 30th Floor</p>
-                      <p>Bhiraj Tower at EmQuartier</p>
-                      <p>689 Sukhumvit Rd, Khlong Tan Nuea</p>
-                      <p>Watthana, Bangkok 10110</p>
+                      {t.contact.office.address.map((line, index) => (
+                        <p key={index} className={index === 0 ? "font-semibold text-slate-800" : ""}>
+                          {line}
+                        </p>
+                      ))}
                     </div>
                   </motion.div>
 
@@ -397,7 +345,7 @@ export default function ContactPage() {
                       <div className="w-10 h-10 bg-sky-100 rounded-lg flex items-center justify-center">
                         <Phone className="w-5 h-5 text-sky-600" />
                       </div>
-                      <h3 className="text-lg font-bold text-slate-800">Direct Contact</h3>
+                      <h3 className="text-lg font-bold text-slate-800">{t.contact.directContact}</h3>
                     </div>
                     <div className="space-y-3">
                       <a
@@ -405,14 +353,14 @@ export default function ContactPage() {
                         className="flex items-center justify-between p-3 bg-slate-50 rounded-lg hover:bg-sky-50 transition-colors group"
                       >
                         <span className="text-slate-700 font-medium">+66 2 017 2949</span>
-                        <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-sky-600 group-hover:translate-x-1 transition-all" />
+                        <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-sky-600 transition-all" />
                       </a>
                       <a
                         href="mailto:info@pnd50.com"
                         className="flex items-center justify-between p-3 bg-slate-50 rounded-lg hover:bg-sky-50 transition-colors group"
                       >
                         <span className="text-slate-700 font-medium">info@pnd50.com</span>
-                        <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-sky-600 group-hover:translate-x-1 transition-all" />
+                        <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-sky-600 transition-all" />
                       </a>
                     </div>
                   </motion.div>
@@ -426,7 +374,7 @@ export default function ContactPage() {
                     transition={{ duration: 0.5, delay: 0.3 }}
                     className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm"
                   >
-                    <h3 className="text-lg font-bold text-slate-800 mb-4">Message Us</h3>
+                    <h3 className="text-lg font-bold text-slate-800 mb-4">{t.contact.messageUs}</h3>
                     <div className="grid grid-cols-2 gap-3">
                       <a
                         href="https://wa.me/66843563805"
@@ -453,56 +401,6 @@ export default function ContactPage() {
             </div>
           </div>
         </section>
-
-        <motion.section
-          className="py-12 md:py-16 relative z-10"
-          variants={fadeInUp}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-        >
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="max-w-7xl mx-auto">
-              <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
-                {/* Map Header */}
-                <div className="p-6 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-sky-100 rounded-lg flex items-center justify-center">
-                      <MapPin className="w-5 h-5 text-sky-600" />
-                    </div>
-                    <div>
-                      <h2 className="text-xl font-bold text-slate-800">Find Us</h2>
-                      <p className="text-sm text-slate-500">EmQuartier, Bangkok</p>
-                    </div>
-                  </div>
-                  <a
-                    href="https://www.google.com/maps/dir//Bhiraj+Tower+at+EmQuartier,+689+Sukhumvit+Rd,+Khlong+Tan+Nuea,+Watthana,+Bangkok+10110"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 text-sky-600 font-medium hover:text-sky-700 transition-colors"
-                  >
-                    Get Directions
-                    <ArrowRight className="w-4 h-4" />
-                  </a>
-                </div>
-                {/* Map Embed */}
-                <iframe
-                  src="https://maps.google.com/maps?q=Bhiraj+Tower+at+EmQuartier,+689+Sukhumvit+Rd,+Khlong+Tan+Nuea,+Watthana,+Bangkok+10110&t=&z=16&ie=UTF8&iwloc=&output=embed"
-                  width="100%"
-                  height="400"
-                  style={{ border: 0 }}
-                  allowFullScreen
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                  className="w-full"
-                ></iframe>
-              </div>
-            </div>
-          </div>
-        </motion.section>
-
-        <div className="pb-16" />
       </AnimatedGridBackground>
     </div>
   )

@@ -24,17 +24,21 @@ export async function getOrCreateSession(sessionToken: string): Promise<ChatSess
   try {
     const supabase = await createServerClient()
 
-    // First try to find existing session
-    const { data: existing, error: fetchError } = await supabase
+    // First try to find existing session (don't use .single() to avoid error on 0 rows)
+    const { data: existingList, error: fetchError } = await supabase
       .from("chat_sessions")
       .select("*")
       .eq("session_token", sessionToken)
       .order("updated_at", { ascending: false })
       .limit(1)
-      .single()
 
-    if (existing && !fetchError) {
-      return existing as ChatSession
+    if (fetchError) {
+      console.error("Error fetching session:", fetchError)
+    }
+
+    // If we found an existing session, return it
+    if (existingList && existingList.length > 0) {
+      return existingList[0] as ChatSession
     }
 
     // Create new session
