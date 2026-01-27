@@ -81,12 +81,25 @@ export function ScrollSpyNavbar() {
       } border border-slate-700/50 w-[calc(100%-2rem)] max-w-4xl`}
     >
       <div className="flex items-center justify-between px-4 md:px-6 py-3">
-        {/* Logo */}
+        {/* Logo - highlighted when on hero section */}
         <button
           onClick={() => scrollToSection("hero")}
-          className="text-xl font-bold text-white hover:text-sky-400 transition-colors"
+          className="relative px-3 py-1.5 text-xl font-bold transition-colors"
         >
-          PND50
+          <span
+            className={`relative z-10 ${
+              activeSection === "hero" ? "text-white" : "text-slate-300 hover:text-white"
+            }`}
+          >
+            PND50
+          </span>
+          {activeSection === "hero" && (
+            <motion.div
+              layoutId="activeNav"
+              className="absolute inset-0 bg-white/10 rounded-full"
+              transition={{ type: "spring", stiffness: 380, damping: 30 }}
+            />
+          )}
         </button>
 
         {/* Desktop Nav */}
