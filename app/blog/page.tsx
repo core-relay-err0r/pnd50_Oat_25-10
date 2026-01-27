@@ -95,7 +95,7 @@ export default function BlogPage() {
                       {featuredPost.tags.map((tag) => (
                         <span
                           key={tag}
-                          className="flex items-center gap-1 bg-slate-100 text-slate-600 text-xs px-3 py-1 rounded-full"
+                          className="flex items-center gap-1 bg-slate-100 text-slate-600 text-xs px-3 py-1.5 rounded-full"
                         >
                           <Tag className="w-3 h-3" />
                           {tag}
@@ -114,7 +114,7 @@ export default function BlogPage() {
       )}
 
       {/* Other Posts */}
-      <section className="py-12 pb-24">
+      <section className="py-12">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-2xl font-bold text-slate-900 mb-8">Latest Articles</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -158,6 +158,89 @@ export default function BlogPage() {
                 </article>
               </Link>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Related Services & Resources - Backlinks */}
+      <section className="py-16 bg-slate-50/80 border-t border-slate-200/50">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-2xl font-bold text-slate-900 mb-8">Related Services & Resources</h2>
+          <div className="grid md:grid-cols-3 gap-6">
+            <Link
+              href="/services/tax"
+              className="group bg-white rounded-xl p-6 border border-slate-200/50 hover:shadow-lg hover:border-sky-200 transition-all"
+            >
+              <h3 className="text-lg font-semibold text-slate-900 mb-2 group-hover:text-sky-600 transition-colors">
+                Tax Filing Services
+              </h3>
+              <p className="text-slate-600 text-sm mb-4">
+                Professional PND50 and corporate tax filing services for foreign companies in Thailand.
+              </p>
+              <span className="inline-flex items-center gap-2 text-sky-600 text-sm font-medium">
+                Learn more <ArrowRight className="w-4 h-4" />
+              </span>
+            </Link>
+
+            <Link
+              href="/services/accounting"
+              className="group bg-white rounded-xl p-6 border border-slate-200/50 hover:shadow-lg hover:border-sky-200 transition-all"
+            >
+              <h3 className="text-lg font-semibold text-slate-900 mb-2 group-hover:text-sky-600 transition-colors">
+                Accounting Services
+              </h3>
+              <p className="text-slate-600 text-sm mb-4">
+                Full-service bookkeeping and financial reporting compliant with Thai accounting standards.
+              </p>
+              <span className="inline-flex items-center gap-2 text-sky-600 text-sm font-medium">
+                Learn more <ArrowRight className="w-4 h-4" />
+              </span>
+            </Link>
+
+            <Link
+              href="/case-studies"
+              className="group bg-white rounded-xl p-6 border border-slate-200/50 hover:shadow-lg hover:border-sky-200 transition-all"
+            >
+              <h3 className="text-lg font-semibold text-slate-900 mb-2 group-hover:text-sky-600 transition-colors">
+                Client Success Stories
+              </h3>
+              <p className="text-slate-600 text-sm mb-4">
+                See how we have helped foreign companies successfully navigate Thai business compliance.
+              </p>
+              <span className="inline-flex items-center gap-2 text-sky-600 text-sm font-medium">
+                View case studies <ArrowRight className="w-4 h-4" />
+              </span>
+            </Link>
+          </div>
+
+          <div className="mt-8 flex flex-wrap gap-4 justify-center">
+            <Link
+              href="/faq"
+              className="text-slate-600 hover:text-sky-600 text-sm underline underline-offset-4 transition-colors"
+            >
+              Frequently Asked Questions
+            </Link>
+            <span className="text-slate-300">|</span>
+            <Link
+              href="/calculator"
+              className="text-slate-600 hover:text-sky-600 text-sm underline underline-offset-4 transition-colors"
+            >
+              Accounting Fee Calculator
+            </Link>
+            <span className="text-slate-300">|</span>
+            <Link
+              href="/contact"
+              className="text-slate-600 hover:text-sky-600 text-sm underline underline-offset-4 transition-colors"
+            >
+              Contact Us
+            </Link>
+            <span className="text-slate-300">|</span>
+            <Link
+              href="/schedule"
+              className="text-slate-600 hover:text-sky-600 text-sm underline underline-offset-4 transition-colors"
+            >
+              Schedule Consultation
+            </Link>
           </div>
         </div>
       </section>

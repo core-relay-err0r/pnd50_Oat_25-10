@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next"
 import { siteConfig } from "@/lib/seo-config"
+import { blogPosts } from "@/lib/blog-data"
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = siteConfig.url
@@ -98,7 +99,23 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.6,
       alternates: createAlternates("/calculator"),
     },
+    {
+      url: `${baseUrl}/blog`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.8,
+      alternates: createAlternates("/blog"),
+    },
   ]
+
+  // Blog posts
+  const blogPages: MetadataRoute.Sitemap = blogPosts.map((post) => ({
+    url: `${baseUrl}/blog/${post.slug}`,
+    lastModified: post.dateModified || post.datePublished,
+    changeFrequency: "monthly" as const,
+    priority: 0.7,
+    alternates: createAlternates(`/blog/${post.slug}`),
+  }))
 
   // Service pages
   const servicePages: MetadataRoute.Sitemap = [
@@ -181,5 +198,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })),
   )
 
-  return [...mainPages, ...servicePages, ...regionalPages, ...legalPages, ...languagePages, ...localizedSubPages]
+  return [...mainPages, ...servicePages, ...blogPages, ...regionalPages, ...legalPages, ...languagePages, ...localizedSubPages]
 }
