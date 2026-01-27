@@ -1,112 +1,185 @@
 import type { MetadataRoute } from "next"
-import { siteConfig, pageDates } from "@/lib/seo-config"
+import { siteConfig } from "@/lib/seo-config"
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = siteConfig.url
+  const now = new Date().toISOString()
 
-  // Main pages with dates from pageDates
+  const lastUpdated = {
+    home: now,
+    services: now,
+    servicePages: now,
+    about: now,
+    schedule: now,
+    contact: now,
+    faq: now,
+    caseStudies: now,
+    legal: now,
+    calculator: now,
+    regional: now,
+  }
+
+  const targetRegions = ["en", "en-US", "en-GB", "en-SG", "en-AU"]
+
+  const createAlternates = (path: string) => ({
+    languages: targetRegions.reduce(
+      (acc, lang) => ({
+        ...acc,
+        [lang]: `${baseUrl}${path}`,
+      }),
+      {} as Record<string, string>,
+    ),
+  })
+
+  const createMultilingualAlternates = (path: string) => ({
+    languages: {
+      en: `${baseUrl}${path}`,
+      th: `${baseUrl}/th${path}`,
+      ru: `${baseUrl}/ru${path}`,
+      "zh-CN": `${baseUrl}/cn${path}`,
+    },
+  })
+
+  // Main pages
   const mainPages: MetadataRoute.Sitemap = [
     {
       url: baseUrl,
-      lastModified: pageDates.home.modified,
+      lastModified: lastUpdated.home,
       changeFrequency: "monthly",
-      priority: 1.0,
+      priority: 0.8,
+      alternates: createMultilingualAlternates(""),
     },
     {
       url: `${baseUrl}/services`,
-      lastModified: pageDates.services.modified,
+      lastModified: lastUpdated.services,
       changeFrequency: "weekly",
-      priority: 0.95,
+      priority: 1.0,
+      alternates: createMultilingualAlternates("/services"),
     },
     {
       url: `${baseUrl}/about`,
-      lastModified: pageDates.about.modified,
+      lastModified: lastUpdated.about,
       changeFrequency: "monthly",
-      priority: 0.8,
+      priority: 0.7,
+      alternates: createMultilingualAlternates("/about"),
     },
     {
       url: `${baseUrl}/schedule`,
-      lastModified: pageDates.schedule.modified,
+      lastModified: lastUpdated.schedule,
       changeFrequency: "monthly",
-      priority: 0.9,
+      priority: 0.8,
+      alternates: createAlternates("/schedule"),
     },
     {
       url: `${baseUrl}/contact`,
-      lastModified: pageDates.contact.modified,
+      lastModified: lastUpdated.contact,
       changeFrequency: "monthly",
-      priority: 0.8,
+      priority: 0.7,
+      alternates: createMultilingualAlternates("/contact"),
     },
     {
       url: `${baseUrl}/faq`,
-      lastModified: pageDates.faq.modified,
+      lastModified: lastUpdated.faq,
       changeFrequency: "weekly",
-      priority: 0.85,
+      priority: 0.8,
+      alternates: createMultilingualAlternates("/faq"),
     },
     {
-      url: `${baseUrl}/blog`,
-      lastModified: "2024-12-23",
-      changeFrequency: "weekly",
-      priority: 0.9,
+      url: `${baseUrl}/case-studies`,
+      lastModified: lastUpdated.caseStudies,
+      changeFrequency: "monthly",
+      priority: 0.5,
+      alternates: createAlternates("/case-studies"),
     },
     {
       url: `${baseUrl}/calculator`,
-      lastModified: pageDates.calculator.modified,
+      lastModified: lastUpdated.calculator,
       changeFrequency: "monthly",
-      priority: 0.75,
+      priority: 0.6,
+      alternates: createAlternates("/calculator"),
     },
   ]
 
-  // Service pages with individual dates
+  // Service pages
   const servicePages: MetadataRoute.Sitemap = [
-    { slug: "corporate", priority: 0.95, dateKey: "services/corporate" as keyof typeof pageDates },
-    { slug: "accounting", priority: 0.9, dateKey: "services/accounting" as keyof typeof pageDates },
-    { slug: "tax", priority: 0.9, dateKey: "services/tax" as keyof typeof pageDates },
-    { slug: "payroll", priority: 0.9, dateKey: "services/payroll" as keyof typeof pageDates },
-    { slug: "advisory", priority: 0.85, dateKey: "services/advisory" as keyof typeof pageDates },
-    { slug: "growth", priority: 0.85, dateKey: "services/growth" as keyof typeof pageDates },
+    { slug: "corporate", priority: 0.95 },
+    { slug: "accounting", priority: 0.9 },
+    { slug: "tax", priority: 0.9 },
+    { slug: "payroll", priority: 0.9 },
+    { slug: "advisory", priority: 0.85 },
+    { slug: "growth", priority: 0.85 },
   ].map((service) => ({
     url: `${baseUrl}/services/${service.slug}`,
-    lastModified: pageDates[service.dateKey]?.modified || pageDates.services.modified,
+    lastModified: lastUpdated.servicePages,
     changeFrequency: "weekly" as const,
     priority: service.priority,
+    alternates: createAlternates(`/services/${service.slug}`),
   }))
 
-  const blogPosts: MetadataRoute.Sitemap = [
-    {
-      url: `${baseUrl}/blog/what-is-pnd50`,
-      lastModified: "2024-12-23",
-      changeFrequency: "monthly",
-      priority: 0.95,
-    },
-    {
-      url: `${baseUrl}/blog/pnd50-vs-pnd51`,
-      lastModified: "2024-12-23",
-      changeFrequency: "monthly",
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/blog/thailand-tax-guide`,
-      lastModified: "2024-12-23",
-      changeFrequency: "monthly",
-      priority: 0.85,
-    },
-  ]
+  const regionalPages: MetadataRoute.Sitemap = [
+    { slug: "singapore", priority: 0.7 },
+    { slug: "taiwan", priority: 0.7 },
+    { slug: "russia", priority: 0.7 },
+  ].map((region) => ({
+    url: `${baseUrl}/for/${region.slug}`,
+    lastModified: lastUpdated.regional,
+    changeFrequency: "monthly" as const,
+    priority: region.priority,
+    alternates: createAlternates(`/for/${region.slug}`),
+  }))
 
   // Legal pages
   const legalPages: MetadataRoute.Sitemap = [
     {
       url: `${baseUrl}/privacy-policy`,
-      lastModified: "2025-01-01",
+      lastModified: lastUpdated.legal,
       changeFrequency: "yearly",
       priority: 0.2,
     },
     {
       url: `${baseUrl}/terms-of-service`,
-      lastModified: "2025-01-01",
+      lastModified: lastUpdated.legal,
       changeFrequency: "yearly",
       priority: 0.2,
     },
   ]
 
-  return [...mainPages, ...servicePages, ...blogPosts, ...legalPages]
+  const languagePages: MetadataRoute.Sitemap = [
+    {
+      url: `${baseUrl}/th`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.8,
+      alternates: createMultilingualAlternates(""),
+    },
+    {
+      url: `${baseUrl}/ru`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.8,
+      alternates: createMultilingualAlternates(""),
+    },
+    {
+      url: `${baseUrl}/cn`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.8,
+      alternates: createMultilingualAlternates(""),
+    },
+  ]
+
+  const locales = ["th", "ru", "cn"]
+  const localizedPages = ["services", "about", "faq", "contact"]
+
+  const localizedSubPages: MetadataRoute.Sitemap = locales.flatMap((locale) =>
+    localizedPages.map((page) => ({
+      url: `${baseUrl}/${locale}/${page}`,
+      lastModified: now,
+      changeFrequency: "monthly" as const,
+      priority: page === "services" ? 0.9 : 0.7,
+      alternates: createMultilingualAlternates(`/${page}`),
+    })),
+  )
+
+  return [...mainPages, ...servicePages, ...regionalPages, ...legalPages, ...languagePages, ...localizedSubPages]
 }

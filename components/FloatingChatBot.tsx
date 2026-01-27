@@ -16,13 +16,10 @@ import {
   getOrCreateSession,
   getChatSessions,
   getChatMessages,
-  saveMessage,
-  updateSessionTitle,
   deleteChatSession,
   createNewSession,
   type ChatSession,
 } from "@/app/actions/chat-history"
-import { generateTitle } from "@/lib/chat-utils"
 
 const WELCOME_MESSAGE = {
   id: "welcome-static",
@@ -86,8 +83,8 @@ export function FloatingChatBot() {
   const recognitionRef = useRef<SpeechRecognition | null>(null)
   const synthRef = useRef<SpeechSynthesis | null>(null)
   const lastSpokenMessageRef = useRef<string | null>(null)
-  const spokenMessageIdsRef = useRef<Set<string>>(new Set())
-  const wasSpeakingRef = useRef(false)
+  const previousStatusRef = useRef<string | null>(null)
+  const lastAssistantContentRef = useRef<string>("")
 
   const [inputValue, setInputValue] = useState("")
 
@@ -104,6 +101,7 @@ export function FloatingChatBot() {
 
   const ttsQueueRef = useRef<string[]>([])
   const isProcessingTTSRef = useRef(false)
+  const lastSpokenMessageIdRef = useRef<string | null>(null)
 
   useEffect(() => {
     const token = getSessionToken()
@@ -189,13 +187,13 @@ export function FloatingChatBot() {
   // Click outside to close
   useEffect(() => {
     function clickOutsideHandler(e: MouseEvent) {
-      if (wrapperRef.current && !wrapperRef.current.contains(e.target as Node) && isOpen && !voiceMode) {
+      if (wrapperRef.current && !wrapperRef.current.contains(e.target as Node) && isOpen) {
         setIsOpen(false)
       }
     }
     document.addEventListener("mousedown", clickOutsideHandler)
     return () => document.removeEventListener("mousedown", clickOutsideHandler)
-  }, [isOpen, voiceMode])
+  }, [isOpen])
 
   const {
     messages: aiMessages,
@@ -217,58 +215,7 @@ export function FloatingChatBot() {
   // Ref to track saved message IDs and debounce timer
   const savedMessageIds = useRef<Set<string>>(new Set())
   const saveTimerRef = useRef<NodeJS.Timeout | null>(null)
-
-  useEffect(() => {
-    if (!currentSessionId || aiMessages.length === 0) return
-
-    const lastMessage = aiMessages[aiMessages.length - 1]
-    if (!lastMessage) return
-
-    if (lastMessage.id.startsWith("welcome-")) return
-
-    // Skip if already saved
-    if (savedMessageIds.current.has(lastMessage.id)) return
-
-    if (status === "in_progress" && lastMessage.role === "assistant") return
-
-    // Extract text content from message parts
-    const content = lastMessage.parts
-      .filter((part) => part.type === "text")
-      .map((part) => part.text)
-      .join("")
-
-    if (!content) return
-
-    // Clear previous timer
-    if (saveTimerRef.current) {
-      clearTimeout(saveTimerRef.current)
-    }
-
-    // Set new debounced timer - saves after 500ms of no updates
-    saveTimerRef.current = setTimeout(() => {
-      // Save message to database
-      saveMessage(currentSessionId, lastMessage.role as "user" | "assistant", content, {
-        page: pathname,
-        voiceMode,
-      })
-
-      savedMessageIds.current.add(lastMessage.id)
-
-      // Auto-generate title from first user message
-      if (!hasSetTitle && lastMessage.role === "user") {
-        const title = generateTitle(content)
-        updateSessionTitle(currentSessionId, title)
-        setHasSetTitle(true)
-      }
-    }, 500)
-
-    // Cleanup timer on unmount
-    return () => {
-      if (saveTimerRef.current) {
-        clearTimeout(saveTimerRef.current)
-      }
-    }
-  }, [aiMessages, currentSessionId, pathname, voiceMode, hasSetTitle, status])
+  const pendingTTSContentRef = useRef<{ id: string; content: string } | null>(null)
 
   const speakWithElevenLabs = useCallback(async (text: string) => {
     if (!text) return
@@ -397,6 +344,9 @@ export function FloatingChatBot() {
   )
 
   const stopSpeaking = useCallback(() => {
+    ttsQueueRef.current = []
+    isProcessingTTSRef.current = false
+
     if (audioRef.current) {
       audioRef.current.pause()
       audioRef.current = null
@@ -407,116 +357,102 @@ export function FloatingChatBot() {
     setIsSpeaking(false)
   }, [])
 
-  useEffect(() => {
-    if (!voiceMode || aiMessages.length === 0) return
-
-    const lastMessage = aiMessages[aiMessages.length - 1]
-
-    // AI SDK v5 uses: "ready" | "submitted" | "streaming" | "error"
-    if (
-      lastMessage.role === "assistant" &&
-      status === "ready" &&
-      !lastMessage.id.startsWith("welcome-") &&
-      !spokenMessageIdsRef.current.has(lastMessage.id)
-    ) {
-      const messageText = lastMessage.parts
-        .filter((part) => part.type === "text")
-        .map((part) => part.text)
-        .join(" ")
-
-      if (messageText && messageText.trim().length > 0) {
-        // Mark as spoken BEFORE triggering TTS to prevent duplicates
-        spokenMessageIdsRef.current.add(lastMessage.id)
-        lastSpokenMessageRef.current = messageText
-        setIsProcessing(false)
-        speakText(messageText)
-      }
-    }
-  }, [aiMessages, status, voiceMode, speakText])
-
-  const toggleVoiceMode = useCallback(() => {
-    const newValue = !voiceMode
-    setVoiceMode(newValue)
-    setVoiceEnabled(newValue)
-    localStorage.setItem("chatbot-voice-mode", String(newValue))
-    localStorage.setItem("chatbot-voice-enabled", String(newValue))
-
-    if (!newValue && isSpeaking) {
-      stopSpeaking()
-    }
-  }, [voiceMode, isSpeaking, stopSpeaking])
-
-  const toggleVoice = useCallback(() => {
-    const newValue = !voiceEnabled
-    setVoiceEnabled(newValue)
-    localStorage.setItem("chatbot-voice-enabled", String(newValue))
-
-    if (!newValue && isSpeaking) {
-      stopSpeaking()
-    }
-  }, [voiceEnabled, isSpeaking, stopSpeaking])
-
   const startVoiceModeListening = useCallback(() => {
-    if (!recognitionRef.current || isListening || isSpeaking) return
-
-    recognitionRef.current.onresult = (event) => {
-      const transcript = event.results[0][0].transcript
-      if (transcript.trim()) {
-        setIsProcessing(true)
-        sendMessage({ text: transcript })
-      }
-      setIsListening(false)
-    }
-
-    recognitionRef.current.onerror = () => {
-      setIsListening(false)
-    }
-
-    recognitionRef.current.onend = () => {
-      setIsListening(false)
-    }
-
-    try {
-      recognitionRef.current.start()
-      setIsListening(true)
-    } catch (error) {
-      console.error("Speech recognition error:", error)
-      setIsListening(false)
-    }
-  }, [isListening, isSpeaking, sendMessage])
-
-  const startListening = useCallback(() => {
-    if (!recognitionRef.current || isListening) return
-
-    recognitionRef.current.onresult = (event) => {
-      const transcript = event.results[0][0].transcript
-      setInputValue((prev) => prev + (prev ? " " : "") + transcript)
-      setIsListening(false)
-    }
-
-    recognitionRef.current.onerror = () => {
-      setIsListening(false)
-    }
-
-    recognitionRef.current.onend = () => {
-      setIsListening(false)
-    }
-
-    try {
-      recognitionRef.current.start()
-      setIsListening(true)
-    } catch (error) {
-      console.error("Speech recognition error:", error)
-      setIsListening(false)
-    }
-  }, [isListening])
+    if (!recognitionRef.current) return
+    setIsListening(true)
+    recognitionRef.current.start()
+  }, [])
 
   const stopListening = useCallback(() => {
-    if (recognitionRef.current && isListening) {
-      recognitionRef.current.stop()
-      setIsListening(false)
+    if (!recognitionRef.current) return
+    setIsListening(false)
+    recognitionRef.current.stop()
+  }, [])
+
+  const toggleVoiceMode = useCallback(() => {
+    setVoiceMode((prev) => !prev)
+    if (!voiceMode && recognitionRef.current) {
+      startVoiceModeListening()
     }
-  }, [isListening])
+    if (voiceMode) {
+      stopListening()
+    }
+  }, [voiceMode, startVoiceModeListening])
+
+  useEffect(() => {
+    if (!voiceMode) {
+      previousStatusRef.current = status
+      return
+    }
+
+    // Detect transition from "in_progress" to completed state
+    const wasStreaming = previousStatusRef.current === "in_progress"
+    const isNowComplete = status !== "in_progress"
+    previousStatusRef.current = status
+
+    // Only trigger TTS when streaming just completed
+    if (!wasStreaming || !isNowComplete) return
+
+    if (aiMessages.length === 0) return
+
+    const lastMessage = aiMessages[aiMessages.length - 1]
+    if (!lastMessage || lastMessage.role !== "assistant") return
+
+    // Skip if already spoken
+    if (lastMessage.id === lastSpokenMessageIdRef.current) return
+
+    console.log("[v0] TTS: Streaming completed, waiting for final text...")
+
+    // Use a small delay and polling to ensure message is fully populated
+    const attemptTTS = (attempts = 0) => {
+      const currentLastMessage = aiMessages[aiMessages.length - 1]
+
+      // Extract text from the message
+      let messageText = ""
+
+      // Method 1: Try parts array (AI SDK format)
+      if (currentLastMessage.parts && Array.isArray(currentLastMessage.parts)) {
+        for (const part of currentLastMessage.parts) {
+          if (part.type === "text" && part.text) {
+            messageText += part.text
+          }
+        }
+        messageText = messageText.trim()
+      }
+
+      // Method 2: Try content property (standard format)
+      if (!messageText && (currentLastMessage as { content?: string }).content) {
+        messageText = (currentLastMessage as { content?: string }).content || ""
+      }
+
+      console.log(`[v0] TTS Attempt ${attempts + 1}: Text length = ${messageText.length}`)
+      console.log("[v0] TTS: Message parts:", JSON.stringify(currentLastMessage.parts, null, 2))
+
+      // If we have text and it's different from last spoken, speak it
+      if (messageText && messageText.length > 10) {
+        if (messageText !== lastAssistantContentRef.current) {
+          console.log("[v0] TTS: Speaking text:", messageText.substring(0, 100) + "...")
+          lastSpokenMessageIdRef.current = currentLastMessage.id
+          lastSpokenMessageRef.current = messageText
+          lastAssistantContentRef.current = messageText
+          setIsProcessing(false)
+
+          // Clear any queued audio and speak the final message
+          ttsQueueRef.current = []
+          speakText(messageText)
+        }
+      } else if (attempts < 5) {
+        // Retry after a short delay (up to 5 attempts, 200ms each = 1 second max)
+        console.log("[v0] TTS: Text too short or empty, retrying...")
+        setTimeout(() => attemptTTS(attempts + 1), 200)
+      } else {
+        console.log("[v0] TTS: Failed to get text after 5 attempts")
+      }
+    }
+
+    // Start with a small initial delay to let React update
+    setTimeout(() => attemptTTS(0), 100)
+  }, [aiMessages, status, voiceMode, speakText])
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
@@ -619,23 +555,6 @@ export function FloatingChatBot() {
     if (diffDays < 7) return `${diffDays} days ago`
     return date.toLocaleDateString()
   }
-
-  useEffect(() => {
-    // When Panida finishes speaking (isSpeaking goes from true to false)
-    if (wasSpeakingRef.current && !isSpeaking && voiceMode && !isListening && !isProcessing && status === "ready") {
-      // Small delay before listening again for natural conversation flow
-      const timer = setTimeout(() => {
-        if (voiceMode && !isSpeaking && !isListening) {
-          startVoiceModeListening()
-        }
-      }, 500)
-
-      return () => clearTimeout(timer)
-    }
-
-    // Track previous speaking state
-    wasSpeakingRef.current = isSpeaking
-  }, [isSpeaking, voiceMode, isListening, isProcessing, status, startVoiceModeListening])
 
   return (
     <div className="fixed bottom-4 md:bottom-6 right-4 md:right-6 z-50 flex items-end justify-end">

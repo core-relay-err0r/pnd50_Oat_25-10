@@ -8,8 +8,6 @@ import { useEffect, useState } from "react"
 import { Testimonial } from "@/components/ui/testimonial-card"
 import { motion } from "framer-motion"
 import CTASection from "@/components/layout/CTASection"
-import { BreadcrumbNav } from "@/components/seo/breadcrumb-nav"
-import { BreadcrumbSchema } from "@/components/seo/structured-data"
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 30 },
@@ -37,11 +35,6 @@ const staggerContainer = {
 }
 
 const AboutClientPage = () => {
-  const breadcrumbItems = [
-    { name: "Home", url: "/" },
-    { name: "About Us", url: "/about" },
-  ]
-
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
   const [stats, setStats] = useState({ years: 0, clients: 0, satisfaction: 0 })
   const [hasAnimated, setHasAnimated] = useState(false)
@@ -99,63 +92,72 @@ const AboutClientPage = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-sky-50/80 relative overflow-hidden">
-      <BreadcrumbSchema items={breadcrumbItems} />
-
-      {/* Decorative Elements */}
-      <motion.div
-        className="absolute top-[15%] left-[8%] w-20 h-20 border-2 border-sky-300/40 rounded-2xl"
-        animate={{
-          rotate: [0, 90, 180, 270, 360],
-          y: [0, -15, 0, 15, 0],
-        }}
-        transition={{ duration: 20, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
-        style={{
-          transform: `translate(${mousePosition.x * 0.3}px, ${mousePosition.y * 0.3}px)`,
-        }}
-      />
-      <motion.div
-        className="absolute top-[25%] right-[12%] w-16 h-16 border-2 border-teal-300/30 rounded-full"
-        animate={{
-          scale: [1, 1.2, 1],
-          opacity: [0.3, 0.6, 0.3],
-        }}
-        transition={{ duration: 4, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
-      />
-      <motion.div
-        className="absolute bottom-[30%] left-[15%] w-12 h-12 bg-gradient-to-br from-sky-200/30 to-teal-200/30 rounded-lg"
-        animate={{
-          rotate: [45, 135, 225, 315, 405],
-        }}
-        transition={{ duration: 15, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
-      />
-      <motion.div
-        className="absolute top-[40%] right-[20%] w-8 h-8 bg-gradient-to-br from-blue-300/40 to-sky-300/40 rounded-full"
-        animate={{
-          y: [0, -20, 0],
-          x: [0, 10, 0],
-        }}
-        transition={{ duration: 5, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
-      />
-
-      <div
-        className="absolute top-20 left-10 w-[500px] h-[500px] bg-gradient-to-br from-sky-200/40 via-blue-200/30 to-teal-200/20 rounded-full blur-3xl pointer-events-none"
-        style={{
-          transform: `translate(${mousePosition.x}px, ${mousePosition.y}px)`,
-          transition: "transform 0.5s ease-out",
-        }}
-      />
-      <div
-        className="absolute bottom-20 right-10 w-[450px] h-[450px] bg-gradient-to-br from-teal-200/35 via-sky-200/25 to-blue-200/20 rounded-full blur-3xl pointer-events-none"
-        style={{
-          transform: `translate(${-mousePosition.x}px, ${-mousePosition.y}px)`,
-          transition: "transform 0.5s ease-out",
-        }}
-      />
-
       {/* Hero Section */}
-      <section className="pt-24 pb-12 sm:pt-32 sm:pb-16 relative z-10">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <BreadcrumbNav items={breadcrumbItems} className="mb-8" />
+      <section className="relative pb-24 overflow-hidden md:pb-32 md:pt-28 pt-24 px-4 sm:px-6 lg:px-8">
+        {/* ... existing floating elements ... */}
+        <motion.div
+          className="absolute top-[15%] left-[8%] w-20 h-20 border-2 border-sky-300/40 rounded-2xl"
+          animate={{
+            rotate: [0, 90, 180, 270, 360],
+            y: [0, -15, 0, 15, 0],
+          }}
+          transition={{ duration: 20, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
+          style={{
+            transform: `translate(${mousePosition.x * 0.3}px, ${mousePosition.y * 0.3}px)`,
+          }}
+        />
+        <motion.div
+          className="absolute top-[25%] right-[12%] w-16 h-16 border-2 border-teal-300/30 rounded-full"
+          animate={{
+            scale: [1, 1.2, 1],
+            opacity: [0.3, 0.6, 0.3],
+          }}
+          transition={{ duration: 4, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
+        />
+        <motion.div
+          className="absolute bottom-[30%] left-[15%] w-12 h-12 bg-gradient-to-br from-sky-200/30 to-teal-200/30 rounded-lg"
+          animate={{
+            rotate: [45, 135, 225, 315, 405],
+          }}
+          transition={{ duration: 15, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
+        />
+        <motion.div
+          className="absolute top-[40%] right-[20%] w-8 h-8 bg-gradient-to-br from-blue-300/40 to-sky-300/40 rounded-full"
+          animate={{
+            y: [0, -20, 0],
+            x: [0, 10, 0],
+          }}
+          transition={{ duration: 5, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
+        />
+
+        <div
+          className="absolute top-20 left-10 w-[500px] h-[500px] bg-gradient-to-br from-sky-200/40 via-blue-200/30 to-teal-200/20 rounded-full blur-3xl pointer-events-none"
+          style={{
+            transform: `translate(${mousePosition.x}px, ${mousePosition.y}px)`,
+            transition: "transform 0.5s ease-out",
+          }}
+        />
+        <div
+          className="absolute bottom-20 right-10 w-[450px] h-[450px] bg-gradient-to-br from-teal-200/35 via-sky-200/25 to-blue-200/20 rounded-full blur-3xl pointer-events-none"
+          style={{
+            transform: `translate(${-mousePosition.x}px, ${-mousePosition.y}px)`,
+            transition: "transform 0.5s ease-out",
+          }}
+        />
+
+        <div className="container mx-auto px-4 sm:px-6 relative z-10 lg:px-0 max-w-7xl">
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.2, duration: 0.4 }}
+          >
+            <Link
+              href="/"
+              className="inline-flex items-center gap-2 text-slate-400 hover:text-primary transition-colors group mb-6 sm:mb-8 touch-manipulation"
+            >
+              {/* Link content */}
+            </Link>
+          </motion.div>
 
           <div className="flex flex-col lg:grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             {/* Left: Text Content */}
@@ -170,7 +172,7 @@ const AboutClientPage = () => {
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
                   <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-sky-500"></span>
                 </span>
-                We are experts
+                About PND50
               </motion.div>
 
               <motion.h1
@@ -184,7 +186,7 @@ const AboutClientPage = () => {
                 <span className="text-slate-900">specialist with</span>
                 <br />
                 <span className="bg-gradient-to-r from-blue-600 via-sky-500 to-teal-400 bg-clip-text text-transparent font-extrabold">
-                  Global standards
+                  {"Global standards\n"}
                 </span>
               </motion.h1>
 
@@ -249,43 +251,6 @@ const AboutClientPage = () => {
           </div>
         </div>
       </section>
-
-      {/* Why PND50 Section */}
-      <motion.section
-        className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-sky-50 via-white to-teal-50 relative overflow-hidden"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-100px" }}
-        variants={fadeInUp}
-        transition={{ duration: 0.6 }}
-      >
-        <div className="absolute inset-0 bg-gradient-to-br from-sky-100/50 via-transparent to-teal-100/50" />
-        <div className="absolute top-0 right-0 w-96 h-96 bg-sky-200/30 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-teal-200/30 rounded-full blur-3xl" />
-
-        <div className="container mx-auto relative z-10 max-w-4xl">
-          <div className="text-center">
-            <motion.h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-900 mb-6" variants={fadeInUp}>
-              Why{" "}
-              <span className="bg-gradient-to-r from-sky-500 to-teal-500 bg-clip-text text-transparent">
-                &quot;PND50&quot;
-              </span>
-              ?
-            </motion.h2>
-
-            <motion.div className="space-y-4 text-lg text-slate-600 leading-relaxed" variants={fadeInUp}>
-              <p>
-                Our name comes from <span className="text-slate-900 font-semibold">ภ.ง.ด.50</span> (P.N.D.50) —
-                Thailand&apos;s Annual Corporate Income Tax Return form.
-              </p>
-              <p>
-                This essential form represents what we do best: helping foreign-owned businesses master Thai tax
-                compliance with clarity and confidence.
-              </p>
-            </motion.div>
-          </div>
-        </div>
-      </motion.section>
 
       {/* Stats Section */}
       <motion.section
@@ -363,8 +328,8 @@ const AboutClientPage = () => {
         </div>
       </motion.section>
 
-      {/* Mission Section */}
-      <section className="py-12 sm:py-24 md:py-32 bg-white relative overflow-hidden">
+      <section className="py-16 sm:py-24 md:py-32 relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-sky-100/50 rounded-full blur-3xl"></div>
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 max-w-7xl">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
             {/* Image */}
@@ -460,7 +425,6 @@ const AboutClientPage = () => {
         </div>
       </section>
 
-      {/* Success Stories Section */}
       <section className="py-12 sm:py-24 md:py-32 bg-gradient-to-br from-sky-50/50 to-white relative overflow-hidden">
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-teal-100/30 rounded-full blur-3xl"></div>
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -524,6 +488,9 @@ const AboutClientPage = () => {
           </div>
         </div>
       </section>
+
+      {/* Related Pages Section */}
+      
 
       {/* CTA Section */}
       <CTASection />

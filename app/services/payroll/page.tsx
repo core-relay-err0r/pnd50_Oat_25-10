@@ -1,61 +1,45 @@
 import type { Metadata } from "next"
 import { Users } from "lucide-react"
-import {
-  DetailedServiceSchema,
-  BreadcrumbSchema,
-  FAQSchema,
-  AuthorSchema,
-  ServiceHowToSchema,
-} from "@/components/seo/structured-data"
+import { ServiceSchema, BreadcrumbSchema, FAQSchema } from "@/components/seo/structured-data"
 import { siteConfig } from "@/lib/seo-config"
 import { ServicePageClient } from "@/components/services/service-page-client"
 
 export const metadata: Metadata = {
-  title: "Payroll Services in Thailand | Salary & Social Security | PND50",
+  title: "Payroll Services in Thailand | PND50",
   description:
-    "Professional payroll services in Thailand for foreign businesses. Monthly salary processing, social security submissions, PND1 tax withholding, and payslip generation. Full English support.",
+    "Professional payroll services in Thailand for foreign businesses. Monthly payroll processing, social security submissions, and tax withholding. Accurate and timely for expat companies.",
   keywords: [
-    "payroll Thailand",
     "payroll services Thailand",
-    "salary processing Thailand",
+    "payroll outsourcing Thailand",
     "social security Thailand",
-    "outsource payroll Thailand",
-    // Thai keywords
-    "เงินเดือน",
-    "ทำเงินเดือน",
-    "ประกันสังคม",
-    "บริการเงินเดือน",
-    "จ่ายเงินเดือน",
+    "employee payroll Thailand",
+    "foreign business payroll Thailand",
+    "expat payroll Thailand",
+    "HR services Thailand",
   ],
   alternates: {
     canonical: `${siteConfig.url}/services/payroll`,
     languages: {
       en: `${siteConfig.url}/services/payroll`,
+      "en-US": `${siteConfig.url}/services/payroll`,
+      "en-GB": `${siteConfig.url}/services/payroll`,
+      "en-SG": `${siteConfig.url}/services/payroll`,
+      "en-AU": `${siteConfig.url}/services/payroll`,
       "x-default": `${siteConfig.url}/services/payroll`,
     },
   },
   openGraph: {
     title: "Payroll Services in Thailand | PND50",
-    description:
-      "Professional payroll processing for foreign businesses in Thailand. Social security and tax compliance included.",
+    description: "Professional payroll processing for foreign businesses in Thailand.",
     url: `${siteConfig.url}/services/payroll`,
     siteName: "PND50",
     locale: "en_US",
     type: "website",
-    images: [
-      {
-        url: `${siteConfig.url}/og-services.png`,
-        width: 1200,
-        height: 630,
-        alt: "PND50 Payroll Services in Thailand",
-      },
-    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Payroll Services in Thailand | PND50",
     description: "Professional payroll for foreign businesses in Thailand.",
-    images: [`${siteConfig.url}/og-services.png`],
   },
   robots: {
     index: true,
@@ -96,55 +80,22 @@ const faqs = [
   },
 ]
 
-const howToSteps = [
-  {
-    name: "Employee Setup",
-    text: "We set up your employee database with salary details, tax IDs, and social security numbers.",
-  },
-  {
-    name: "Monthly Data Collection",
-    text: "Submit attendance, overtime, leave, and any salary changes by the 20th of each month.",
-  },
-  {
-    name: "Payroll Processing",
-    text: "We calculate net salaries, tax withholdings, and social security contributions for all employees.",
-  },
-  { name: "Payslip Delivery", text: "Receive individual payslips and summary reports by month-end for your records." },
-  {
-    name: "Government Submissions",
-    text: "We file PND1 withholding tax and social security contributions to respective government agencies.",
-  },
-]
-
-const breadcrumbItems = [
-  { name: "Home", url: "/" },
-  { name: "Services", url: "/services" },
-  { name: "Payroll Services", url: "/services/payroll" },
-]
-
 export default function PayrollPage() {
   return (
     <>
-      <DetailedServiceSchema
+      <ServiceSchema
         name="Payroll Services in Thailand"
         description="Professional payroll processing and social security services for foreign businesses in Thailand."
         url="/services/payroll"
-        serviceType="Payroll Service"
-        datePublished="2024-01-15"
-        dateModified="2025-06-20"
-        priceRange="฿฿"
-        aggregateRating={{ ratingValue: "4.9", reviewCount: "52" }}
-        breadcrumb={breadcrumbItems}
       />
-      <BreadcrumbSchema items={breadcrumbItems} />
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", url: "/" },
+          { name: "Services", url: "/services" },
+          { name: "Payroll in Thailand", url: "/services/payroll" },
+        ]}
+      />
       <FAQSchema faqs={faqs} />
-      <ServiceHowToSchema serviceName="Payroll Processing" steps={howToSteps} totalTime="P30D" />
-      <AuthorSchema
-        name="PND50 Payroll Team"
-        jobTitle="Payroll Specialists"
-        description="HR and payroll experts ensuring accurate salary processing and labor law compliance"
-        credentials={["HR Management Certificate", "Social Security Specialist"]}
-      />
 
       <ServicePageClient
         title="Payroll Services in Thailand"
@@ -152,7 +103,6 @@ export default function PayrollPage() {
         icon={<Users className="w-6 h-6 text-white" />}
         features={features}
         faqs={faqs}
-        breadcrumbItems={breadcrumbItems}
       />
     </>
   )

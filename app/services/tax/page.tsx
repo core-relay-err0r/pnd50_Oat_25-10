@@ -1,63 +1,45 @@
 import type { Metadata } from "next"
 import { FileText } from "lucide-react"
-import {
-  DetailedServiceSchema,
-  BreadcrumbSchema,
-  FAQSchema,
-  AuthorSchema,
-  ServiceHowToSchema,
-} from "@/components/seo/structured-data"
+import { ServiceSchema, BreadcrumbSchema, FAQSchema } from "@/components/seo/structured-data"
 import { siteConfig } from "@/lib/seo-config"
 import { ServicePageClient } from "@/components/services/service-page-client"
 
 export const metadata: Metadata = {
-  title: "Tax Filing in Thailand | Corporate Tax & VAT Services | PND50",
+  title: "Tax Filing & Compliance Services in Thailand | PND50",
   description:
-    "Expert tax filing services in Thailand for foreign businesses. VAT, withholding tax, corporate income tax (PND50, PND51), and Revenue Department compliance. Full English support.",
+    "Expert tax filing and compliance services in Thailand for foreign businesses. VAT, withholding tax, corporate income tax, and Revenue Department compliance. Full English support for expats.",
   keywords: [
-    "tax filing Thailand",
     "tax filing in Thailand",
-    "corporate tax Thailand",
-    "VAT Thailand",
-    "withholding tax Thailand",
-    "PND50",
-    "PND51",
-    // Thai keywords
-    "ยื่นภาษี",
-    "ภาษีนิติบุคคล",
-    "ภาษีมูลค่าเพิ่ม",
-    "ภ.ง.ด.50",
-    "ภ.ง.ด.51",
+    "VAT in Thailand",
+    "corporate income tax Thailand",
+    "withholding tax in Thailand",
+    "tax compliance in Thailand",
+    "PND50 tax filing Thailand",
+    "foreign business tax Thailand",
   ],
   alternates: {
     canonical: `${siteConfig.url}/services/tax`,
     languages: {
       en: `${siteConfig.url}/services/tax`,
+      "en-US": `${siteConfig.url}/services/tax`,
+      "en-GB": `${siteConfig.url}/services/tax`,
+      "en-SG": `${siteConfig.url}/services/tax`,
+      "en-AU": `${siteConfig.url}/services/tax`,
       "x-default": `${siteConfig.url}/services/tax`,
     },
   },
   openGraph: {
-    title: "Tax Filing in Thailand | PND50",
-    description:
-      "Expert tax filing for foreign businesses in Thailand. VAT, corporate tax, and full compliance support.",
+    title: "Tax Filing & Compliance in Thailand | PND50",
+    description: "Expert tax services for foreign businesses in Thailand. Full English support.",
     url: `${siteConfig.url}/services/tax`,
     siteName: "PND50",
     locale: "en_US",
     type: "website",
-    images: [
-      {
-        url: `${siteConfig.url}/og-services.png`,
-        width: 1200,
-        height: 630,
-        alt: "PND50 Tax Filing Services in Thailand",
-      },
-    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Tax Filing in Thailand | PND50",
+    title: "Tax Services in Thailand | PND50",
     description: "Expert tax filing for foreign businesses in Thailand.",
-    images: [`${siteConfig.url}/og-services.png`],
   },
   robots: {
     index: true,
@@ -98,54 +80,22 @@ const faqs = [
   },
 ]
 
-const howToSteps = [
-  {
-    name: "Tax Calendar Setup",
-    text: "We create a customized tax calendar with all your company's filing deadlines and send reminders in advance.",
-  },
-  {
-    name: "Monthly VAT Filing",
-    text: "We prepare and submit PP30 VAT returns by the 15th of each month, including input/output reconciliation.",
-  },
-  {
-    name: "Withholding Tax Management",
-    text: "We calculate, file, and pay withholding taxes (PND1, PND3, PND53) for all applicable payments.",
-  },
-  {
-    name: "Corporate Tax Filing",
-    text: "We prepare and submit PND51 (half-year) and PND50 (annual) corporate income tax returns with optimized calculations.",
-  },
-]
-
 export default function TaxPage() {
-  const breadcrumbItems = [
-    { name: "Home", url: "/" },
-    { name: "Services", url: "/services" },
-    { name: "Tax & Compliance", url: "/services/tax" },
-  ]
-
   return (
     <>
-      <DetailedServiceSchema
+      <ServiceSchema
         name="Tax Filing & Compliance Services in Thailand"
         description="Expert tax filing and compliance services for foreign businesses operating in Thailand."
         url="/services/tax"
-        serviceType="Tax Preparation Service"
-        datePublished="2024-01-15"
-        dateModified="2025-06-20"
-        priceRange="฿฿"
-        aggregateRating={{ ratingValue: "4.9", reviewCount: "127" }}
-        breadcrumb={breadcrumbItems}
       />
-      <BreadcrumbSchema items={breadcrumbItems} />
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", url: "/" },
+          { name: "Services", url: "/services" },
+          { name: "Tax Services in Thailand", url: "/services/tax" },
+        ]}
+      />
       <FAQSchema faqs={faqs} />
-      <ServiceHowToSchema serviceName="Tax Filing & Compliance" steps={howToSteps} totalTime="P365D" />
-      <AuthorSchema
-        name="PND50 Tax Team"
-        jobTitle="Tax Specialists"
-        description="Certified tax auditors with expertise in Thai corporate taxation and Revenue Department compliance"
-        credentials={["Tax Auditor Certificate", "Revenue Department Licensed"]}
-      />
 
       <ServicePageClient
         title="Tax & Compliance in Thailand"
@@ -153,7 +103,6 @@ export default function TaxPage() {
         icon={<FileText className="w-6 h-6 text-white" />}
         features={features}
         faqs={faqs}
-        breadcrumbItems={breadcrumbItems}
       />
     </>
   )

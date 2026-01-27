@@ -10,18 +10,12 @@ import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 import { Mail, Phone, MapPin, Send, CheckCircle2, MessageSquare, Building2, Clock, ArrowRight } from "lucide-react"
 import { motion } from "framer-motion"
-import { BreadcrumbNav } from "@/components/seo/breadcrumb-nav"
-import { BreadcrumbSchema } from "@/components/seo/structured-data"
+import { ContactRelatedLinks } from "@/components/seo/related-links"
 
 const AnimatedGridBackground = dynamic(
   () => import("@/components/ui/animated-grid-background").then((mod) => mod.AnimatedGridBackground),
   { ssr: false },
 )
-
-const breadcrumbItems = [
-  { name: "Home", url: "/" },
-  { name: "Contact", url: "/contact" },
-]
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 30 },
@@ -126,8 +120,6 @@ export default function ContactPage() {
 
   return (
     <div className="min-h-screen bg-slate-50">
-      <BreadcrumbSchema items={breadcrumbItems} />
-
       <AnimatedGridBackground className="min-h-screen" variant="light">
         {/* Decorative Elements */}
         <div className="absolute top-20 left-10 w-[500px] h-[500px] bg-gradient-to-br from-sky-200/40 via-blue-200/30 to-teal-200/20 rounded-full blur-3xl pointer-events-none" />
@@ -135,8 +127,6 @@ export default function ContactPage() {
 
         <section className="relative pt-24 pb-8 md:pt-32 md:pb-12 overflow-hidden">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 max-w-7xl">
-            <BreadcrumbNav items={breadcrumbItems} className="mb-8" />
-
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               {/* Left: Headline */}
               <motion.div
@@ -145,7 +135,7 @@ export default function ContactPage() {
                 transition={{ duration: 0.6 }}
               >
                 <span className="inline-block text-sky-600 font-semibold text-sm uppercase tracking-wider mb-4">
-                  Located in Thailand
+                  Contact
                 </span>
                 <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-slate-900 leading-tight mb-6">
                   Let's talk about
@@ -501,6 +491,8 @@ export default function ContactPage() {
             </div>
           </div>
         </motion.section>
+
+        
 
         <div className="pb-16" />
       </AnimatedGridBackground>

@@ -1,59 +1,45 @@
 import type { Metadata } from "next"
 import { TrendingUp } from "lucide-react"
-import {
-  DetailedServiceSchema,
-  BreadcrumbSchema,
-  FAQSchema,
-  AuthorSchema,
-  ServiceHowToSchema,
-} from "@/components/seo/structured-data"
+import { ServiceSchema, BreadcrumbSchema, FAQSchema } from "@/components/seo/structured-data"
 import { siteConfig } from "@/lib/seo-config"
 import { ServicePageClient } from "@/components/services/service-page-client"
 
 export const metadata: Metadata = {
-  title: "Grow Your Business in Thailand | Financial Planning | PND50",
+  title: "Business Growth & Financial Planning in Thailand | PND50",
   description:
-    "Strategic financial planning and business growth solutions in Thailand. Scale your foreign business with expert analysis, cost optimization, and performance insights. Full English support.",
+    "Strategic financial planning and business growth solutions in Thailand. Scale your foreign business with expert analysis, cost optimization, and performance insights in Thailand.",
   keywords: [
-    "grow business Thailand",
-    "business growth Thailand",
-    "expand business Thailand",
-    "financial planning Thailand",
-    "scale business Thailand",
-    // Thai keywords
-    "ขยายธุรกิจ",
-    "เติบโตธุรกิจ",
-    "วางแผนการเงิน",
-    "พัฒนาธุรกิจ",
+    "business growth in Thailand",
+    "financial planning in Thailand",
+    "scale business in Thailand",
+    "foreign business expansion Thailand",
+    "cost optimization Thailand",
+    "financial analysis Thailand",
+    "grow company Thailand",
   ],
   alternates: {
     canonical: `${siteConfig.url}/services/growth`,
     languages: {
       en: `${siteConfig.url}/services/growth`,
+      "en-US": `${siteConfig.url}/services/growth`,
+      "en-GB": `${siteConfig.url}/services/growth`,
+      "en-SG": `${siteConfig.url}/services/growth`,
+      "en-AU": `${siteConfig.url}/services/growth`,
       "x-default": `${siteConfig.url}/services/growth`,
     },
   },
   openGraph: {
-    title: "Grow Your Business in Thailand | PND50",
-    description: "Scale your foreign business in Thailand with expert financial planning and growth strategies.",
+    title: "Business Growth in Thailand | PND50",
+    description: "Scale your foreign business in Thailand with expert financial planning.",
     url: `${siteConfig.url}/services/growth`,
     siteName: "PND50",
     locale: "en_US",
     type: "website",
-    images: [
-      {
-        url: `${siteConfig.url}/og-services.png`,
-        width: 1200,
-        height: 630,
-        alt: "PND50 Business Growth in Thailand",
-      },
-    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Grow Your Business in Thailand | PND50",
+    title: "Business Growth in Thailand | PND50",
     description: "Scale your foreign business in Thailand.",
-    images: [`${siteConfig.url}/og-services.png`],
   },
   robots: {
     index: true,
@@ -94,54 +80,22 @@ const faqs = [
   },
 ]
 
-const howToSteps = [
-  {
-    name: "Financial Health Check",
-    text: "We analyze your current financial statements, cash flow patterns, and key metrics.",
-  },
-  {
-    name: "KPI Dashboard Setup",
-    text: "We create a customized dashboard tracking the metrics that matter most for your business goals.",
-  },
-  {
-    name: "Opportunity Identification",
-    text: "We identify cost reduction opportunities, revenue optimization areas, and growth potential.",
-  },
-  {
-    name: "Monthly Reviews",
-    text: "Regular check-ins to review performance, adjust strategies, and ensure you're on track to meet targets.",
-  },
-]
-
-const breadcrumbItems = [
-  { name: "Home", url: "/" },
-  { name: "Services", url: "/services" },
-  { name: "Business Growth", url: "/services/growth" },
-]
-
 export default function GrowthPage() {
   return (
     <>
-      <DetailedServiceSchema
+      <ServiceSchema
         name="Business Growth & Financial Planning in Thailand"
         description="Strategic financial planning and business growth solutions for foreign companies in Thailand."
         url="/services/growth"
-        serviceType="Financial Planning Service"
-        datePublished="2024-01-15"
-        dateModified="2025-06-20"
-        priceRange="฿฿฿"
-        aggregateRating={{ ratingValue: "4.9", reviewCount: "31" }}
-        breadcrumb={breadcrumbItems}
       />
-      <BreadcrumbSchema items={breadcrumbItems} />
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", url: "/" },
+          { name: "Services", url: "/services" },
+          { name: "Business Growth in Thailand", url: "/services/growth" },
+        ]}
+      />
       <FAQSchema faqs={faqs} />
-      <ServiceHowToSchema serviceName="Business Growth Planning" steps={howToSteps} totalTime="P90D" />
-      <AuthorSchema
-        name="PND50 Growth Team"
-        jobTitle="Financial Analysts"
-        description="Financial analysts specialized in helping foreign businesses scale operations in Thailand"
-        credentials={["CFA", "Financial Planning Certificate"]}
-      />
 
       <ServicePageClient
         title="Business Growth in Thailand"
@@ -150,7 +104,6 @@ export default function GrowthPage() {
         features={features}
         faqs={faqs}
         ctaText="Ready to Grow Your Business?"
-        breadcrumbItems={breadcrumbItems}
       />
     </>
   )
