@@ -54,7 +54,7 @@ export function HeroSection() {
           <h1 className="hero-title text-4xl sm:text-5xl md:text-6xl lg:text-[3.5rem] font-bold text-foreground mb-8 leading-[1.15] tracking-tight">
             Figure out what your business actually needs in Thailand{" "}
             <span className="text-slate-400 font-normal italic">
-              — before you talk to anyone.
+               before you talk to anyone.
             </span>
           </h1>
 
