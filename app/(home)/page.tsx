@@ -7,7 +7,7 @@ import { ServicesSection } from "@/components/homepage/sections/services-section
 import { AboutSection } from "@/components/homepage/sections/about-section"
 import { FAQSection } from "@/components/homepage/sections/faq-section"
 import { ContactSection } from "@/components/homepage/sections/contact-section"
-import { LandingFooter } from "@/components/landing-footer"
+import { FooterSection } from "@/components/homepage/sections/footer-section"
 
 export default function PND50Landing() {
   return (
@@ -35,9 +35,7 @@ export default function PND50Landing() {
         <ContactSection />
 
         {/* Footer */}
-        <footer className="py-6 bg-slate-900 border-t border-slate-800">
-          <LandingFooter variant="dark" absolute={false} />
-        </footer>
+        <FooterSection />
       </div>
     </>
   )
