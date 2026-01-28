@@ -36,27 +36,32 @@ export function HeroSection() {
         ".hero-trust",
         { opacity: 0 },
         { opacity: 1, duration: 0.5, ease: "power2.out" },
-        "-=0.2"
+        "-=0.1"
       )
   }, [])
 
   return (
     <section
       ref={heroRef}
-      className="relative min-h-[85vh] flex items-center bg-gradient-to-b from-slate-50 via-white to-white overflow-hidden"
+      className="relative min-h-[85vh] flex items-center bg-gradient-to-br from-slate-50 via-white to-sky-50/30 overflow-hidden"
     >
-      {/* Subtle grid pattern */}
+      {/* Subtle background elements */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-1/3 left-1/4 w-[500px] h-[500px] bg-primary/3 rounded-full blur-3xl" />
+        <div className="absolute bottom-1/3 right-1/4 w-[400px] h-[400px] bg-sky-200/30 rounded-full blur-3xl" />
+      </div>
+
+      {/* Grid pattern */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#8881_1px,transparent_1px),linear-gradient(to_bottom,#8881_1px,transparent_1px)] bg-[size:60px_60px] pointer-events-none opacity-50" />
 
       <div className="container mx-auto px-4 py-20 md:py-28 relative z-10">
         <div className="max-w-4xl mx-auto text-center">
           {/* Main heading */}
-          <h1 className="hero-title text-4xl sm:text-5xl md:text-6xl lg:text-[3.5rem] font-bold text-foreground mb-8 leading-[1.15] tracking-tight">
-            Figure out what your business
-            <br className="hidden sm:block" />
-            {" "}actually needs in Thailand
-            <br />
-            <span className="text-slate-400 font-normal italic">before you talk to anyone.</span>
+          <h1 className="hero-title text-4xl sm:text-5xl md:text-6xl lg:text-[4.2rem] font-bold text-foreground mb-8 leading-[1.1] tracking-tight">
+            Figure out what your business actually needs in Thailand{" "}
+            <span className="text-muted-foreground/60 font-normal italic">
+              — before you talk to anyone.
+            </span>
           </h1>
 
           {/* Subtitle */}
@@ -68,28 +73,28 @@ export function HeroSection() {
 
           {/* CTAs */}
           <div className="hero-cta flex flex-col sm:flex-row gap-4 justify-center mb-8">
-            <Link href="/schedule">
+            <Link href="#contact">
               <Button
                 size="lg"
                 className="w-full sm:w-auto bg-slate-900 hover:bg-slate-800 text-white text-base px-8 py-6 rounded-lg transition-all hover:scale-[1.02] group"
               >
                 Start with clarity
-                <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
               </Button>
             </Link>
             <Link href="#services">
               <Button
                 size="lg"
                 variant="outline"
-                className="w-full sm:w-auto border-2 border-slate-300 text-foreground text-base px-8 py-6 rounded-lg hover:bg-slate-50 transition-all hover:scale-[1.02]"
+                className="w-full sm:w-auto border-2 border-slate-300 text-slate-700 text-base px-8 py-6 rounded-lg hover:bg-slate-50 transition-all hover:scale-[1.02]"
               >
                 See how it works
               </Button>
             </Link>
           </div>
 
-          {/* Trust line */}
-          <p className="hero-trust text-sm text-slate-400">
+          {/* Trust text */}
+          <p className="hero-trust text-sm text-primary/70">
             No calls. No sales. No email required to explore.
           </p>
         </div>
