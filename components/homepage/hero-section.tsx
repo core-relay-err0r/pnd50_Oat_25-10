@@ -52,10 +52,12 @@ export function HeroSection() {
         <div className="max-w-4xl mx-auto text-center">
           {/* Main heading */}
           <h1 className="hero-title text-4xl sm:text-5xl md:text-6xl lg:text-[3.5rem] font-bold text-foreground mb-8 leading-[1.15] tracking-tight">
-            Figure out what your business actually needs in Thailand{" "}
-            <span className="text-slate-400 font-normal italic">
-               before you talk to anyone.
-            </span>
+            Figure out what your business
+            <br className="hidden sm:block" />
+            {" "}actually needs in Thailand{" "}
+            <span className="text-slate-400 font-normal italic">before</span>
+            <br />
+            <span className="text-slate-400 font-normal italic">you talk to anyone.</span>
           </h1>
 
           {/* Subtitle */}
